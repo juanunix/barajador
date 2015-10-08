@@ -1,0 +1,144 @@
+body {
+    background: silver;
+    padding-top:50px;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+.navbar-brand img {
+    height: 50px;
+    display: inline;
+}
+.navbar-brand {
+    padding:0;
+    padding-right:10px;
+    }
+
+.matriz input {
+    padding:10px;
+    text-align: right;
+}
+
+.contenedor {
+    height:auto;
+    min-height: 150px;
+    overflow: hidden;
+    width:100%;
+    background: #004000;
+    padding:10px;
+    margin-top:0px;
+}
+    
+.baraja{
+    list-style: none;
+    margin:0px;
+    padding:0px;
+    float:right;
+
+}
+    
+.baraja li {
+    display:inline;
+    margin-left:-83px;
+}
+    
+.naipe {
+    display: inline-block;
+    width: 100px;
+    height: 140px;
+    border: 1px solid silver;
+    background-color: white;
+    background-image: url(bicycle-blue-100.png);
+    background-size: cover;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: -2px 0px 2px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: -2px 0px 2px -1px rgba(0,0,0,0.2);
+    box-shadow: -2px 0px 2px -1px rgba(0,0,0,0.2);
+    position: relative;
+    padding:2px;
+    font-size:12px;
+}
+
+.naipe:active {
+    z-index: 99;
+}
+
+#consola {
+    background: black;
+    color: white;
+}
+
+#consola input {
+    background: transparent;
+    width: calc(100% - 15px);
+    color: white;
+    border: 0px solid;
+    font-family: "Courier New", monospace;
+    white-space: pre;
+    padding-left: 5px;
+}
+
+#consola input:focus {
+    outline: none;
+}
+
+#consolaOutput {
+    border-top: 1px solid;
+    height: 200px;
+    overflow-y: scroll;
+    font-family: "Courier New", monospace;
+    white-space: pre;
+    padding:2px;
+}
+
+.centrado {
+text-align: center;
+}
