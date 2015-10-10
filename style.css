@@ -65,27 +65,47 @@ body {
     text-align: right;
 }
 
+.progress {
+    margin-bottom: 10px
+}
+
+.tab-pane {
+    padding-top: 10px;
+}
+
+input[type="color"]{
+    cursor: pointer;
+}
+
+.subtitulo {
+    font-size:10pt;
+}
+
 .contenedor {
-    height:auto;
+    height: auto;
     min-height: 150px;
     overflow: hidden;
-    width:100%;
-    background: #004000;
-    padding:10px;
-    margin-top:0px;
+    width: 100%;
+    background-color: #004000;
+    background-image: url("img/table/suits.png");
+    padding: 10px;
+    padding-left: 100px;
+    margin-top: 0px;
 }
-    
+
 .baraja{
     list-style: none;
-    margin:0px;
-    padding:0px;
-    float:right;
+    margin: 0px;
+    padding: 0px;
+    padding-top: 100px;
+    float: right;
 
 }
     
 .baraja li {
-    display:inline;
-    margin-left:-83px;
+    display: inline-flex;
+    margin-left: -83px;
+    margin-top: -100px;
 }
     
 .naipe {
@@ -119,7 +139,6 @@ body {
 #consola input {
     background: transparent;
     width: calc(100% - 15px);
-    color: white;
     border: 0px solid;
     font-family: "Courier New", monospace;
     white-space: pre;

@@ -3,6 +3,10 @@ var imgDeck = "wiki";
 var imgBack = "bicycle-red";
 var vrChck0 = "glyphicon glyphicon-unchecked";
 var vrChck1 = "glyphicon glyphicon-check"
+
+
+var JsonApi = new RandomJs();
+
 // Inicia el menu de herramientas
 
 // Menu HELP
@@ -11,6 +15,10 @@ var vrChck1 = "glyphicon glyphicon-check"
 //$( "#bjAbrir" ).on( "click", bjAbrir );
 $( "#generarQr" ).on( "click", generarQr );
 //$( "#bjAjustes" ).on( "click", bjAjustes );
+
+$( "#colorTapete" ).on( "change", cambiarColorTapete );
+$( "#colorConsola" ).on( "change", cambiarColorConsola );
+$( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
 
 // Menu: Mezclar
 //$( "#sfRepetir" ).on( "click", sfRepetir );
@@ -45,7 +53,7 @@ function abreBaraja(){
     }
 
     contenido = contenido + '</ul>';
-    document.getElementById("tapete").innerHTML = contenido
+    $("#tapete").html(contenido);
 }
 
 // Algoritmo de FisherShuttle 
@@ -71,7 +79,7 @@ function sfFisherYates() {
 
 // Algoritmo Sattolo
 function sfSattolo() {
-
+    alert("SATOLO");
     for (i = 0; i < baraja.length - 1; i++) {
         var j = i + 1 + Math.floor(Math.random() * (baraja.length - i - 1));
 
@@ -84,13 +92,14 @@ function sfSattolo() {
 }
 
 // RANDOM.ORG
-document.getElementById("customApiKeyRandom").value = "2dbcb5c9-d4f8-4d19-b1f1-cd5cf3980e97";
+$("#customApiKeyRandom").val("2dbcb5c9-d4f8-4d19-b1f1-cd5cf3980e97");
+comprobarApiRandom();
 
 function sfRandomOrg(){
 var barajaTemp = baraja.slice();
-var JsonApi = new RandomJs();
+
     var result = JsonApi
-    .apikey(document.getElementById("customApiKeyRandom").value)
+    .apikey($("#customApiKeyRandom").val())
     .method('generateIntegers')
     .params({
         n:baraja.length,
@@ -99,20 +108,44 @@ var JsonApi = new RandomJs();
         replacement:true
     })
     .post(function(xhrOrError, stream, body) {
-        //console.log('==START==')
-        //console.log('==xhrOrError==')
-        //console.log(xhrOrError)
-        //console.log('==stream==')
-        //console.log(stream)
-        //console.log('==body==')
-        //console.log(body)
-        //console.log('==END==')
+        
         for (i = 0; i < baraja.length ; i++){
             baraja[i] = barajaTemp[body.result.random.data[i]]
         }
+        
+        comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
         consola("radomOrg()");
     });
+}
+
+function comprobarApiRandom(numRequest,numBits){
+    var bitsQuedan, requestQuedan
+    
+    if (numRequest == undefined){
+            var result = JsonApi
+            .apikey($("#customApiKeyRandom").val())
+            .method('getUsage')
+            .params({
+                apiKey:$("#customApiKeyRandom").val()
+            })
+            .post(function(xhrOrError, stream, body) {
+                requestQuedan = body.result.requestsLeft;
+                bitsQuedan = body.result.bitsLeft;
+                $('#randomKeyApiRequestLeft').css('width', (requestQuedan/10)+'%').attr('aria-valuenow', requestQuedan); 
+                $('#randomKeyApiRequestLeft').html(requestQuedan);
+                $('#randomKeyApiBitsLeft').css('width', (bitsQuedan/2500)+'%').attr('aria-valuenow', bitsQuedan); 
+                $('#randomKeyApiBitsLeft').html(bitsQuedan);
+            });
+
+    }  else {
+        $('#randomKeyApiRequestLeft').css('width', (numRequest/10)+'%').attr('aria-valuenow', numRequest); 
+        $('#randomKeyApiRequestLeft').html(numRequest);
+        $('#randomKeyApiBitsLeft').css('width', (numBits/2500)+'%').attr('aria-valuenow', numBits); 
+        $('#randomKeyApiBitsLeft').html(numBits);
+            
+    }
+    
 }
 
 // MESCLA = INVERTIR
@@ -203,10 +236,10 @@ function renderizar(){
     
     // Renderiza el tapete
     for (i = 0;i < baraja.length;i++){
-        document.getElementById("naipe"+i).style.background = "url(img/decks/" + imgDeck + "/" + baraja[i] + ".png)";
-        document.getElementById("naipe"+i).style.backgroundColor = "white";
-        document.getElementById("naipe"+i).style.backgroundSize = "100px 140px"
-        document.getElementById("naipe"+i).style.backgroundPositionX = "-1px";  
+        $("#naipe"+i).css('background', 'url(img/decks/' + imgDeck + '/' + baraja[i] + '.png)');
+        $("#naipe"+i).css('backgroundColor', 'white');
+        $("#naipe"+i).css('backgroundSize', '100px 140px');
+        $("#naipe"+i).css('backgroundPositionX','-1px');  
     }
 }
 
@@ -223,20 +256,20 @@ function verModulos(event){
     if( document.getElementById(mModulo).className == vrChck0 ){
     
         document.getElementById(mModulo).className = vrChck1;
-        document.getElementById(xModulo).style.display = "block";
+        $('#xModulo').css('display', 'block');
         
     // Oculta el módulo seleccionado
     }else{
         
         document.getElementById(mModulo).className = vrChck0;
-        document.getElementById(xModulo).style.display = "none";
+        $('#xModulo').css('display', 'none');
     }
 }
 
 // Output a consola
 function consola(texto){
     
-    document.getElementById("consolaOutput").innerHTML = document.getElementById("consolaOutput").innerHTML + texto + ";\n"
+    document.getElementById("consolaOutput").innerHTML = document.getElementById("consolaOutput").innerHTML + texto + ";\n";
     
 }
 
@@ -244,6 +277,18 @@ function consola(texto){
 function generarQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size="+qrSize+"x"+qrSize+"&data=";
-    document.getElementById("imagenQr").src = urlApi + baraja;
+    $("#imagenQr").attr('src',urlApi + baraja);
     $('#modalQr').modal();
+}
+
+function cambiarColorTapete(){
+    $('.contenedor').css('background-color',$('#colorTapete').val())
+}
+
+function cambiarColorConsola(){
+    $('#consola').css('background',$('#colorConsola').val())
+}
+
+function cambiarColorConsolaTexto(){
+    $('#consola').css('color',$('#colorConsolaTexto').val())
 }
