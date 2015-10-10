@@ -48,7 +48,7 @@
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Baraja<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-submenu">
+                        <li class="dropdown-submenu" style="display:none">
                             <a id="bjAbrir" href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...</a>
                             <ul class="dropdown-menu">
                                 <li class="disabled"><a href="#">Bicycle Roja</a></li>
@@ -57,16 +57,28 @@
                                 <li class="disabled"><a href="#">Más...</a></li>
                             </ul>
                         </li>
-                        <li><a id="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
-                        <li class="divider"></li>
+                        
+                        
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
                             <ul class="dropdown-menu">
-                                <li class="disabled"><a href="#" class="disabled">Rosario en 3</a></li>
-                                <li class="disabled"><a href="#" class="disabled">Rosario en 4</a></li>
-                                <li class="disabled"><a href="#" class="disabled">Mnemónica</a></li>
+                                <li><a id="ordenBicycle" href="#">Bicycle</a></li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rosario</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a id="ordenRosarioEightKings" href="#">Eight Kings threatened...</a></li>
+                                        <li><a id="ordenRosarioDixRois" href="#">Dix huit Rois ne valent...</a></li>
+                                        <li><a id="ordenRosarioUnusQuinque" href="#">Unus quinque noven...</a></li>
+                                        <li style="display:none"><a id="ordenRosarioTodoQuinto" href="#">Todo quinto caballero...</a></li>
+                                        <li style="display:none"><a id="ordenRosarioLasCuatro" href="#">Las cuatro damas...</a></li>
+                                        <li><a id="ordenRosario18Reyes" href="#">18 Reyes sentados entre...</a></li>
+                                    </ul>
+                                </li>
+                                <li><a id="ordenMnemonica" href="#">Mnemónica Tamariz</a></li>
                             </ul>
                         </li>
+                        <li class="divider"></li>
+                        <li><a id="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
                     </ul>
                 </li>
                 <li>
@@ -76,6 +88,8 @@
                         <li class="disabled"><a id="sfCortar" href="#">Cortar...</a></li>
                         <li class="divider"></li>
                         <li class="disabled"><a id="sfAlfa" href="#">Mezcla alfa</a></li>
+                        <li class="disabled"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
+                        <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mezclas faro</a>
                             <ul class="dropdown-menu w200">

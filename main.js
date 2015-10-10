@@ -12,8 +12,14 @@ var JsonApi = new RandomJs();
 // Menu HELP
 
 // Menu: Baraja
-//$( "#bjAbrir" ).on( "click", bjAbrir );
 $( "#mnuGenerarQr" ).on( "click", generarQr );
+$( "#ordenMnemonica" ).on( "click", ordenarMnemonica );
+$( "#ordenBicycle" ).on( "click", ordenarBicycle );
+$( "#ordenRosarioEightKings" ).on( "click", ordenarRosarioEightKings);
+$( "#ordenRosarioDixRois" ).on( "click", ordenarRosarioDixRois);
+$( "#ordenRosarioUnusQuinque" ).on( "click", ordenarRosarioUnusQuinque);
+$( "#ordenRosario18Reyes" ).on( "click", ordenarRosario18Reyes);
+
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -23,7 +29,6 @@ $( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
 $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 
 // Menu: Mezclar
-//$( "#sfRepetir" ).on( "click", sfRepetir );
 $( "#sfInvertir" ).on( "click", sfInvertir );
 $( "#sfFisherYates" ).on( "click", sfFisherYates );
 $( "#sfSattolo" ).on( "click", sfSattolo );
@@ -34,15 +39,58 @@ $( "#sfFaroExt" ).on( "click", sfFaroExt );
 $( "#sfFaroIn" ).on( "click", sfFaroInt );
 $( "#sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( "#sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
-//$( "#sfAlfa" ).on( "click", sfAlfa );
 
 // Menu: Ver Check / UnCheck
 $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
 $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
+// Ordenaciones
 var baraja = "AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH";
 baraja = baraja.split(",");
+
+// Ordenar Bicycle
+function ordenarBicycle(){
+    baraja = "AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD,KC,QC,JC,10C,9C,8C,7C,6C,5C,4C,3C,2C,AC,KH,QH,JH,10H,9H,8H,7H,6H,5H,4H,3H,2H,AH";
+    baraja = baraja.split(",");
+    abreBaraja();
+}
+
+function ordenarRosarioEightKings(){
+    baraja = "8S,KH,3C,10D,2S,7H,9C,5D,QS,4H,AC,6D,JS,8H,KC,3D,10S,2H,7C,9D,5S,QH,4C,AD,6S,JH,8C,KD,3S,10H,2C,7D,9S,5H,QC,4D,AS,6H,JC,8D,KS,3H,10C,2D,7S,9H,5C,QD,4S,AH,6C,JD";
+    baraja = baraja.split(",");
+    consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
+    abreBaraja();
+}
+
+function ordenarRosarioDixRois(){
+    baraja = "10S,8H,KC,9D,JS,AH,7C,QD,10H,8C,KD,9S,JH,AC,7D,QS,10C,8D,KS,9H,JC,AD,7S,QH,10D,8S,KH,9C,JD,AS,7H,QC";
+    baraja = baraja.split(",");
+    consola('"Dix huit Rois ne valent pas sept Dames"')
+    abreBaraja();
+}
+
+function ordenarRosarioUnusQuinque(){
+    baraja = "AS,5H,9C,JD,6S,4H,2C,KD,7S,8H,QC,3D,10S,AH,5C,9D,JS,6H,4C,2D,KS,7H,8C,QD,3S,10H,AC,5D,9S,JH,6C,4D,2S,KH,7C,8D,QS,3H,10C,AD,5S,9H,JC,6D,4S,2H,KC,7D,8S,QH,3C,10D";
+    baraja = baraja.split(",");
+    consola('"Unus quinque noven fámulus sex quatuor duo Rex septem acto faemina trina decem"')
+    abreBaraja();
+}
+
+function ordenarRosario18Reyes(){
+    baraja = "10S,8H,KC,7D,2S,3H,AC,4D,9S,QH,6C,JD,5S,10H,8C,KD,7S,2H,3C,AD,4S,9H,QC,6D,JS,5H,10C,8D,KS,7H,2C,3D,AS,4H,9C,QD,6S,JH,5C,10D,8S,KH,7C,2D,3S,AH,4C,9D,QS,6H,JC,5D";
+    baraja = baraja.split(",");
+    consola('"18 Reyes sentados entre las 49 damas se van al cine"')
+    abreBaraja();
+}
+
+
+// Ordenar Mnemónica
+function ordenarMnemonica(){
+    baraja = "4C,2H,7D,3C,4H,6D,AS,5H,9S,2S,QH,3D,QC,8H,6S,5S,9H,KC,2D,JH,3S,8S,6H,10C,5D,KD,2C,3H,8D,5C,KS,JD,8C,10S,KH,JC,7S,10H,AD,4S,7H,4D,AC,9C,JS,QD,7C,QS,10D,6C,AH,9D";
+    baraja = baraja.split(",");
+    abreBaraja();
+}
 
 // Función de Renderización
 function abreBaraja(){
@@ -56,6 +104,7 @@ function abreBaraja(){
 
     contenido = contenido + '</ul>';
     $("#tapete").html(contenido);
+    renderizar();
 }
 
 // Algoritmo de FisherShuttle 
@@ -245,8 +294,7 @@ function renderizar(){
     }
 }
 
-abreBaraja()
-renderizar();
+abreBaraja();
 
 // Ver Modulos
 function verModulos(event){
