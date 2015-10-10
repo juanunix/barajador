@@ -11,9 +11,10 @@ var JsonApi = new RandomJs();
 // Menu HELP
 
 // Menu: Baraja
-$( "#mnuGenerarQr" ).on( "click", generarQr );
+$( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#ordenMnemonica" ).on( "click", ordenarMnemonica );
 $( "#ordenBicycle" ).on( "click", ordenarBicycle );
+$( "#orden4Kings" ).on( "click", ordenar4Kings);
 $( "#ordenRosarioEightKings" ).on( "click", ordenarRosarioEightKings);
 $( "#ordenRosarioDixRois" ).on( "click", ordenarRosarioDixRois);
 $( "#ordenRosarioUnusQuinque" ).on( "click", ordenarRosarioUnusQuinque);
@@ -45,8 +46,19 @@ $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
+// Entrar comando en consola
+ $('#consolaInput').keypress(function(event){  
+       var keycode = (event.keyCode ? event.keyCode : event.which);  
+      if(keycode == '13'){  
+           inputConsola();
+      }   
+ });  
+
+
+document.oncontextmenu = function(){return false;}
+
 // Ordenaciones
-var baraja = "KH,QH,JH,10H,9H,8H,7H,6H,5H,4H,3H,2H,AH,KC,QC,JC,10C,9C,8C,7C,6C,5C,4C,3C,2C,AC,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KS,QS,JS,10S,9S,8S,7S,6S,5S,4S,3S,2S,AS";
+var baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
 baraja = baraja.split(",");
 
 // Ordenar Bicycle
@@ -60,6 +72,13 @@ function ordenarRosarioEightKings(){
     baraja = "8S,KH,3C,10D,2S,7H,9C,5D,QS,4H,AC,6D,JS,8H,KC,3D,10S,2H,7C,9D,5S,QH,4C,AD,6S,JH,8C,KD,3S,10H,2C,7D,9S,5H,QC,4D,AS,6H,JC,8D,KS,3H,10C,2D,7S,9H,5C,QD,4S,AH,6C,JD";
     baraja = baraja.split(",");
     consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
+    abreBaraja();
+}
+
+function ordenar4Kings(){
+    baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
+    baraja = baraja.split(",");
+    //consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
     abreBaraja();
 }
 
@@ -125,7 +144,7 @@ function sfFisherYates() {
         baraja[index] = temp;
     }
     renderizar();
-    consola("durst()");
+    consola("durstenfeld");
 }
 
 // Algoritmo Sattolo
@@ -138,7 +157,7 @@ function sfSattolo() {
         baraja[i] = temp;
     }
     renderizar();
-    consola("satol()");
+    consola("sattolo");
 }
 
 // RANDOM.ORG
@@ -165,7 +184,7 @@ var barajaTemp = baraja.slice();
         
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
-        consola("radomOrg()");
+        consola("radomOrg");
     });
 }
 
@@ -201,7 +220,7 @@ function comprobarApiRandom(numRequest,numBits){
 // MESCLA = INVERTIR
 function sfInvertir(){
     baraja.reverse();
-    consola("inv()");
+    consola("invertir");
     renderizar();
 }
 
@@ -227,7 +246,7 @@ function sfFaroExt(){
             baraja[i] = barajaTemp[(i+baraja.length-1)/2];
         }
     }
-    consola("faroO()");
+    consola("faroExt");
     renderizar();
 }
 
@@ -243,7 +262,7 @@ function sfFaroInt(){
             baraja[i-1] = barajaTemp[(i+baraja.length-1)/2];
         }
     }
-    consola("faroI()");
+    consola("faroInt");
     renderizar();
 }
 
@@ -259,7 +278,7 @@ function sfAntiFaroExt(){
             baraja[(i+baraja.length-1)/2] = barajaTemp[i];
         }
     }
-    consola("-faroO()");
+    consola("antiFaroExt");
     renderizar();
 }
 
@@ -275,7 +294,7 @@ function sfAntiFaroInt(){
             baraja[(i+baraja.length-1)/2] = barajaTemp[i-1];
         }
     } 
-    consola("-faroI()");
+    consola("antiFaroInt");
     renderizar();
 }
 
@@ -314,11 +333,56 @@ function verModulos(event){
         $(xModulo).css('display', 'none');
     }
 }
+// Input a consola
+function inputConsola(){
+    var txtComando = $("#consolaInput").val();
+    $("#consolaInput").val("")
+    
+    switch (txtComando) {
+        case "help":
+        case "ayuda":
+            consola('Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.')
+            break;
+        case "clear":
+        case "clr":
+        // Limpiar consola
+            $("#consolaOutput").text("")
+            break;
+        case "invertir":
+            sfInvertir();
+            break;
+        case "sattolo":
+            sfSattolo();
+            break;
+        case "durstenfeld":
+            sfFisherYates();
+            break;
+        case "randomOrg":
+            sfRandomOrg();
+            break;
+        case "faroExt":
+            sfFaroExt();
+            break;
+        case "faroInt":
+            sfFaroInt();
+            break;
+        case "antiFaroExt":
+            sfAntiFaroExt();
+            break;
+        case "antiFaroInt":
+            sfAntiFaroInt();
+            break;
+        break;
+        default:
+            consola(txtComando + ": No se encontró la orden")
+              // código si no es ninguno de los anteriores
+    }
+}
 
 // Output a consola
 function consola(texto){
     
-    document.getElementById("consolaOutput").innerHTML = document.getElementById("consolaOutput").innerHTML + texto + ";\n";
+    document.getElementById("consolaOutput").innerHTML = texto + "\n" + document.getElementById("consolaOutput").innerHTML;
     
 }
 
