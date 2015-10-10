@@ -252,19 +252,19 @@ renderizar();
 function verModulos(event){
     
     mModulo = "txtVer" + event.data.name;
-    xModulo = "modulo" + event.data.name;
+    xModulo = "#modulo" + event.data.name;
     
     // Muestra el módulo seleccionado
     if( document.getElementById(mModulo).className == vrChck0 ){
     
         document.getElementById(mModulo).className = vrChck1;
-        $('#xModulo').css('display', 'block');
+        $(xModulo).css('display', 'block');
         
     // Oculta el módulo seleccionado
     }else{
         
         document.getElementById(mModulo).className = vrChck0;
-        $('#xModulo').css('display', 'none');
+        $(xModulo).css('display', 'none');
     }
 }
 
