@@ -130,7 +130,6 @@ function sfFisherYates() {
 
 // Algoritmo Sattolo
 function sfSattolo() {
-    alert("SATOLO");
     for (i = 0; i < baraja.length - 1; i++) {
         var j = i + 1 + Math.floor(Math.random() * (baraja.length - i - 1));
 
