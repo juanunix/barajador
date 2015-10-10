@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><img alt="Brand" src="favicon.png">Barajador</a>
+            <a class="navbar-brand" href=""><img alt="Brand" src="favicon.png">Barajador</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -206,9 +206,23 @@
           <div id="themeSettings" class="tab-pane fade in active">
             <p>Preferencias del Tema actual</p>
             
-            <input id="colorTapete" type="color" value="#004000"> Tapete : Fondo <br/>
-            <input id="colorConsola" type="color" value="#000000"> Consola : Fondo<br/>
-            <input id="colorConsolaTexto" type="color" value="#ffffff"> Consola : Texto<br/>
+            <input id="colorTapete" type="color" value="#004000"> Color del tapete<br/>
+            <select id="texturaTapete" class="ancho120">
+                <option value="none">Ninguna</option>
+                <option value="suits-light">Suits (light)</option>
+                <option value="suits-dark" selected>Suits (dark)</option>
+                <option value="night-light">Night (light)</option>
+                <option value="night-dark">Night (dark)</option>
+                <option value="pana-light">Pana (light)</option>
+                <option value="pana-dark">Pana (dark)</option>
+            </select> Textura del tapete<br/>
+            <input id="colorConsola" type="color" value="#000000"> Fondo de la consola<br/>
+            <input id="colorConsolaTexto" type="color" value="#ffffff"> Texto de la consola<br/>
+            <select id="fuenteConsola" class="ancho120">
+                <option value='"Courier New", monospace'>Courier New</option>
+                <option value='"Lucida Console", Monaco, monospace' selected>Lucila Console</option>
+                <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Sans</option>
+            </select> Tipografía de la consola<br/>
             
           </div>
           <div id="randomSettings" class="tab-pane fade">

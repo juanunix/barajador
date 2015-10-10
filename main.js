@@ -17,8 +17,10 @@ $( "#mnuGenerarQr" ).on( "click", generarQr );
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
+$( "#texturaTapete" ).on( "change", cambiarTexturaTapete );
 $( "#colorConsola" ).on( "change", cambiarColorConsola );
 $( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
+$( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 
 // Menu: Mezclar
 //$( "#sfRepetir" ).on( "click", sfRepetir );
@@ -285,10 +287,21 @@ function cambiarColorTapete(){
     $('.contenedor').css('background-color',$('#colorTapete').val())
 }
 
+function cambiarTexturaTapete(){
+    var urlTextura = "url('img/table/"+ $('#texturaTapete').val() + ".png')"
+    $('.contenedor').css('background-image',urlTextura)
+}
+
 function cambiarColorConsola(){
     $('#consola').css('background',$('#colorConsola').val())
 }
 
 function cambiarColorConsolaTexto(){
     $('#consola').css('color',$('#colorConsolaTexto').val())
+}
+
+function cambiarFuenteConsola(){
+    $('#consola').css('font-family',$('#fuenteConsola').val())
+    $('#consolaInput').css('font-family',$('#fuenteConsola').val())
+    $('#consolaOutput').css('font-family',$('#fuenteConsola').val())
 }

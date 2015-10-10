@@ -75,6 +75,11 @@ body {
 
 input[type="color"]{
     cursor: pointer;
+    width: 120px;
+}
+
+.ancho120 {
+    width: 120px;
 }
 
 .subtitulo {
@@ -87,7 +92,7 @@ input[type="color"]{
     overflow: hidden;
     width: 100%;
     background-color: #004000;
-    background-image: url("img/table/suits.png");
+    background-image: url("img/table/suits-dark.png");
     padding: 10px;
     padding-left: 100px;
     margin-top: 0px;
@@ -114,7 +119,6 @@ input[type="color"]{
     height: 140px;
     border: 1px solid silver;
     background-color: white;
-    background-image: url(bicycle-blue-100.png);
     background-size: cover;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -134,18 +138,19 @@ input[type="color"]{
 #consola {
     background: black;
     color: white;
+    font-family: "Lucida Console", Monaco, monospace;
 }
 
-#consola input {
+#consolaInput {
     background: transparent;
     width: calc(100% - 15px);
     border: 0px solid;
-    font-family: "Courier New", monospace;
+    font-family: "Lucida Console", Monaco, monospace;
     white-space: pre;
     padding-left: 5px;
 }
 
-#consola input:focus {
+#consolaInput:focus {
     outline: none;
 }
 
@@ -153,9 +158,9 @@ input[type="color"]{
     border-top: 1px solid;
     height: 200px;
     overflow-y: scroll;
-    font-family: "Courier New", monospace;
+    font-family: "Lucida Console", Monaco, monospace;
     white-space: pre;
-    padding:2px;
+    padding: 2px;
 }
 
 .centrado {
