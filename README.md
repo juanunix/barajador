@@ -6,7 +6,7 @@ Simulador de baraja online. Un programa pensado para la investigación de las pr
 # Versión experimental:
 Esta aplicación está en constante cambios debido a su reciente y permantente desarrollo. Algunas cosas que deberían funcionar no lo hacen y otras posiblemente no ocurren como deberían.
 
-# Conctacto:
+# Contacto:
 Si tienes alguna sugerencia, crítica o consulta no dudes en [escribirme un correo](mailto:pachaguionbajo@gmail.com?Subject=Barajador%20v1.0%20(beta)).
 
 # Créditos:
