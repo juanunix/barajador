@@ -57,7 +57,7 @@
                                 <li class="disabled"><a href="#">Más...</a></li>
                             </ul>
                         </li>
-                        <li><a id="generarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
+                        <li><a id="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
@@ -147,6 +147,24 @@
 </div>
 </div>
 
+<!-- GenerarQR -->
+<div class="modal fade" id="modalQr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Generar código QR</h4>
+      </div>
+      <div class="modal-body centrado">
+        <img id="imagenQr" scr="" alt="" title="QR de la baraja actual" width="250" height="250">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
 <!-- Modal Ayuda -->
 <div class="modal fade" id="modalHelp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -209,24 +227,6 @@
               </div>
         </div>
           
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-      
-<!-- GenrarQR -->
-<div class="modal fade" id="modalQr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Generar código QR</h4>
-      </div>
-      <div class="modal-body centrado">
-        <img id="imagenQr" scr="" alt="" title="QR de la baraja actual" width="250" height="250">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>

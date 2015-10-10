@@ -13,7 +13,7 @@ var JsonApi = new RandomJs();
 
 // Menu: Baraja
 //$( "#bjAbrir" ).on( "click", bjAbrir );
-$( "#generarQr" ).on( "click", generarQr );
+$( "#mnuGenerarQr" ).on( "click", generarQr );
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -277,8 +277,8 @@ function consola(texto){
 function generarQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size="+qrSize+"x"+qrSize+"&data=";
-    $("#imagenQr").attr('src',urlApi + baraja);
-    $('#modalQr').modal();
+    $("#imagenQr").attr('src', urlApi + baraja);
+    $("#modalQr").modal();
 }
 
 function cambiarColorTapete(){
