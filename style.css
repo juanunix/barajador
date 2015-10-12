@@ -103,8 +103,8 @@ input[type="color"]{
 
 #tapeteFondo {
     display: block;
-    background-color: #004000;
-    background-image: url("img/table/suits-dark.png");
+    background-color: #40001b;
+    background-image: url("img/table/suits-light.png");
 }
 
 .botonera {
@@ -129,7 +129,7 @@ input[type="color"]{
     margin-left: -83px;
     margin-top: -100px;
 }
-    
+
 .naipe {
     display: inline-block;
     width: 100px;

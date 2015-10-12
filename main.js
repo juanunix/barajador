@@ -34,7 +34,7 @@ $( ".sfFisherYates" ).on( "click", sfFisherYates );
 $( ".sfSattolo" ).on( "click", sfSattolo );
 $( ".sfRandomOrg" ).on( "click", sfRandomOrg );
 $( ".sfFaroExt" ).on( "click", sfFaroExt );
-$( ".sfFaroIn" ).on( "click", sfFaroInt );
+$( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
 // $( "#sfCortar" ).on( "click", sfCortar );
@@ -55,7 +55,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
  });  
 
 
-document.oncontextmenu = function(){return false;}
+//document.oncontextmenu = function(){return false;}
 
 // Ordenaciones
 var baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
@@ -113,15 +113,16 @@ function ordenarMnemonica(){
 
 // Función de Renderización
 function abreBaraja(){
+
+    
     var contenido = '<ul class="baraja" id="naipes">';
 
     for (i = 0;i < baraja.length;i++){
-
-       contenido = contenido + '<li><a href="#" class="naipe" id="naipe' + i + '"></a></li>';
+       contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" title="(' + (i+1) + ')"></a></li>';
 
     }
-
     contenido = contenido + '</ul>';
+    
     $("#tapete").html(contenido);
     renderizar();
 }
@@ -390,8 +391,11 @@ function consola(texto){
 function generarQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size="+qrSize+"x"+qrSize+"&data=";
+    comi = '"'
     $("#imagenQr").attr('src', urlApi + baraja);
+    $("#modalQr #descargar").attr('href', urlApi + baraja);
     $("#modalQr").modal();
+    
 }
 
 function cambiarColorTapete(){
