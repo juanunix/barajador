@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -95,7 +96,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mezclas faro</a>
                             <ul class="dropdown-menu w200">
                                 <li><a class="sfFaroExt" href="#" accesskey="o">Faro Exterior<span class="atajo">Alt+O</span></a></li>
-                                <li><a class="sfFaroInt" href="# "accesskey="i">Faro Interior<span class="atajo">Alt+I</span></a></li>
+                                <li><a class="sfFaroIn" href="# "accesskey="i">Faro Interior<span class="atajo">Alt+I</span></a></li>
                                 <li><a class="sfAntiFaroExt" href="#" accesskey="l">Antifaro Exterior<span class="atajo">Alt+L</span></a></li>
                                 <li><a class="sfAntiFaroIn" href="#" accesskey="k">Antifaro Interior<span class="atajo">Alt+K</span></a></li>
                             </ul>
@@ -182,19 +183,12 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Generar código QR</h4>
       </div>
-<form enctype="multipart/form-data" action="http://api.qrserver.com/v1/read-qr-code/" method="POST">
-<!-- MAX_FILE_SIZE (maximum file size in bytes) must precede the file input field used to upload the QR code image -->
-<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-<!-- The "name" of the input field has to be "file" as it is the name of the POST parameter -->
-Choose QR code image to read/scan: <input name="file" type="file" />
-<input type="submit" value="Read QR code" />
-</form>
       <div class="modal-body centrado">
         <img id="imagenQr" scr="" alt="" title="QR de la baraja actual" width="250" height="250">
       </div>
       <div class="modal-footer">
-          <a id="descargar" class="btn btn-primary" href="#" download>Descargar</a>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <a id="descargar" class="btn btn-primary" href="#" download="baraja">Descargar</a>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -244,8 +238,8 @@ Choose QR code image to read/scan: <input name="file" type="file" />
             <input id="colorTapete" type="color" value="#40001b"> Color del tapete<br/>
             <select id="texturaTapete" class="ancho120">
                 <option value="none">Ninguna</option>
-                <option value="suits-light">Suits (light)</option>
-                <option value="suits-dark" selected>Suits (dark)</option>
+                <option value="suits-light" selected>Suits (light)</option>
+                <option value="suits-dark">Suits (dark)</option>
                 <option value="night-light">Night (light)</option>
                 <option value="night-dark">Night (dark)</option>
                 <option value="pana-light">Pana (light)</option>

@@ -55,7 +55,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
  });  
 
 
-//document.oncontextmenu = function(){return false;}
+document.oncontextmenu = function(){return false;}
 
 // Ordenaciones
 var baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
@@ -301,6 +301,35 @@ function sfAntiFaroInt(){
 
 // Renderiza la baraja
 function renderizar(){
+    
+    // Renderiza la Matriz v Ascii
+    if (true == false){
+        
+    var contenido = '';
+    for (i = 0; i < baraja.length;i++){
+        
+        switch(baraja[i].charAt(baraja[i].length-1)){
+            case 'C':
+                contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&spades;</big> ';
+                break;
+            case 'H':
+                contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&hearts;</big></font> ';
+                break
+            case 'S':
+                contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&clubs;</big> ';
+                break;
+            case 'D':
+                contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&diams;</big></font> ';
+                break;
+            default:
+                contenido = contenido + baraja[i]        
+        }
+        
+    } 
+    document.getElementById("matrizAscii").innerHTML = contenido;
+    
+    }
+    
     // Renderiza la Matriz
     document.getElementById("matriz").value = baraja;
     
