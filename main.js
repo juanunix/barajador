@@ -119,7 +119,8 @@ function abreBaraja(){
     var rotulos = '';
 
     for (i = 0;i < baraja.length;i++){
-       contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" title="(' + (i+1) + ')"></a></li>';
+        //contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" title="(' + (i+1) + ')"></a></li>';
+        contenido = contenido + '<li><a class="naipe" id="naipe' + i + '"><div class="rotulo">' + (i+1) + '</div></a></li>';
 
     }
     contenido = contenido + '</ul>';
@@ -448,6 +449,15 @@ function cambiarTexturaTapete(){
     var urlTextura = "url('img/table/"+ $('#texturaTapete').val() + ".png')"
     $('#tapeteFondo').css('background-image',urlTextura)
 }
+
+$( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $(".rotulo").css('display', 'table-caption');
+   }else{
+       $(".rotulo").css('display', 'none');
+   }
+});
+
 
 function cambiarColorConsola(){
     $('#consola').css('background',$('#colorConsola').val())

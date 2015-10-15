@@ -106,6 +106,10 @@ input[type="color"]{
     text-align: center;
 }
 
+#tapete {
+    margin-top: 60px;
+}
+
 #tapeteFondo {
     display: block;
     background-color: #40001b;
@@ -126,14 +130,14 @@ input[type="color"]{
     list-style: none;
     margin: 0px;
     padding: 0px;
-    padding-top: 100px;
+    padding-top: 35px;
 
 }
     
 .baraja li {
     display: inline-flex;
     margin-left: -83px;
-    margin-top: -100px;
+    margin-top: -90px;
 }
 
 .naipe {
@@ -152,10 +156,26 @@ input[type="color"]{
     position: relative;
     padding:2px;
     font-size:12px;
+    color: grey;
+    cursor: pointer;
 }
 
 .naipe:active {
     z-index: 99;
+}
+
+.naipe:hover {
+    color: grey;
+    text-decoration: none;
+}
+
+.rotulo {
+    width: 15px;
+    font-size: 8pt;
+    text-align: center;
+    padding-top: 35px;
+    display: table-caption;
+    cursor: pointer;
 }
 
 #consola {
