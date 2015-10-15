@@ -55,7 +55,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
  });  
 
 
-document.oncontextmenu = function(){return false;}
+//document.oncontextmenu = function(){return false;}
 
 // Ordenaciones
 var baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
@@ -116,6 +116,7 @@ function abreBaraja(){
 
     
     var contenido = '<ul class="baraja" id="naipes">';
+    var rotulos = '';
 
     for (i = 0;i < baraja.length;i++){
        contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" title="(' + (i+1) + ')"></a></li>';
@@ -366,12 +367,16 @@ function verModulos(event){
 // Input a consola
 function inputConsola(){
     var txtComando = $("#consolaInput").val();
+    txtComando = txtComando.toLowerCase()
     $("#consolaInput").val("")
     
     switch (txtComando) {
         case "help":
         case "ayuda":
             consola('Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.')
+            break;
+        case "version":
+            consola('Barajador v0.1 (beta)')
             break;
         case "clear":
         case "clr":
@@ -387,20 +392,23 @@ function inputConsola(){
         case "durstenfeld":
             sfFisherYates();
             break;
-        case "randomOrg":
+        case "randomorg":
             sfRandomOrg();
             break;
-        case "faroExt":
+        case "faroext":
             sfFaroExt();
             break;
-        case "faroInt":
+        case "faroint":
             sfFaroInt();
             break;
-        case "antiFaroExt":
+        case "antifaroext":
             sfAntiFaroExt();
             break;
-        case "antiFaroInt":
+        case "antifaroint":
             sfAntiFaroInt();
+            break;
+        case "generarqr":
+            generarQrConsola()
             break;
         break;
         default:
@@ -419,12 +427,17 @@ function consola(texto){
 // Generar QR
 function generarQr(){
     qrSize = 250;
-    urlApi = "https://api.qrserver.com/v1/create-qr-code/?size="+qrSize+"x"+qrSize+"&data=";
-    comi = '"'
+    urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
     $("#imagenQr").attr('src', urlApi + baraja);
     $("#modalQr #descargar").attr('href', urlApi + baraja);
     $("#modalQr").modal();
     
+}
+
+function generarQrConsola(){
+    qrSize = 250;
+    urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
+    consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + baraja +"' download='descarga'>click aquí</a>.")
 }
 
 function cambiarColorTapete(){
