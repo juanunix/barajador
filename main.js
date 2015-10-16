@@ -55,7 +55,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
  });  
 
 
-//document.oncontextmenu = function(){return false;}
+document.oncontextmenu = function(){return false;}
 
 // Ordenaciones
 var baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
@@ -118,8 +118,7 @@ function abreBaraja(){
     var contenido = '<ul class="baraja" id="naipes">';
     var rotulos = '';
 
-    for (i = 0;i < baraja.length;i++){
-        //contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" title="(' + (i+1) + ')"></a></li>';
+    for (var i = 0;i < baraja.length;i++){
         contenido = contenido + '<li><a class="naipe" id="naipe' + i + '"><div class="rotulo">' + (i+1) + '</div></a></li>';
 
     }
@@ -152,7 +151,7 @@ function sfFisherYates() {
 
 // Algoritmo Sattolo
 function sfSattolo() {
-    for (i = 0; i < baraja.length - 1; i++) {
+    for (var i = 0; i < baraja.length - 1; i++) {
         var j = i + 1 + Math.floor(Math.random() * (baraja.length - i - 1));
 
         var temp = baraja[j];
@@ -181,7 +180,7 @@ var barajaTemp = baraja.slice();
     })
     .post(function(xhrOrError, stream, body) {
         
-        for (i = 0; i < baraja.length ; i++){
+        for (var i = 0; i < baraja.length ; i++){
             baraja[i] = barajaTemp[body.result.random.data[i]]
         }
         
@@ -242,7 +241,7 @@ function sfFaroExt(){
     var barajaTemp = baraja.slice();
     
     // Realiza la mezcla
-    for (i = 0; i < baraja.length;i++){
+    for (var i = 0; i < baraja.length;i++){
         if ( i % 2 == 0 ){
             baraja[i] = barajaTemp[i/2];
         }else{
@@ -258,7 +257,7 @@ function sfFaroInt(){
     var barajaTemp = baraja.slice();
     
     // Realiza la mezcla
-    for (i = 0; i < baraja.length;i++){
+    for (var i = 0; i < baraja.length;i++){
         if ( i % 2 == 0 ){
             baraja[i+1] = barajaTemp[i/2];
         }else{
@@ -274,7 +273,7 @@ function sfAntiFaroExt(){
     var barajaTemp = baraja.slice();
     
     // Realiza la mezcla
-    for (i = 0; i < baraja.length;i++){
+    for (var i = 0; i < baraja.length;i++){
         if ( i % 2 == 0 ){
             baraja[i/2] = barajaTemp[i];
         }else{
@@ -290,7 +289,7 @@ function sfAntiFaroInt(){
     var barajaTemp = baraja.slice();
     
     // Realiza la mezcla
-    for (i = 0; i < baraja.length;i++){
+    for (var i = 0; i < baraja.length;i++){
         if ( i % 2 == 0 ){
             baraja[i/2] = barajaTemp[i+1];
         }else{
@@ -308,7 +307,7 @@ function renderizar(){
     if (true == false){
         
     var contenido = '';
-    for (i = 0; i < baraja.length;i++){
+    for (var i = 0; i < baraja.length;i++){
         
         switch(baraja[i].charAt(baraja[i].length-1)){
             case 'C':
@@ -336,7 +335,7 @@ function renderizar(){
     document.getElementById("matriz").value = baraja;
     
     // Renderiza el tapete
-    for (i = 0;i < baraja.length;i++){
+    for (var i = 0;i < baraja.length;i++){
         $("#naipe"+i).css('background', 'url(img/decks/' + imgDeck + '/' + baraja[i] + '.png)');
         $("#naipe"+i).css('backgroundColor', 'white');
         $("#naipe"+i).css('backgroundSize', '100px 140px');
@@ -367,57 +366,120 @@ function verModulos(event){
 }
 // Input a consola
 function inputConsola(){
-    var txtComando = $("#consolaInput").val();
-    txtComando = txtComando.toLowerCase()
-    $("#consolaInput").val("")
+    var txtOrden = $("#consolaInput").val();
+    txtOrden = txtOrden.toLowerCase()
+    $("#consolaInput").val("");
     
-    switch (txtComando) {
-        case "help":
-        case "ayuda":
-            consola('Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.')
-            break;
-        case "version":
-            consola('Barajador v0.1 (beta)')
-            break;
-        case "clear":
-        case "clr":
-        // Limpiar consola
-            $("#consolaOutput").text("")
-            break;
-        case "invertir":
-            sfInvertir();
-            break;
-        case "sattolo":
-            sfSattolo();
-            break;
-        case "durstenfeld":
-            sfFisherYates();
-            break;
-        case "randomorg":
-            sfRandomOrg();
-            break;
-        case "faroext":
-            sfFaroExt();
-            break;
-        case "faroint":
-            sfFaroInt();
-            break;
-        case "antifaroext":
-            sfAntiFaroExt();
-            break;
-        case "antifaroint":
-            sfAntiFaroInt();
-            break;
-        case "generarqr":
-            generarQrConsola()
-            break;
-        break;
-        default:
-            consola(txtComando + ": No se encontró la orden")
-              // código si no es ninguno de los anteriores
+    // Divide el input de la consola al encontrar un ";" generando así una secuencia de órdenes.
+    txtOrden = txtOrden.split(";");
+
+    // Ejecuta cada órden
+    for (var i = 0;i < txtOrden.length;i++){
+        
+            var txtComando = txtOrden[i].split("*");
+            
+            // ¿el comando tiene multiplicador?
+            if (txtComando.length == 2){
+                
+                if (isNaN(parseInt(txtComando[1]))){
+                    consola("'" + txtComando[1] + "' no es un multiplicador válido.")
+                }else{
+                
+                    txtComando[1] = parseInt(txtComando[1]);
+
+
+
+                    // repite el comando según el multiplicador
+                    for (var j = 0; j < txtComando[1] ;j++){
+                    //consola("subiteracion = " + j );
+                        ejecutarComando(txtComando[0].trim());
+                    }
+                }
+            }else if (txtComando.length = 1){
+                
+                ejecutarComando(txtComando[0].trim());
+            }
     }
 }
 
+function ejecutarComando(texto){
+    
+    switch (texto) {
+            case "help":
+            case "ayuda":
+            {
+                consola('Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.');
+                return;
+            }
+            case "version":
+            {
+                consola('Barajador v0.1 (beta)');
+                return;
+            }
+            case "clear":
+            case "clr":
+            {
+            // Limpiar consola
+                $("#consolaOutput").text("");
+                return;
+            }
+            case "invertir":
+            {
+                sfInvertir();
+                return;
+            }
+            case "sattolo":
+            {
+                sfSattolo();
+                return;
+            }
+            case "durstenfeld":
+            {
+                sfFisherYates();
+                return;
+            }
+            case "randomorg":
+            {
+                sfRandomOrg();
+                return;
+            }
+            case "faroext":
+            {
+                sfFaroExt();
+                return;
+            }
+            case "faroint":
+            {
+                sfFaroInt();
+                return;
+            }
+            case "antifaroext":
+            {
+                sfAntiFaroExt();
+                return;
+            }
+            case "antifaroint":
+            {
+                sfAntiFaroInt();
+                return;
+            }
+            case "generarqr":
+            {
+                generarQrConsola();
+                return;
+            }
+            case "":
+            {
+                return;
+            }
+            default:
+            {
+                consola(texto + ": No se encontró la orden");
+                return;
+                  // código si no es ninguno de los anteriores
+            }
+        }
+}
 // Output a consola
 function consola(texto){
     
