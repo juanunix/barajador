@@ -46,7 +46,13 @@
             <ul class="nav navbar-nav">
                 <li><a href="#ayuda">Ayuda del Barajador</a></li>
                 <li><a href="#baraja">Baraja</a></li>
-                <li><a href="#consola">Consola</a></li>
+                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Consola<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#sintaxis">Sintaxis</a></li>
+                        <li><a href="#multiplicador">Multiplicador</a></li>
+                        <li><a href="#comandos">Comandos</a></li>
+                    </ul>
+                </li>
                 <li><a href="#creditos">Créditos</a></li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -85,47 +91,62 @@
         </p>
     </div>
 </div>
-      
+<div id="sintaxis">
+    <div class="container">
+        <h2>Sintaxis</h2>
+        <p>Ingrese un comando en la línea que comienza con el símbolo <code>&gt;</code> (el intérprete es indiferente a minúsculas y mayúsculas) y presione la tecla <kbd>Enter</kbd> para ejecutar la órden. Puede ingresar varias órdenes utilice <kbd>;</kbd> entre cada una de ellas. Al presionar la tecla <kbd>Enter</kbd> se ejecutarán una a continuación de la otra. Ejemplo:</p>
+        <dl class="dl-horizontal">
+            <dt><code>faroExt;invertir</code></dt>
+        <dd>Aplicará a la baraja una mezcla Faro Exterior para luego invertir una a una el órden de las cartas.</dd>
+        </dl>
+        <h3>Multiplicador</h3>
+        <p>Luego de un comando puede utilizar el multiplicador <kbd>*</kbd> seguido de un numero entero. Al presionar <kbd>Enter</kbd> la órden se ejecutará ese número de veces.</p>
+        <dl class="dl-horizontal">
+            <dt><code>faroExt*6</code></dt>
+        <dd>Aplicará a la baraja seis mezclas Faros Exteriores consecutivas.</dd>
+        </dl>
+    </div>
+</div>
 <div id="comandos">
     <div class="container">
-        <h1>Comandos</h1>
+        <h2>Comandos</h1>
         <p>Esta es una lista de los comando generales con sus descripciones y modos de uso:</p>
         <dl class="dl-horizontal">
-        <dt>version</dt>
+        <dt><code>version</code></dt>
         <dd>Imprime la versión del Barajador.</dd>
-        <dt>ayuda, help</dt>
+            <dt><code>ayuda</code> / <code>help</code></dt>
         <dd>Muestra un link a esta página.</dd>   
-        <dt>clear</dt>
+            <dt><code>clear</code></dt>
         <dd>Borra la pantalla de la terminal.</dd>
-        <dt>generarQr</dt>
+            <dt><code>generarQr</code></dt>
         <dd>Genera un código QR a partir con el orden de la baraja actual.</dd>
         </dl>
         
         
         <dl class="dl-horizontal">
-        <dt>invertir</dt>
+            <dt><code>invertir</code></dt>
         <dd>Invierte una a una el orden de la cartas de la baraja.</dd>
         </dl>
         
         <dl class="dl-horizontal">
-        <dt>faroExt</dt>
+            <dt><code>faroExt</code></dt>
         <dd>Realiza una mezcla Faro Exterior.</dd>
-        <dt>faroInt</dt>
+            <dt><code>faroInt</code></dt>
         <dd>Realiza una mezcla Faro Interior.</dd>   
-        <dt>antiFaroExt</dt>
+            <dt><code>antiFaroExt</code></dt>
         <dd>Realiza una mezcla Antifaro Exterior.</dd>
-        <dt>antiFaroInt</dt>
+            <dt><code>antiFaroInt</code></dt>
         <dd>Realiza una mezcla Antifaro Interior.</dd>
         </dl>
         
         <dl class="dl-horizontal">
-        <dt>random</dt>
+            <dt><code>random</code></dt>
         <dd>Mezcla seudoaleatoria utilizando la función Math.Random().</dd>
-        <dt>randomOrg</dt>
+            <dt><code>randomOrg</code></dt>
         <dd>Mezcla aleatoria a partir del ruido atmosférico, utilizando el algoritmo del servicio Random.Org.</dd>
-        <dt>durstenfeld</dt>
+            <dt><code>durstenfeld</code></dt>
         <dd>Mezcla aleatoria utilizando utilizando el algoritmo Fisher-yates en su implementación Durstenfeld.</dd>
-        <dt>satollo</dt>
+            <dt><code>satollo</code></dt>
         <dd>Mezcla aleatoria utilizando el algoritmo Fisher-yates en su implementación Satollo (ninguna carta ocupará la posición original).</dd>   
         </dl>
     </div>
