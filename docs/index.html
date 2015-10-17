@@ -99,7 +99,7 @@
             <dt><code>faroExt;invertir</code></dt>
         <dd>Aplicará a la baraja una mezcla Faro Exterior para luego invertir una a una el órden de las cartas.</dd>
         </dl>
-        <h3>Multiplicador</h3>
+        <h3 id="multiplicador">Multiplicador</h3>
         <p>Luego de un comando puede utilizar el multiplicador <kbd>*</kbd> seguido de un numero entero. Al presionar <kbd>Enter</kbd> la órden se ejecutará ese número de veces.</p>
         <dl class="dl-horizontal">
             <dt><code>faroExt*6</code></dt>
@@ -119,7 +119,7 @@
             <dt><code>clear</code></dt>
         <dd>Borra la pantalla de la terminal.</dd>
             <dt><code>generarQr</code></dt>
-        <dd>Genera un código QR a partir con el orden de la baraja actual.</dd>
+        <dd>Genera un código QR a partir con el orden de la baraja actual. Utilizando la <a href="http://goqr.me/api/" target="_blank">API de goQr.me</a></dd>
         </dl>
         
         
@@ -140,14 +140,13 @@
         </dl>
         
         <dl class="dl-horizontal">
-            <dt><code>random</code></dt>
-        <dd>Mezcla seudoaleatoria utilizando la función Math.Random().</dd>
-            <dt><code>randomOrg</code></dt>
-        <dd>Mezcla aleatoria a partir del ruido atmosférico, utilizando el algoritmo del servicio Random.Org.</dd>
+        <dd>Mezcla aleatoria a partir del ruido atmosférico, utilizando el algoritmo del servicio <a href="https://www.random.org/" target="_blank">Random.Org</a>.</dd>
+            <dt><code>fisherYates</code></dt>
+        <dd>Mezcla pseudoaleatoria utilizando utilizando el algoritmo <a href="https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates" target="_blank">Fisher-yates</a> en su implementación <a href="https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates#Pseudoc.C3.B3digo_del_algoritmo" target="_blank">original</a>.</dd>
             <dt><code>durstenfeld</code></dt>
-        <dd>Mezcla aleatoria utilizando utilizando el algoritmo Fisher-yates en su implementación Durstenfeld.</dd>
+        <dd>Mezcla pseudoaleatoria utilizando utilizando el algoritmo <a href="https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates" target="_blank">Fisher-yates</a> en su implementación <a href="https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates#Pseudoc.C3.B3digo_del_algoritmo" target="_blank">Durstenfeld</a>.</dd>
             <dt><code>satollo</code></dt>
-        <dd>Mezcla aleatoria utilizando el algoritmo Fisher-yates en su implementación Satollo (ninguna carta ocupará la posición original).</dd>   
+        <dd>Mezcla pseudoaleatoria utilizando el algoritmo <a href="https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates" target="_blank">Fisher-yates</a> en su implementación <a href="https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates#Variante_Sattolo" target="_blank">Satollo</a> (ninguna carta ocupará la posición original).</dd>   
         </dl>
     </div>
 </div>
