@@ -12,6 +12,7 @@ var JsonApi = new RandomJs();
 
 // Menu: Baraja
 $( ".mnuGenerarQr" ).on( "click", generarQr );
+$( "#mnuGuardarImagen" ).on( "click", screenshot );
 $( "#ordenMnemonica" ).on( "click", ordenarMnemonica );
 $( "#ordenBicycle" ).on( "click", ordenarBicycle );
 $( "#orden4Kings" ).on( "click", ordenar4Kings);
@@ -47,6 +48,9 @@ $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
+//cambiar nombre del archivo modalScreen
+$( "#modalScreen input" ).on( "change", cambiarNombreArchivo );
+
 // Entrar comando en consola
  $('#consolaInput').keypress(function(event){  
        var keycode = (event.keyCode ? event.keyCode : event.which);  
@@ -56,7 +60,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
  });  
 
 
-document.oncontextmenu = function(){return false;}
+//document.oncontextmenu = function(){return false;}
 
 
 // Ordenaciones
@@ -494,6 +498,11 @@ function ejecutarComando(texto){
                 generarQrConsola();
                 return;
             }
+            case "screenshot":
+            {
+                screenshotConsola;
+                return;
+            }
             case "":
             {
                 return;
@@ -527,6 +536,38 @@ function generarQrConsola(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
     consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + baraja +"' download='descarga'>click aquí</a>.")
+}
+
+function screenshot(){
+    html2canvas($("#moduloTapete"), {
+        onrendered: function(canvas) {
+            var screenS = new Image();
+            screenS = canvas.toDataURL("image/png");
+            screenS = screenS.replace("image/png", "image/octet-stream");
+            
+            $("#imagenScreen").attr('src', screenS);
+            $("#modalScreen #descargar").attr('href', screenS);
+            $("#modalScreen").modal();
+
+        }
+    });
+}
+
+function cambiarNombreArchivo(){
+     $("#modalScreen #descargar").attr('download', $("#modalScreen input").val()+".png");
+}
+
+
+function screenshotConsola(){
+    html2canvas($("#moduloTapete"), {
+        onrendered: function(canvas) {
+            var screenS = new Image();
+            screenS = canvas.toDataURL("image/png");
+            screenS = screenS.replace("image/png", "image/octet-stream");
+            consola("Imagen generada. Haga <a href=" + screenS + " download='" + $("#modalScreen input").val()+".png" + "'>click aquí</a> para descargar");
+
+        }
+    });
 }
 
 function cambiarColorTapete(){
