@@ -212,7 +212,15 @@ input[type="color"]{
 
 .atajo {
     font-size: 9pt;
+    line-height: 20px;
     color:gray;
+    float: right;
+}
+
+.nuevo {
+    font-size: 7pt;
+    line-height: 20px;
+    color:green;
     float: right;
 }
 
