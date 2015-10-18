@@ -45,14 +45,22 @@
             
             <ul class="nav navbar-nav">
                 <li><a href="#ayuda">Ayuda del Barajador</a></li>
-                <li><a href="#baraja">Baraja</a></li>
+                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Baraja<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#baraja">Descripción</a></li>
+                        <li><a href="#matriz">Matriz</a></li>
+                        <li><a href="#matrizcodigos">Códigos</a></li>
+                    </ul>
+                </li>
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Consola<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        <li><a href="#consola">Descripción</a></li>
                         <li><a href="#sintaxis">Sintaxis</a></li>
                         <li><a href="#multiplicador">Multiplicador</a></li>
                         <li><a href="#comandos">Comandos</a></li>
                     </ul>
                 </li>
+                <li><a href="#shorcuts">Atajos</a></li>
                 <li><a href="#creditos">Créditos</a></li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -78,7 +86,55 @@
         <p>Tal como en una extención en cinta la primer carta comenzando por la derecha (A<big>&clubs;</big>) corresponderá a la carta en posición de TOP y la primer carta comenzando por la derecha  (A<big>&diams;</big>) corresponderá a la carta en posisión de BOTTOM.</p>
     </div>
 </div>
+
+<div id="matriz">
+    <div class="container">
+        <h2>Matriz</h2>
+        <p>Conceptualmente una baraja de cartas es una matriz unidireccional, una lista de elementos ordenados (cartas virtuales en este caso).</p>
+        <figure>
+            <img src="img/varias-matrices.png" alt="Varias matrices">
+            <figcaption>Fig 2: Varias matrices</figcaption>
+        </figure>
+        <p>En la figura de arriba se pueden ver tres paquetes distintos de cartas, sus matrices se representan separando cada carta con comas.</p>
+        <p>Para el full del primer caso <code class="cards">KT,KC,KP,8C,8T</code>, para el paquete del centro <code class="cards">AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC</code> y para el último paquete <code class="cards">6T,2D,6T,JC,5D,9T</code>.</p>
+    </div>
+</div>
       
+<div id="matrizcodigos">
+    <div class="container">
+        <h2>Códigos</h2>
+        <p>Puede utilizar cualquier conjunto de letras o palabras enteras para representar cada carta, pero si quiere que el programa le muestre las imágenes debe seguir la siguiente codificación, la cual de no respetarse dará lugar a una carta en blanco. Los siguientes códigos deben combinarse escribiendo siempre primero el valor seguido por el palo.</p>
+        <dl class="dl-horizontal">
+            <dt><code>A</code></dt>
+        <dd>As</dd>
+             <dt><code>2,3,4,5,6,7,8,9</code></dt>
+        <dd>Los números</dd>
+             <dt><code>J,Q,K</code></dt>
+        <dd>Las figuras</dd>
+             <dt><code>P</code></dt>
+        <dd>Picas</dd>
+             <dt><code>C</code></dt>
+        <dd>Corazones</dd>
+             <dt><code>T</code></dt>
+        <dd>Tréboles</dd>
+             <dt><code>D</code></dt>
+        <dd>Diamantes</dd>
+        </dl>
+        <p>Además de otros códigos especiales:</p>
+        <dl class="dl-horizontal">
+            <dt><code>J1,J2</code></dt>
+        <dd>Los jokers</dd>
+             <dt><code>X</code></dt>
+        <dd>Carta en blanco</dd>
+             <dt><code>dR</code></dt>
+        <dd>Dorso rojo</dd>
+             <dt><code>dA</code></dt>
+        <dd>Dorso azul</dd>
+        </dl>
+    </div>
+</div>
+      
+
 <div id="consola">
     <div class="container">
         <h1>Consola</h1>
@@ -151,6 +207,44 @@
         </dl>
     </div>
 </div>
+
+<div id="atajos">
+    <div class="container">
+        <h2>Atajos</h1>
+        <p>Para acceder más rapidamente a las distintas opciones del hemos procurado atajos con el teclado para las funciones más comunes.</p>
+        <dl class="dl-horizontal">
+            <dt><code>ALT+O</code></dt>
+        <dd>Mezcla Faro Exterior.</dd>
+            <dt><code>ALT+I</code></dt>
+        <dd>Mezcla Faro Interior.</dd>
+            <dt><code>ALT+L</code></dt>
+        <dd>Mezcla Antifaro Exterior.</dd>
+            <dt><code>ALT+K</code></dt>
+        <dd>Mezcla Antifaro Interior.</dd>
+        </dl>
+        
+        <dl class="dl-horizontal">
+            <dt><code>ALT+E</code></dt>
+        <dd>Muestra y oculta las etiquetas de posisión sobre las cartas</dd>
+            <dt><code>ALT+Q</code></dt>
+        <dd>Muestra y oculta el módulo de la matriz</dd>
+            <dt><code>ALT+A</code></dt>
+        <dd>Muestra y oculta el módulo del tapete</dd>
+            <dt><code>ALT+Z</code></dt>
+        <dd>Muestra y oculta el módulo de la botonera</dd>
+            <dt><code>ALT+X</code></dt>
+        <dd>Muestra y oculta el módulo de la consola</dd>
+        </dl>
+        
+        <dl class="dl-horizontal">
+            <dt><code>ALT+P</code></dt>
+        <dd>Abre las Preferencias de la aplicación</dd>
+            <dt><code>ALT+D</code></dt>
+        <dd>Abre la documentación (está página).</dd>
+        </dl>
+        
+    </div>
+</div>
       
 <div id="creditos">
     <div class="container">
@@ -159,7 +253,7 @@
         <p>Este aplicación está hecha con JavaScript y utilizando como framework <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>. Las imágenes de las cartas fueron extraidas del artículo <a href="https://en.wikipedia.org/wiki/Standard_52-card_deck#Rank_and_color" target="_blank">Standar 52-card deck</a> de Wikipedia.</p>
         <h2>Agredecimientos</h2>
         <p>Esto no hubiese sido posible sin la ayuda de las siguientes personas:</p>
-        <p><a href="http://latorregabriel.com/" target="_blank">Gabriel La Torre</a>, Nicolás Pierri.</p>
+        <p><a href="http://latorregabriel.com/" target="_blank">Gabriel La Torre</a>, <a href="http://www.nontricks.com/" target="_blank">Nicolás Pierri</a>.</p>
     </div>
 </div>      
       

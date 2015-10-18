@@ -100,6 +100,12 @@ figcaption {
     font-variant: small-caps;
 }
 
+.cards {
+    color: black;
+    font-weight: bold;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
 @media (min-width: 768px){
     .bs-docs-header {
         padding-top: 60px;
