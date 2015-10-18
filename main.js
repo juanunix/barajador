@@ -20,6 +20,8 @@ $( "#ordenRosarioEightKings" ).on( "click", ordenarRosarioEightKings);
 $( "#ordenRosarioDixRois" ).on( "click", ordenarRosarioDixRois);
 $( "#ordenRosarioUnusQuinque" ).on( "click", ordenarRosarioUnusQuinque);
 $( "#ordenRosario18Reyes" ).on( "click", ordenarRosario18Reyes);
+$( "#ordenSoloAces" ).on( "click", ordenarSoloAces);
+$( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 
@@ -31,10 +33,15 @@ $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 
 // Menu: Mezclar
 $( ".sfInvertir" ).on( "click", sfInvertir );
+
+// Aleatoriedad
 $( ".sfFisherYates" ).on( "click", sfFisherYates );
 $( ".sfDurstenfeld" ).on( "click", sfDurstenfeld );
 $( ".sfSattolo" ).on( "click", sfSattolo );
 $( ".sfRandomOrg" ).on( "click", sfRandomOrg );
+$( ".sfNumeroAleatorio" ).on( "click", sfNumeroAleatorio );
+
+// Faros
 $( ".sfFaroExt" ).on( "click", sfFaroExt );
 $( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
@@ -49,7 +56,7 @@ $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
 //cambiar nombre del archivo modalScreen
-$( "#modalScreen input" ).on( "change", cambiarNombreArchivo );
+$( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
 
 // Entrar comando en consola
  $('#consolaInput').keypress(function(event){  
@@ -60,50 +67,57 @@ $( "#modalScreen input" ).on( "change", cambiarNombreArchivo );
  });  
 
 
-//document.oncontextmenu = function(){return false;}
+document.oncontextmenu = function(){return false;}
 
 
 // Ordenaciones
-var baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
+var baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
 baraja = baraja.split(",");
 
 // Ordenar Bicycle
 function ordenarBicycle(){
-    baraja = "AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KS,QS,JS,10S,9S,8S,7S,6S,5S,4S,3S,2S,AS";
+    baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KP,QP,JP,10P,9P,8P,7P,6P,5P,4P,3P,2P,AP";
+    baraja = baraja.split(",");
+    abreBaraja();
+}
+
+// Ordenar Solo Aces
+function ordenarSoloAces(){
+    baraja = "AT,AC,AP,AD,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X";
     baraja = baraja.split(",");
     abreBaraja();
 }
 
 function ordenarRosarioEightKings(){
-    baraja = "8S,KH,3C,10D,2S,7H,9C,5D,QS,4H,AC,6D,JS,8H,KC,3D,10S,2H,7C,9D,5S,QH,4C,AD,6S,JH,8C,KD,3S,10H,2C,7D,9S,5H,QC,4D,AS,6H,JC,8D,KS,3H,10C,2D,7S,9H,5C,QD,4S,AH,6C,JD";
+    baraja = "8P,KC,3T,10D,2P,7C,9T,5D,QP,4C,AT,6D,JP,8C,KT,3D,10P,2C,7T,9D,5P,QC,4T,AD,6P,JC,8T,KD,3P,10C,2T,7D,9P,5C,QT,4D,AP,6C,JT,8D,KP,3C,10T,2D,7P,9C,5T,QD,4P,AC,6T,JD";
     baraja = baraja.split(",");
     consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
     abreBaraja();
 }
 
 function ordenar4Kings(){
-    baraja = "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
+    baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
     baraja = baraja.split(",");
     //consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
     abreBaraja();
 }
 
 function ordenarRosarioDixRois(){
-    baraja = "10S,8H,KC,9D,JS,AH,7C,QD,10H,8C,KD,9S,JH,AC,7D,QS,10C,8D,KS,9H,JC,AD,7S,QH,10D,8S,KH,9C,JD,AS,7H,QC";
+    baraja = "10P,8C,KT,9D,JP,AC,7T,QD,10C,8T,KD,9P,JC,AT,7D,QP,10T,8D,KP,9C,JT,AD,7P,QC,10D,8P,KC,9T,JD,AP,7C,QT";
     baraja = baraja.split(",");
     consola('"Dix huit Rois ne valent pas sept Dames"')
     abreBaraja();
 }
 
 function ordenarRosarioUnusQuinque(){
-    baraja = "AS,5H,9C,JD,6S,4H,2C,KD,7S,8H,QC,3D,10S,AH,5C,9D,JS,6H,4C,2D,KS,7H,8C,QD,3S,10H,AC,5D,9S,JH,6C,4D,2S,KH,7C,8D,QS,3H,10C,AD,5S,9H,JC,6D,4S,2H,KC,7D,8S,QH,3C,10D";
+    baraja = "AP,5C,9T,JD,6P,4C,2T,KD,7P,8C,QT,3D,10P,AC,5T,9D,JP,6C,4T,2D,KP,7C,8T,QD,3P,10C,AT,5D,9P,JC,6T,4D,2P,KC,7T,8D,QP,3C,10T,AD,5P,9C,JT,6D,4P,2C,KT,7D,8P,QC,3T,10D";
     baraja = baraja.split(",");
     consola('"Unus quinque noven fámulus sex quatuor duo Rex septem acto faemina trina decem"')
     abreBaraja();
 }
 
 function ordenarRosario18Reyes(){
-    baraja = "10S,8H,KC,7D,2S,3H,AC,4D,9S,QH,6C,JD,5S,10H,8C,KD,7S,2H,3C,AD,4S,9H,QC,6D,JS,5H,10C,8D,KS,7H,2C,3D,AS,4H,9C,QD,6S,JH,5C,10D,8S,KH,7C,2D,3S,AH,4C,9D,QS,6H,JC,5D";
+    baraja = "10P,8C,KT,7D,2P,3C,AT,4D,9P,QC,6T,JD,5P,10C,8T,KD,7P,2C,3T,AD,4P,9C,QT,6D,JP,5C,10T,8D,KP,7C,2T,3D,AP,4C,9T,QD,6P,JC,5T,10D,8P,KC,7T,2D,3P,AC,4T,9D,QP,6C,JT,5D";
     baraja = baraja.split(",");
     consola('"18 Reyes sentados entre las 49 damas se van al cine"')
     abreBaraja();
@@ -112,11 +126,17 @@ function ordenarRosario18Reyes(){
 
 // Ordenar Mnemónica
 function ordenarMnemonica(){
-    baraja = "4C,2H,7D,3C,4H,6D,AS,5H,9S,2S,QH,3D,QC,8H,6S,5S,9H,KC,2D,JH,3S,8S,6H,10C,5D,KD,2C,3H,8D,5C,KS,JD,8C,10S,KH,JC,7S,10H,AD,4S,7H,4D,AC,9C,JS,QD,7C,QS,10D,6C,AH,9D";
+    baraja = "4T,2C,7D,3T,4C,6D,AP,5C,9P,2P,QC,3D,QT,8C,6P,5P,9C,KT,2D,JC,3P,8P,6C,10T,5D,KD,2T,3C,8D,5T,KP,JD,8T,10P,KC,JT,7P,10C,AD,4P,7C,4D,AT,9T,JP,QD,7T,QP,10D,6T,AC,9D";
     baraja = baraja.split(",");
     abreBaraja();
 }
 
+// Ordenar personalizadamente
+function ordenarPersonal(){
+    baraja = $("#ordenPersonal").val(); "8P,KC,3T,10D,2P,7C,9T,5D,QP,4C,AT,6D,JP,8C,KT,3D,10P,2C,7T,9D,5P,QC,4T,AD,6P,JC,8T,KD,3P,10C,2T,7D,9P,5C,QT,4D,AP,6C,JT,8D,KP,3C,10T,2D,7P,9C,5T,QD,4P,AC,6T,JD";
+    baraja = baraja.split(",");
+    abreBaraja();
+}
 // Función de Renderización
 function abreBaraja(){
 
@@ -212,6 +232,23 @@ var barajaTemp = baraja.slice();
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
         consola("radomOrg");
+    });
+}
+
+function sfNumeroAleatorio(){
+var barajaTemp = baraja.slice();
+    
+    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (baraja.length-1) + "&numero=" + baraja.length + "&repeticion=0&json=0"
+        
+    $.getJSON(apiUrl, function(contenido){
+        consola(contenido)
+    
+      //  for (var i = 0; i < baraja.length ; i++){
+    //        baraja[i] = barajaTemp[body.result.random.data[i]]
+    //    }
+        
+      //  renderizar();
+    //    consola("numero-aleatorio.com");
     });
 }
 
@@ -331,33 +368,35 @@ function renderizar(){
     // Renderiza la Matriz v Ascii
     if (true == false){
         
-    var contenido = '';
-    for (var i = 0; i < baraja.length;i++){
-        
-        switch(baraja[i].charAt(baraja[i].length-1)){
-            case 'C':
-                contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&spades;</big> ';
-                break;
-            case 'H':
-                contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&hearts;</big></font> ';
-                break
-            case 'S':
-                contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&clubs;</big> ';
-                break;
-            case 'D':
-                contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&diams;</big></font> ';
-                break;
-            default:
-                contenido = contenido + baraja[i]        
-        }
-        
-    } 
-    document.getElementById("matrizAscii").innerHTML = contenido;
+        var contenido = '';
+        for (var i = 0; i < baraja.length;i++){
+
+            switch(baraja[i].charAt(baraja[i].length-1)){
+                case 'C':
+                    contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&spades;</big> ';
+                    break;
+                case 'H':
+                    contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&hearts;</big></font> ';
+                    break
+                case 'S':
+                    contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&clubs;</big> ';
+                    break;
+                case 'D':
+                    contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&diams;</big></font> ';
+                    break;
+                default:
+                    contenido = contenido + baraja[i]        
+            }
+
+        } 
+        document.getElementById("matrizAscii").innerHTML = contenido;
+    
     
     }
     
     // Renderiza la Matriz
-    document.getElementById("matriz").value = baraja;
+    $("#matriz").attr("value", baraja);
+    $("#ordenPersonal").val(baraja);
     
     // Renderiza el tapete
     for (var i = 0;i < baraja.length;i++){
@@ -535,13 +574,14 @@ function generarQr(){
 function generarQrConsola(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
-    consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + baraja +"' download='descarga'>click aquí</a>.")
+    consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + baraja +"' download='barajaQr.png'>click aquí</a>.")
 }
 
 function screenshot(){
     html2canvas($("#moduloTapete"), {
         onrendered: function(canvas) {
             var screenS = new Image();
+            
             screenS = canvas.toDataURL("image/png");
             screenS = screenS.replace("image/png", "image/octet-stream");
             
@@ -556,7 +596,6 @@ function screenshot(){
 function cambiarNombreArchivo(){
      $("#modalScreen #descargar").attr('download', $("#modalScreen input").val()+".png");
 }
-
 
 function screenshotConsola(){
     html2canvas($("#moduloTapete"), {

@@ -116,6 +116,13 @@ input[type="color"]{
     background-image: url("img/table/suits-light.png");
 }
 
+#ordenPersonal {
+    resize: none;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 9pt;
+}
+
+
 .botonera {
     padding: 5px;
     padding-left: 18px;
@@ -224,10 +231,33 @@ input[type="color"]{
     float: right;
 }
 
+.bug {
+    font-size: 7pt;
+    line-height: 20px;
+    color:red;
+    float: right;
+}
+
 .w200 {
     width: 200px;
 }
 
 .w210 {
     width: 210px;
+}
+
+.w220 {
+    width: 20px;
+}
+
+.w230 {
+    width: 230px;
+}
+
+.w240 {
+    width: 240px;
+}
+
+.w250 {
+    width: 250px;
 }
