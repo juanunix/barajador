@@ -642,3 +642,12 @@ function cambiarFuenteConsola(){
     $('#consolaInput').css('font-family',$('#fuenteConsola').val())
     $('#consolaOutput').css('font-family',$('#fuenteConsola').val())
 }
+
+// Menú contextual sobre naipe
+function eliminarCarta(){
+    alert("Eliminar carta");
+}
+
+function editarCarta(){
+    alert("Editar carta");
+}
