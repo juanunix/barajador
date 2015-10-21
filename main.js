@@ -2,8 +2,8 @@
 var imgDeck = "wiki";
 var imgBack = "bicycle-red";
 var vrChck0 = "glyphicon glyphicon-unchecked";
-var vrChck1 = "glyphicon glyphicon-check"
-
+var vrChck1 = "glyphicon glyphicon-check";
+var idCartaActual;
 var JsonApi = new RandomJs();
 
 // Inicia el menu de herramientas
@@ -55,7 +55,11 @@ $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
-//cambiar nombre del archivo modalScreen
+// Editar carta
+$( "#modalEditarCarta input" ).on( "keyup", editarCodigoCarta );
+$( "#modalEditarCarta .btnAplicar" ).on( "click", editarCartaAplicar );
+
+// Cambiar nombre del archivo modalScreen
 $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
 
 // Entrar comando en consola
@@ -144,7 +148,7 @@ function abreBaraja(){
     var rotulos = '';
 
     for (var i = 0;i < baraja.length;i++){
-        contenido = contenido + '<li><a class="naipe" id="naipe' + i + '"><div class="rotulo">' + (i+1) + '</div></a></li>';
+        contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">' + (i+1) + '</div></a></li>';
         
     }
     contenido = contenido + '</ul>';
@@ -402,10 +406,7 @@ function renderizar(){
     
     // Renderiza el tapete
     for (var i = 0;i < baraja.length;i++){
-        $("#naipe"+i).css('background', 'url(img/decks/' + imgDeck + '/' + baraja[i] + '.png)');
-        $("#naipe"+i).css('backgroundColor', 'white');
-        $("#naipe"+i).css('backgroundSize', '100px 140px');
-        $("#naipe"+i).css('backgroundPositionX','-1px');  
+        $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + baraja[i] + '.png)');
     }
 }
 
@@ -644,10 +645,27 @@ function cambiarFuenteConsola(){
 }
 
 // Menú contextual sobre naipe
+function cartaActual(carta){
+    idCartaActual = carta;
+}
+
 function eliminarCarta(){
-    alert("Eliminar carta");
+    baraja.splice(idCartaActual,1);
+    abreBaraja();
 }
 
 function editarCarta(){
-    alert("Editar carta");
+    $("#modalEditarCarta input").val(baraja[idCartaActual])
+    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + baraja[idCartaActual] + '.png)');
+    $("#modalEditarCarta").modal();
+}
+
+function editarCartaAplicar(){
+    baraja[idCartaActual] = $("#modalEditarCarta input").val()
+    abreBaraja();
+    $("#modalEditarCarta").modal('hide');
+}
+
+function editarCodigoCarta(){
+    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + $("#modalEditarCarta input").val() + '.png)');
 }

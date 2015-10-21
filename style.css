@@ -153,7 +153,8 @@ input[type="color"]{
     height: 140px;
     border: 1px solid silver;
     background-color: white;
-    background-size: cover;
+    background-size: 100px 140px;
+    background-position: -1px 0px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
@@ -170,6 +171,18 @@ input[type="color"]{
 .naipe:hover {
     color: grey;
     text-decoration: none;
+}
+
+#modalEditarCarta .naipe {
+    cursor:default;
+}
+
+#modalEditarCarta .detalles {
+    display: inline-block;
+    width: 160px;
+    height: 140px;
+    position: relative;
+    vertical-align: top;
 }
 
 .rotulo {
