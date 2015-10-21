@@ -167,10 +167,6 @@ input[type="color"]{
     cursor: pointer;
 }
 
-.naipe:active {
-    z-index: 99;
-}
-
 .naipe:hover {
     color: grey;
     text-decoration: none;
