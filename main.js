@@ -66,9 +66,8 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
       }   
  });  
 
-
+// Desactivar el menú contextual del navegador
 document.oncontextmenu = function(){return false;}
-
 
 // Ordenaciones
 var baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
@@ -146,7 +145,7 @@ function abreBaraja(){
 
     for (var i = 0;i < baraja.length;i++){
         contenido = contenido + '<li><a class="naipe" id="naipe' + i + '"><div class="rotulo">' + (i+1) + '</div></a></li>';
-
+        
     }
     contenido = contenido + '</ul>';
     
@@ -301,13 +300,14 @@ function sfOverhand(){
 // MEZCLA =  FARO EXT
 function sfFaroExt(){
     var barajaTemp = baraja.slice();
-    
-    // Realiza la mezcla
+    // Realiza la mezccla
     for (var i = 0; i < baraja.length;i++){
-        if ( i % 2 == 0 ){
-            baraja[i] = barajaTemp[i/2];
+        if ( baraja.length % 2 == 0 ){
+            if ( i < baraja.length - 1 ){
+                baraja[(2*i) % (baraja.length-1)] = barajaTemp[i]
+            }       
         }else{
-            baraja[i] = barajaTemp[(i+baraja.length-1)/2];
+            baraja[(2*i) % baraja.length] = barajaTemp[i]
         }
     }
     consola("faroExt");
@@ -320,10 +320,10 @@ function sfFaroInt(){
     
     // Realiza la mezcla
     for (var i = 0; i < baraja.length;i++){
-        if ( i % 2 == 0 ){
-            baraja[i+1] = barajaTemp[i/2];
+        if ( baraja.length % 2 == 0 ){
+            baraja[(2*i+1) % (baraja.length+1)] = barajaTemp[i]
         }else{
-            baraja[i-1] = barajaTemp[(i+baraja.length-1)/2];
+            baraja[(2*i+1) % (baraja.length)] = barajaTemp[i]
         }
     }
     consola("faroInt");
@@ -336,10 +336,12 @@ function sfAntiFaroExt(){
     
     // Realiza la mezcla
     for (var i = 0; i < baraja.length;i++){
-        if ( i % 2 == 0 ){
-            baraja[i/2] = barajaTemp[i];
+        if ( baraja.length % 2 == 0 ){
+            if ( i < baraja.length - 1 ){
+                baraja[i] = barajaTemp[(2*i) % (baraja.length-1)]
+            }       
         }else{
-            baraja[(i+baraja.length-1)/2] = barajaTemp[i];
+            baraja[i] = barajaTemp[(2*i) % baraja.length]
         }
     }
     consola("antiFaroExt");
@@ -352,12 +354,12 @@ function sfAntiFaroInt(){
     
     // Realiza la mezcla
     for (var i = 0; i < baraja.length;i++){
-        if ( i % 2 == 0 ){
-            baraja[i/2] = barajaTemp[i+1];
+        if ( baraja.length % 2 == 0 ){
+            baraja[i] = barajaTemp[(2*i+1) % (baraja.length+1)]
         }else{
-            baraja[(i+baraja.length-1)/2] = barajaTemp[i-1];
+            baraja[i] = barajaTemp[(2*i+1) % (baraja.length)]
         }
-    } 
+    }
     consola("antiFaroInt");
     renderizar();
 }
