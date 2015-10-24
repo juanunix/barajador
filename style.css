@@ -106,6 +106,15 @@ input[type="color"]{
     text-align: center;
 }
 
+.contenedorPaquete {
+    height: auto;
+    min-height: 150px;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 0px;
+    text-align: center;
+}
 #tapete {
     margin-top: 60px;
 }
@@ -173,6 +182,50 @@ input[type="color"]{
     text-decoration: none;
 }
 
+#moduloPaquetes {
+    padding-top: 240px;
+}
+
+.paqueteBaraja {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    padding-top: 0px;
+}
+
+.paqueteBaraja li {
+    display: block;
+    margin-top: -188px;
+
+}
+.paqueteNaipe {
+    display: inline-block;
+    width: 249px;
+    height: 182px;
+    background-image: url("img/decks/bicycle/perspective.png");
+    background-size: 250px 182px;
+    background-position: 0px 0px;
+    -webkit-border-bottom-right-radius: 12px;
+    -webkit-border-bottom-left-radius: 12px;
+    -moz-border-radius-bottomright: 12px;
+    -moz-border-radius-bottomleft: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    position: relative;
+    padding:2px;
+    font-size:12px;
+    color: grey;
+    cursor: pointer;
+}
+
+.borBlanco {
+    border-bottom: 1px solid white;
+}
+
+.borGris {
+    border-bottom: 1px solid silver;
+}
+
 #modalEditarCarta .naipe {
     cursor:default;
 }
@@ -233,6 +286,10 @@ input[type="color"]{
     float: right;
 }
 
+.bgYellow {
+    background: yellow;
+}
+
 .nuevo {
     font-size: 7pt;
     line-height: 20px;
@@ -269,4 +326,8 @@ input[type="color"]{
 
 .w250 {
     width: 250px;
+}
+
+.bgYellow {
+    background: yellow;
 }

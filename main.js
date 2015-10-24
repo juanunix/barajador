@@ -4,8 +4,8 @@ var imgBack = "bicycle-red";
 var vrChck0 = "glyphicon glyphicon-unchecked";
 var vrChck1 = "glyphicon glyphicon-check";
 var idCartaActual;
+var lugarAnt;
 var JsonApi = new RandomJs();
-
 // Inicia el menu de herramientas
 
 // Menu HELP
@@ -31,10 +31,13 @@ $( "#colorConsola" ).on( "change", cambiarColorConsola );
 $( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
 $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 
-// Menu: Mezclar
+// Invertir
 $( ".sfInvertir" ).on( "click", sfInvertir );
+
+// Cortar
 $( "#openModalCortar" ).on( "click", sfModalCortar );
 $( ".btnMontar" ).on( "click", sfCortarMontar );
+$( "#alNumero" ).on( "change", actualizarCorte );
 
 // Aleatoriedad
 $( ".sfFisherYates" ).on( "click", sfFisherYates );
@@ -152,8 +155,30 @@ function abreBaraja(){
     }
     contenido = contenido + '</ul>';
     
+    
     $("#tapete").html(contenido);
+    
+    contenido = '<ul class="paqueteBaraja" id="paqueteNaipes">';
+    var naipeeBorde;
+    
+    for (var i = 0;i < baraja.length;i++){
+        
+        if (i % 2 == 0){
+            naipeBorde = "borBlanco"
+        }else{
+            naipeBorde = "borGris"
+        }
+        
+        contenido = contenido + '<li id="naipe' + i + '"><a class="paqueteNaipe ' + naipeBorde + '" onmousedown="javascript:mostrarCorte('+(baraja.length-i)+');"></a></li>';
+        
+        
+    }
+    contenido = contenido + '</ul>';
+    
+    
+    $("#moduloPaquetes").html(contenido);
     renderizar();
+    
 }
 
 function sfFisherYates() {
@@ -448,8 +473,6 @@ function inputConsola(){
                 
                     txtComando[1] = parseInt(txtComando[1]);
 
-
-
                     // repite el comando según el multiplicador
                     for (var j = 0; j < txtComando[1] ;j++){
                     //consola("subiteracion = " + j );
@@ -464,6 +487,16 @@ function inputConsola(){
 }
 
 function ejecutarComando(texto){
+    
+    var argAbre = texto.indexOf("(");
+    var argCierra = texto.indexOf(")");
+    var argumento;
+
+    if (argAbre != -1){
+
+        argumento = texto.substring(argAbre+1,argCierra);
+        texto = texto.substring(0,argAbre);
+    }
     
     switch (texto) {
             case "help":
@@ -484,6 +517,9 @@ function ejecutarComando(texto){
                 $("#consolaOutput").text("");
                 return;
             }
+            case "cortar":
+                sfCortar(argumento);
+                return;
             case "invertir":
             {
                 sfInvertir();
@@ -625,22 +661,24 @@ $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state)
 
 
 function cambiarColorConsola(){
-    $('#consola').css('background',$('#colorConsola').val())
+    $('#consola').css('background',$('#colorConsola').val());
 }
 
 function cambiarColorConsolaTexto(){
-    $('#consola').css('color',$('#colorConsolaTexto').val())
+    $('#consola').css('color',$('#colorConsolaTexto').val());
 }
 
 function cambiarFuenteConsola(){
-    $('#consola').css('font-family',$('#fuenteConsola').val())
-    $('#consolaInput').css('font-family',$('#fuenteConsola').val())
-    $('#consolaOutput').css('font-family',$('#fuenteConsola').val())
+    $('#consola').css('font-family',$('#fuenteConsola').val());
+    $('#consolaInput').css('font-family',$('#fuenteConsola').val());
+    $('#consolaOutput').css('font-family',$('#fuenteConsola').val());
 }
 
 // Menú contextual sobre naipe
 function cartaActual(carta){
-    idCartaActual = carta;
+    
+        idCartaActual = carta;
+   
 }
 
 function eliminarCarta(){
@@ -665,14 +703,40 @@ function editarCodigoCarta(){
 }
 
 function sfModalCortar(){
-    $("#modalCortar .numero").attr('min',-baraja.length+1);
-    $("#modalCortar .numero").attr('max',baraja.length-1);
-    $("#modalCortar .numero").val(baraja.length/2);
+    $("#alNumero").attr('min',-baraja.length+1);
+    $("#alNumero").attr('max',baraja.length-1);
+    $("#alNumero").val(0);
     $("#modalCortar").modal();
 }
 
+function actualizarCorte(){
+
+mostrarCorte($("#alNumero").val())
+
+}
+
+function mostrarCorte(lugar){
+    
+    $("#alNumero").val(lugar);
+    lugar = baraja.length - lugar;
+    
+    if (lugar > baraja.length){
+        lugar = lugar - baraja.length;
+    }
+    
+    $("#moduloPaquetes #naipe"+lugar).css('margin-top',"-205px");
+    
+    if (typeof(lugarAnt) != "undefined"){
+        if (lugarAnt != lugar){
+            
+            $("#moduloPaquetes #naipe"+lugarAnt).css('margin-top',"-188px");
+        }
+    }
+    lugarAnt = lugar;
+}
+
 function sfCortarMontar(){
-    sfCortar(posicion = $("#modalCortar .numero").val());
+    sfCortar(posicion = $("#alNumero").val());
 }
 
 function cortarPorAca(){
@@ -685,5 +749,6 @@ function sfCortar(posicion){
     baraja = paqueteB.concat(paqueteA);
     abreBaraja();
     $("#modalCortar").modal('hide');
+    consola("cortar("+posicion+")");
     
 }

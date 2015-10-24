@@ -87,11 +87,12 @@
                         <li><a class="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
                     </ul>
                 </li>
+                </li>
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>  Mezclar<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         <li><a href="#" class="sfInvertir">Invertir</a></li>
-                        <li><a id="openModalCortar" href="#" accesskey="c">Cortar...</a></li>
+                        <li><a id="openModalCortar" href="#" accesskey="c">Cortar...<span class="nuevo">NUEVO!</span></a></li>
                         <li class="divider"></li>
                         <li class="disabled"><a id="sfAlfa" href="#">Mezcla alfa</a></li>
                         <li class="disabled"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
@@ -167,8 +168,9 @@
     <div class="contenedor">
           <div id="tapete" class="tapete"></div>
     </div>
+        
     </div>
-
+    
     <div id="moduloBotonera" class="botonera">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir">
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
@@ -284,7 +286,11 @@
       </div>
       <div class="modal-body">
             Al número:
-              <input type="number" class="form-control numero" value="26">
+              <input type="number" id="alNumero" class="form-control" value="26"><br/>
+            Interactivo:
+              <div class="contenedorPaquete">
+        <div id="moduloPaquetes" class="vistaPaquetes"></div>
+    </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary btnMontar">Montar</button>
@@ -293,8 +299,7 @@
     </div>
   </div>
 </div>
-      
-      
+    
 <!-- Modal Ayuda -->
 <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
