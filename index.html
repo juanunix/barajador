@@ -62,10 +62,10 @@
                         
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
-                            <ul class="dropdown-menu w210">
+                            <ul class="dropdown-menu">
                                 <li><a id="orden4Kings" href="#">Four kings</a></li>
                                 <li><a id="ordenBicycle" href="#">Bicycle</a></li>
-                                <li><a id="ordenSoloAces" href="#">Sólo Aces<span class="nuevo">NUEVO!</span></a></li>
+                                <li><a id="ordenSoloAces" href="#">Sólo Aces</a></li>
                                 <li class="dropdown-submenu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rosario</a>
                                     <ul class="dropdown-menu">
@@ -79,11 +79,11 @@
                                 </li>
                                 <li><a id="ordenMnemonica" href="#">Mnemónica Tamariz</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal">Personalizada...<span class="nuevo">NUEVO!</span></a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal">Personalizada...</a></li>
                             </ul>
                         </li>
                         <li class="divider"></li>
-                        <li><a id="mnuGuardarImagen" href="#"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Generar imagen<span class="nuevo">NUEVO!</span></a></li>
+                        <li><a id="mnuGuardarImagen" href="#"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Generar imagen</a></li>
                         <li><a class="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
                     </ul>
                 </li>
@@ -91,7 +91,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>  Mezclar<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         <li><a href="#" class="sfInvertir">Invertir</a></li>
-                        <li class="disabled"><a id="sfCortar" href="#">Cortar...</a></li>
+                        <li><a id="openModalCortar" href="#" accesskey="c">Cortar...</a></li>
                         <li class="divider"></li>
                         <li class="disabled"><a id="sfAlfa" href="#">Mezcla alfa</a></li>
                         <li class="disabled"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
@@ -174,7 +174,7 @@
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
         <input type="button" class="btn btn-primary sfFaroInt" value="Faro Int">
         <input type="button" class="btn btn-primary sfAntiFaroExt" value="AntiFaro Ext">
-        <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In">
+        <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In"><br>
         <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
         <input type="button" class="btn btn-primary sfSattolo" value="Azar Sattolo">
@@ -194,7 +194,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Generar imagen</h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Generar imagen</h4>
       </div>
       <div class="modal-body">
             Nombre:
@@ -217,7 +217,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Generar código QR</h4>
+          <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar código QR</h4>
       </div>
       <div class="modal-body centrado">
         <img id="imagenQr" scr="" alt="" title="QR de la baraja actual" width="250" height="250">
@@ -236,7 +236,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ordenación personalizada</h4>
+          <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación personalizada</h4>
       </div>
       <div class="modal-body">
           Ingrese todas las cartas separándolas por comas. Para más ayuda lea la <a href="docs#matriz" target="_blank">documentación</a>.<br><br>
@@ -257,7 +257,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Editar Carta</h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Carta</h4>
       </div>
       <div class="modal-body" style="text-align:justify">
           <div class="naipe"></div>
@@ -273,6 +273,27 @@
     </div>
   </div>
 </div>
+
+<!-- Generar Captura -->
+<div class="modal fade" id="modalCortar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cortar...</h4>
+      </div>
+      <div class="modal-body">
+            Al número:
+              <input type="number" class="form-control numero" value="26">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btnMontar">Montar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
       
 <!-- Modal Ayuda -->
 <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -280,7 +301,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Acerca de...</h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Acerca de...</h4>
       </div>
       <div class="modal-body" style="text-align:justify">
           <p style="font-size:16pt;font-weight:bold">Barajador v1.0 (beta)</p>
@@ -325,7 +346,7 @@
                 <option value="pana-light">Pana (light)</option>
                 <option value="pana-dark">Pana (dark)</option>
             </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" class="form-control" type="checkbox" accesskey="e" checked> Número de posición en las cartas<br/>
+            <input id="mostrarRotulos" class="form-control" type="checkbox" accesskey="r" checked> Número de posición en las cartas<br/>
             <input id="colorConsola" type="color" value="#000000"> Fondo de la consola<br/>
             <input id="colorConsolaTexto" type="color" value="#ffffff"> Texto de la consola<br/>
             <select id="fuenteConsola" class="ancho120">

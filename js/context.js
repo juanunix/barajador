@@ -68,6 +68,12 @@ var context = context || (function () {
 				}else {
                     linkClass = ''
                 }
+                if (typeof data[i].icon !== 'undefined'){
+                    icono = '<span class="glyphicon glyphicon-'+ data[i].icon +'" aria-hidden="true"></span> '
+                }
+                else {
+                    icono = ''
+                }
 				if (typeof data[i].href == 'undefined') {
 					data[i].href = '#';
 				}
@@ -77,7 +83,7 @@ var context = context || (function () {
 				if (typeof data[i].subMenu !== 'undefined') {
 					$sub = ('<li class="dropdown-submenu"><a tabindex="-1" href="' + data[i].href + '">' + data[i].text + '</a></li>');
 				} else {
-					$sub = $('<li><a'+linkId+linkClass+' tabindex="-1" href="' + data[i].href + '"'+linkTarget+'>' + data[i].text + '</a></li>');
+					$sub = $('<li><a'+linkId+linkClass+' tabindex="-1" href="' + data[i].href + '"'+linkTarget+'>'+ icono + data[i].text + '</a></li>');
 				}
 				if (typeof data[i].action !== 'undefined') {
 					var actiond = new Date(),
@@ -159,9 +165,10 @@ $(document).ready(function(){
 	
 	context.attach('#naipes li', [
 		{header: 'Opciones'},
-		{text: 'Editar', href: '#', action: editarCarta},
-		{divider: true},
-		{text: 'Eliminar', href: '#', action: eliminarCarta},
+        {text: 'Cortar', href: '#', icon: 'retweet', action: cortarPorAca},
+        {divider: true},
+		{text: 'Editar', href: '#', icon: 'edit', action: editarCarta},
+		{text: 'Eliminar', href: '#', icon: 'remove-circle', action: eliminarCarta},
 	]);
 	
 	context.settings({compress: true});

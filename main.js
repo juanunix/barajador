@@ -33,6 +33,8 @@ $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 
 // Menu: Mezclar
 $( ".sfInvertir" ).on( "click", sfInvertir );
+$( "#openModalCortar" ).on( "click", sfModalCortar );
+$( ".btnMontar" ).on( "click", sfCortarMontar );
 
 // Aleatoriedad
 $( ".sfFisherYates" ).on( "click", sfFisherYates );
@@ -46,8 +48,6 @@ $( ".sfFaroExt" ).on( "click", sfFaroExt );
 $( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
-// $( "#sfCortar" ).on( "click", sfCortar );
-// $( "#sfOverhand" ).on( "click", sfOverhand );
 
 // Menu: Ver Check / UnCheck
 $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
@@ -57,7 +57,6 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
 // Editar carta
 $( "#modalEditarCarta input" ).on( "keyup", editarCodigoCarta );
-$( "#modalEditarCarta .btnAplicar" ).on( "click", editarCartaAplicar );
 
 // Cambiar nombre del archivo modalScreen
 $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
@@ -289,11 +288,6 @@ function sfInvertir(){
     baraja.reverse();
     consola("invertir");
     renderizar();
-}
-
-// MEZCLA = CORTAR
-function sfCortar(){
-   // alert("Corta la baraja")
 }
 
 // MEZCLA = OVERHAND
@@ -668,4 +662,28 @@ function editarCartaAplicar(){
 
 function editarCodigoCarta(){
     $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + $("#modalEditarCarta input").val() + '.png)');
+}
+
+function sfModalCortar(){
+    $("#modalCortar .numero").attr('min',-baraja.length+1);
+    $("#modalCortar .numero").attr('max',baraja.length-1);
+    $("#modalCortar .numero").val(baraja.length/2);
+    $("#modalCortar").modal();
+}
+
+function sfCortarMontar(){
+    sfCortar(posicion = $("#modalCortar .numero").val());
+}
+
+function cortarPorAca(){
+    sfCortar(idCartaActual);
+}
+
+function sfCortar(posicion){
+    paqueteA = baraja.slice(0,posicion);
+    paqueteB = baraja.slice(posicion);
+    baraja = paqueteB.concat(paqueteA);
+    abreBaraja();
+    $("#modalCortar").modal('hide');
+    
 }
