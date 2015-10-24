@@ -60,6 +60,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
 // Editar carta
 $( "#modalEditarCarta input" ).on( "keyup", editarCodigoCarta );
+$( ".btnAplicar" ).on( "click", editarCartaAplicar );
 
 // Cambiar nombre del archivo modalScreen
 $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
@@ -248,7 +249,7 @@ var barajaTemp = baraja.slice();
         n:baraja.length,
         min:0,
         max:(baraja.length-1),
-        replacement:true
+        replacement:false
     })
     .post(function(xhrOrError, stream, body) {
         
