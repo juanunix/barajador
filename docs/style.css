@@ -106,6 +106,9 @@ figcaption {
     font-family: "Lucida Console", Monaco, monospace;
 }
 
+code {
+    font-weight: bold;
+}
 @media (min-width: 768px){
     .bs-docs-header {
         padding-top: 60px;

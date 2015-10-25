@@ -155,6 +155,8 @@
             <dt><code>faroExt;invertir</code></dt>
         <dd>Aplicará a la baraja una mezcla Faro Exterior para luego invertir una a una el órden de las cartas.</dd>
         </dl>
+        <h3 id="argumentos">Argumentos</h3>
+        <p>Algunos comandos tienen argumentos los cuales modifican la manera en la que el comando se ejecuta. La sintaxis tiene siempre la estructura: <code>comando(argumento1,argumento2)</code>. Depediendo el comando los argumentos serán de carácter opcional u obligatorio (en dicho caso al no declararse un argumento válido el comando no se ejecutará).</p>
         <h3 id="multiplicador">Multiplicador</h3>
         <p>Luego de un comando puede utilizar el multiplicador <kbd>*</kbd> seguido de un numero entero. Al presionar <kbd>Enter</kbd> la órden se ejecutará ese número de veces.</p>
         <dl class="dl-horizontal">
@@ -180,8 +182,14 @@
         
         
         <dl class="dl-horizontal">
-            <dt><code>invertir</code></dt>
+        <dt><code>cortar(n)</code></dt>
+        <dd>Corta un paquete de <code>n</code> cartas de arriba hacia abajo si <code>n</code> es positivo, y de abarjo hacia arriba si <code>n</code>es negativo.</dd>
+        <dt><code>invertir</code></dt>
         <dd>Invierte una a una el orden de la cartas de la baraja.</dd>
+        <dt><code>invertir(n)</code></dt>
+        <dd>Invierte una a una el orden de las primeras <code>n</code> cartas de la baraja contando desde TOP si <code>n</code> es positivo y desde BOTTOM si <code>n</code> es negativo.</dd>
+        <dt><code>eliminar(n)</code></dt>
+        <dd>Elimina la carta ubicada en la <code>n-sima</code>: desde TOP si <code>n</code> es positivo y desde BOTTOM si <code>n</code> es negativo.</dd>  
         </dl>
         
         <dl class="dl-horizontal">
