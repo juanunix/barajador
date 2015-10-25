@@ -6,6 +6,8 @@ var vrChck1 = "glyphicon glyphicon-check";
 var idCartaActual;
 var lugarAnt;
 var JsonApi = new RandomJs();
+var comandosHistorial = [];
+var comandoHistorialN = 0;
 // Inicia el menu de herramientas
 
 // Menu HELP
@@ -66,12 +68,45 @@ $( ".btnAplicar" ).on( "click", editarCartaAplicar );
 $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
 
 // Entrar comando en consola
- $('#consolaInput').keypress(function(event){  
+ $('#consolaInput').keydown(function(event){  
        var keycode = (event.keyCode ? event.keyCode : event.which);  
-      if(keycode == '13'){  
+      // ENTER
+      if(keycode == '13'){
+          
            inputConsola();
-      }   
+           comandoHistorialN = 0;
+      } else {
+        // FLECHA DE ARRIBA
+        if (keycode == '38'){ 
+            
+            if (comandosHistorial.length != 0){
+            var regresivo = comandosHistorial.length - comandoHistorialN;
+            
+                if (regresivo > 0){
+                    
+                    $("#consolaInput").val(comandosHistorial[regresivo-1]);
+                    comandoHistorialN++;
+                }
+            }
+        } else {
+        
+            if (keycode = '40'){
+            
+                if (comandosHistorial.length != 0){
+                var regresivo = comandosHistorial.length - comandoHistorialN + 2;
+                    
+                    if (regresivo < comandosHistorial.length + 1) {
+                    
+                    $("#consolaInput").val(comandosHistorial[regresivo-1]);
+                    comandoHistorialN--;
+    
+                    }
+                }
+            }
+        }
+      }
  });  
+
 
 // Desactivar el menú contextual del navegador
 document.oncontextmenu = function(){return false;}
@@ -246,10 +281,10 @@ var barajaTemp = baraja.slice();
     .apikey($("#customApiKeyRandom").val())
     .method('generateIntegers')
     .params({
-        n:baraja.length,
-        min:0,
-        max:(baraja.length-1),
-        replacement:false
+        n: baraja.length,
+        min: 0,
+        max: (baraja.length-1),
+        replacement: false
     })
     .post(function(xhrOrError, stream, body) {
         
@@ -314,6 +349,37 @@ function sfInvertir(){
     baraja.reverse();
     consola("invertir");
     renderizar();
+}
+
+// MESCLA = INVERTIR PARCIAL
+function sfInvertirN(cuantas){
+    if (cuantas > 0){
+        consola("invertir("+cuantas+")");
+        
+        var paqueteA = baraja.slice(0,cuantas);
+        var paqueteB = baraja.slice(cuantas);
+        
+        paqueteA = paqueteA.reverse()
+        baraja = paqueteA.concat(paqueteB);
+        
+        renderizar();
+    } else {
+        if (cuantas < 0){
+            consola("invertir("+cuantas+")");
+            cuantas = baraja.length + parseInt(cuantas);
+            var paqueteA = baraja.slice(0,cuantas);
+            var paqueteB = baraja.slice(cuantas);
+            
+            paqueteB = paqueteB.reverse();
+            baraja = paqueteA.concat(paqueteB);
+            
+            renderizar();
+            
+        } else {
+            consola(cuantas + " no es un argumento válido.");
+        }
+    }
+    
 }
 
 // MEZCLA = OVERHAND
@@ -454,6 +520,7 @@ function verModulos(event){
 // Input a consola
 function inputConsola(){
     var txtOrden = $("#consolaInput").val();
+    comandosHistorial.push(txtOrden);
     txtOrden = txtOrden.toLowerCase()
     $("#consolaInput").val("");
     
@@ -491,7 +558,7 @@ function ejecutarComando(texto){
     
     var argAbre = texto.indexOf("(");
     var argCierra = texto.indexOf(")");
-    var argumento;
+    var argumento = "";
 
     if (argAbre != -1){
 
@@ -523,9 +590,16 @@ function ejecutarComando(texto){
                 return;
             case "invertir":
             {
-                sfInvertir();
+                if (argumento == ""){
+                    sfInvertir();
+                } else {
+                    sfInvertirN(argumento);
+                }
                 return;
             }
+            case "eliminar":
+                eliminarCartaX(argumento);
+                return;
             case "fisheryates":
             {
                 sfFisherYates();
@@ -685,6 +759,28 @@ function cartaActual(carta){
 function eliminarCarta(){
     baraja.splice(idCartaActual,1);
     abreBaraja();
+    consola("eliminar("+parseInt(idCartaActual+1)+")");
+}
+function eliminarCartaX(cual){
+    if (cual == "") {
+        consola("Falta un argumento");
+        return;
+    } else {
+        if (cual > 0) {
+            consola("eliminar("+cual+")");
+            cual = parseInt(cual) - 1;
+        } else {
+            if (cual < 0){
+                consola("eliminar("+cual+")");
+                cual = baraja.length + parseInt(cual);
+            } else {
+                consola(cual + " no es un argumento válido.");
+                return;
+            }
+        }
+        baraja.splice(cual,1);
+        abreBaraja();
+    }
 }
 
 function editarCarta(){
@@ -745,8 +841,8 @@ function cortarPorAca(){
 }
 
 function sfCortar(posicion){
-    paqueteA = baraja.slice(0,posicion);
-    paqueteB = baraja.slice(posicion);
+    var paqueteA = baraja.slice(0,posicion);
+    var paqueteB = baraja.slice(posicion);
     baraja = paqueteB.concat(paqueteA);
     abreBaraja();
     $("#modalCortar").modal('hide');
