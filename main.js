@@ -4,6 +4,7 @@ var imgBack = "bicycle-red";
 var vrChck0 = "glyphicon glyphicon-unchecked";
 var vrChck1 = "glyphicon glyphicon-check";
 var idCartaActual;
+var baraja;
 var lugarAnt;
 var JsonApi = new RandomJs();
 var comandosHistorial = [];
@@ -26,12 +27,13 @@ $( "#ordenSoloAces" ).on( "click", ordenarSoloAces);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
-
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
 $( "#texturaTapete" ).on( "change", cambiarTexturaTapete );
 $( "#colorConsola" ).on( "change", cambiarColorConsola );
 $( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
 $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
+$( "#reiniciarTema" ).on( "click", reiniciarTema );
+$( "#fuenteConsolaSize" ).on( "change", cambiarFuenteSizeConsola );
 
 // Invertir
 $( ".sfInvertir" ).on( "click", sfInvertir );
@@ -110,20 +112,63 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
       }
  });  
 
-// Desactivar el menú contextual del navegador
-document.oncontextmenu = function(){return false;}
+// Inicia el barajador
+function iniciar(){
 
-// Ordenaciones
-
-if ( sessionStorage.getItem("baraja_autosave") ) {
-    var baraja = abrirSesion("baraja_autosave");
-    baraja = baraja.split(",");
-}else{
+    // Desactivar el menú contextual del navegador
+    document.oncontextmenu = function(){return false;}
     
-    var baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
-    baraja = baraja.split(",");
+    
+    // ¿Había una baraja abierta en la sesión?
+    if ( sessionStorage.getItem("baraja_autosave") ) {
+        baraja = abrirSesion("baraja_autosave");
+        baraja = baraja.split(",");
+        abreBaraja();
+    }else{
+
+        ordenar4Kings();
+    }
+    
+    // Carga las preferencias guardadas
+    if ( localStorage.getItem("tapete_fondo") ) {
+        var tapete_fondo = abrirLocal("tapete_fondo");
+        $('#colorTapete').val(tapete_fondo);
+        $('#tapeteFondo').css('background-color',tapete_fondo);
+    }
+    
+    if ( localStorage.getItem("tapete_textura") ) {
+        var tapete_textura = abrirLocal("tapete_textura");
+        $('#texturaTapete').val(tapete_textura);
+        $('#tapeteFondo').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
+    }
+    
+    if ( localStorage.getItem("consola_fondo") ) {
+        var consola_fondo = abrirLocal("consola_fondo");
+        $('#colorConsola').val(consola_fondo);
+        $('#consola').css('background',consola_fondo);        
+    }
+    
+    if ( localStorage.getItem("consola_texto") ) {
+        var consola_texto = abrirLocal("consola_texto");
+        $('#colorConsolaTexto').val(consola_texto);
+        $('#consola').css('color',consola_texto);
+        
+    }
+    
+    if ( localStorage.getItem("consola_fuente") ) {
+        var consola_fuente = abrirLocal("consola_fuente");
+        $('#fuenteConsola').val(consola_fuente);
+        $('#consola').css('font-family',consola_fuente);
+    }
+    
+    if ( localStorage.getItem("consola_fuenteSize") ) {
+        var consola_fuenteSize = abrirLocal("consola_fuenteSize");
+        $('#fuenteConsolaSize').val(consola_fuenteSize);
+        $('#consola').css('font-size',consola_fuenteSize+'pt');
+    }
 }
-abreBaraja();
+
+iniciar();
 
 // Ordenar Bicycle
 function ordenarBicycle(){
@@ -149,7 +194,6 @@ function ordenarRosarioEightKings(){
 function ordenar4Kings(){
     baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
     baraja = baraja.split(",");
-    //consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
     abreBaraja();
 }
 
@@ -745,12 +789,15 @@ function screenshotConsola(){
 }
 
 function cambiarColorTapete(){
-    $('#tapeteFondo').css('background-color',$('#colorTapete').val())
+    var color = $('#colorTapete').val();
+    $('#tapeteFondo').css('background-color',color);
+    guardarLocal("tapete_fondo",color);
 }
 
 function cambiarTexturaTapete(){
-    var urlTextura = "url('img/table/"+ $('#texturaTapete').val() + ".png')"
-    $('#tapeteFondo').css('background-image',urlTextura)
+    var tapete_textura = $('#texturaTapete').val();
+    $('#tapeteFondo').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
+    guardarLocal("tapete_textura",tapete_textura);
 }
 
 $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state) {
@@ -761,19 +808,40 @@ $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state)
    }
 });
 
-
 function cambiarColorConsola(){
-    $('#consola').css('background',$('#colorConsola').val());
+    var color = $('#colorConsola').val();
+    $('#consola').css('background',color);
+    guardarLocal("consola_fondo",color);
 }
 
 function cambiarColorConsolaTexto(){
-    $('#consola').css('color',$('#colorConsolaTexto').val());
+    var color = $('#colorConsolaTexto').val();
+    $('#consola').css('color',color);
+    guardarLocal("consola_texto",color);
 }
 
 function cambiarFuenteConsola(){
-    $('#consola').css('font-family',$('#fuenteConsola').val());
-    $('#consolaInput').css('font-family',$('#fuenteConsola').val());
-    $('#consolaOutput').css('font-family',$('#fuenteConsola').val());
+    var fuente = $('#fuenteConsola').val();
+    $('#consola').css('font-family',fuente);
+    guardarLocal("consola_fuente",fuente);
+    
+}
+
+function cambiarFuenteSizeConsola(){
+    var fuenteSize = $('#fuenteConsolaSize').val();
+    $('#consola').css('font-size',fuenteSize+'pt');
+    guardarLocal("consola_fuenteSize",fuenteSize);
+    
+}
+
+function reiniciarTema(){
+    localStorage.removeItem("tapete_fondo");
+    localStorage.removeItem("tapete_textura");
+    localStorage.removeItem("consola_fondo");
+    localStorage.removeItem("consola_texto");
+    localStorage.removeItem("consola_fuente");
+    localStorage.removeItem("consola_fuenteSize");
+    location.reload();
 }
 
 // Menú contextual sobre naipe
@@ -835,7 +903,7 @@ function sfModalCortar(){
 
 function actualizarCorte(){
 
-mostrarCorte($("#alNumero").val())
+    mostrarCorte($("#alNumero").val())
 
 }
 
@@ -878,7 +946,6 @@ function sfCortar(posicion){
 }
 
 function historial(){
-    consola("historial");
     for(var i = 0; i < comandosHistorial.length; i++){
         var t = i.toString();
         if (t.length == 2) { t = " " + t + " "};
@@ -888,9 +955,10 @@ function historial(){
 }
 
 function refresh(){
-    location.reload()
+    location.reload();
 }
 
+// GUARDA Y ABRE LOS DATOS DE SESION
 function guardarSesion(variable, valor){
     
     var compresion = LZString.compressToUTF16(valor);
@@ -901,6 +969,22 @@ function guardarSesion(variable, valor){
 function abrirSesion(variable){
     
     var valor = sessionStorage.getItem(variable);
+    valor = LZString.decompressFromUTF16(valor);
+    return valor;
+    
+}
+
+// GUARDA Y ABRE LOS DATOS PERSISTENTES
+function guardarLocal(variable, valor){
+    
+    var compresion = LZString.compressToUTF16(valor);
+    localStorage.setItem(variable,compresion);
+        
+}
+
+function abrirLocal(variable){
+    
+    var valor = localStorage.getItem(variable);
     valor = LZString.decompressFromUTF16(valor);
     return valor;
     

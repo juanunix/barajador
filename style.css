@@ -91,8 +91,22 @@ input[type="color"]{
     width: 120px;
 }
 
-.ancho120 {
+.inputSettings {
     width: 120px;
+    display: inline-table;
+    height: 22px;
+    vertical-align: bottom;
+}
+
+.inputSettings input {
+    height: 22px;
+    padding: 0px 5px;
+    text-align: right;
+}
+
+.inputSettings span{
+    height: 22px !important;
+    padding: 0px 10px;
 }
 
 .subtitulo {
@@ -255,13 +269,13 @@ input[type="color"]{
     background: black;
     color: white;
     font-family: "Lucida Console", Monaco, monospace;
+    font-size:10pt;
 }
 
 #consolaInput {
     background: transparent;
-    width: calc(100% - 15px);
+    width: calc(100% - 30px);
     border: 0px solid;
-    font-family: "Lucida Console", Monaco, monospace;
     white-space: pre;
     padding-left: 5px;
 }
@@ -274,7 +288,6 @@ input[type="color"]{
     border-top: 1px solid;
     height: 200px;
     overflow-y: scroll;
-    font-family: "Lucida Console", Monaco, monospace;
     white-space: pre;
     padding: 2px;
 }

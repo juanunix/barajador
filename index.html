@@ -16,7 +16,7 @@
     <link href="css/bootstrap-switch.min.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="js/ie-emulation-modes-warning.js"></script>
+    <script src="js/ie-emulation-modes-warning.min.js"></script>
     <!-- Dropdown multinivel -->
     <link href="style.css" rel="stylesheet">
     <!-- Menu contextuales -->
@@ -340,9 +340,9 @@
         <div class="tab-content">
           <div id="themeSettings" class="tab-pane fade in active">
             <p>Preferencias del Tema actual</p>
-            
+            <p>
             <input id="colorTapete" type="color" value="#40001b"> Color del tapete<br/>
-            <select id="texturaTapete" class="ancho120">
+            <select id="texturaTapete" class="inputSettings">
                 <option value="none">Ninguna</option>
                 <option value="suits-light" selected>Suits (light)</option>
                 <option value="suits-dark">Suits (dark)</option>
@@ -351,15 +351,21 @@
                 <option value="pana-light">Pana (light)</option>
                 <option value="pana-dark">Pana (dark)</option>
             </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" class="form-control" type="checkbox" accesskey="r"> Número de posición en las cartas<br/>
-            <input id="colorConsola" type="color" value="#000000"> Fondo de la consola<br/>
-            <input id="colorConsolaTexto" type="color" value="#ffffff"> Texto de la consola<br/>
-            <select id="fuenteConsola" class="ancho120">
+            <input id="mostrarRotulos" class="inputSettings form-control" type="checkbox" accesskey="r"> Número de posición en las cartas<br/>
+            <input id="colorConsola" class="inputSettings" type="color" value="#000000"> Fondo de la consola<br/>
+            <input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"> Texto de la consola<br/>
+            <select id="fuenteConsola" class="inputSettings">
                 <option value='"Courier New", monospace'>Courier New</option>
                 <option value='"Lucida Console", Monaco, monospace' selected>Lucila Console</option>
                 <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Sans</option>
             </select> Tipografía de la consola<br/>
-            
+            <span class="input-group inputSettings">
+              <input id="fuenteConsolaSize" type="number" class="form-control" value="10" min="7" max="24">
+              <span class="input-group-addon">pt</span>
+            </span>
+            Tamaño de la fuente<br/>
+            </p>
+            <p><a id="reiniciarTema" href="#">Reiniciar valores por defecto.</a></p>
           </div>
           <div id="randomSettings" class="tab-pane fade">
             <p>Preferencias para la mezcla aleatoria a partir del ruido atmosférico utilizando el servicio de <a href="https://www.random.org/" target="_blank">Random.org</a>.</p>
@@ -393,19 +399,19 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-switch.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/ie10-viewport-bug-workaround.min.js"></script>
 
     <!-- RANDOM.ORG API -->
-    <script src="js/randomorg-js.js"></script>
+    <script src="js/randomorg-js.min.js"></script>
     
     <!-- Compresión -->
-    <script language="javascript" src="js/lz-string.js"></script>
+    <script language="javascript" src="js/lz-string.min.js"></script>
     
     <!-- Script principal -->
     <script src="main.js"></script>
     
     <!-- Menú contextual -->
-    <script src="js/context.js"></script>
+    <script src="js/context.min.js"></script>
      <!-- Screenshots -->
     <script type="text/javascript" src="js/html2canvas.min.js"></script>
     
