@@ -1,10 +1,16 @@
+html,body {
+    height: 100%;
+    width: 100%;
+}
+
 body {
-    background: silver;
     padding-top:50px;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select:none;
     user-select:none;
+    background-color: #40001b;
+    background-image: url("img/table/suits-light.png");
 }
 
 .dropdown-submenu {
@@ -139,8 +145,6 @@ input[type="color"]{
 
 #tapeteFondo {
     display: block;
-    background-color: #40001b;
-    background-image: url("img/table/suits-light.png");
 }
 
 #ordenPersonal {
@@ -265,11 +269,20 @@ input[type="color"]{
     cursor: pointer;
 }
 
+#moduloConsola {
+    display:none;
+}
+
 #consola {
     background: black;
     color: white;
     font-family: "Lucida Console", Monaco, monospace;
     font-size:10pt;
+    clear:both;
+    position:absolute;
+    bottom:0;
+    left:0;
+    width: 100%;
 }
 
 #consolaInput {
@@ -286,7 +299,7 @@ input[type="color"]{
 
 #consolaOutput {
     border-top: 1px solid;
-    height: 200px;
+    height: 100px;
     overflow-y: scroll;
     white-space: pre;
     padding: 2px;

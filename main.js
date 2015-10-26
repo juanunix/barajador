@@ -58,6 +58,7 @@ $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
 
 // Menu: Ver Check / UnCheck
 $( "#vrRefresh" ).on( "click", refresh );
+$( "#vrFullScreen" ).on( "click", vrFullScreen );
 $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
 $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
@@ -560,9 +561,16 @@ function verModulos(event){
     
     // Muestra el módulo seleccionado
     if( document.getElementById(mModulo).className == vrChck0 ){
-    
+         
         document.getElementById(mModulo).className = vrChck1;
         $(xModulo).css('display', 'block');
+        
+        // Si se muestra la consola darle foco al input
+        if (event.data.name == "Consola"){
+            
+            $("#consolaInput").focus();
+            
+        }
         
     // Oculta el módulo seleccionado
     }else{
@@ -955,7 +963,14 @@ function historial(){
 }
 
 function refresh(){
+    
     location.reload();
+}
+
+function vrFullScreen(){
+    
+    $('body').fullScreen();
+    
 }
 
 // GUARDA Y ABRE LOS DATOS DE SESION
