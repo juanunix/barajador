@@ -126,6 +126,7 @@
                  <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver<b class="caret"></b></a>
                         <ul class="dropdown-menu w200">
+                         <li><a href="#" id="vrRefresh"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Recargar<span class="atajo">F5</span></a></li>
                          <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Módulos</a>
                             <ul class="dropdown-menu">
@@ -184,7 +185,7 @@
 </div>
       
 <div id="moduloConsola">
-<div id="consola">><input id="consolaInput" type="text" />
+<div id="consola">><input id="consolaInput" type="text"/>
 <div id="consolaOutput"></div>
 </div>
 </div>
@@ -397,6 +398,9 @@
     <!-- RANDOM.ORG API -->
     <script src="js/randomorg-js.js"></script>
     
+    <!-- Compresión -->
+    <script language="javascript" src="js/lz-string.js"></script>
+    
     <!-- Script principal -->
     <script src="main.js"></script>
     
@@ -415,7 +419,6 @@
       
     })
     </script>
-    
  
     <!-- Tracking de piwki -->
     <script type="text/javascript">

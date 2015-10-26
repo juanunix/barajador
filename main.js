@@ -55,6 +55,7 @@ $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
 
 // Menu: Ver Check / UnCheck
+$( "#vrRefresh" ).on( "click", refresh );
 $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
 $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
@@ -78,7 +79,6 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
       } else {
         // FLECHA DE ARRIBA
         if (keycode == '38'){ 
-            
             if (comandosHistorial.length != 0){
             var regresivo = comandosHistorial.length - comandoHistorialN;
             
@@ -86,10 +86,13 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
                     
                     $("#consolaInput").val(comandosHistorial[regresivo-1]);
                     comandoHistorialN++;
+                    
                 }
+            return false;
+
             }
         } else {
-        
+            // Flecha abajo
             if (keycode = '40'){
             
                 if (comandosHistorial.length != 0){
@@ -107,13 +110,20 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
       }
  });  
 
-
 // Desactivar el menú contextual del navegador
 document.oncontextmenu = function(){return false;}
 
 // Ordenaciones
-var baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
-baraja = baraja.split(",");
+
+if ( sessionStorage.getItem("baraja_autosave") ) {
+    var baraja = abrirSesion("baraja_autosave");
+    baraja = baraja.split(",");
+}else{
+    
+    var baraja = "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD";
+    baraja = baraja.split(",");
+}
+abreBaraja();
 
 // Ordenar Bicycle
 function ordenarBicycle(){
@@ -494,9 +504,9 @@ function renderizar(){
     for (var i = 0;i < baraja.length;i++){
         $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + baraja[i] + '.png)');
     }
-}
 
-abreBaraja();
+    guardarSesion("baraja_autosave",baraja.toString());
+}
 
 // Ver Modulos
 function verModulos(event){
@@ -560,8 +570,9 @@ function ejecutarComando(texto){
     var argCierra = texto.indexOf(")");
     var argumento = "";
 
-    if (argAbre != -1){
-
+    if (argAbre != -1 ){
+        
+        if (argAbre == 0) {consola("Sintáxis no válida")}
         argumento = texto.substring(argAbre+1,argCierra);
         texto = texto.substring(0,argAbre);
     }
@@ -578,13 +589,20 @@ function ejecutarComando(texto){
                 consola('Barajador v0.1 (beta)');
                 return;
             }
+            case "limpiar":
             case "clear":
-            case "clr":
             {
             // Limpiar consola
                 $("#consolaOutput").text("");
                 return;
             }
+            case "recargar":
+            case "refresh":
+                refresh();
+                return;
+            case "historial":
+                historial();
+                return;
             case "cortar":
                 sfCortar(argumento);
                 return;
@@ -662,6 +680,7 @@ function ejecutarComando(texto){
             }
         }
 }
+
 // Output a consola
 function consola(texto){
     
@@ -673,10 +692,18 @@ function consola(texto){
 function generarQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
-    $("#imagenQr").attr('src', urlApi + baraja);
-    $("#modalQr #descargar").attr('href', urlApi + baraja);
+    var strBaraja = baraja.toString();
+    // var strBaraja16 = LZString.compressToUTF16(strBaraja);
+    
+    $("#imagenQr").attr('src', urlApi + strBaraja);
+    $("#modalQr #descargar").attr('href', urlApi + strBaraja);
     $("#modalQr").modal();
     
+}
+
+function OpenInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
 }
 
 function generarQrConsola(){
@@ -847,5 +874,34 @@ function sfCortar(posicion){
     abreBaraja();
     $("#modalCortar").modal('hide');
     consola("cortar("+posicion+")");
+    
+}
+
+function historial(){
+    consola("historial");
+    for(var i = 0; i < comandosHistorial.length; i++){
+        var t = i.toString();
+        if (t.length == 2) { t = " " + t + " "};
+        if (t.length == 1) { t = "  " + t + " "};
+        consola(t + comandosHistorial[i]);
+    }
+}
+
+function refresh(){
+    location.reload()
+}
+
+function guardarSesion(variable, valor){
+    
+    var compresion = LZString.compressToUTF16(valor);
+    sessionStorage.setItem(variable,compresion);
+        
+}
+
+function abrirSesion(variable){
+    
+    var valor = sessionStorage.getItem(variable);
+    valor = LZString.decompressFromUTF16(valor);
+    return valor;
     
 }
