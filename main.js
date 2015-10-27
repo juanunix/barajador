@@ -167,6 +167,14 @@ function iniciar(){
         $('#fuenteConsolaSize').val(consola_fuenteSize);
         $('#consola').css('font-size',consola_fuenteSize+'pt');
     }
+    
+    if($.support.fullscreen){
+        // Show the full screen button
+        $("#liFullScreen").show();
+    }
+    
+    
+    
 }
 
 iniciar();

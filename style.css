@@ -309,6 +309,10 @@ input[type="color"]{
     text-align: center;
 }
 
+#liFullScreen {
+    display:none;
+}
+
 .atajo {
     font-size: 9pt;
     line-height: 20px;
