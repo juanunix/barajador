@@ -106,7 +106,7 @@ input[type="color"]{
 
 .inputSettings input {
     height: 22px;
-    padding: 0px 5px;
+    padding: 0px;
     text-align: right;
 }
 
@@ -364,4 +364,12 @@ input[type="color"]{
 
 .bgYellow {
     background: yellow;
+}
+
+.modal-body table {
+    width: 100%;
+}
+
+.modal-body table td {
+    padding: 2px 5px;
 }

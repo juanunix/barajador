@@ -55,6 +55,7 @@ $( ".sfFaroExt" ).on( "click", sfFaroExt );
 $( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
+$( "#modalFaro .btnAplicar" ).on( "click", faroAplicar );
 
 // Menu: Ver Check / UnCheck
 $( "#vrRefresh" ).on( "click", refresh );
@@ -66,7 +67,7 @@ $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 
 // Editar carta
 $( "#modalEditarCarta input" ).on( "keyup", editarCodigoCarta );
-$( ".btnAplicar" ).on( "click", editarCartaAplicar );
+$( "#modalEditarCarta .btnAplicar" ).on( "click", editarCartaAplicar );
 
 // Cambiar nombre del archivo modalScreen
 $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
@@ -408,40 +409,41 @@ function comprobarApiRandom(numRequest,numBits){
 }
 
 // MESCLA = INVERTIR
-function sfInvertir(){
-    baraja.reverse();
-    consola("invertir");
-    renderizar();
-}
+function sfInvertir(cantidad){
+    
+    // ¿Total o parcial?
+    if (isNaN(cantidad) || cantidad >= baraja.length){
 
-// MESCLA = INVERTIR PARCIAL
-function sfInvertirN(cuantas){
-    if (cuantas > 0){
-        consola("invertir("+cuantas+")");
+        baraja.reverse();
+        consola("invertir");
+        renderizar();
         
-        var paqueteA = baraja.slice(0,cuantas);
-        var paqueteB = baraja.slice(cuantas);
+    } else {
+        if (cantidad > 0){
         
+        consola("invertir("+cantidad+")");
+        var paqueteA = baraja.slice(0,cantidad);
+        var paqueteB = baraja.slice(cantidad);
         paqueteA = paqueteA.reverse()
         baraja = paqueteA.concat(paqueteB);
-        
         renderizar();
-    } else {
-        if (cuantas < 0){
-            consola("invertir("+cuantas+")");
-            cuantas = baraja.length + parseInt(cuantas);
-            var paqueteA = baraja.slice(0,cuantas);
-            var paqueteB = baraja.slice(cuantas);
             
+    } else {
+        if (cantidad < 0){
+            
+            consola("invertir("+cantidad+")");
+            cantidad = baraja.length + parseInt(cantidad);
+            var paqueteA = baraja.slice(0,cantidad);
+            var paqueteB = baraja.slice(cantidad);
             paqueteB = paqueteB.reverse();
             baraja = paqueteA.concat(paqueteB);
-            
             renderizar();
             
         } else {
-            consola(cuantas + " no es un argumento válido.");
+            consola(cantidad + " no es un argumento válido.");
         }
     }
+        }
     
 }
 
@@ -451,69 +453,128 @@ function sfOverhand(){
 }
 
 // MEZCLA =  FARO EXT
-function sfFaroExt(){
+function sfFaroExt(cantidad){
+    var desde = 0;
     var barajaTemp = baraja.slice();
+    //alert(typeof cantidad);
+    // ¿Total o parcial?
+    if (isNaN(cantidad) || Math.abs(cantidad) >= baraja.length || !cantidad){
+        cantidad = baraja.length;
+        consola("faroExt");
+        
+    } else if (typeof cantidad == "number"){
+        consola("faroExt("+cantidad+")");
+    
+    }
+    
+    // Si es negativo cuenta X cartas hasta Bottom
+    if (cantidad < 0) {
+        desde = baraja.length + cantidad -1;
+        cantidad = Math.abs(cantidad);
+    }
+    
     // Realiza la mezccla
-    for (var i = 0; i < baraja.length;i++){
-        if ( baraja.length % 2 == 0 ){
-            if ( i < baraja.length - 1 ){
-                baraja[(2*i) % (baraja.length-1)] = barajaTemp[i]
+    for (var i = 0; i < cantidad ;i++){
+        if ( cantidad % 2 == 0 ){
+            if ( i < cantidad - 1 ){
+                baraja[(2*i) % (cantidad-1) + desde] = barajaTemp[i + desde]
             }       
         }else{
-            baraja[(2*i) % baraja.length] = barajaTemp[i]
+            baraja[(2*i) % cantidad + desde] = barajaTemp[i + desde]
         }
     }
-    consola("faroExt");
     renderizar();
 }
 
 // MEZCLA =  FARO INT
-function sfFaroInt(){
+function sfFaroInt(cantidad){
+    var desde = 0;
     var barajaTemp = baraja.slice();
     
+    // ¿Total o parcial?
+    if (isNaN(cantidad) || Math.abs(cantidad) >= baraja.length || !cantidad){
+        cantidad = baraja.length;
+        consola("faroInt");
+    } else {
+        consola("faroInt("+cantidad+")");
+        }
+    
+    // Si es negativo cuenta X cartas hasta Bottom
+    if (cantidad < 0) {
+        desde = baraja.length + cantidad -1;
+        cantidad = Math.abs(cantidad);
+    }
+    
     // Realiza la mezcla
-    for (var i = 0; i < baraja.length;i++){
-        if ( baraja.length % 2 == 0 ){
-            baraja[(2*i+1) % (baraja.length+1)] = barajaTemp[i]
+    for (var i = 0; i < cantidad;i++){
+        if ( cantidad % 2 == 0 ){
+            baraja[(2*i+1) % (cantidad+1) + desde] = barajaTemp[i + desde]
         }else{
-            baraja[(2*i+1) % (baraja.length)] = barajaTemp[i]
+            baraja[(2*i+1) % (cantidad) + desde] = barajaTemp[i + desde]
         }
     }
-    consola("faroInt");
     renderizar();
 }
 
 // MEZCLA =  ANTIFARO EXT
-function sfAntiFaroExt(){
+function sfAntiFaroExt(cantidad){
+    var desde = 0;
     var barajaTemp = baraja.slice();
     
+    // ¿Total o parcial?
+    if (isNaN(cantidad) || Math.abs(cantidad) >= baraja.length || !cantidad){
+        cantidad = baraja.length;
+        consola("antiFaroExt");
+    } else {
+        consola("antiFaroExt("+cantidad+")");
+        }
+    
+    // Si es negativo cuenta X cartas hasta Bottom
+    if (cantidad < 0) {
+        desde = baraja.length + cantidad -1;
+        cantidad = Math.abs(cantidad);
+    }
+    
     // Realiza la mezcla
-    for (var i = 0; i < baraja.length;i++){
-        if ( baraja.length % 2 == 0 ){
-            if ( i < baraja.length - 1 ){
-                baraja[i] = barajaTemp[(2*i) % (baraja.length-1)]
+    for (var i = 0; i < cantidad;i++){
+        if ( cantidad % 2 == 0 ){
+            if ( i < cantidad - 1 ){
+                baraja[i + desde] = barajaTemp[(2*i) % (cantidad-1) + desde]
             }       
         }else{
-            baraja[i] = barajaTemp[(2*i) % baraja.length]
+            baraja[i + desde] = barajaTemp[(2*i) % cantidad + desde]
         }
     }
-    consola("antiFaroExt");
     renderizar();
 }
 
 // MEZCLA =  ANTIFARO INT
-function sfAntiFaroInt(){
+function sfAntiFaroInt(cantidad){
+    var desde = 0;
     var barajaTemp = baraja.slice();
     
+    // ¿Total o parcial?
+    if (isNaN(cantidad) || Math.abs(cantidad) >= baraja.length || !cantidad){
+        cantidad = baraja.length;
+        consola("antiFaroInt");
+    } else {
+        consola("antiFaroInt("+cantidad+")");
+        }
+    
+    // Si es negativo cuenta X cartas hasta Bottom
+    if (cantidad < 0) {
+        desde = baraja.length + cantidad -1;
+        cantidad = Math.abs(cantidad);
+    }
+    
     // Realiza la mezcla
-    for (var i = 0; i < baraja.length;i++){
-        if ( baraja.length % 2 == 0 ){
-            baraja[i] = barajaTemp[(2*i+1) % (baraja.length+1)]
+    for (var i = 0; i < cantidad;i++){
+        if ( cantidad % 2 == 0 ){
+            baraja[i + desde] = barajaTemp[(2*i+1) % (cantidad+1) + desde]
         }else{
-            baraja[i] = barajaTemp[(2*i+1) % (baraja.length)]
+            baraja[i + desde] = barajaTemp[(2*i+1) % (cantidad) + desde]
         }
     }
-    consola("antiFaroInt");
     renderizar();
 }
 
@@ -633,7 +694,7 @@ function ejecutarComando(texto){
     if (argAbre != -1 ){
         
         if (argAbre == 0) {consola("Sintáxis no válida")}
-        argumento = texto.substring(argAbre+1,argCierra);
+        argumento = parseInt(texto.substring(argAbre+1,argCierra));
         texto = texto.substring(0,argAbre);
     }
     
@@ -668,11 +729,7 @@ function ejecutarComando(texto){
                 return;
             case "invertir":
             {
-                if (argumento == ""){
-                    sfInvertir();
-                } else {
-                    sfInvertirN(argumento);
-                }
+                sfInvertir(argumento);
                 return;
             }
             case "eliminar":
@@ -700,22 +757,22 @@ function ejecutarComando(texto){
             }
             case "faroext":
             {
-                sfFaroExt();
+                sfFaroExt(argumento);
                 return;
             }
             case "faroint":
             {
-                sfFaroInt();
+                sfFaroInt(argumento);
                 return;
             }
             case "antifaroext":
             {
-                sfAntiFaroExt();
+                sfAntiFaroExt(argumento);
                 return;
             }
             case "antifaroint":
             {
-                sfAntiFaroInt();
+                sfAntiFaroInt(argumento);
                 return;
             }
             case "generarqr":
@@ -821,6 +878,22 @@ $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state)
         $(".rotulo").css('display', 'table-caption');
    }else{
        $(".rotulo").css('display', 'none');
+   }
+});
+
+$( "#faroCantidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $("#faroCantidadOpciones").collapse('hide');
+   }else{
+        $("#faroCantidadOpciones").collapse('show');
+   }
+});
+
+$( "#faroCalidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $("#faroCalidadOpciones").collapse('hide');
+   }else{
+        $("#faroCalidadOpciones").collapse('show');
    }
 });
 
@@ -1011,4 +1084,51 @@ function abrirLocal(variable){
     valor = LZString.decompressFromUTF16(valor);
     return valor;
     
+}
+
+function faroAplicar(){
+    
+    var mezcla = "sf";
+    
+    // ¿Faro o AntiFaro?
+    if ( $("#faroAntiFaro").bootstrapSwitch('state') ) {
+    
+        mezcla = mezcla + "Faro";
+    
+    } else {
+        
+        mezcla = mezcla + "AntiFaro";
+        
+    }
+    
+    // ¿Exterior o Interior?
+    if ( $("#faroExtInt").bootstrapSwitch('state') ) {
+        
+        mezcla = mezcla + "Ext(";
+    
+    } else {
+    
+        mezcla = mezcla + "Int(";
+        
+    }
+    
+    // ¿Total o parcial?
+    if ( $("#faroCantidad").bootstrapSwitch('state') ) {
+        
+        mezcla = mezcla + baraja.length + ")";
+        
+    } else {
+        var valor = $('#faroParcial').val();
+        
+        // ¿Desde top o desde bottom?
+        if ( !$("#faroTopBotom").bootstrapSwitch('state') ){
+            mezcla = mezcla + "-";
+        }
+        
+        mezcla = mezcla + valor + ")";
+    }
+    
+    // Aplica la mezcla
+    eval(mezcla);
+    $("#modalFaro").modal('hide');
 }
