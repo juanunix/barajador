@@ -35,13 +35,14 @@ $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 $( "#reiniciarTema" ).on( "click", reiniciarTema );
 $( "#fuenteConsolaSize" ).on( "change", cambiarFuenteSizeConsola );
 
-// Invertir
+$( "#sfRepetir" ).on( "click", sfRepetir );
 $( ".sfInvertir" ).on( "click", sfInvertir );
 
 // Cortar
-$( "#openModalCortar" ).on( "click", sfModalCortar );
+$( ".sfCut" ).on( "click", sfModalCortar );
 $( ".btnMontar" ).on( "click", sfCortarMontar );
 $( "#alNumero" ).on( "change", actualizarCorte );
+
 
 // Aleatoriedad
 $( ".sfFisherYates" ).on( "click", sfFisherYates );
@@ -56,6 +57,8 @@ $( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
 $( "#modalFaro .btnAplicar" ).on( "click", faroAplicar );
+$( ".sfFaroAv" ).on( "click", faroShow );
+
 
 // Menu: Ver Check / UnCheck
 $( "#vrRefresh" ).on( "click", refresh );
@@ -64,6 +67,7 @@ $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
 $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
+$( "#vrStats" ).on( "click", verStats );
 
 // Editar carta
 $( "#modalEditarCarta input" ).on( "keyup", editarCodigoCarta );
@@ -1043,6 +1047,11 @@ function historial(){
     }
 }
 
+function sfRepetir(){
+    alert("repite: " + comandosHistorial[comandosHistorial.length - 1]);
+    //ejecutarComando(historial[historial.length-1]);
+}
+
 function refresh(){
     
     location.reload();
@@ -1083,6 +1092,12 @@ function abrirLocal(variable){
     var valor = localStorage.getItem(variable);
     valor = LZString.decompressFromUTF16(valor);
     return valor;
+    
+}
+
+function faroShow(){
+
+    $("#modalFaro").modal('show');
     
 }
 
@@ -1131,4 +1146,53 @@ function faroAplicar(){
     // Aplica la mezcla
     eval(mezcla);
     $("#modalFaro").modal('hide');
+}
+
+function verStats(){
+    
+    var redond =  7;
+    // Permutaciones posibles
+    var permutaciones = 1;
+    for (var i = 1; i <= baraja.length; i++) {
+        permutaciones = permutaciones * i
+	}
+    
+    var ePlus = permutaciones.toString().indexOf("e+") ;
+
+    if (ePlus != -1){
+        
+        permutaciones = permutaciones.toString();
+        var permutacionesBase = permutaciones.substring(0,ePlus);
+        var permutacionesPotencia = permutaciones.substring(ePlus+2,permutaciones.length);
+        permutacionesBase = redondeo(permutacionesBase,redond);
+
+        permutaciones = permutacionesBase +  " x10 <sup>" + permutacionesPotencia + "</sup>";
+        
+    }
+        
+    // Mezclas riffle necesaria para desordenar la baraja
+    var mezclasNecesarias = (Math.log(baraja.length) / Math.log(2))*1.5;
+    mezclasNecesarias = redondeo(mezclasNecesarias,redond);
+    
+    // Adivinaciones posibles
+    var adivinacionesPosibles = 0;
+    for (var i = 1; i<=baraja.length;i++){
+    
+        adivinacionesPosibles = adivinacionesPosibles + 1 / i;
+    }
+    
+    adivinacionesPosibles = redondeo(adivinacionesPosibles,redond);
+    
+    $("#modalStats .cantidad").html(baraja.length);
+    $("#modalStats .permutaciones").html(baraja.length + "! = " + permutaciones);
+    $("#modalStats .mezclasNecesarias").html(mezclasNecesarias);
+    $("#modalStats .adivinacionesPosibles").html(adivinacionesPosibles);
+    
+}
+
+function redondeo(numero,decimales){
+
+    numero = Math.round(numero * Math.pow(10,decimales)) / Math.pow(10,decimales) + "...";
+    return numero;
+    
 }

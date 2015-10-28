@@ -90,14 +90,15 @@
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>  Mezclar<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        <li><a href="#" class="sfInvertir">Invertir</a></li>
-                        <li><a id="openModalCortar" href="#" accesskey="c">Cortar...<span class="nuevo">NUEVO!</span></a></li>
+                            <li class="collapse"><a href="#" id="sfRepetir"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repetir</a></li>
+                        <li><a href="#" class="sfInvertir"><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Invertir</a></li>
+                        <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
                         <li class="collapse divider"></li>
                         <li class="collapse"><a id="sfAlfa" href="#">Mezcla alfa</a></li>
                         <li class="collapse"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mezcla faro</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla faro</a>
                             <ul class="dropdown-menu w200">
                                 <li><a class="sfFaroExt" href="#" accesskey="o">Faro Exterior<span class="atajo">Alt+O</span></a></li>
                                 <li><a class="sfFaroIn" href="# "accesskey="i">Faro Interior<span class="atajo">Alt+I</span></a></li>
@@ -109,7 +110,7 @@
                         </li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Algoritmo Fisher-Yates</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Algoritmo Fisher-Yates</a>
                             <ul class="dropdown-menu w200"> 
                                 <li><a class="sfFisherYates" href="#">Versión Original<span class="nuevo">NUEVO!</span></a></li>
                                 <li><a class="sfDurstenfeld" href="#">Versión Durstenfeld</a></li>
@@ -117,7 +118,7 @@
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Aleatoriedad</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Aleatoriedad</a>
                             <ul class="dropdown-menu w210">
                                 <li><a class="sfRandomOrg" href="#">API Random.org</a></li>
                                 <li><a class="sfNumeroAleatorio" href="#">numero-aleatorio.com<span class="bug">BUG!</span></a></li>
@@ -140,6 +141,7 @@
                                 <li><a id="vrConsola" href="#" accesskey="x"><span id="txtVerConsola" class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Consola<span class="atajo">Alt+X</span></a></li>
                             </ul>
                         </li>
+                        <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="s"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas<span class="atajo"></span></a></li>
                         <li class="divider"></li>
                         <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalSettings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
                     </ul>
@@ -177,10 +179,12 @@
     
     <div id="moduloBotonera" class="botonera">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir">
+        <input type="button" class="btn btn-primary sfCut" value="Cortar...">
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
         <input type="button" class="btn btn-primary sfFaroInt" value="Faro Int">
         <input type="button" class="btn btn-primary sfAntiFaroExt" value="AntiFaro Ext">
-        <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In"><br>
+        <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In">
+        <input type="button" class="btn btn-primary sfFaroAv" value="Faro..."><br>
         <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
         <input type="button" class="btn btn-primary sfSattolo" value="Azar Sattolo">
@@ -316,10 +320,10 @@
           <table>
             <tr>
                 <td>Mezcla:<br/><input id="faroAntiFaro" type="checkbox" data-off-color="primary" data-on-text="Faro" data-off-text="Antifaro" class="form-control" checked></td>
-                <td>Tipo:<br/><input id="faroExtInt" type="checkbox" data-off-color="primary" data-on-text="Exterior" data-off-text="Interior" class="form-control" checked></td>
+                <td><br/><input id="faroExtInt" type="checkbox" data-off-color="primary" data-on-text="Exterior" data-off-text="Interior" class="form-control" checked></td>
             </tr>
             <tr>
-                <td colspan="2">Cantidad:<br/><input type="checkbox" id="faroCantidad" data-off-color="primary" data-on-text="Total" data-off-text="Parcial" class="form-control" data-handle-width="118" checked></td>
+                <td colspan="2">Tipo:<br/><input type="checkbox" id="faroCantidad" data-off-color="primary" data-on-text="Total" data-off-text="Parcial" class="form-control" data-handle-width="118" checked></td>
             </tr>
             <tr id="faroCantidadOpciones" class="collapse">
                 <td>Cartas:<input id="faroParcial" type="number" min="1" max="52" value="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></td>
@@ -349,6 +353,26 @@
   </div>
 </div>
     
+<!-- Modal Stadisticas -->
+<div class="modal fade" id="modalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas</h4>
+      </div>
+      <div class="modal-body">
+          <p>Cantidad de cartas: <span class="cantidad"></span></p>
+          <p>Permutaciones: <span class="permutaciones"></span></p>
+          <p>Mezclas necesarias: <span class="mezclasNecesarias"></span></p>
+          <p>Adivinaciones posibles: <span class="adivinacionesPosibles"></span></p>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
 <!-- Modal Ayuda -->
 <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -459,6 +483,9 @@
     <!-- Fullscreen -->
     <script src="js/jquery.fullscreen.js"></script>
     
+    <!-- Big numbers -->
+    <script type="text/javascript" src="js/bignumbers.js"></script>
+                
     <!-- Script principal -->
     <script src="main.js"></script>
     
@@ -478,7 +505,7 @@
       
     })
     </script>
- 
+                      
     <!-- Tracking de piwki -->
     <script type="text/javascript">
   var _paq = _paq || [];
