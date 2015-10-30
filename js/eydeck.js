@@ -1,11 +1,9 @@
-// Consctructor de la clase eyDeck!
+// Constructor de la clase EyDeck!
 // Autor: Ey Pacha! 
-//
-
+// Web: github.com/eypacha/barajador/blob/master/js/eydeck.js
 
 // Crea el objeto de la baraja
 function EyDeck(cartas){
-    
     var deck = cartas.split(",");
     
     // Construye el naipe individual
@@ -38,7 +36,8 @@ function naipe(i,cara){
     this.id = i;
     this.face = cara;
     this.back = "dorso";
-    this.crimp = false; 
+    this.crimp = false;
+    this.crimpB = false;
     
 }
 
@@ -54,7 +53,6 @@ function getMatriz(propiedad,delimitador){
     }
     
     cadena +=  eval("this.naipe[this.naipe.length-1]."+propiedad);
-    
     
     return cadena
 }

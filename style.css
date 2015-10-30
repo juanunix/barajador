@@ -107,6 +107,8 @@ input[type="color"]{
     display: inline-table;
     height: 22px;
     vertical-align: bottom;
+    padding: 0px;
+    text-align: right;
 }
 
 .inputSettings input {
@@ -377,4 +379,8 @@ input[type="color"]{
 
 .modal-body table td {
     padding: 2px 5px;
+}
+
+#modalStats .modal-body {
+    font-size: 9pt;
 }

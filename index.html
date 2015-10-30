@@ -105,14 +105,14 @@
                                 <li><a class="sfAntiFaroExt" href="#" accesskey="l">Antifaro Exterior<span class="atajo">Alt+L</span></a></li>
                                 <li><a class="sfAntiFaroIn" href="#" accesskey="k">Antifaro Interior<span class="atajo">Alt+K</span></a></li>
                                 <li class="divider"></li>
-                                <li><a data-toggle="modal" href="#" data-target="#modalFaro" accesskey=".">Avanzada...<span class="nuevo">NUEVO!</span></a></li>
+                                <li><a data-toggle="modal" href="#" data-target="#modalFaro" accesskey=".">Avanzada...</a></li>
                             </ul>
                         </li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Algoritmo Fisher-Yates</a>
-                            <ul class="dropdown-menu w200"> 
-                                <li><a class="sfFisherYates" href="#">Versión Original<span class="nuevo">NUEVO!</span></a></li>
+                            <ul class="dropdown-menu"> 
+                                <li><a class="sfFisherYates" href="#">Versión Original</a></li>
                                 <li><a class="sfDurstenfeld" href="#">Versión Durstenfeld</a></li>
                                 <li><a class="sfSattolo" href="#">Versión Sattolo</a></li>
                             </ul>
@@ -120,7 +120,7 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Aleatoriedad</a>
                             <ul class="dropdown-menu w210">
-                                <li class="collapse"><a class="sfRandomOrg" href="#">API Random.org</a></li>
+                                <li><a class="sfRandomOrg" href="#">API Random.org</a></li>
                                 <li><a class="sfNumeroAleatorio" href="#">numero-aleatorio.com<span class="bug">BUG!</span></a></li>
                             </ul>
                         </li>
@@ -188,7 +188,7 @@
         <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
         <input type="button" class="btn btn-primary sfSattolo" value="Azar Sattolo">
-        <input type="button" class="btn btn-primary sfRandomOrg" value="Azar Random.org" disabled>
+        <input type="button" class="btn btn-primary sfRandomOrg" value="Azar Random.org">
     </div>
 </div>
 
@@ -267,7 +267,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Carta</h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Carta <span class="posicion"></span></h4>
       </div>
       <div class="modal-body" style="text-align:justify">
           <div class="naipe"></div>
@@ -276,7 +276,9 @@
               <input type="text" class="editarCodigo form-control" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
               Crimp:
               <input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control" data-handle-width="69">
-              
+              <div class="editarCrimpTipo collapse">Tipo:
+              <input type="checkbox" class="editarCrimpTopBottom" data-off-color="primary" data-on-text="A Top" data-off-text="A Bottom" class="form-control" data-handle-width="69">
+              </div>
           </div>
       </div>
       <div class="modal-footer">
@@ -322,28 +324,30 @@
       <div class="modal-body" style="text-align:justify">
           <table>
             <tr>
+                <td>Cantidad:<br/><input type="number" class="form-control inputSettings multiplicador" value="1" min="1" max="99"></td>
                 <td>Mezcla:<br/><input id="faroAntiFaro" type="checkbox" data-off-color="primary" data-on-text="Faro" data-off-text="Antifaro" class="form-control" checked></td>
-                <td><br/><input id="faroExtInt" type="checkbox" data-off-color="primary" data-on-text="Exterior" data-off-text="Interior" class="form-control" checked></td>
             </tr>
             <tr>
-                <td colspan="2">Tipo:<br/><input type="checkbox" id="faroCantidad" data-off-color="primary" data-on-text="Total" data-off-text="Parcial" class="form-control" data-handle-width="118" checked></td>
+                <td>Tipo:<br/><input id="faroExtInt" type="checkbox" data-off-color="primary" data-on-text="Exterior" data-off-text="Interior" class="form-control" checked></td>
+                <td><br/><input type="checkbox" id="faroCantidad" data-off-color="primary" data-on-text="Total" data-off-text="Parcial" class="form-control" checked></td>
             </tr>
-            <tr id="faroCantidadOpciones" class="collapse">
-                <td>Cartas:<input id="faroParcial" type="number" min="1" max="52" value="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></td>
-                <td>Desde:<br/><input id="faroTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control" type="checkbox" checked></td>
+            <tr>
+                <td><div class="collapse cantidadOpciones">Cartas:<input id="faroParcial" type="number" min="1" max="52" value="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></div></td>
+                <td><div class="collapse cantidadOpciones">Desde:<br/><input id="faroTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control" type="checkbox" checked></div></td>
             </tr>
+            
             <tr class="collapse">
                 <td colspan="2">Calidad:<br/><input type="checkbox" id="faroCalidad" data-off-color="primary" data-on-text="Perfecta" data-off-text="Imperfecta" class="form-control" data-handle-width="118" checked></td>
             </tr>
-            <tr id="faroCalidadOpciones" class="collapse">
-                <td>Imperf de corte:<br/><span class="input-group inputSettings">
+            <tr>
+                <td><div class="collapse calidadOpciones">Imperf de corte:<br/><span class="input-group inputSettings">
               <input type="number" class="form-control" value="1" min="1" max="99">
               <span class="input-group-addon">%</span>
-            </span></td>
-                <td>Imperf de mezcla:<br/><span class="input-group inputSettings">
+            </span></div></td>
+                <td><div class="collapse calidadOpciones">Imperf de mezcla:<br/><span class="input-group inputSettings">
               <input type="number" class="form-control" value="1" min="1" max="99">
               <span class="input-group-addon">%</span>
-            </span></td>
+            </span></div></td>
             </tr>
           </table>
       

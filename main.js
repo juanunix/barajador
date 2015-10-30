@@ -126,14 +126,21 @@ function iniciar(){
     
     
     // ¿Había una baraja abierta en la sesión?
-    //if ( sessionStorage.getItem("baraja_autosave") ) {
-    //    baraja = abrirSesion("baraja_autosave");
-    //    baraja = baraja.split(",");
-    //    abreBaraja();
-    //else{
-    //
-    //    ordenar4Kings();
-    //}
+    if ( sessionStorage.getItem("baraja_autosave") ) {
+        barajaActual = new EyDeck(abrirSesion("baraja_autosave"));
+        var posicionesActuales = abrirSesion("baraja_posiciones_autosave").split(",");
+        
+        for (var i=0;i<barajaActual.naipe.length;i++){
+        
+            barajaActual.naipe[i].id = parseInt(posicionesActuales[i]);
+            
+        }
+        
+        abreBaraja();
+    }else{
+    
+        ordenar4Kings();
+    }
     
     // Carga las preferencias guardadas
     if ( localStorage.getItem("tapete_fondo") ) {
@@ -183,8 +190,6 @@ function iniciar(){
 }
 
 iniciar();
-barajaActual = new EyDeck("AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD");
-abreBaraja();
 
 // Ordenar Bicycle
 function ordenarBicycle(){
@@ -194,7 +199,7 @@ function ordenarBicycle(){
 
 // Ordenar Solo Aces
 function ordenarSoloAces(){
-    barajaActual= new EyDeck("AT,AC,AP,AD,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X");
+    barajaActual= new EyDeck("AT,AC,AP,AD,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA");
     abreBaraja();
 }
 
@@ -306,21 +311,21 @@ $("#customApiKeyRandom").val("2dbcb5c9-d4f8-4d19-b1f1-cd5cf3980e97");
 comprobarApiRandom();
 
 function sfRandomOrg(){
-var barajaTemp = baraja.slice();
+var barajaTemp = barajaActual.naipe.slice();
 
     var result = JsonApi
     .apikey($("#customApiKeyRandom").val())
     .method('generateIntegers')
     .params({
-        "n": baraja.length,
+        "n": barajaActual.naipe.length,
         "min": 0,
-        "max": (baraja.length-1),
+        "max": (barajaActual.naipe.length-1),
         "replacement": false,
     })
     .post(function(xhrOrError, stream, body) {
         
-        for (var i = 0; i < baraja.length ; i++){
-            baraja[i] = barajaTemp[body.result.random.data[i]]
+        for (var i = 0; i < barajaActual.naipe.length ; i++){
+            barajaActual.naipe[i] = barajaTemp[body.result.random.data[i]]
         }
         
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
@@ -331,15 +336,15 @@ var barajaTemp = baraja.slice();
 }
 
 function sfNumeroAleatorio(){
-var barajaTemp = baraja.slice();
+var barajaTemp = barajaActual.naipe.slice();
     
-    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (baraja.length-1) + "&numero=" + baraja.length + "&repeticion=0&json=0"
+    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (barajaActual.naipe.length-1) + "&numero=" + barajaActual.naipe.length + "&repeticion=0&json=0"
         
     $.getJSON(apiUrl, function(contenido){
         consola(contenido)
     
-      //  for (var i = 0; i < baraja.length ; i++){
-    //        baraja[i] = barajaTemp[body.result.random.data[i]]
+      //  for (var i = 0; i < barajaActual.naipe.length ; i++){
+    //        barajaActual.naipe[i] = barajaTemp[body.result.random.data[i]]
     //    }
         
       //  renderizar();
@@ -432,23 +437,23 @@ function renderizar(){
     if (true == false){
         
         var contenido = '';
-        for (var i = 0; i < baraja.length;i++){
+        for (var i = 0; i < barajaActual.naipe.length;i++){
 
-            switch(baraja[i].charAt(baraja[i].length-1)){
+            switch(barajaActual.naipe[i].charAt(barajaActual.naipe[i].length-1)){
                 case 'C':
-                    contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&spades;</big> ';
+                    contenido = contenido + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&spades;</big> ';
                     break;
                 case 'H':
-                    contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&hearts;</big></font> ';
+                    contenido = contenido + '<font color="#dd0000">' + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&hearts;</big></font> ';
                     break
                 case 'S':
-                    contenido = contenido + baraja[i].substring(0,baraja[i].length-1) + '<big>&clubs;</big> ';
+                    contenido = contenido + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&clubs;</big> ';
                     break;
                 case 'D':
-                    contenido = contenido + '<font color="#dd0000">' + baraja[i].substring(0,baraja[i].length-1) + '<big>&diams;</big></font> ';
+                    contenido = contenido + '<font color="#dd0000">' + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&diams;</big></font> ';
                     break;
                 default:
-                    contenido = contenido + baraja[i]        
+                    contenido = contenido + barajaActual.naipe[i]        
             }
 
         } 
@@ -469,6 +474,7 @@ function renderizar(){
     }
 
     guardarSesion("baraja_autosave",matrizFace);
+    guardarSesion("baraja_posiciones_autosave",barajaActual.getMatriz("id",","));
 }
 
 // Ver Modulos
@@ -512,6 +518,7 @@ function inputConsola(){
         
             var txtComando = txtOrden[i].split("*");
             
+            
             // ¿el comando tiene multiplicador?
             if (txtComando.length == 2){
                 
@@ -521,17 +528,23 @@ function inputConsola(){
                 
                     txtComando[1] = parseInt(txtComando[1]);
 
-                    // repite el comando según el multiplicador
-                    for (var j = 0; j < txtComando[1] ;j++){
-                    //consola("subiteracion = " + j );
-                        ejecutarComando(txtComando[0].trim());
-                    }
+                    repetirComando(txtComando[0].trim(),txtComando[1]);
+                    
                 }
             }else if (txtComando.length = 1){
                 
                 ejecutarComando(txtComando[0].trim());
             }
     }
+}
+
+// repite el comando según el multiplicador
+function repetirComando(comando, multipicador){
+
+    for (var i = 0; i < multipicador ;i++){
+        ejecutarComando(comando);
+    }
+    
 }
 
 function ejecutarComando(texto){
@@ -658,7 +671,7 @@ function consola(texto){
 function generarQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
-    var strBaraja = baraja.toString();
+    var strBaraja = barajaActual.getMatriz("face",",");
     // var strBaraja16 = LZString.compressToUTF16(strBaraja);
     
     $("#imagenQr").attr('src', urlApi + strBaraja);
@@ -675,7 +688,7 @@ function OpenInNewTab(url) {
 function generarQrConsola(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
-    consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + baraja +"' download='barajaQr.png'>click aquí</a>.")
+    consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + barajaActual.getMatriz("face",",") +"' download='barajaQr.png'>click aquí</a>.")
 }
 
 function screenshot(){
@@ -732,17 +745,17 @@ $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state)
 
 $( "#faroCantidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
-        $("#faroCantidadOpciones").collapse('hide');
+        $(".cantidadOpciones").collapse('hide');
    }else{
-        $("#faroCantidadOpciones").collapse('show');
+        $(".cantidadOpciones").collapse('show');
    }
 });
 
 $( "#faroCalidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
-        $("#faroCalidadOpciones").collapse('hide');
+        $(".calidadOpciones").collapse('hide');
    }else{
-        $("#faroCalidadOpciones").collapse('show');
+        $(".calidadOpciones").collapse('show');
    }
 });
 
@@ -818,18 +831,21 @@ function eliminarCartaX(cual){
 }
 
 function editarCarta(){
+    $("#modalEditarCarta .posicion").html(" #" + (barajaActual.naipe[idCartaActual].id+1));
     $("#modalEditarCarta .editarCodigo").val(barajaActual.naipe[idCartaActual].face);
     $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.naipe[idCartaActual].crimp);
+    $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.naipe[idCartaActual].crimpB);
     $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.naipe[idCartaActual].face + '.png)');
     $("#modalEditarCarta").modal();
 }
 
 $( "#modalEditarCarta .editarCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
-       barajaActual.naipe[idCartaActual].crimp = true;
+       $( "#modalEditarCarta .editarCrimpTipo" ).collapse('show');
+       
        
    }else{
-       barajaActual.naipe[idCartaActual].crimp = false;
+       $( "#modalEditarCarta .editarCrimpTipo" ).collapse('hide');
    }
 });
 
@@ -841,6 +857,8 @@ function editarCodigoCarta(){
 
 function editarCartaAplicar(){
     barajaActual.naipe[idCartaActual].face = $("#modalEditarCarta input").val()
+    barajaActual.naipe[idCartaActual].crimp = $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state');
+    barajaActual.naipe[idCartaActual].crimpB = !$("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state');
     abreBaraja();
     $("#modalEditarCarta").modal('hide');
 }
@@ -958,34 +976,32 @@ function faroShow(){
 
 function faroAplicar(){
     
-    var mezcla = "sf";
-    
     // ¿Faro o AntiFaro?
     if ( $("#faroAntiFaro").bootstrapSwitch('state') ) {
     
-        mezcla = mezcla + "Faro";
+        var mezcla = "faro";
     
     } else {
         
-        mezcla = mezcla + "AntiFaro";
+        var mezcla = "antifaro";
         
     }
     
     // ¿Exterior o Interior?
     if ( $("#faroExtInt").bootstrapSwitch('state') ) {
         
-        mezcla = mezcla + "Ext(";
+        mezcla = mezcla + "ext(";
     
     } else {
     
-        mezcla = mezcla + "Int(";
+        mezcla = mezcla + "int(";
         
     }
     
     // ¿Total o parcial?
     if ( $("#faroCantidad").bootstrapSwitch('state') ) {
         
-        mezcla = mezcla + barajaActual.naipe.length + ")";
+        mezcla = mezcla + barajaActual.naipe.length;
         
     } else {
         var valor = $('#faroParcial').val();
@@ -997,6 +1013,18 @@ function faroAplicar(){
         
         mezcla = mezcla + valor + ")";
     }
+    
+    // ¿Hay multiplicador?
+        var veces = $(".multiplicador").val();
+    if ( veces == 1 || !isNaN(valor) ) {
+        
+        ejecutarComando(mezcla);
+        
+    } else {
+        
+        repetirComando(mezcla,veces)
+    }
+    
     
     // Aplica la mezcla
     eval(mezcla);
