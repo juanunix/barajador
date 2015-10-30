@@ -23,7 +23,8 @@
       apiKey: defaultApiKey,
       n: 3,
       min: 1,
-      max: 5
+      max: 5,
+      replacement: false
     },
     generateDecimalFractions: {
       apiKey: defaultApiKey,
