@@ -143,7 +143,7 @@
                         </li>
                         <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="s"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas<span class="atajo"></span></a></li>
                         <li class="divider"></li>
-                        <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalSettings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
+                        <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalPreferencias"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
                     </ul>
                 </li>
                 <li>
@@ -362,17 +362,24 @@
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas</h4>
       </div>
       <div class="modal-body">
-          <p>Cantidad de cartas: <span class="cantidad"></span></p>
-          <p>Permutaciones: <span class="permutaciones"></span></p>
-          <p>Mezclas necesarias: <span class="mezclasNecesarias"></span></p>
-          <p>Adivinaciones posibles: <span class="adivinacionesPosibles"></span></p>
+        <div class="printable">
+          <p><b>Baraja:</b> <span class="barajaMatriz"></span></p>
+          <p><b>Cantidad total de cartas:</b> <span class="cantidad"></span></p>
+          <p><b>Permutaciones posible:</b> <span class="permutaciones"></span></p>
+          <p><b>Mezclas riffle para alcanzar el azar:</b> <span class="mezclasNecesarias"></span></p>
+          <p><b>Adivinaciones probables:</b> <span class="adivinacionesProbables"></span> (<span class="adivinacionesPorcentaje"></span>)</p>
+          <p></p>
+          
+        </div>
+      </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary printStats">Imprimir</button><button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
-      
+
+    
 <!-- Modal Ayuda -->
 <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -396,7 +403,7 @@
 </div>
       
 <!-- Modal SETTINGS -->
-<div class="modal fade" id="modalSettings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modalPreferencias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -438,7 +445,7 @@
             </span>
             Tamaño de la fuente<br/>
             </p>
-            <p><a id="reiniciarTema" href="#">Reiniciar valores por defecto.</a></p>
+            <p style="text-align: right"><a id="reiniciarTema" href="#">Reiniciar valores por defecto</a></p>
           </div>
           <div id="randomSettings" class="tab-pane fade">
             <p>Preferencias para la mezcla aleatoria a partir del ruido atmosférico utilizando el servicio de <a href="https://www.random.org/" target="_blank">Random.org</a>.</p>
@@ -483,9 +490,12 @@
     <!-- Fullscreen -->
     <script src="js/jquery.fullscreen.js"></script>
     
+    <!-- eyDeck! -->
+    <script type="text/javascript" src="js/eydeck.js"></script>
+    
     <!-- Big numbers -->
     <script type="text/javascript" src="js/bignumbers.js"></script>
-                
+         
     <!-- Script principal -->
     <script src="main.js"></script>
     
@@ -495,6 +505,7 @@
     <!-- Screenshots -->
     <script type="text/javascript" src="js/html2canvas.min.js"></script>
     
+    <script type="text/javascript" src="js/print.js"></script>
     <script>
     $(function(argument) {
       $.fn.bootstrapSwitch.defaults.onText = 'SI';
@@ -524,4 +535,4 @@
 <noscript><p><img src="//clowntube.tv/clowntube/piwik/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
   </body>
     
-</html>
+</html><

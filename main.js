@@ -68,6 +68,7 @@ $( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
 $( "#vrStats" ).on( "click", verStats );
+$( "#modalStats .printStats" ).on( "click", printStats );
 
 // Editar carta
 $( "#modalEditarCarta input" ).on( "keyup", editarCodigoCarta );
@@ -242,14 +243,13 @@ function ordenarMnemonica(){
 
 // Ordenar personalizadamente
 function ordenarPersonal(){
-    baraja = $("#ordenPersonal").val(); "8P,KC,3T,10D,2P,7C,9T,5D,QP,4C,AT,6D,JP,8C,KT,3D,10P,2C,7T,9D,5P,QC,4T,AD,6P,JC,8T,KD,3P,10C,2T,7D,9P,5C,QT,4D,AP,6C,JT,8D,KP,3C,10T,2D,7P,9C,5T,QD,4P,AC,6T,JD";
+    baraja = $("#ordenPersonal").val(); 
     baraja = baraja.split(",");
     abreBaraja();
 }
 // Función de Renderización
 function abreBaraja(){
-
-    
+     
     var contenido = '<ul class="baraja" id="naipes">';
     var rotulos = '';
 
@@ -349,10 +349,10 @@ var barajaTemp = baraja.slice();
     .apikey($("#customApiKeyRandom").val())
     .method('generateIntegers')
     .params({
-        n: baraja.length,
-        min: 0,
-        max: (baraja.length-1),
-        replacement: false
+        "n": baraja.length,
+        "min": 0,
+        "max": (baraja.length-1),
+        "replacement": false,
     })
     .post(function(xhrOrError, stream, body) {
         
@@ -363,6 +363,7 @@ var barajaTemp = baraja.slice();
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
         consola("radomOrg");
+        
     });
 }
 
@@ -1174,25 +1175,41 @@ function verStats(){
     var mezclasNecesarias = (Math.log(baraja.length) / Math.log(2))*1.5;
     mezclasNecesarias = redondeo(mezclasNecesarias,redond);
     
-    // Adivinaciones posibles
-    var adivinacionesPosibles = 0;
+    // Adivinaciones probables
+    var adivinacionesProbables = 0;
     for (var i = 1; i<=baraja.length;i++){
     
-        adivinacionesPosibles = adivinacionesPosibles + 1 / i;
+        adivinacionesProbables = adivinacionesProbables + 1 / i;
     }
     
-    adivinacionesPosibles = redondeo(adivinacionesPosibles,redond);
+    var adivinacionesPorcentaje = adivinacionesProbables * 100 / baraja.length;
+    adivinacionesPorcentaje = redondeo(adivinacionesPorcentaje,2);
+    adivinacionesProbables = redondeo(adivinacionesProbables,redond);
     
+    $("#modalStats .barajaMatriz").html(baraja.join(", "));
     $("#modalStats .cantidad").html(baraja.length);
     $("#modalStats .permutaciones").html(baraja.length + "! = " + permutaciones);
-    $("#modalStats .mezclasNecesarias").html(mezclasNecesarias);
-    $("#modalStats .adivinacionesPosibles").html(adivinacionesPosibles);
+    $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>" + baraja.length + " = " + mezclasNecesarias);
+    $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>1</sub> + <sup>1</sup>&frasl;<sub>2</sub> + ... + <sup>1</sup>&frasl;<sub>" + baraja.length + "</sub> = " + adivinacionesProbables);
+    $("#modalStats .adivinacionesPorcentaje").html(adivinacionesPorcentaje + "%");
+    
+    
+}
+
+function printStats(){
+
+    $(".printable").print();
     
 }
 
 function redondeo(numero,decimales){
 
-    numero = Math.round(numero * Math.pow(10,decimales)) / Math.pow(10,decimales) + "...";
-    return numero;
+    var numeroRedondo = Math.round(numero * Math.pow(10,decimales)) / Math.pow(10,decimales);
+    
+    if (numero != numeroRedondo){
+        numeroRedondo = numeroRedondo + "..."
+    }
+    
+    return numeroRedondo;
     
 }
