@@ -16,6 +16,7 @@ function EyDeck(cartas){
     // Definiendo funciones
     this.getMatriz = getMatriz;
     this.setOrder = setOrder;
+    this.getCrimps = getCrimps;
     this.cortar = cortar;
     this.invertir = invertir;
     this.faroExt = faroExt;
@@ -38,6 +39,7 @@ function naipe(i,cara){
     this.back = "dorso";
     this.crimp = false;
     this.crimpB = false;
+    this.crimpTag = "";
     
 }
 
@@ -57,13 +59,32 @@ function getMatriz(propiedad,delimitador){
     return cadena
 }
 
+// Genera un array con las posiciones de las cartas crimpeadas
+function getCrimps(){
+
+    var ides = [];
+    
+    for (var i = 0; i < this.naipe.length; i++){
+        
+        if (this.naipe[i].crimp){
+         
+            ides.push(i);
+            
+        }
+    
+    }
+    
+    return ides;
+    
+}
+
 // Ordenar según strings con los Ids separados por comas
 function setOrder(cadena){
 
     var ides = cadena.split(",");
     
     for (var i = 0; i < ides.length; i++){
-    document.getElementById
+    //document.getElementById
     
     }
 }

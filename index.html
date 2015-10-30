@@ -274,12 +274,16 @@
           <div class="detalles">
               Código: <a href="docs/#matrizcodigos" target="_blank"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
               <input type="text" class="editarCodigo form-control" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-              Crimp:
-              <input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control" data-handle-width="69">
-              <div class="editarCrimpTipo collapse">Tipo:
-              <input type="checkbox" class="editarCrimpTopBottom" data-off-color="primary" data-on-text="A Top" data-off-text="A Bottom" class="form-control" data-handle-width="69">
               </div>
-          </div>
+          <table>
+            <tr>
+                <td>Crimp:<br/><input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><div class="editarCrimpTipo collapse">Tipo:<br/><input type="checkbox" class="editarCrimpTopBottom form-control" data-off-color="primary" data-on-text="A Top" data-off-text="A Bottom" data-handle-width="69"></div></td>
+                <td><div class="editarCrimpTipo collapse">Etiqueta:<br/><input type="text" class="editarCrimpTag form-control inputSettings w90" maxlength="10"></div></td>
+            </tr>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -298,16 +302,24 @@
         <h4 class="modal-title" id="myModalLabel">Cortar...</h4>
       </div>
       <div class="modal-body">
-            Al número:
-              <input type="number" id="alNumero" class="form-control" value="26"><br/>
+            <table>
+                <tr>
+                    <td colspan="2"><input type="checkbox" class="alNumeroCrimp form-control" data-off-color="primary" data-on-text="Al número" data-off-text="Al crimp" data-size="small" data-handle-width="110" checked><br/></td>
+                </tr>
+                <tr>
+                    <td class="w50p">Posición:<br/><input type="number" id="alNumero" class="form-control" value="26"></td>
+                    <td class="w50p"><div class="alCrimp collapse">Etiqueta:<br/><select class="form-control"></select>
+                    </div></td>
+                </tr>
+            </table>
             Interactivo:
-              <div class="contenedorPaquete">
-        <div id="moduloPaquetes" class="vistaPaquetes"></div>
-    </div>
+            <div class="contenedorPaquete">
+                <div id="moduloPaquetes" class="vistaPaquetes"></div>
+            </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btnMontar">Montar</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary btnMontar">Montar</button>
       </div>
     </div>
   </div>

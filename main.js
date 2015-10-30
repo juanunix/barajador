@@ -41,7 +41,7 @@ $( ".sfInvertir" ).on( "click", sfInvertir );
 $( ".sfCut" ).on( "click", sfModalCortar );
 $( ".btnMontar" ).on( "click", sfCortarMontar );
 $( "#alNumero" ).on( "change", actualizarCorte );
-
+$( ".alCrimp select" ).on( "change", actualizarCorteCrimp );
 
 // Aleatoriedad
 $( ".sfFisherYates" ).on( "click", sfFisherYates );
@@ -835,6 +835,17 @@ function editarCarta(){
     $("#modalEditarCarta .editarCodigo").val(barajaActual.naipe[idCartaActual].face);
     $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.naipe[idCartaActual].crimp);
     $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.naipe[idCartaActual].crimpB);
+    
+    if (barajaActual.naipe[idCartaActual].crimpTag == ""){
+        
+        var letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $("#modalEditarCarta .editarCrimpTag").val(letras.split("")[barajaActual.getCrimps().length]);
+        
+    } else {
+    
+        $("#modalEditarCarta .editarCrimpTag").val(barajaActual.naipe[idCartaActual].crimpTag);
+    }
+    
     $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.naipe[idCartaActual].face + '.png)');
     $("#modalEditarCarta").modal();
 }
@@ -856,9 +867,10 @@ function editarCodigoCarta(){
 }
 
 function editarCartaAplicar(){
-    barajaActual.naipe[idCartaActual].face = $("#modalEditarCarta input").val()
+    barajaActual.naipe[idCartaActual].face = $("#modalEditarCarta input").val();
     barajaActual.naipe[idCartaActual].crimp = $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state');
     barajaActual.naipe[idCartaActual].crimpB = !$("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state');
+    barajaActual.naipe[idCartaActual].crimpTag = $("#modalEditarCarta .editarCrimpTag").val();
     abreBaraja();
     $("#modalEditarCarta").modal('hide');
 }
@@ -868,14 +880,47 @@ function sfModalCortar(){
     $("#alNumero").attr('min',-barajaActual.naipe.length+1);
     $("#alNumero").attr('max',barajaActual.naipe.length-1);
     $("#alNumero").val(0);
+    
+    var crimps = barajaActual.getCrimps();
+    var opciones;
+    for (var i = 0; i < crimps.length; i++){
+    
+        var posicion = crimps[i];
+        if (barajaActual.naipe[crimps[i]].crimpB){
+            posicion++;
+        }
+        opciones += "<option value="+posicion+">" + barajaActual.naipe[crimps[i]].crimpTag + "</option>";
+        
+    }
+    $(".alCrimp select").html(opciones);
+    $("#modalCortar .alNumeroCrimp").bootstrapSwitch('state', true);
+    
     $("#moduloPaquetes #naipe"+lugarAnt).css('margin-top',"-188px");
     $("#modalCortar").modal();
 }
 
+$( "#modalCortar .alNumeroCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+       $( "#modalCortar .alCrimp" ).collapse('hide');
+       
+       
+   }else{
+       mostrarCorte($(".alCrimp select").val());
+       $( "#modalCortar .alCrimp" ).collapse('show');
+   }
+});
+
 function actualizarCorte(){
 
-    mostrarCorte($("#alNumero").val())
+    mostrarCorte($("#alNumero").val());
 
+}
+
+function actualizarCorteCrimp(){
+    
+    
+    mostrarCorte($(".alCrimp select").val());
+    
 }
 
 function mostrarCorte(lugar){
