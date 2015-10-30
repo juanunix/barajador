@@ -120,7 +120,7 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Aleatoriedad</a>
                             <ul class="dropdown-menu w210">
-                                <li><a class="sfRandomOrg" href="#">API Random.org</a></li>
+                                <li class="collapse"><a class="sfRandomOrg" href="#">API Random.org</a></li>
                                 <li><a class="sfNumeroAleatorio" href="#">numero-aleatorio.com<span class="bug">BUG!</span></a></li>
                             </ul>
                         </li>
@@ -188,7 +188,7 @@
         <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
         <input type="button" class="btn btn-primary sfSattolo" value="Azar Sattolo">
-        <input type="button" class="btn btn-primary sfRandomOrg" value="Azar Random.org">
+        <input type="button" class="btn btn-primary sfRandomOrg" value="Azar Random.org" disabled>
     </div>
 </div>
 
@@ -272,8 +272,11 @@
       <div class="modal-body" style="text-align:justify">
           <div class="naipe"></div>
           <div class="detalles">
-              Código: <a href="http://eypacha.com.ar/barajador/docs/#matrizcodigos" target="_blank"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-              <input type="text" class="form-control" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+              Código: <a href="docs/#matrizcodigos" target="_blank"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+              <input type="text" class="editarCodigo form-control" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+              Crimp:
+              <input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control" data-handle-width="69">
+              
           </div>
       </div>
       <div class="modal-footer">
@@ -431,7 +434,7 @@
                 <option value="pana-light">Pana (light)</option>
                 <option value="pana-dark">Pana (dark)</option>
             </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" class="inputSettings form-control" type="checkbox" accesskey="r"> Número de posición en las cartas<br/>
+            <input id="mostrarRotulos" class="inputSettings form-control" type="checkbox" accesskey="r" checked> Número de posición en las cartas<br/>
             <input id="colorConsola" class="inputSettings" type="color" value="#000000"> Fondo de la consola<br/>
             <input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"> Texto de la consola<br/>
             <select id="fuenteConsola" class="inputSettings">
