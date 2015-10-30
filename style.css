@@ -18,6 +18,11 @@ body {
 
 }
 
+.barajaMatriz {
+    width: 100%;
+    overflow: hidden;
+}
+
 .dropdown-submenu>.dropdown-menu {
     top: 0;
     left: 100%;
