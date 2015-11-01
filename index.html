@@ -92,7 +92,7 @@
                         <ul class="dropdown-menu">
                             <li class="collapse"><a href="#" id="sfRepetir"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repetir</a></li>
                         <li><a href="#" class="sfInvertir"><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Invertir</a></li>
-                        <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
+                        <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
                         <li class="collapse divider"></li>
                         <li class="collapse"><a id="sfAlfa" href="#">Mezcla alfa</a></li>
                         <li class="collapse"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
@@ -272,9 +272,20 @@
       <div class="modal-body" style="text-align:justify">
           <div class="naipe"></div>
           <div class="detalles">
-              Código: <a href="docs/#matrizcodigos" target="_blank"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
-              <input type="text" class="editarCodigo form-control" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-              </div>
+              <table>
+                <tr>
+                  <td colspan="2" style="padding-bottom: 10px"><input type="checkbox" class="editarVer" data-size="small" data-handle-width="58" data-off-color="primary" data-on-text="Cara" data-off-text="Dorso" class="form-control" checked></td>
+                </tr>
+                <tr>
+                 <td><input type="text" class="editarCodigoCara form-control aC" maxlength="2" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
+                 <td><input type="text" class="editarCodigoDorso form-control aC" maxlength="2" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
+                </tr>
+                <tr>
+                  <td>Posición:<br/><input type="number" class="form-control aR editarPosicion" min="1"></td>
+                </tr>  
+              </table>
+
+            </div>
           <table>
             <tr>
                 <td>Crimp:<br/><input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control"></td>
@@ -299,7 +310,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Cortar...</h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...</h4>
       </div>
       <div class="modal-body">
             <table>
@@ -519,7 +530,7 @@
     <script src="main.js"></script>
     
     <!-- Menú contextual -->
-    <script src="js/context.min.js"></script>
+    <script src="js/context.js"></script>
     
     <!-- Screenshots -->
     <script type="text/javascript" src="js/html2canvas.min.js"></script>

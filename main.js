@@ -3,7 +3,7 @@ var imgDeck = "wiki";
 var imgBack = "bicycle-red";
 var vrChck0 = "glyphicon glyphicon-unchecked";
 var vrChck1 = "glyphicon glyphicon-check";
-var idCartaActual;
+var posCartaActual;
 var lugarAnt;
 var JsonApi = new RandomJs();
 var comandosHistorial = [];
@@ -70,7 +70,8 @@ $( "#vrStats" ).on( "click", verStats );
 $( "#modalStats .printStats" ).on( "click", printStats );
 
 // Editar carta
-$( "#modalEditarCarta .editarCodigo" ).on( "keyup", editarCodigoCarta );
+$( "#modalEditarCarta .editarCodigoCara" ).on( "keyup", editarCodigosCarta );
+$( "#modalEditarCarta .editarCodigoDorso" ).on( "keyup", editarCodigosCarta );
 $( "#modalEditarCarta .btnAplicar" ).on( "click", editarCartaAplicar );
 
 // Cambiar nombre del archivo modalScreen
@@ -469,8 +470,8 @@ function renderizar(){
     
     // Renderiza el tapete
     for (var i = 0;i < barajaActual.naipe.length;i++){
-        $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.naipe[i].face + '.png)');
-        $("#naipe"+i + " .rotulo").html((barajaActual.naipe[i].id+1));
+        $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.png)');
+        $("#naipe"+i + " .rotulo").html((i+1)+"<hr>"+(barajaActual.naipe[i].id+1));
     }
 
     guardarSesion("baraja_autosave",matrizFace);
@@ -798,14 +799,14 @@ function reiniciarTema(){
 // Menú contextual sobre naipe
 function cartaActual(carta){
     
-        idCartaActual = carta;
+        posCartaActual = carta;
    
 }
 
 function eliminarCarta(){
-    barajaActual.naipe.splice(idCartaActual,1);
+    barajaActual.naipe.splice(posCartaActual,1);
     abreBaraja();
-    consola("eliminar("+parseInt(idCartaActual+1)+")");
+    consola("eliminar("+parseInt(posCartaActual+1)+")");
 }
 
 function eliminarCartaX(cual){
@@ -831,24 +832,46 @@ function eliminarCartaX(cual){
 }
 
 function editarCarta(){
-    $("#modalEditarCarta .posicion").html(" #" + (barajaActual.naipe[idCartaActual].id+1));
-    $("#modalEditarCarta .editarCodigo").val(barajaActual.naipe[idCartaActual].face);
-    $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.naipe[idCartaActual].crimp);
-    $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.naipe[idCartaActual].crimpB);
+    $("#modalEditarCarta .posicion").html(" #" + (barajaActual.naipe[posCartaActual].id+1));
+    $("#modalEditarCarta .editarCodigoCara").val(barajaActual.naipe[posCartaActual].face);
+    $("#modalEditarCarta .editarCodigoDorso").val(barajaActual.naipe[posCartaActual].back);
+    $("#modalEditarCarta .editarVer").bootstrapSwitch('state', barajaActual.naipe[posCartaActual].canSee);
+    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.png)');
+    $("#modalEditarCarta .editarPosicion").val(posCartaActual+1);
+    $("#modalEditarCarta .editarPosicion").attr("max",barajaActual.naipe.length+1);
+    $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.naipe[posCartaActual].crimp);
+    $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.naipe[posCartaActual].crimpB);
     
-    if (barajaActual.naipe[idCartaActual].crimpTag == ""){
+    if (barajaActual.naipe[posCartaActual].crimpTag == ""){
         
         var letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $("#modalEditarCarta .editarCrimpTag").val(letras.split("")[barajaActual.getCrimps().length]);
         
     } else {
     
-        $("#modalEditarCarta .editarCrimpTag").val(barajaActual.naipe[idCartaActual].crimpTag);
+        $("#modalEditarCarta .editarCrimpTag").val(barajaActual.naipe[posCartaActual].crimpTag);
     }
     
-    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.naipe[idCartaActual].face + '.png)');
     $("#modalEditarCarta").modal();
 }
+
+$( "#modalEditarCarta .editarVer" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   
+    barajaActual.naipe[posCartaActual].canSee = state;
+    if (state){
+        var preview = $("#modalEditarCarta .editarCodigoCara").val();
+    } else {
+        var preview = $("#modalEditarCarta .editarCodigoDorso").val();
+    }
+    
+    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
+    
+});
+
+function editarCodigosCarta(){
+   
+}
+
 
 $( "#modalEditarCarta .editarCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
@@ -861,17 +884,25 @@ $( "#modalEditarCarta .editarCrimp" ).on('switchChange.bootstrapSwitch', functio
 });
 
 
-
-function editarCodigoCarta(){
-    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + $("#modalEditarCarta input").val() + '.png)');
-}
-
 function editarCartaAplicar(){
-    barajaActual.naipe[idCartaActual].face = $("#modalEditarCarta input").val();
-    barajaActual.naipe[idCartaActual].crimp = $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state');
-    barajaActual.naipe[idCartaActual].crimpB = !$("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state');
-    barajaActual.naipe[idCartaActual].crimpTag = $("#modalEditarCarta .editarCrimpTag").val();
-    abreBaraja();
+    
+    barajaActual.naipe[posCartaActual].face = $(".editarCodigoCara").val();
+    barajaActual.naipe[posCartaActual].back = $(".editarCodigoDorso").val();
+    barajaActual.naipe[posCartaActual].canSee = $(".editarVer").bootstrapSwitch('state');
+    barajaActual.naipe[posCartaActual].crimp = $(".editarCrimp").bootstrapSwitch('state');
+    barajaActual.naipe[posCartaActual].crimpB = !$(".editarCrimpTopBottom").bootstrapSwitch('state');
+    barajaActual.naipe[posCartaActual].crimpTag = $(".editarCrimpTag").val();
+    
+    var posNueva = ($("#modalEditarCarta .editarPosicion").val()-1);
+    
+    if (posCartaActual != posNueva){
+
+        consola(barajaActual.naipe[posCartaActual].face + " > " + posNueva);
+        barajaActual.move(posCartaActual,posNueva);
+        
+    }
+    
+    renderizar();
     $("#modalEditarCarta").modal('hide');
 }
 
@@ -882,7 +913,7 @@ function sfModalCortar(){
     $("#alNumero").val(0);
     
     var crimps = barajaActual.getCrimps();
-    var opciones;
+    var opciones = "";
     for (var i = 0; i < crimps.length; i++){
     
         var posicion = crimps[i];
@@ -951,9 +982,26 @@ function sfCortarMontar(){
 }
 
 function cortarPorAca(){
-    var salida = barajaActual.cortar(idCartaActual);
+    var salida = barajaActual.cortar(posCartaActual);
     renderizar();
     consola(salida);
+}
+
+function voltearEsta(){
+    barajaActual.turnOver(posCartaActual);
+    renderizar();
+}
+
+function moverATop(){
+    consola(barajaActual.naipe[posCartaActual].face + " > Top");
+    barajaActual.toTop(posCartaActual);
+    renderizar();
+}
+
+function moverABottom(){
+    consola(barajaActual.naipe[posCartaActual].face + " > Bottom");
+    barajaActual.toBotom(posCartaActual);
+    renderizar();  
 }
 
 function historial(){
@@ -1119,7 +1167,6 @@ function verStats(){
     $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>" + barajaActual.naipe.length + " = " + mezclasNecesarias);
     $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>1</sub> + <sup>1</sup>&frasl;<sub>2</sub> + ... + <sup>1</sup>&frasl;<sub>" + barajaActual.naipe.length + "</sub> = " + adivinacionesProbables);
     $("#modalStats .adivinacionesPorcentaje").html(adivinacionesPorcentaje + "%");
-    
     
 }
 

@@ -165,46 +165,16 @@ $(document).ready(function(){
 	
 	context.attach('#naipes li', [
 		{header: 'Opciones'},
-        {text: 'Cortar', href: '#', icon: 'retweet', action: cortarPorAca},
-        {divider: true},
+        {text: 'Mover a Top', href: '#', icon: 'arrow-up', action: moverATop},
+        {text: 'Mover a Bottom', href: '#', icon: 'arrow-down', action: moverABottom},
+        {divider:!0},
+        {text: 'Cortar por acá', href: '#', icon: 'random', action: cortarPorAca},
+        {text: 'Voltear', href: '#', icon: 'retweet', action: voltearEsta},
+		{text: 'Remover', href: '#', icon: 'remove-circle', action: eliminarCarta},
+        {divider:!0},
 		{text: 'Editar', href: '#', icon: 'edit', action: editarCarta},
-		{text: 'Eliminar', href: '#', icon: 'remove-circle', action: eliminarCarta},
 	]);
 	
 	context.settings({compress: true});
-	/*
-	context.attach('html', [
-		{header: 'Compressed Menu'},
-		{text: 'Back', href: '#'},
-		{text: 'Reload', href: '#'},
-		{divider: true},
-		{text: 'Save As', href: '#'},
-		{text: 'Print', href: '#'},
-		{text: 'View Page Source', href: '#'},
-		{text: 'View Page Info', href: '#'},
-		{divider: true},
-		{text: 'Inspect Element', href: '#'},
-		{divider: true},
-		{text: 'Disable This Menu', action: function(e){
-			e.preventDefault();
-			context.destroy('html');
-			alert('html contextual menu destroyed!');
-		}},
-		{text: 'Donar?', action: function(e){
-			e.preventDefault();
-			$('#donate').submit();
-		}}
-	]);
-	
-	$(document).on('mouseover', '.me-codesta', function(){
-		$('.finale h1:first').css({opacity:0});
-		$('.finale h1:last').css({opacity:1});
-	});
-	
-	$(document).on('mouseout', '.me-codesta', function(){
-		$('.finale h1:last').css({opacity:0});
-		$('.finale h1:first').css({opacity:1});
-	});
-    */
 	
 });

@@ -16,7 +16,13 @@ function EyDeck(cartas){
     // Definiendo funciones
     this.getMatriz = getMatriz;
     this.setOrder = setOrder;
+    this.move = move;
+    this.toTop = toTop;
+    this.toBottom = toBottom;
+    this.getCardById = getCardById;
     this.getCrimps = getCrimps;
+    this.getValue = getValue;
+    this.turnOver = turnOver;
     this.cortar = cortar;
     this.invertir = invertir;
     this.faroExt = faroExt;
@@ -29,14 +35,14 @@ function EyDeck(cartas){
     
 }
 
-
 // Crea el objeto del naipe individual
 function naipe(i,cara){
     
     // Definiendo aributos por default
     this.id = i;
     this.face = cara;
-    this.back = "dorso";
+    this.back = "DA";
+    this.canSee = true;
     this.crimp = false;
     this.crimpB = false;
     this.crimpTag = "";
@@ -78,15 +84,61 @@ function getCrimps(){
     
 }
 
+function getCardById(idParam){
+
+    var result;
+    for(i in this.naipe){
+        if(this.naipe[i].id === idParam){
+            result = this.naipe[i];
+            break;
+        }
+    }
+    
+    return result;
+}
+
 // Ordenar según strings con los Ids separados por comas
 function setOrder(cadena){
 
     var ides = cadena.split(",");
-    
+    var barajaTemp = this.splice();
     for (var i = 0; i < ides.length; i++){
-    //document.getElementById
+    
+        barajaActual.naipe[i] = barajaTemp.getCardById[i];
     
     }
+}
+
+// Devuelve la cara visible de la carta
+function getValue(carta) {
+    
+    if (this.naipe[carta].canSee){
+    
+        return this.naipe[carta].face;
+        
+    } else {
+    
+        return this.naipe[carta].back;
+        
+    }
+
+}
+
+// Voltea la carta cara arriba
+function turnOver(carta){
+    
+    if (isNaN(carta) || carta >= this.naipe.length){
+    
+        for (var i=0; i < this.naipe.length; i++){
+        
+            this.naipe[i].canSee = !this.naipe[i].canSee;
+            
+        }
+    } else {
+    
+        this.naipe[carta].canSee = !this.naipe[carta].canSee;
+    }
+    
 }
 
 // Cortar
@@ -339,4 +391,27 @@ function sattolo(){
     }
     
     return "sattolo";
+}
+
+function toTop(posCarta){
+    var barajaTemp =  this.naipe.slice();
+    this.naipe.splice(posCarta,1);
+    this.naipe.unshift(barajaTemp[posCarta]);
+}
+
+function toBottom(posCarta){
+    var barajaTemp = this.naipe.slice();
+    this.naipe.splice(posCarta,1);
+    this.naipe.push(barajaTemp[posCarta]);
+}
+
+function move(de,hasta){
+        
+    var barajaTemp =  this.naipe.slice();
+    this.naipe.splice(de,1);
+    var paqueteA = this.naipe.slice(0,hasta);
+    var paqueteB = this.naipe.slice(hasta);
+    paqueteA.push(barajaTemp[de]);
+    this.naipe = paqueteA.concat(paqueteB); ;
+    
 }
