@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Ey Pacha!">
+    <link rel="icon" href="../favicon.png">
+
+    <title>Desarrollo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../js/ie-emulation-modes-warning.js"></script>
+    <!-- Dropdown multinivel -->
+    <link href="style.css" rel="stylesheet">
+      
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+</head>
+
+  <body data-spy="scroll" data-target=".navbar" data-offset="50">
+<!-- Barra de menues -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=""><img alt="Brand" src="../favicon.png"></a>
+        </div>
+        <div class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav">
+                <li><a href="#ayuda">Ayuda del Barajador</a></li>
+                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Baraja<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#baraja">Descripción</a></li>
+                        <li><a href="#posiciones">Posiciones</a></li>
+                        <li><a href="#matriz">Matriz</a></li>
+                        <li><a href="#matrizcodigos">Códigos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<div id="ayuda" class="bs-docs-header">
+    <div class="container">
+        <h1>La Magia es infinita</h1>
+        <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ¡Tú puedes ser el financiador de este proyecto!</p>
+    </div>
+</div>
+      
+<div id="acercaDe">
+    <div class="container">
+        <h1>Acerca de Barajador</h1>
+        <p>Barajador es proyecto pensado para estar al servicio la comunidad cartomágica. Desarrollada para fomentar la investigación, la educación y el amor tanto a la magia como a las matemáticas.</p>
+    </div>
+</div>
+<div id="elEquipo">
+    <div class="container">
+        <h1>El Equipo</h1>
+        <p>Un equipo multidiciplinar de cartomagos y programadores trabajando en conjunto con el objetivo de desarrollar el mejor software en su especie, haciendo lo posible para superarse día a día:</p>
+        <div class="equipo row">
+          <div class="col-md-4">
+              <div class="avatar"><img src="img/ey-pacha.png" alt="Ey Pacha!" class="img-circle"></div>
+              <div class="detalle">
+              <div class="nombre">Ey Pacha!</div>
+              <div class="cargo"><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Director General</div>
+              <div class="mas">Mago, clown, programador...</div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="avatar"><img src="img/nicolas-pierri.jpg" alt="Nicolás Pierri" class="img-circle"></div>
+              <div class="detalle">
+              <div class="nombre">Nicolás Pierri</div>
+              <div class="cargo"><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Asesor cartomágico</div>
+              <div class="mas">Mago, amante de las faro</div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="avatar"><img src="img/gabriel-la-torre.jpg" alt="Gabriel La Torre" class="img-circle"></div>
+              <div class="detalle">
+              <div class="nombre">Gabriel La Torre</div>
+              <div class="cargo"><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Asesor de programación</div>
+              <div class="mas">Programador freelance, puede comunicarse con los gatos</div>
+              </div>
+          </div>
+        </div>
+        
+    </div>
+</div>
+<div id="financiamiento">
+    <div class="container">
+        <h1>¡Financia el desarrollo!</h1>
+        <p>¿Hay alguna herramienta que te gustaría que esté más desarrollada? ¿Tienes alguna idea en mente? Hay dos maneras de las cuales puedes colaborar con el proyecto:</p>
+        <div class="row">
+            
+            <div class="col-md-6">
+              <div class="icono"><img src="img/financiador-exclusivo.jpg" alt="Financiador colectivo" class="img-circle"></div>
+              <div class="detalle">
+              <div class="titulo">Financiador exclusivo</div>
+              <div class="descripcion">Tu financiamiento será ocupado en desarrollo del cual sólo tú podrás elegir qué hacer con él. Sólo tu podrás usar y decidir que se hará con lo que se ha desarrollado y su confidencialidad: la licencia de uso es de tu exclusividad y si deseas hasta puedes ponerle un valor de venta.</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="icono"><img src="img/financiador-colectivo.jpg" alt="Financiador colectivo" class="img-circle"></div>
+              <div class="detalle">
+              <div class="titulo">Financiador colectivo</div>
+              <div class="descripcion">Tu financiamiento será ocupado en desarrollo que será liberado a los usuarios de Barajador, a la comunidad mágica y de programadores. Puedes elegir si figurar en los agradecimientos de nuestra página o colaborar de forma anónima.</div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="queseviene">
+    <div class="container">
+        <h1>Lo que podemos hacer</h1>
+        <p>Estas son algunas de las tecnologías que podemos somos capaces de implementar.</p>
+        <div class="equipo row">
+          <div class="col-md-4">
+              <div class="avatar"><img src="img/controlar-caos.jpg" alt="Controal el caos" class="img-circle"></div>
+              <div class="detalle">
+              <div class="nombre">Controlar el caos</div>
+              <div class="cargo"><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Estadística y probabilidad avanzada</div>
+              <div class="mas">Informes configurables hasta donde lo imagen. Obtención de perfiles de probabilidad de espectadores reales.</div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="avatar"><img src="img/realidad-aumentada.jpg" alt="Realidad aumentada" class="img-circle"></div>
+              <div class="detalle">
+              <div class="nombre">Realidad aumentada</div>
+              <div class="cargo"><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Realidad+virtualidad</div>
+              <div class="mas">Reconocimiento de imágenes a tiempo real. Creación de una realidad mixta en tiempo real.</div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="avatar"><img src="img/lo-que-imagines.jpg" alt="Lo que imagines" class="img-circle"></div>
+              <div class="detalle">
+              <div class="nombre">Lo que imagines</div>
+              <div class="cargo"><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ¿Una idea innovadora?</div>
+              <div class="mas">Si lo puedes imaginarlo, puede hacerse, todo es posible en el mundo de la magia.</div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Main JS -->
+    <script src="main.js"></script>
+    <!-- Tracking de piwki -->
+    <script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setCookieDomain", "*.eypacha.com.ar"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//clowntube.tv/clowntube/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 2]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//clowntube.tv/clowntube/piwik/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+  </body>
+    
+</html>

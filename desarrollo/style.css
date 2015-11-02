@@ -1,0 +1,187 @@
+body {
+    position: relative;
+    background: silver;
+    padding-top:50px;
+}
+
+.dropdown-submenu {
+    position: relative;
+
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+.navbar {
+    -webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+}
+
+.navbar-brand img {
+    height: 50px;
+    display: inline;
+}
+.navbar-brand {
+    padding:0;
+    padding-right:10px;
+}
+
+.bs-docs-header{
+    position: relative;
+    padding: 30px 0;
+    color: #cdbfe3;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    background-color: #40001b;
+    background-image: url("../img/table/suits-light.png");
+}
+
+.bs-docs-header h1 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.centrado {
+    text-align: center;
+}
+
+figure {
+    text-align: center;
+}
+
+figure img{
+    max-width: 100%;
+    height: auto;
+}
+
+figcaption {
+    font-size: 10pt;
+    font-variant: small-caps;
+}
+
+.cards {
+    color: black;
+    font-weight: bold;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+code {
+    font-weight: bold;
+}
+
+@media (min-width: 768px){
+    .bs-docs-header {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        font-size: 24px;
+        text-align: left;
+    }
+    
+    .bs-docs-header h1 {
+        font-size: 60px;
+        line-height: 1;
+    }
+}
+
+@media (min-width: 992px){
+    .bs-docs-header h1, .bs-docs-header p {
+        margin-right: 380px;
+    }
+}
+
+.equipo, .financiamiento {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.avatar {
+    display: inline-block;
+    width: 28%;
+    margin-bottom: 20px;
+}
+
+.avatar img, .icono img {
+    width: 100%;
+    border:solid 2px #40001b;
+    -webkit-box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.4);
+    box-shadow: 0px 4px 3px 0px rgba(0,0,0,0.4);
+    
+}
+
+.icono img {
+    width: 140px;
+}
+
+.icono {
+    display: block
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.financiamiento .detalle {
+    width: 100%;
+}
+
+.equipo .detalle {
+    width: 70%;
+}
+
+.detalle {
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px 0px 0px 0px;
+    text-align: center;
+
+}
+
+.nombre, .titulo {
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.cargo {
+    font-variant: small-caps;
+    margin-bottom: 10px;
+}
