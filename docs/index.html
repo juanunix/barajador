@@ -48,6 +48,7 @@
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Baraja<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#baraja">Descripción</a></li>
+                        <li><a href="#posiciones">Posiciones</a></li>
                         <li><a href="#matriz">Matriz</a></li>
                         <li><a href="#matrizcodigos">Códigos</a></li>
                     </ul>
@@ -87,13 +88,34 @@
     </div>
 </div>
 
+ <div id="posiciones">
+    <div class="container">
+        <h2>Posiciones absolutas y relativas</h2>
+        <p>Ajustando las preferencias (o presionando <code>ALT+R</code>) puede activar o desactivar la vista de los números de posiciones sobre cada una de las cartas.</p>
+        <p>
+            <figure>
+                <img src="img/baraja-posiciones.png" alt="Baraja extendida en cinta">
+                <figcaption>Fig 2: Baraja con la vista de posiciones activada</figcaption>
+            </figure>
+        </p>
+        <p>Como notará cada una de la cartas tiene dos números, estos representan las posiciones:</p>
+        <ul class="dl-horizontal">
+            <li><b>Absoluta:</b><br/>
+            Arriba del índice. No se modifica con las mezclas. Indica el lugar que se encuentra la carta contando desde Top.<br/><br/></li>
+            <li><b>Relativa:</b><br/>
+            Debajo del índice. Se modifica con las mezclas. Indica dónde se encontraba la carta antes de mezclar.</li>
+        </ul>
+        <p>Como podrá comprobarlo en la baraja de la figura arriba, el 9<big>&spades;</big> ocupa la posición 18, habiendo comenzado en la posición 35 contando desde Top.</p>
+    </div>
+</div>
+      
 <div id="matriz">
     <div class="container">
         <h2>Matriz</h2>
         <p>Conceptualmente una baraja de cartas es una matriz unidireccional, una lista de elementos ordenados (cartas virtuales en este caso).</p>
         <figure>
             <img src="img/varias-matrices.png" alt="Varias matrices">
-            <figcaption>Fig 2: Varias matrices</figcaption>
+            <figcaption>Fig 3: Varias matrices</figcaption>
         </figure>
         <p>En la figura de arriba se pueden ver tres paquetes distintos de cartas, sus matrices se representan separando cada carta con comas.</p>
         <p>Para el full del primer caso <code class="cards">KT,KC,KP,8C,8T</code>, para el paquete del centro <code class="cards">AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC</code> y para el último paquete <code class="cards">6T,2D,6T,JC,5D,9T</code>.</p>
@@ -128,7 +150,7 @@
         <dd>Carta en blanco</dd>
              <dt><code>DR</code></dt>
         <dd>Dorso rojo</dd>
-             <dt><code>DA</code></dt>
+             <dt><code>DR</code></dt>
         <dd>Dorso azul</dd>
         </dl>
     </div>
@@ -142,7 +164,7 @@
         <p>
             <figure>
                 <img src="img/consola.png" alt="Consola vacía">
-                <figcaption>Fig 2: Consola vacía</figcaption>
+                <figcaption>Fig 4: Consola vacía</figcaption>
             </figure>
         </p>
     </div>
@@ -225,6 +247,8 @@
         <h2>Atajos</h1>
         <p>Para acceder más rapidamente a las distintas opciones del hemos procurado atajos con el teclado para las funciones más comunes.</p>
         <dl class="dl-horizontal">
+            <dt><code>ALT+C</code></dt>
+        <dd>Abre la ventana de corte.</dd>
             <dt><code>ALT+O</code></dt>
         <dd>Mezcla Faro Exterior.</dd>
             <dt><code>ALT+I</code></dt>
@@ -233,11 +257,13 @@
         <dd>Mezcla Antifaro Exterior.</dd>
             <dt><code>ALT+K</code></dt>
         <dd>Mezcla Antifaro Interior.</dd>
+            <dt><code>ALT+.</code></dt>
+        <dd>Abre la ventana de Mezcla Faro avanzada.</dd>
         </dl>
         
         <dl class="dl-horizontal">
-            <dt><code>ALT+E</code></dt>
-        <dd>Muestra y oculta las etiquetas de posisión sobre las cartas</dd>
+            <dt><code>ALT+R</code></dt>
+        <dd>Muestra y oculta las posiciones absolutas y relativas</dd>
             <dt><code>ALT+Q</code></dt>
         <dd>Muestra y oculta el módulo de la matriz</dd>
             <dt><code>ALT+A</code></dt>
