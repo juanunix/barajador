@@ -282,6 +282,12 @@ function abreBaraja(){
     }
     contenido = contenido + '</ul>';
     
+    if ($("#mostrarRotulos").bootstrapSwitch('state')){
+        $(".rotulo").css('display', 'table-caption');
+    }else{
+        $(".rotulo").css('display', 'none');
+    };
+    
     $("#moduloPaquetes").html(contenido);
     renderizar();
     
@@ -487,6 +493,12 @@ function renderizar(){
 function reordenable(){
 
 $("#naipes").sortable({
+                opacity: 1,
+                revert: 700,
+                placeholder: "naipe-vacio",
+                scroll: false,
+                grid: [ 17, 1 ],
+                cursorAt: { left: 8, top:8},
 			    update: function(){
 				var ordenElementos = $("#naipes").sortable("toArray");
                 var numero;
