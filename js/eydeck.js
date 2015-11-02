@@ -153,6 +153,7 @@ function turnOver(carta){
 
 // Cortar
 function cortar(cantidad){
+    
     var paqueteA = this.naipe.slice(0,cantidad);
     var paqueteB = this.naipe.slice(cantidad);
     this.naipe = paqueteB.concat(paqueteA); 
