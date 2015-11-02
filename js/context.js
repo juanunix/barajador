@@ -11,7 +11,7 @@ var context = context || (function () {
 		filter: function ($obj) {
 			// Modify $obj, Do not return
 		},
-		above: 'auto',
+		above: 'false',
 		preventDoubleContext: true,
 		compress: false
 	};
@@ -128,6 +128,7 @@ var context = context || (function () {
 					left: e.pageX - 13
 				}).fadeIn(options.fadeSpeed);
 			} else if (typeof options.above == 'string' && options.above == 'auto') {
+    
 				$dd.removeClass('dropdown-context-up');
 				var autoH = $dd.height() + 12;
 				if ((e.pageY + autoH) > $('html').height()) {
@@ -141,7 +142,12 @@ var context = context || (function () {
 						left: e.pageX - 13
 					}).fadeIn(options.fadeSpeed);
 				}
-			}
+			} else if (typeof options.above == 'string' && options.above == 'dropdown'){
+                    $dd.css({
+						top: e.pageY + 10,
+						left: e.pageX - 13
+					}).fadeIn(options.fadeSpeed);
+                } 
 		});
 	}
 	
@@ -175,6 +181,6 @@ $(document).ready(function(){
 		{text: 'Editar', href: '#', icon: 'edit', action: editarCarta},
 	]);
 	
-	context.settings({compress: true});
+	context.settings({compress: true, above: 'dropdown'});
 	
 });
