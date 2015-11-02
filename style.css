@@ -122,6 +122,10 @@ input[type="color"]{
     text-align: center;
 }
 
+.aJ {
+    text-align: justify;
+}
+
 .inputSettings input {
     height: 22px;
     padding: 0px;
@@ -414,4 +418,30 @@ input[type="color"]{
 
 #modalStats .modal-body {
     font-size: 9pt;
+}
+
+.input-group-addon {
+    cursor: pointer;
+}
+
+.btn-default {
+    background: #DDD;
+}
+
+.btn-default:hover {
+    background: #CCC;
+}
+
+#modalDesarrollarFeature .modal-header div {
+    font-style: italic;
+    padding: 5px 20px 0px;
+}
+
+#modalDesarrollarFeature .jumbotron {
+    margin-bottom: 0px;
+}
+
+#modalDesarrollarFeature h2 {
+    line-height: 0;
+    padding-bottom: 30px;
 }

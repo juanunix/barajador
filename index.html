@@ -276,8 +276,8 @@
                   <td colspan="2" style="padding-bottom: 10px"><input type="checkbox" class="editarVer" data-size="small" data-handle-width="58" data-off-color="primary" data-on-text="Cara" data-off-text="Dorso" class="form-control" checked></td>
                 </tr>
                 <tr>
-                 <td><input type="text" class="editarCodigoCara form-control aC" maxlength="2" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
-                 <td><input type="text" class="editarCodigoDorso form-control aC" maxlength="2" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
+                 <td><input type="text" class="editarCodigoCara form-control aC" maxlength="3" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
+                 <td><input type="text" class="editarCodigoDorso form-control aC" maxlength="3" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
                 </tr>
                 <tr>
                   <td>Posición:<br/><input type="number" class="form-control aR editarPosicion" min="1"></td>
@@ -318,8 +318,18 @@
                 </tr>
                 <tr>
                     <td class="w50p">Posición:<br/><input type="number" id="alNumero" class="form-control" value="26"></td>
-                    <td class="w50p"><div class="alCrimp collapse">Etiqueta:<br/><select class="form-control"></select>
-                    </div></td>
+                    <td class="w50p">
+                        <div class="alCrimp collapse">Etiqueta:<br/><select class="form-control"></select></div>
+                        <div class="alNumeroError collapse in">Error:<br/>
+                            <span class="input-group">
+                                <span class="input-group-addon">&plusmn;</span>
+                              <input type="number" class="form-control aR" value="0" min="0" max="99">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">%</button>
+                              </span>
+                            </span>
+                        </div>
+                    </td>
                 </tr>
             </table>
             Interactivo:
@@ -330,6 +340,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary btnMontar">Montar</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<!-- Feature en desarrollo -->
+<div class="modal fade" id="modalDesarrollarFeature" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ¿Le gustaría contar con esta herramienta?</h4>
+          <div><span class="glyphicon glyphicon-education" aria-hidden="true"></span>"Cálculo de exactitud y precisión"</div>
+      </div>
+      <div class="modal-body jumbotron">
+        <h2>¡Calcule la imperfección!</h2>
+        <p class="aJ">El análisis y el conocimiento de la probabilidad matemática de la baraja de cartas tiene un <i>gran potencial oculto</i> que puede impactar directamente en sus juegos de cartomagia. Usted puede optar por ser <i>inversor colectivo o exclusivo</i> de dicha herramienta.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="desarrollo" target="_blank" class="btn btn-primary btn-lg saberMas">Quiero saber más</a>
+        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Tal vez más tarde</button>
       </div>
     </div>
   </div>

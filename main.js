@@ -59,6 +59,8 @@ $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
 $( "#modalFaro .btnAplicar" ).on( "click", faroAplicar );
 $( ".sfFaroAv" ).on( "click", faroShow );
 
+// Inversores
+$( ".saberMas" ).on( "click", saberMas );
 
 // Menu: Ver Check / UnCheck
 $( "#vrRefresh" ).on( "click", refresh );
@@ -71,8 +73,9 @@ $( "#vrStats" ).on( "click", verStats );
 $( "#modalStats .printStats" ).on( "click", printStats );
 
 // Editar carta
-$( "#modalEditarCarta .editarCodigoCara" ).on( "keyup", editarCodigosCarta );
-$( "#modalEditarCarta .editarCodigoDorso" ).on( "keyup", editarCodigosCarta );
+$( "#modalEditarCarta .editarCodigoCara" ).on( "keyup", mostrarPreviewCarta );
+$( "#modalEditarCarta .editarCodigoDorso" ).on( "keyup", mostrarPreviewCarta );
+$( "#modalEditarCarta .editarVer" ).on('switchChange.bootstrapSwitch', mostrarPreviewCarta);
 $( "#modalEditarCarta .btnAplicar" ).on( "click", editarCartaAplicar );
 
 // Cambiar nombre del archivo modalScreen
@@ -893,23 +896,15 @@ function editarCarta(){
     $("#modalEditarCarta").modal();
 }
 
-$( "#modalEditarCarta .editarVer" ).on('switchChange.bootstrapSwitch', function(event, state) {
-   
-    barajaActual.naipe[posCartaActual].canSee = state;
-    if (state){
+function mostrarPreviewCarta(){
+    if ($( "#modalEditarCarta .editarVer" ).bootstrapSwitch('state')){
         var preview = $("#modalEditarCarta .editarCodigoCara").val();
-    } else {
+    }else {
         var preview = $("#modalEditarCarta .editarCodigoDorso").val();
     }
-    
     $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
-    
-});
 
-function editarCodigosCarta(){
-   
 }
-
 
 $( "#modalEditarCarta .editarCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
@@ -971,11 +966,12 @@ function sfModalCortar(){
 $( "#modalCortar .alNumeroCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
        $( "#modalCortar .alCrimp" ).collapse('hide');
-       
+       $( "#modalCortar .alNumeroError" ).collapse('show');
        
    }else{
        mostrarCorte($(".alCrimp select").val());
        $( "#modalCortar .alCrimp" ).collapse('show');
+       $( "#modalCortar .alNumeroError" ).collapse('hide');
    }
 });
 
@@ -1013,6 +1009,13 @@ function mostrarCorte(lugar){
 }
 
 function sfCortarMontar(){
+    
+    if($( "#modalCortar .alNumeroCrimp" ).bootstrapSwitch('state') && parseInt($(".alNumeroError input").val()) !== 0){
+    
+    $("#modalDesarrollarFeature").modal();
+    return;
+    }
+    
     var salida = barajaActual.cortar($("#alNumero").val());
     $("#modalCortar").modal('hide');
     renderizar();
@@ -1223,5 +1226,11 @@ function redondeo(numero,decimales){
     }
     
     return numeroRedondo;
+    
+}
+
+function saberMas(){
+
+    
     
 }
