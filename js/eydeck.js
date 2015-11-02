@@ -16,6 +16,7 @@ function EyDeck(cartas){
     // Definiendo funciones
     this.getMatriz = getMatriz;
     this.setOrder = setOrder;
+    this.refreshOrder = refreshOrder;
     this.move = move;
     this.toTop = toTop;
     this.toBottom = toBottom;
@@ -65,6 +66,14 @@ function getMatriz(propiedad,delimitador){
     return cadena
 }
 
+// Actualiza los Ids (Posiciones relativas)
+function refreshOrder(){
+    
+    for (var i = 0; i < this.naipe.length; i++){
+        this.naipe[i].id = i;
+    }
+}
+
 // Genera un array con las posiciones de las cartas crimpeadas
 function getCrimps(){
 
@@ -84,6 +93,7 @@ function getCrimps(){
     
 }
 
+// Devuelve la carta partiendo de su Id
 function getCardById(idParam){
 
     var result;
@@ -101,7 +111,7 @@ function getCardById(idParam){
 function setOrder(cadena){
 
     var ides = cadena.split(",");
-    var barajaTemp = this.splice();
+    var barajaTemp = this.naipe.splice();
     for (var i = 0; i < ides.length; i++){
     
         barajaActual.naipe[i] = barajaTemp.getCardById[i];
@@ -124,7 +134,7 @@ function getValue(carta) {
 
 }
 
-// Voltea la carta cara arriba
+// Voltea la carta
 function turnOver(carta){
     
     if (isNaN(carta) || carta >= this.naipe.length){
@@ -344,12 +354,12 @@ function fisherYates(){
     var n = this.naipe.length;
     var i;
     this.naipe = [];
-    // While there remain elements to shuffle…
+    // Mientras queden cartas por mezclar...
     while (n) {
-        // Pick a remaining element…
+        // Elije una carta del remanente...
         i = Math.floor(Math.random() * n--);
 
-        // And move it to the new array.
+        // Y la agrega al nuevo array
         this.naipe.push(barajaTemp.splice(i, 1)[0]);
     }
     
@@ -393,18 +403,21 @@ function sattolo(){
     return "sattolo";
 }
 
+// Mover una carta a Top 
 function toTop(posCarta){
     var barajaTemp =  this.naipe.slice();
     this.naipe.splice(posCarta,1);
     this.naipe.unshift(barajaTemp[posCarta]);
 }
 
+// Mover una carta a Bottom
 function toBottom(posCarta){
     var barajaTemp = this.naipe.slice();
     this.naipe.splice(posCarta,1);
     this.naipe.push(barajaTemp[posCarta]);
 }
 
+// Mover una carta
 function move(de,hasta){
         
     var barajaTemp =  this.naipe.slice();
