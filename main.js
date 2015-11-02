@@ -24,6 +24,7 @@ $( "#ordenRosarioUnusQuinque" ).on( "click", ordenarRosarioUnusQuinque);
 $( "#ordenRosario18Reyes" ).on( "click", ordenarRosario18Reyes);
 $( "#ordenSoloAces" ).on( "click", ordenarSoloAces);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
+$( "#reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -186,8 +187,6 @@ function iniciar(){
         $("#liFullScreen").show();
     }
     
-    
-    
 }
 
 iniciar();
@@ -242,9 +241,15 @@ function ordenarMnemonica(){
 
 // Ordenar personalizadamente
 function ordenarPersonal(){
-    barajaActual= new EyDeck($("#ordenPersonal").val()); 
+    barajaActual = new EyDeck($("#ordenPersonal").val()); 
     abreBaraja();
 }
+
+function reiniciarPosiciones(){
+    barajaActual.refreshOrder();
+    abreBaraja();
+}
+
 // Función de Renderización
 function abreBaraja(){
      
@@ -252,7 +257,7 @@ function abreBaraja(){
     var rotulos = '';
 
     for (var i = 0;i < barajaActual.naipe.length ;i++){
-        contenido = contenido + '<li><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.naipe[i].id+1)+'</div></a></li>';
+        contenido = contenido + '<li id="'+i+'"><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.naipe[i].id+1)+'</div></a></li>';
         
     }
     contenido = contenido + '</ul>';
@@ -276,7 +281,6 @@ function abreBaraja(){
         
     }
     contenido = contenido + '</ul>';
-    
     
     $("#moduloPaquetes").html(contenido);
     renderizar();
@@ -476,6 +480,28 @@ function renderizar(){
 
     guardarSesion("baraja_autosave",matrizFace);
     guardarSesion("baraja_posiciones_autosave",barajaActual.getMatriz("id",","));
+    reordenable();
+        
+}
+
+function reordenable(){
+
+$("#naipes").sortable({
+			    update: function(){
+				var ordenElementos = $("#naipes").sortable("toArray");
+                var numero;
+                for (var i = 0; i < barajaActual.naipe.length; i++){
+                    numero = parseInt(ordenElementos[i]);
+                    if (i !== numero && (i+1) !== numero){
+                        barajaActual.move(numero,i);
+                        consola("#"+(numero+1)+" > #"+(i+1))
+                        abreBaraja();
+                        break;
+                    }
+                }
+                
+			    }
+			});
 }
 
 // Ver Modulos
@@ -1161,7 +1187,7 @@ function verStats(){
     adivinacionesPorcentaje = redondeo(adivinacionesPorcentaje,2);
     adivinacionesProbables = redondeo(adivinacionesProbables,redond);
     
-    $("#modalStats .barajaMatriz").html(barajaActual.getMatriz("face",", "));
+    $("#modalStats .barajaMatriz").html("["+barajaActual.getMatriz("face",",")+"]");
     $("#modalStats .cantidad").html(barajaActual.naipe.length);
     $("#modalStats .permutaciones").html(barajaActual.naipe.length + "! = " + permutaciones);
     $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>" + barajaActual.naipe.length + " = " + mezclasNecesarias);

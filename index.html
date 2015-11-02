@@ -57,8 +57,7 @@
                                 <li class="disabled"><a href="#">Más...</a></li>
                             </ul>
                         </li>
-                        
-                        
+                        <li><a id="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
                             <ul class="dropdown-menu">
@@ -461,7 +460,7 @@
                 <option value="pana-light">Pana (light)</option>
                 <option value="pana-dark">Pana (dark)</option>
             </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" class="inputSettings form-control" type="checkbox" accesskey="r" checked> Número de posición en las cartas<br/>
+            <input id="mostrarRotulos" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked> Posiciones absolutas y relativas<br/>
             <input id="colorConsola" class="inputSettings" type="color" value="#000000"> Fondo de la consola<br/>
             <input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"> Texto de la consola<br/>
             <select id="fuenteConsola" class="inputSettings">
@@ -506,36 +505,19 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-switch.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.min.js"></script>
-
-    <!-- RANDOM.ORG API -->
     <script src="js/randomorg-js.min.js"></script>
-    
-    <!-- Compresión -->
-    <script language="javascript" src="js/lz-string.min.js"></script>
-    
-    <!-- Fullscreen -->
+    <script src="js/lz-string.min.js"></script>
     <script src="js/jquery.fullscreen.js"></script>
-    
-    <!-- eyDeck! -->
-    <script type="text/javascript" src="js/eydeck.js"></script>
-    
-    <!-- Big numbers -->
-    <script type="text/javascript" src="js/bignumbers.js"></script>
-         
-    <!-- Script principal -->
+    <script src="js/eydeck.js"></script>
+    <script src="js/bignumbers.js"></script>
     <script src="main.js"></script>
-    
-    <!-- Menú contextual -->
     <script src="js/context.js"></script>
-    
-    <!-- Screenshots -->
-    <script type="text/javascript" src="js/html2canvas.min.js"></script>
-    
-    <script type="text/javascript" src="js/print.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+    <script src="js/print.js"></script>
     <script>
     $(function(argument) {
       $.fn.bootstrapSwitch.defaults.onText = 'SI';

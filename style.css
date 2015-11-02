@@ -19,8 +19,7 @@ body {
 }
 
 .barajaMatriz {
-    width: 100%;
-    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .dropdown-submenu>.dropdown-menu {
