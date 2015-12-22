@@ -1,5 +1,5 @@
 # BARAJADOR
-Simulador de baraja online. Un programa pensado para la investigación de las propiedades de una baraja de cartas, ordenamientos, mezclas, informes y estadísticas.
+Simulador de baraja online. Un programa pensado para la investigación de las propiedades de una baraja de cartas, ordenamientos, mezclas, gráficos e informes.
 
 ![Screenshot](https://raw.githubusercontent.com/eypacha/barajador/master/img/screenshot.png)
 
