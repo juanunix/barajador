@@ -232,13 +232,13 @@ function ordenarRosarioDixRois(){
 
 function ordenarRosarioUnusQuinque(){
     barajaActual= new EyDeck("AP,5C,9T,JD,6P,4C,2T,KD,7P,8C,QT,3D,10P,AC,5T,9D,JP,6C,4T,2D,KP,7C,8T,QD,3P,10C,AT,5D,9P,JC,6T,4D,2P,KC,7T,8D,QP,3C,10T,AD,5P,9C,JT,6D,4P,2C,KT,7D,8P,QC,3T,10D");
-    consola('"Unus quinque noven fámulus sex quatuor duo Rex septem acto faemina trina decem"')
+    consola('"Unus quinque noven fámulus sex quatuor duo Rex septem acto faemina trina decem"');
     abreBaraja();
 }
 
 function ordenarRosario18Reyes(){
     barajaActual= new EyDeck("10P,8C,KT,7D,2P,3C,AT,4D,9P,QC,6T,JD,5P,10C,8T,KD,7P,2C,3T,AD,4P,9C,QT,6D,JP,5C,10T,8D,KP,7C,2T,3D,AP,4C,9T,QD,6P,JC,5T,10D,8P,KC,7T,2D,3P,AC,4T,9D,QP,6C,JT,5D");
-    consola('"18 Reyes sentados entre las 49 damas se van al cine"')
+    consola('"18 Reyes sentados entre las 49 damas se van al cine"');
     abreBaraja();
 }
 
@@ -257,6 +257,7 @@ function ordenarPersonal(){
 
 function reiniciarPosiciones(){
     barajaActual.refreshOrder();
+    consola('reiniciar');
     abreBaraja();
 }
 
@@ -640,7 +641,7 @@ function ejecutarComando(texto){
                 reiniciarPosiciones();
                 return;
             case "historial":
-            case "h":
+            case "hist":
                 historial();
                 return;
             case "cortar":
@@ -1007,6 +1008,13 @@ function mostrarCorte(lugar){
         }
     }
     lugarAnt = lugar;
+}
+
+function sfCortar(numero){
+    var salida = barajaActual.cortar(numero);
+    renderizar();
+    consola(salida);
+    
 }
 
 function sfCortarMontar(){
