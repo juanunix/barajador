@@ -208,12 +208,16 @@
         
         
         <dl class="dl-horizontal">
-        <dt><code>cortar(n)</code></dt>
+        <dt><code>cortar(n)</code> / <code>cut(n)</code></dt>
         <dd>Corta un paquete de <code>n</code> cartas de arriba hacia abajo si <code>n</code> es positivo, y de abarjo hacia arriba si <code>n</code>es negativo.</dd>
         <dt><code>invertir</code> / <code>inv</code></dt>
         <dd>Invierte una a una el orden de la cartas de la baraja.</dd>
-        <dt><code>invertir(n) / <code>inv(n)</code></code></dt>
+        <dt><code>invertir(n)</code> / <code>inv(n)</code></dt>
         <dd>Invierte una a una el orden de las primeras <code>n</code> cartas de la baraja contando desde TOP si <code>n</code> es positivo y desde BOTTOM si <code>n</code> es negativo.</dd>
+        <dt><code>voltear(n)</code> / <code>turn(n)</code></dt>
+        <dd>Voltea la carta en la <code>n</code> posición.</dd>
+        <dt><code>voltear(n,m)</code></dt>
+        <dd>Voltea desde la carta en la <code>n</code> posición <code>m</code> cantidad de cartas. También  <code>turn(n,m)</code></dd>
         <dt><code>eliminar(n)</code> / <code>del(n)</code></dt>
         <dd>Elimina la carta ubicada en la <code>n-sima</code>: desde TOP si <code>n</code> es positivo y desde BOTTOM si <code>n</code> es negativo.</dd>  
         </dl>
@@ -221,7 +225,7 @@
         <dl class="dl-horizontal">
             <dt><code>faroExt</code> / <code>fo</code></dt>
         <dd>Realiza una mezcla Faro Exterior.</dd>
-            <dt><code>faroInt<code> / </code>fi</code></dt>
+            <dt><code>faroInt</code> / <code>fi</code></dt>
         <dd>Realiza una mezcla Faro Interior.</dd>   
             <dt><code>antiFaroExt</code> / <code>-fo</code></dt>
         <dd>Realiza una mezcla Antifaro Exterior.</dd>
