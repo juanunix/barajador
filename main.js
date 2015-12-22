@@ -26,6 +26,7 @@ $( "#ordenRosario18Reyes" ).on( "click", ordenarRosario18Reyes);
 $( "#ordenSoloAces" ).on( "click", ordenarSoloAces);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
+$( ".sfNevar" ).on( "click", sfNevar);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -156,15 +157,15 @@ function iniciar(){
     
     // Carga las preferencias guardadas
     if ( localStorage.getItem("tapete_fondo") ) {
-        var tapete_fondo = abrirLocal("tapete_fondo");
+        var tapete_fondo = "rgb(0, 3, 29)";// abrirLocal("tapete_fondo");
         $('#colorTapete').val(tapete_fondo);
-        $('#tapeteFondo').css('background-color',tapete_fondo);
+        $('body').css('background-color',tapete_fondo);
     }
     
     if ( localStorage.getItem("tapete_textura") ) {
-        var tapete_textura = abrirLocal("tapete_textura");
+        var tapete_textura = "night-light" // abrirLocal("tapete_textura");
         $('#texturaTapete').val(tapete_textura);
-        $('#tapeteFondo').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
+        $('body').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
     }
     
     if ( localStorage.getItem("consola_fondo") ) {
@@ -645,9 +646,7 @@ function ejecutarComando(texto){
                 historial();
                 return;
             case "nevar":
-                $(document).ready( function(){
-                $.fn.snow();
-                });
+                fsNevar()
                 return;
             case "cortar":
             case "cut":
@@ -774,13 +773,13 @@ function screenshotConsola(){
 
 function cambiarColorTapete(){
     var color = $('#colorTapete').val();
-    $('#tapeteFondo').css('background-color',color);
+    $('body').css('background-color',color);
     guardarLocal("tapete_fondo",color);
 }
 
 function cambiarTexturaTapete(){
     var tapete_textura = $('#texturaTapete').val();
-    $('#tapeteFondo').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
+    $('body').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
     guardarLocal("tapete_textura",tapete_textura);
 }
 
@@ -1276,4 +1275,10 @@ function obtenerOrden(){
 
 function saberMas(){
 
+}
+
+function sfNevar(){
+    $(document).ready( function(){
+      $.fn.snow();
+    });
 }
