@@ -644,6 +644,11 @@ function ejecutarComando(texto){
             case "hist":
                 historial();
                 return;
+            case "nevar":
+                $(document).ready( function(){
+                $.fn.snow();
+                });
+                return;
             case "cortar":
             case "cut":
                 sfCortar(argumento);
