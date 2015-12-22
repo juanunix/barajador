@@ -30,6 +30,7 @@ function EyDeck(cartas){
     this.faroInt = faroInt;
     this.antiFaroExt = antiFaroExt;
     this.antiFaroInt = antiFaroInt;
+    this.milkSuffle = milkSuffle;
     this.fisherYates = fisherYates;
     this.durstenfeld = durstenfeld;
     this.sattolo = sattolo;
@@ -347,7 +348,21 @@ function antiFaroInt(cantidad){
     }    
     
 }
-
+// Mezcla Alfa / Klondike
+function milkSuffle(){
+    var barajaTemp = this.naipe.slice();    
+    cantidad = this.naipe.length;
+    
+    alert("milk");
+    for (var i = 0; i < cantidad; i++){
+        if ( cantidad % 2 == 0 ){
+            this.naipe[i] = barajaTemp[((cantidad - i) / 2) - 1]
+        } else {
+            this.naipe[i] = barajaTemp[(cantidad  + i - 1)/2]
+        }
+    }
+    return "milkShuffle";
+}
 // Mezcla pseudoaleatoria Fisher-Yates
 function fisherYates(){
 

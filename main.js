@@ -8,6 +8,7 @@ var lugarAnt;
 var JsonApi = new RandomJs();
 var comandosHistorial = [];
 var comandoHistorialN = 0;
+var ordenI;
 // Inicia el menu de herramientas
 
 // Menu HELP
@@ -24,7 +25,7 @@ $( "#ordenRosarioUnusQuinque" ).on( "click", ordenarRosarioUnusQuinque);
 $( "#ordenRosario18Reyes" ).on( "click", ordenarRosario18Reyes);
 $( "#ordenSoloAces" ).on( "click", ordenarSoloAces);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
-$( "#reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
+$( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -58,6 +59,12 @@ $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
 $( "#modalFaro .btnAplicar" ).on( "click", faroAplicar );
 $( ".sfFaroAv" ).on( "click", faroShow );
+
+// otras mezclas
+$( "#sfAlfa" ).on("click", sfMilkSuffle);
+
+// Otras cosas
+$( ".vrOrden").on("click", obtenerOrden);
 
 // Inversores
 $( ".saberMas" ).on( "click", saberMas );
@@ -265,7 +272,6 @@ function abreBaraja(){
     }
     contenido = contenido + '</ul>';
     
-    
     $("#tapete").html(contenido);
     
     contenido = '<ul class="paqueteBaraja" id="paqueteNaipes">';
@@ -280,7 +286,6 @@ function abreBaraja(){
         }
         
         contenido = contenido + '<li id="naipe' + i + '"><a class="paqueteNaipe ' + naipeBorde + '" onmousedown="javascript:mostrarCorte('+(barajaActual.naipe.length-i)+');"></a></li>';
-        
         
     }
     contenido = contenido + '</ul>';
@@ -446,6 +451,12 @@ function sfAntiFaroInt(cantidad){
 
 // Renderiza la baraja
 function renderizar(){
+     // Calcular órden
+        ordenI = [];
+        for (var i = 0;i < barajaActual.naipe.length ;i++){
+            ordenI[barajaActual.naipe[i].id] = i+1;
+        }
+        $("#vrGraph").attr("href","graficador?orden="+ordenI);
     
     // Renderiza la Matriz v Ascii
     if (true == false){
@@ -472,7 +483,7 @@ function renderizar(){
 
         } 
         document.getElementById("matrizAscii").innerHTML = contenido;
-    
+
     
     }
     
@@ -481,10 +492,13 @@ function renderizar(){
     $("#matriz").attr("value", matrizFace);
     $("#ordenPersonal").val(matrizFace);
     
+
     // Renderiza el tapete
     for (var i = 0;i < barajaActual.naipe.length;i++){
         $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.png)');
         $("#naipe"+i + " .rotulo").html((i+1)+"<hr>"+(barajaActual.naipe[i].id+1));
+        
+        
     }
 
     guardarSesion("baraja_autosave",matrizFace);
@@ -590,7 +604,7 @@ function repetirComando(comando, multipicador){
 }
 
 function ejecutarComando(texto){
-    
+
     var argAbre = texto.indexOf("(");
     var argCierra = texto.indexOf(")");
     var argumento = "";
@@ -598,107 +612,94 @@ function ejecutarComando(texto){
     if (argAbre != -1 ){
         
         if (argAbre == 0) {consola("Sintáxis no válida")}
-        argumento = parseInt(texto.substring(argAbre+1,argCierra));
+        argumento = texto.substring(argAbre+1,argCierra);
         texto = texto.substring(0,argAbre);
     }
     
     switch (texto) {
             case "help":
             case "ayuda":
-            {
                 consola('Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.');
                 return;
-            }
             case "version":
-            {
                 consola('Barajador v0.1 (beta)');
                 return;
-            }
             case "limpiar":
             case "clear":
-            {
-            // Limpiar consola
+            case "clr":
                 $("#consolaOutput").text("");
                 return;
-            }
             case "recargar":
             case "refresh":
                 refresh();
                 return;
+            case "orden":
+                obtenerOrden();
+                return;
+            case "reiniciar":
+                reiniciarPosiciones();
+                return;
             case "historial":
+            case "h":
                 historial();
                 return;
             case "cortar":
+            case "cut":
                 sfCortar(argumento);
                 return;
+            case "voltear":
+            case "turn":
+                sfVoltearEstas(argumento);
+                return;
             case "invertir":
-            {
+            case "inv":
                 sfInvertir(argumento);
                 return;
-            }
             case "eliminar":
+            case "del":
                 eliminarCartaX(argumento);
                 return;
             case "fisheryates":
-            {
                 sfFisherYates();
                 return;
-            }
             case "durstenfeld":
-            {
                 sfDurstenfeld();
                 return;
-            }
             case "sattolo":
-            {
                 sfSattolo();
                 return;
-            }
             case "randomorg":
-            {
                 sfRandomOrg();
                 return;
-            }
             case "faroext":
-            {
+            case "fo":
                 sfFaroExt(argumento);
                 return;
-            }
             case "faroint":
-            {
+            case "fi":
                 sfFaroInt(argumento);
                 return;
-            }
             case "antifaroext":
-            {
+            case "-fo":
                 sfAntiFaroExt(argumento);
                 return;
-            }
             case "antifaroint":
-            {
+            case "-fi":
                 sfAntiFaroInt(argumento);
                 return;
-            }
             case "generarqr":
-            {
+            case "qr":
                 generarQrConsola();
                 return;
-            }
             case "screenshot":
-            {
+            case "shot":
                 screenshotConsola;
                 return;
-            }
             case "":
-            {
                 return;
-            }
             default:
-            {
                 consola(texto + ": No se encontró la orden");
                 return;
-                  // código si no es ninguno de los anteriores
-            }
         }
 }
 
@@ -1033,6 +1034,26 @@ function voltearEsta(){
     renderizar();
 }
 
+function sfVoltearEstas(argumento){
+    
+    var nums = argumento.split(",");
+    
+    if (nums.length != 1){
+     
+        for (var i=0; i < parseInt(nums[1]); i++){
+            
+            barajaActual.turnOver(parseInt(nums[0])-1+i);
+            
+        }
+        
+    }else{
+        barajaActual.turnOver(parseInt(nums[0])-1);
+    }
+    
+    renderizar();
+    
+}
+
 function moverATop(){
     consola(barajaActual.naipe[posCartaActual].face + " > Top");
     barajaActual.toTop(posCartaActual);
@@ -1229,8 +1250,17 @@ function redondeo(numero,decimales){
     
 }
 
+function sfMilkSuffle(){
+
+    barajaActual.milkSuffle();
+    renderizar(); 
+}
+
+function obtenerOrden(){
+
+    consola(ordenI);
+}
+
 function saberMas(){
 
-    
-    
 }

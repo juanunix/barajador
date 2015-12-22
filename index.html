@@ -57,7 +57,7 @@
                                 <li class="disabled"><a href="#">Más...</a></li>
                             </ul>
                         </li>
-                        <li><a id="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posicione</a></li>
+                        <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
                             <ul class="dropdown-menu">
@@ -93,7 +93,7 @@
                         <li><a href="#" class="sfInvertir"><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Invertir</a></li>
                         <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
                         <li class="collapse divider"></li>
-                        <li class="collapse"><a id="sfAlfa" href="#">Mezcla alfa</a></li>
+                        <li><a id="sfAlfa" href="#">Mezcla alfa</a></li>
                         <li class="collapse"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
@@ -140,6 +140,7 @@
                                 <li><a id="vrConsola" href="#" accesskey="x"><span id="txtVerConsola" class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Consola<span class="atajo">Alt+X</span></a></li>
                             </ul>
                         </li>
+                        <li><a id="vrGraph" href="#" accesskey="g" target="_blank"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Graficar<span class="atajo">Alt+G</span></a></li>
                         <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="s"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas<span class="atajo"></span></a></li>
                         <li class="divider"></li>
                         <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalPreferencias"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
@@ -177,6 +178,7 @@
     </div>
     
     <div id="moduloBotonera" class="botonera">
+        <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir">
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
@@ -359,7 +361,7 @@
         <p class="aJ">El análisis y el conocimiento de la probabilidad matemática de la baraja de cartas tiene un <i>gran potencial oculto</i> que puede impactar directamente en sus juegos de cartomagia. Usted puede optar por ser <i>inversor colectivo o exclusivo</i> de dicha herramienta.</p>
       </div>
       <div class="modal-footer">
-        <a href="desarrollo" target="_blank" class="btn btn-primary btn-lg saberMas">Quiero saber más</a>
+        <a href="desarrollo#financiamiento" target="_blank" class="btn btn-primary btn-lg saberMas">Quiero saber más</a>
         <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Tal vez más tarde</button>
       </div>
     </div>
@@ -438,7 +440,6 @@
     </div>
   </div>
 </div>
-
     
 <!-- Modal Ayuda -->
 <div class="modal fade" id="modalAbout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -491,7 +492,7 @@
                 <option value="pana-light">Pana (light)</option>
                 <option value="pana-dark">Pana (dark)</option>
             </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked> Posiciones absolutas y relativas<br/>
+            <input id="mostrarRotulos" data-size="auto" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked> Posiciones absolutas y relativas<br/>
             <input id="colorConsola" class="inputSettings" type="color" value="#000000"> Fondo de la consola<br/>
             <input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"> Texto de la consola<br/>
             <select id="fuenteConsola" class="inputSettings">
@@ -578,4 +579,4 @@
 <noscript><p><img src="//clowntube.tv/clowntube/piwik/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
   </body>
     
-</html><
+</html>
