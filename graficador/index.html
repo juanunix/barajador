@@ -87,6 +87,7 @@ label {
  Zoom: <input id="inpEspacio" type="number" min="1" max="20" value="15" onChange="dibujar()">
  <label>Posiciones:<input type="checkbox" id="inpPosiciones" checked onChange="dibujar()"></label>
  <label>Rótulos:<input type="checkbox" id="inpRotulos" checked onChange="dibujar()"></label>
+ <label>Radial:<input type="checkbox" id="inpRadial" onChange="dibujar()"></label>
 
 </div>
 
@@ -99,7 +100,10 @@ var colores = ["#bf2330","#0ff","#0f0","#00f","#ff0","#f0f","#f00","#888","#7c07
 var oCanvas = document.getElementById("grafico");
 var cxt = oCanvas.getContext("2d");
 var pY = 250;
+var centroX = (800/2);
+var centroY = (500/2);
 var factores;
+
     
 // Dibuja cada mezcla
 function dM(inicial,final){
@@ -113,6 +117,18 @@ function dM(inicial,final){
     var signo = "+";
     }
 
+  if (document.getElementById("inpRadial").checked){
+  // Lineas
+  cxt.beginPath();
+  posX = centroX + Math.cos(alfa * inicial + modif) * radio;
+  posY = centroY + Math.sin(alfa * inicial + modif) * radio;
+  cxt.moveTo(posX,posY);
+  posX = centroX + Math.cos(alfa * final + modif) * radio;
+  posY = centroY + Math.sin(alfa * final + modif) * radio;
+  cxt.lineTo(posX,posY);
+  cxt.stroke();
+  }else{
+
   // Arcos
   diametro = final - inicial;
   pX = margenX + inicial * dotEspacio -  dotEspacio / 2 + (diametro-1) * dotEspacio/2;
@@ -120,11 +136,11 @@ function dM(inicial,final){
   cxt.beginPath();
   cxt.arc(pX,pY,pD,0,Math.PI,dir=!dir);
   cxt.stroke();
-  
+  }
 
   // Rótulos
   rotYmargen = 8
-  if (document.getElementById("inpRotulos").checked){
+  if (document.getElementById("inpRotulos").checked && !document.getElementById("inpRadial").checked){
 
     disY = (diametro) * dotEspacio/2;
     if (dir){
@@ -132,7 +148,7 @@ function dM(inicial,final){
     } else {
         rotpY = pY + disY + 4 + rotYmargen;
     }
-
+    
     cxt.fillStyle ="white";
     cxt.beginPath();
     cxt.arc(pX,rotpY-2,10,0,Math.PI*2,true);
@@ -170,15 +186,26 @@ function dibujar(){
   // Lee las preferencias
   dotEspacio = document.getElementById("inpEspacio").value;
   margenX = (800/2) - (orden.length * dotEspacio)/2;
-
+  alfa = Math.PI*2 / orden.length;
+  modif = alfa * orden.length/2;
+  radio = 200;
   porSecuencia();
   // Dibuja los puntos por cada carta
-  for(var i=0;i < orden.length; i++){
 
-    var pX = margenX + dotEspacio * i
+
+  for(var i=0;i < orden.length; i++){
+    
     cxt.fillStyle ="black";
     cxt.beginPath();
-    cxt.arc(pX,pY,1.5,0,Math.PI*2,true);
+    if (document.getElementById("inpRadial").checked){
+      posX = centroX + Math.cos(alfa * i + modif) * radio;
+      posY = centroY + Math.sin(alfa * i + modif) * radio;
+      cxt.arc(posX,posY,1.5,0,Math.PI*2,true);
+    }else{
+      var pX = margenX + dotEspacio * i;
+      cxt.arc(pX,pY,1.5,0,Math.PI*2,true);
+    }
+    
     cxt.closePath();
     cxt.fill();
     
@@ -186,7 +213,11 @@ function dibujar(){
       cxt.font = "10px Georgia";
       cxt.fillStyle = "black";
       cxt.textAlign = "center";
-      cxt.fillText(i+1,pX,pY+10);
+      if (document.getElementById("inpRadial").checked){
+        cxt.fillText(i+1,posX,posY+10);
+      }else{
+	cxt.fillText(i+1,pX,pY+10);
+      }
     }
   }
 
