@@ -31,11 +31,15 @@ body {
 
 canvas {
     border: 1px solid black;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
     border-radius: 15px;
     background: white;
 }
 label {
     border: 1px solid grey;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
     border-radius: 5px;
     padding:2px;
     vertical-align:middle;
@@ -53,8 +57,10 @@ label {
 #preferencias {
     background: silver;
     padding: 5px 0px;
-    border-radius: 5px;
     margin-bottom:20px;
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
 }
 </style>
 </head>
@@ -86,8 +92,8 @@ label {
  </span>
  Zoom: <input id="inpEspacio" type="number" min="1" max="20" value="15" onChange="dibujar()">
  <label>Posiciones:<input type="checkbox" id="inpPosiciones" checked onChange="dibujar()"></label>
- <label>Rótulos:<input type="checkbox" id="inpRotulos" checked onChange="dibujar()"></label>
- <label>Radial:<input type="checkbox" id="inpRadial" onChange="dibujar()"></label>
+ <label>R&oacute;tulos:<input type="checkbox" id="inpRotulos" checked onChange="dibujar()"></label>
+ <label>Circular:<input type="checkbox" id="inpRadial" onChange="dibujar()"></label>
 
 </div>
 
@@ -221,16 +227,24 @@ function dibujar(){
     }
   }
 
-  // Título
+  // mostrando la matriz graficada
   cxt.font = "12px Georgia";
   cxt.fillStyle = "black";
   cxt.textAlign = "left";
   cxt.fillText(orden,10,25);
     
-  cxt.font = "12px Georgia";
+  // Creando la partición de lambda(x)
+  cxt.font = "14px Georgia";
   cxt.fillStyle = "black";
   cxt.textAlign = "right";
-  cxt.fillText(factores,790,480);
+  num = String(orden.length);
+  subs = "₀₁₂₃₄₅₆₇₈₉".split("");
+  for(var i=0;i<10;i++){
+    var re = new RegExp(i, "g");
+    num = num.replace(re,subs[i]);
+  }
+  
+  cxt.fillText("λ₍"+num+"₎=("+factores.sort(function(a, b){return b - a;})+")",790,480);
 
 }
     
@@ -250,7 +264,7 @@ function porSecuencia(){
 tempO = orden.slice();
 var e = 1;
 var ciclos = [];
-factores = undefined;
+factores = [];
     
 do{
 
@@ -270,11 +284,8 @@ do{
 
     ciclos.push(ciclo.toString());
     
-    if (typeof factores == "undefined"){
-        factores = orden.length + " = " + ciclo.length;
-    } else {
-        factores += " + " + ciclo.length;
-    }
+    factores.push(ciclo.length);
+ 
     
     // Dibuja el ciclo si tiene más de un paso
     if (ciclo.length != 1){
