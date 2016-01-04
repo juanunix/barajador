@@ -30,7 +30,8 @@ function EyDeck(cartas){
     this.faroInt = faroInt;
     this.antiFaroExt = antiFaroExt;
     this.antiFaroInt = antiFaroInt;
-    this.milkSuffle = milkSuffle;
+    this.milkSuffle = milkShuffle;
+    this.mongeSuffle = mongeShuffle;
     this.fisherYates = fisherYates;
     this.durstenfeld = durstenfeld;
     this.sattolo = sattolo;
@@ -348,21 +349,39 @@ function antiFaroInt(cantidad){
     }    
     
 }
-// Mezcla Alfa / Klondike
-function milkSuffle(){
+
+// Mezcla Alfa / Klondike / Milk
+function milkShuffle(){
+    var barajaTemp = this.naipe.slice();    
+    cantidad = this.naipe.length;
+    // AT,2T,3T,4T,5T,6T,7T,8T,9T,10T
+    for (var i = 0; i < cantidad; i++){
+        if ( i % 2 == 0 ){
+            this.naipe[i+1] = barajaTemp[((cantidad - i) / 2) - 1];
+        } else {
+            if ( cantidad % 2 == 0 || i < cantidad - 1){
+                this.naipe[i-1] = barajaTemp[(cantidad  + i - 1)/2];
+            }
+        }
+    }
+    return "milk";
+}
+
+// Mezcla Monge
+function mongeShuffle(){
     var barajaTemp = this.naipe.slice();    
     cantidad = this.naipe.length;
     
-    alert("milk");
     for (var i = 0; i < cantidad; i++){
-        if ( cantidad % 2 == 0 ){
-            this.naipe[i] = barajaTemp[((cantidad - i) / 2) - 1]
+        if ( i % 2 == 0 ){
+            this.naipe[((cantidad - i) / 2) - 1] = barajaTemp[i+1];
         } else {
-            this.naipe[i] = barajaTemp[(cantidad  + i - 1)/2]
+            this.naipe[(cantidad  + i - 1)/2] = barajaTemp[i-1];
         }
     }
-    return "milkShuffle";
+    return "monge";
 }
+
 // Mezcla pseudoaleatoria Fisher-Yates
 function fisherYates(){
 
