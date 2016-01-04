@@ -62,8 +62,11 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
                             <ul class="dropdown-menu">
                                 <li><a id="orden4Kings" href="#">Four kings</a></li>
-                                <li><a id="ordenBicycle" href="#">Bicycle</a></li>
+                                <li><a id="ordenBicycle" href="#">Baraja nueva (Bicycle)</a></li>
+                                <li><a id="ordenFournier" href="#">Baraja nueva (Fournier)</a></li>
                                 <li><a id="ordenSoloAces" href="#">Sólo Aces</a></li>
+                                <li><a id="ordenStanyon" href="#">Ellis Stanyon</a></li>
+                                <li class="divider"></li>
                                 <li class="dropdown-submenu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rosario</a>
                                     <ul class="dropdown-menu">
@@ -75,7 +78,17 @@
                                         <li><a id="ordenRosario18Reyes" href="#">18 Reyes sentados entre...</a></li>
                                     </ul>
                                 </li>
-                                <li><a id="ordenMnemonica" href="#">Mnemónica Tamariz</a></li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mnemónica</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a id="ordenTamariz" href="#">Juan Tamariz</a></li>
+                                        <li><a id="ordenAronson" href="#">Simon Aronson</a></li>
+                                        <li><a id="ordenIreland" href="#">Laurie Ireland</a></li>
+                                        <li><a id="ordenNikola" href="#">Louis Nikola</a></li>
+                                        <li><a id="ordenStay" href="#">Stay (J. Russell Duck)</a></li>
+                                        <li><a id="ordenOsterlind" href="#">Richard Osterlind</a></li>
+                                </ul>
+                                </li>
                                 <li class="divider"></li>
                                 <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal">Personalizada...</a></li>
                             </ul>
@@ -92,10 +105,11 @@
                             <li class="collapse"><a href="#" id="sfRepetir"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repetir</a></li>
                         <li><a href="#" class="sfInvertir"><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Invertir</a></li>
                         <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
-                        <li class="collapse divider"></li>
-                        <li><a id="sfAlfa" href="#">Mezcla alfa</a></li>
+                        
                         <li class="collapse"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
                         <li class="divider"></li>
+                        <li><a class="sfMilk" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Alfa / Klondike</a></li>
+                        <li><a class="sfMonge" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Mongue</a></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla faro</a>
                             <ul class="dropdown-menu w200">
@@ -181,11 +195,15 @@
         <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir">
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
+        <input type="button" class="btn btn-primary sfMilk" value="Alfa">
+        <input type="button" class="btn btn-primary sfMonge" value="Monge">
+        <br>
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
         <input type="button" class="btn btn-primary sfFaroInt" value="Faro Int">
         <input type="button" class="btn btn-primary sfAntiFaroExt" value="AntiFaro Ext">
         <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In">
-        <input type="button" class="btn btn-primary sfFaroAv" value="Faro..."><br>
+        <input type="button" class="btn btn-primary sfFaroAv" value="Faro...">
+        <br>
         <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
         <input type="button" class="btn btn-primary sfSattolo" value="Azar Sattolo">
@@ -430,6 +448,8 @@
           <p><b>Permutaciones posible:</b> <span class="permutaciones"></span></p>
           <p><b>Mezclas riffle para alcanzar el azar:</b> <span class="mezclasNecesarias"></span></p>
           <p><b>Adivinaciones probables:</b> <span class="adivinacionesProbables"></span> (<span class="adivinacionesPorcentaje"></span>)</p>
+          <p><b>Faros Out para ordenar:</b> <span class="farosOutOrdenan"></span></p>
+          <p><b>Faros Int para ordenar:</b> <span class="farosIntOrdenan"></span></p>
           <p></p>
           
         </div>
@@ -536,7 +556,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-switch.min.js"></script>
@@ -579,4 +599,5 @@
 <noscript><p><img src="//clowntube.tv/clowntube/piwik/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
   </body>
     
+</html>
 </html>

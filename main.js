@@ -16,8 +16,15 @@ var ordenI;
 // Menu: Baraja
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
-$( "#ordenMnemonica" ).on( "click", ordenarMnemonica );
+$( "#ordenTamariz" ).on( "click", ordenarTamariz );
+$( "#ordenAronson" ).on( "click", ordenarAronson );
+$( "#ordenIreland" ).on( "click", ordenarIreland );
+$( "#ordenNikola" ).on( "click", ordenarNikola );
+$( "#ordenStay" ).on( "click", ordenarStay );
+$( "#ordenOsterlind" ).on( "click", ordenarOsterlind );
+$( "#ordenStanyon" ).on( "click", ordenarStanyon );
 $( "#ordenBicycle" ).on( "click", ordenarBicycle );
+$( "#ordenFournier" ).on( "click", ordenarFournier );
 $( "#orden4Kings" ).on( "click", ordenar4Kings);
 $( "#ordenRosarioEightKings" ).on( "click", ordenarRosarioEightKings);
 $( "#ordenRosarioDixRois" ).on( "click", ordenarRosarioDixRois);
@@ -61,7 +68,8 @@ $( "#modalFaro .btnAplicar" ).on( "click", faroAplicar );
 $( ".sfFaroAv" ).on( "click", faroShow );
 
 // otras mezclas
-$( "#sfAlfa" ).on("click", sfMilkSuffle);
+$( ".sfMilk" ).on("click", sfMilk);
+$( ".sfMonge" ).on("click", sfMonge);
 
 // Otras cosas
 $( ".vrOrden").on("click", obtenerOrden);
@@ -207,6 +215,12 @@ function ordenarBicycle(){
     abreBaraja();
 }
 
+// Ordenar Fournier
+function ordenarFournier(){
+    barajaActual= new EyDeck("AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,KT,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KT,QT,JT,10T,9T,8T,7T,6T,5T,4T,3T,2T,AT");
+    abreBaraja();
+}
+
 // Ordenar Solo Aces
 function ordenarSoloAces(){
     barajaActual= new EyDeck("AT,AC,AP,AD,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA");
@@ -242,10 +256,45 @@ function ordenarRosario18Reyes(){
     abreBaraja();
 }
 
-
-// Ordenar Mnemónica
-function ordenarMnemonica(){
+// Ordenar Mnemónica Tamariz
+function ordenarTamariz(){
     barajaActual= new EyDeck("4T,2C,7D,3T,4C,6D,AP,5C,9P,2P,QC,3D,QT,8C,6P,5P,9C,KT,2D,JC,3P,8P,6C,10T,5D,KD,2T,3C,8D,5T,KP,JD,8T,10P,KC,JT,7P,10C,AD,4P,7C,4D,AT,9T,JP,QD,7T,QP,10D,6T,AC,9D");
+    abreBaraja();
+}
+
+// Ordenar Aronson
+function ordenarAronson(){
+    barajaActual= new EyDeck("JP,KT,5T,2C,9P,AP,3C,6T,8D,AT,10P,5C,2D,KD,7D,8T,3P,AD,7P,5P,QD,AC,8P,3D,7C,QC,5D,7T,4C,KC,4D,10D,JT,JC,10T,JD,4P,10C,6C,3T,2P,9C,KP,6P,4T,8C,9T,QP,6D,QT,2T,9D");
+    abreBaraja();
+}
+
+// Ordenar Ireland
+function ordenarIreland(){
+    barajaActual= new EyDeck("7C,4C,KC,2T,10P,6T,8C,QD,2D,QP,5D,6C,KT,7P,JP,4P,QC,QT,2P,KP,3C,JC,KD,2C,AP,6P,AT,9T,3T,AD,JT,8D,9C,8T,9P,AC,9D,10C,8P,6D,3P,5C,5T,4D,10D,7T,3D,4T,7D,10T,JD,5P");
+    abreBaraja();
+}
+
+// Ordenar Nikola
+function ordenarNikola(){
+    barajaActual= new EyDeck("6D,5T,KT,JC,5P,9D,9P,QC,3T,10T,KP,AC,4D,JD,KD,KC,2D,QT,9T,10C,8D,2T,AT,7C,7T,4P,7P,9C,8P,6P,6T,2C,AP,JP,4T,5C,10P,AD,JT,4C,2P,7D,QP,3C,3P,8T,10D,6C,5D,3D,QD,8C");
+    abreBaraja();
+}
+
+// Ordenar Stay
+function ordenarStay(){
+    barajaActual= new EyDeck("4C,4T,10D,JP,10T,JC,5P,3D,5C,3T,9D,QP,9T,QC,6P,2D,6C,2T,8D,KP,8T,KC,7P,AD,7C,AT,AP,7D,AC,7T,KD,8P,KT,8C,2P,6D,2C,6T,QD,9P,QT,9C,3P,5D,3C,5T,JD,10P,JT,10C,4P,4D");
+    abreBaraja();
+}
+
+// Ordenar Osterlind
+function ordenarOsterlind(){
+    barajaActual= new EyDeck("4C,10T,10D,JP,10C,9P,6T,2T,7C,3C,8P,4T,JD,KP,AP,3P,7D,5C,QT,AT,5P,JC,JT,QD,2D,8T,6P,KC,2C,6D,3D,10P,8D,7T,4P,9D,9T,8C,5D,AD,6C,AC,4D,QP,QC,KT,3T,9C,7P,2P,5T,KD");
+    abreBaraja();
+}
+
+// Ordenar Stanyon
+function ordenarStanyon(){
+    barajaActual= new EyDeck("AD,3T,6C,10P,2D,4T,7C,JP,3D,5T,8C,QP,4D,6T,9C,KP,5D,7T,10C,AP,6D,8T,JC,2P,7D,9T,QC,3P,8D,10T,KC,4P,9D,JT,AC,5P,10D,QT,2C,6P,JD,KT,3C,7P,QD,AT,4C,8P,KD,2T,5C,9P");
     abreBaraja();
 }
 
@@ -672,6 +721,14 @@ function ejecutarComando(texto){
             case "randomorg":
                 sfRandomOrg();
                 return;
+            case "milk":
+            case "alfa":
+            case "klondike":
+                sfMilk();
+                return;
+            case "mongue":
+                sfMonge();
+                return;
             case "faroext":
             case "fo":
                 sfFaroExt(argumento);
@@ -1039,6 +1096,7 @@ function cortarPorAca(){
 
 function voltearEsta(){
     barajaActual.turnOver(posCartaActual);
+    consola("turn("+(posCartaActual+1)+")");
     renderizar();
 }
 
@@ -1057,7 +1115,7 @@ function sfVoltearEstas(argumento){
     }else{
         barajaActual.turnOver(parseInt(nums[0])-1);
     }
-    
+    consola("turn("+argumento+")");
     renderizar();
     
 }
@@ -1235,8 +1293,10 @@ function verStats(){
     $("#modalStats .cantidad").html(barajaActual.naipe.length);
     $("#modalStats .permutaciones").html(barajaActual.naipe.length + "! = " + permutaciones);
     $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>" + barajaActual.naipe.length + " = " + mezclasNecesarias);
-    $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>1</sub> + <sup>1</sup>&frasl;<sub>2</sub> + ... + <sup>1</sup>&frasl;<sub>" + barajaActual.naipe.length + "</sub> = " + adivinacionesProbables);
+    $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>" + barajaActual.naipe.length + "</sub> + ... + <sup>1</sup>&frasl;<sub>2</sub> + <sup>1</sup>&frasl;<sub>1</sub> = " + adivinacionesProbables);
     $("#modalStats .adivinacionesPorcentaje").html(adivinacionesPorcentaje + "%");
+    $("#modalStats .farosOutOrdenan").html("ord<sub>" + barajaActual.naipe.length + "-1</sub>(2) = ");
+    $("#modalStats .farosIntOrdenan").html("ord<sub>" + barajaActual.naipe.length + "+1</sub>(2) = ");
     
 }
 
@@ -1252,16 +1312,26 @@ function redondeo(numero,decimales){
     
     if (numero != numeroRedondo){
         numeroRedondo = numeroRedondo + "..."
-    }
-    
+    }    
     return numeroRedondo;
     
 }
 
-function sfMilkSuffle(){
+// Mezcla Alfa
+function sfMilk(){
 
-    barajaActual.milkSuffle();
-    renderizar(); 
+    var salida = barajaActual.milkSuffle();
+    renderizar();
+    consola(salida);
+    
+}
+
+// Mezcla Monge
+function sfMonge(){
+
+    var salida = barajaActual.mongeSuffle();
+    renderizar();
+    consola(salida);
 }
 
 function obtenerOrden(){
