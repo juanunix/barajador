@@ -150,7 +150,7 @@
         <dd>Carta en blanco</dd>
              <dt><code>DR</code></dt>
         <dd>Dorso rojo</dd>
-             <dt><code>DR</code></dt>
+             <dt><code>DA</code></dt>
         <dd>Dorso azul</dd>
         </dl>
     </div>
@@ -212,16 +212,28 @@
         <dd>Corta un paquete de <code>n</code> cartas de arriba hacia abajo si <code>n</code> es positivo, y de abarjo hacia arriba si <code>n</code>es negativo.</dd>
         <dt><code>invertir</code> / <code>inv</code></dt>
         <dd>Invierte una a una el orden de la cartas de la baraja.</dd>
-        <dt><code>invertir(n) / <code>inv(n)</code></code></dt>
+        <dt><code>invertir(n) </code> / <code>inv(n)</code></dt>
         <dd>Invierte una a una el orden de las primeras <code>n</code> cartas de la baraja contando desde TOP si <code>n</code> es positivo y desde BOTTOM si <code>n</code> es negativo.</dd>
         <dt><code>eliminar(n)</code> / <code>del(n)</code></dt>
         <dd>Elimina la carta ubicada en la <code>n-sima</code>: desde TOP si <code>n</code> es positivo y desde BOTTOM si <code>n</code> es negativo.</dd>  
         </dl>
         
         <dl class="dl-horizontal">
+            <dt><code>voltear(n)</code> / <code>turn(n)</code></dt>
+        <dd>Voltea la carta en la posición <code>n</code> dejándola de dorso si estaba de cara y viceverza.</dd>
+            <dt><code>voltear(n,m)</code></dt>
+        <dd>Voltea la cartas desde la posición <code>n</code> hasta la <code>m</code>, dejándolas de dorso si estaba de cara y viceverza.</dd>
+            <dt><code>orden</code></dt>
+        <dd>Devuelve el órden absoluto de las cartas</dd>
+            <dt><code>reiniciar</code></dt>
+        <dd>Reinicia las posiciones a números contiguos</dd>
+            
+        </dl>
+      
+        <dl class="dl-horizontal">
             <dt><code>faroExt</code> / <code>fo</code></dt>
         <dd>Realiza una mezcla Faro Exterior.</dd>
-            <dt><code>faroInt<code> / </code>fi</code></dt>
+            <dt><code>faroInt</code> / <code>fi</code></dt>
         <dd>Realiza una mezcla Faro Interior.</dd>   
             <dt><code>antiFaroExt</code> / <code>-fo</code></dt>
         <dd>Realiza una mezcla Antifaro Exterior.</dd>
@@ -275,6 +287,10 @@
         </dl>
         
         <dl class="dl-horizontal">
+            <dt><code>ALT+G</code></dt>
+        <dd>Abre el graficador</dd>
+            <dt><code>ALT+S</code></dt>
+        <dd>Muestra las estadísticas</dd>
             <dt><code>ALT+P</code></dt>
         <dd>Abre las Preferencias de la aplicación</dd>
             <dt><code>ALT+D</code></dt>
