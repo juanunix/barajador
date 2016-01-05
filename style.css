@@ -445,3 +445,13 @@ input[type="color"]{
     line-height: 0;
     padding-bottom: 30px;
 }
+
+#barajaImg {
+    float: left;
+    margin-right: 5px;
+    display: none;
+}
+
+#barajaDesc {
+    padding: 5px;
+}
