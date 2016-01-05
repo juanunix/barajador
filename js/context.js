@@ -163,7 +163,7 @@ var context = context || (function () {
 	};
 })();
 
-// MENUES
+// FTOD
 
 $(document).ready(function(){
 	
