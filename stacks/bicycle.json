@@ -1,0 +1,5 @@
+{
+"name": "Bicycle",
+"description": "Bicycle es el nombre de una baraja de cartas producida por USPC (The United States Playing Cards) utilizada en la gran mayoría de casinos de América. También es una de las barajas más utilizadas por los ilusionistas para realizar cartomagia, básicamente por sus hermosos diseños y por su textura que las hace muy fáciles de manejar. Bicycle tiene ya más de un siglo de historia, comenzaron en la segunda mitad del siglo XIX en Cincinnati, Ohio. Por aquel entonces el mercado estaba dominado por fabricantes de la costa este de Estados Unidos. Comenzó siendo una imprenta y acabó siendo uno de los fabricantes de naipes más reputados del planeta",
+"faces": "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KP,QP,JP,10P,9P,8P,7P,6P,5P,4P,3P,2P,AP"
+}

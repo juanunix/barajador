@@ -23,8 +23,8 @@ $( "#ordenNikola" ).on( "click", ordenarNikola );
 $( "#ordenStay" ).on( "click", ordenarStay );
 $( "#ordenOsterlind" ).on( "click", ordenarOsterlind );
 $( "#ordenStanyon" ).on( "click", ordenarStanyon );
-$( "#ordenBicycle" ).on( "click", ordenarBicycle );
-$( "#ordenFournier" ).on( "click", ordenarFournier );
+$( "#ordenBicycle" ).on( "click", function() { abre_stack("bicycle") } );
+$( "#ordenFournier" ).on( "click", function() { abre_stack("fournier") } );
 $( "#orden4Kings" ).on( "click", ordenar4Kings);
 $( "#ordenRosarioEightKings" ).on( "click", ordenarRosarioEightKings);
 $( "#ordenRosarioDixRois" ).on( "click", ordenarRosarioDixRois);
@@ -208,18 +208,6 @@ function iniciar(){
 }
 
 iniciar();
-
-// Ordenar Bicycle
-function ordenarBicycle(){
-    barajaActual= new EyDeck("AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KP,QP,JP,10P,9P,8P,7P,6P,5P,4P,3P,2P,AP");
-    abreBaraja();
-}
-
-// Ordenar Fournier
-function ordenarFournier(){
-    barajaActual= new EyDeck("AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,KT,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KT,QT,JT,10T,9T,8T,7T,6T,5T,4T,3T,2T,AT");
-    abreBaraja();
-}
 
 // Ordenar Solo Aces
 function ordenarSoloAces(){
@@ -1341,4 +1329,14 @@ function obtenerOrden(){
 
 function saberMas(){
 
+}
+
+// Abre una baraja desde el stack JSON
+function abre_stack(stack) {
+    $.getJSON("stacks/"+stack+".json", function(datos) {
+        alert("Nombre: " + datos["name"]);
+        alert(datos["description"]);
+        barajaActual = new EyDeck(datos["faces"]);
+        abreBaraja();
+    });
 }
