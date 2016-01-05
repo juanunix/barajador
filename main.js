@@ -14,25 +14,14 @@ var ordenI;
 // Menu HELP
 
 // Menu: Baraja
+$( "#orden4Kings" ).on( "click", function(){ abreStack("fourKings")});
+$( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
+$( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
-$( "#ordenTamariz" ).on( "click", ordenarTamariz );
-$( "#ordenAronson" ).on( "click", ordenarAronson );
-$( "#ordenIreland" ).on( "click", ordenarIreland );
-$( "#ordenNikola" ).on( "click", ordenarNikola );
-$( "#ordenStay" ).on( "click", ordenarStay );
-$( "#ordenOsterlind" ).on( "click", ordenarOsterlind );
-$( "#ordenStanyon" ).on( "click", ordenarStanyon );
-$( "#ordenBicycle" ).on( "click", function() { abre_stack("bicycle") } );
-$( "#ordenFournier" ).on( "click", function() { abre_stack("fournier") } );
-$( "#orden4Kings" ).on( "click", ordenar4Kings);
-$( "#ordenRosarioEightKings" ).on( "click", ordenarRosarioEightKings);
-$( "#ordenRosarioDixRois" ).on( "click", ordenarRosarioDixRois);
-$( "#ordenRosarioUnusQuinque" ).on( "click", ordenarRosarioUnusQuinque);
-$( "#ordenRosario18Reyes" ).on( "click", ordenarRosario18Reyes);
-$( "#ordenSoloAces" ).on( "click", ordenarSoloAces);
-$( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
-$( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
+$( "#ordenBaraja" ).on( "change", infoBaraja );
+$( "#abrirStack" ).on( "click", abrirStack );
+
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -159,7 +148,7 @@ function iniciar(){
         abreBaraja();
     }else{
     
-        ordenar4Kings();
+        //abre_stack("fourKings");
     }
     
     // Carga las preferencias guardadas
@@ -205,86 +194,11 @@ function iniciar(){
         $("#liFullScreen").show();
     }
     
+    // crea element bselect
+    $(".bselect").bselect();
 }
 
 iniciar();
-
-// Ordenar Solo Aces
-function ordenarSoloAces(){
-    barajaActual= new EyDeck("AT,AC,AP,AD,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA,DA");
-    abreBaraja();
-}
-
-function ordenarRosarioEightKings(){
-    barajaActual= new EyDeck("8P,KC,3T,10D,2P,7C,9T,5D,QP,4C,AT,6D,JP,8C,KT,3D,10P,2C,7T,9D,5P,QC,4T,AD,6P,JC,8T,KD,3P,10C,2T,7D,9P,5C,QT,4D,AP,6C,JT,8D,KP,3C,10T,2D,7P,9C,5T,QD,4P,AC,6T,JD");
-    consola('"Eight Kings threatened to save ninety-five ladies for one sick knave"')
-    abreBaraja();
-}
-
-function ordenar4Kings(){
-    barajaActual= new EyDeck("AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD");
-    abreBaraja();
-}
-
-function ordenarRosarioDixRois(){
-    barajaActual= new EyDeck("10P,8C,KT,9D,JP,AC,7T,QD,10C,8T,KD,9P,JC,AT,7D,QP,10T,8D,KP,9C,JT,AD,7P,QC,10D,8P,KC,9T,JD,AP,7C,QT");
-    consola('"Dix huit Rois ne valent pas sept Dames"')
-    abreBaraja();
-}
-
-function ordenarRosarioUnusQuinque(){
-    barajaActual= new EyDeck("AP,5C,9T,JD,6P,4C,2T,KD,7P,8C,QT,3D,10P,AC,5T,9D,JP,6C,4T,2D,KP,7C,8T,QD,3P,10C,AT,5D,9P,JC,6T,4D,2P,KC,7T,8D,QP,3C,10T,AD,5P,9C,JT,6D,4P,2C,KT,7D,8P,QC,3T,10D");
-    consola('"Unus quinque noven fámulus sex quatuor duo Rex septem acto faemina trina decem"');
-    abreBaraja();
-}
-
-function ordenarRosario18Reyes(){
-    barajaActual= new EyDeck("10P,8C,KT,7D,2P,3C,AT,4D,9P,QC,6T,JD,5P,10C,8T,KD,7P,2C,3T,AD,4P,9C,QT,6D,JP,5C,10T,8D,KP,7C,2T,3D,AP,4C,9T,QD,6P,JC,5T,10D,8P,KC,7T,2D,3P,AC,4T,9D,QP,6C,JT,5D");
-    consola('"18 Reyes sentados entre las 49 damas se van al cine"');
-    abreBaraja();
-}
-
-// Ordenar Mnemónica Tamariz
-function ordenarTamariz(){
-    barajaActual= new EyDeck("4T,2C,7D,3T,4C,6D,AP,5C,9P,2P,QC,3D,QT,8C,6P,5P,9C,KT,2D,JC,3P,8P,6C,10T,5D,KD,2T,3C,8D,5T,KP,JD,8T,10P,KC,JT,7P,10C,AD,4P,7C,4D,AT,9T,JP,QD,7T,QP,10D,6T,AC,9D");
-    abreBaraja();
-}
-
-// Ordenar Aronson
-function ordenarAronson(){
-    barajaActual= new EyDeck("JP,KT,5T,2C,9P,AP,3C,6T,8D,AT,10P,5C,2D,KD,7D,8T,3P,AD,7P,5P,QD,AC,8P,3D,7C,QC,5D,7T,4C,KC,4D,10D,JT,JC,10T,JD,4P,10C,6C,3T,2P,9C,KP,6P,4T,8C,9T,QP,6D,QT,2T,9D");
-    abreBaraja();
-}
-
-// Ordenar Ireland
-function ordenarIreland(){
-    barajaActual= new EyDeck("7C,4C,KC,2T,10P,6T,8C,QD,2D,QP,5D,6C,KT,7P,JP,4P,QC,QT,2P,KP,3C,JC,KD,2C,AP,6P,AT,9T,3T,AD,JT,8D,9C,8T,9P,AC,9D,10C,8P,6D,3P,5C,5T,4D,10D,7T,3D,4T,7D,10T,JD,5P");
-    abreBaraja();
-}
-
-// Ordenar Nikola
-function ordenarNikola(){
-    barajaActual= new EyDeck("6D,5T,KT,JC,5P,9D,9P,QC,3T,10T,KP,AC,4D,JD,KD,KC,2D,QT,9T,10C,8D,2T,AT,7C,7T,4P,7P,9C,8P,6P,6T,2C,AP,JP,4T,5C,10P,AD,JT,4C,2P,7D,QP,3C,3P,8T,10D,6C,5D,3D,QD,8C");
-    abreBaraja();
-}
-
-// Ordenar Stay
-function ordenarStay(){
-    barajaActual= new EyDeck("4C,4T,10D,JP,10T,JC,5P,3D,5C,3T,9D,QP,9T,QC,6P,2D,6C,2T,8D,KP,8T,KC,7P,AD,7C,AT,AP,7D,AC,7T,KD,8P,KT,8C,2P,6D,2C,6T,QD,9P,QT,9C,3P,5D,3C,5T,JD,10P,JT,10C,4P,4D");
-    abreBaraja();
-}
-
-// Ordenar Osterlind
-function ordenarOsterlind(){
-    barajaActual= new EyDeck("4C,10T,10D,JP,10C,9P,6T,2T,7C,3C,8P,4T,JD,KP,AP,3P,7D,5C,QT,AT,5P,JC,JT,QD,2D,8T,6P,KC,2C,6D,3D,10P,8D,7T,4P,9D,9T,8C,5D,AD,6C,AC,4D,QP,QC,KT,3T,9C,7P,2P,5T,KD");
-    abreBaraja();
-}
-
-// Ordenar Stanyon
-function ordenarStanyon(){
-    barajaActual= new EyDeck("AD,3T,6C,10P,2D,4T,7C,JP,3D,5T,8C,QP,4D,6T,9C,KP,5D,7T,10C,AP,6D,8T,JC,2P,7D,9T,QC,3P,8D,10T,KC,4P,9D,JT,AC,5P,10D,QT,2C,6P,JD,KT,3C,7P,QD,AT,4C,8P,KD,2T,5C,9P");
-    abreBaraja();
-}
 
 // Ordenar personalizadamente
 function ordenarPersonal(){
@@ -1332,11 +1246,50 @@ function saberMas(){
 }
 
 // Abre una baraja desde el stack JSON
-function abre_stack(stack) {
+function abreStack(stack) {
     $.getJSON("stacks/"+stack+".json", function(datos) {
-        alert("Nombre: " + datos["name"]);
-        alert(datos["description"]);
         barajaActual = new EyDeck(datos["faces"]);
         abreBaraja();
     });
+}
+
+// Actualiza la descripción de
+function infoBaraja(){
+   var stack = $("#ordenBaraja").val();
+   $.getJSON("stacks/"+stack+".json", function(datos) {
+       $("#barajaDesc div").html( datos["description"] );
+   
+        var stackImg = datos["image"];
+        
+        if (typeof stackImg === 'undefined'){
+            
+            $("#barajaImg").css("display","none");
+            
+        } else {
+            
+            $("#barajaImg").css('background-image',"url('stacks/"+ stackImg["path"]+"')");
+            $("#barajaImg").css("width", stackImg["width"] + "px");
+            $("#barajaImg").css("height", stackImg["height"] + "px");
+            $("#barajaImg").css("background-size", stackImg["width"] + "px " + stackImg["height"] + "px");
+            $("#barajaImg").css("display","block");
+        }
+       
+    });
+    
+}
+
+function abrirStack(){
+   var stack = $("#ordenBaraja").val();
+   
+    if (stack == "") {
+    
+        
+        
+    } else {
+        
+        abreStack(stack);
+        $("#modalAbrir").modal('hide');
+                  
+    }
+    
 }
