@@ -1,0 +1,6 @@
+{
+    "name": "Ireland Stack",
+    "type": "memorized",
+    "description": "Baraja ordenada de 52 cartas creada por Laurie Ireland, descrita en su libro llamado 'Ireland Writes a Book' (1931).",
+    "faces": "7C,4C,KC,2T,10P,6T,8C,QD,2D,QP,5D,6C,KT,7P,JP,4P,QC,QT,2P,KP,3C,JC,KD,2C,AP,6P,AT,9T,3T,AD,JT,8D,9C,8T,9P,AC,9D,10C,8P,6D,3P,5C,5T,4D,10D,7T,3D,4T,7D,10T,JD,5P"
+}

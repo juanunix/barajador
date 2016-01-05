@@ -1,0 +1,6 @@
+{
+    "name": "Osterlind Stack",
+    "type": "memorized",
+    "description": "Baraja ordenada de 52 cartas creada por Richard Osterlind, descrita en su libro llamado 'Richad Osterlind's Memorized Breakthrough Card System' (1983).",
+    "faces": "4C,10T,10D,JP,10C,9P,6T,2T,7C,3C,8P,4T,JD,KP,AP,3P,7D,5C,QT,AT,5P,JC,JT,QD,2D,8T,6P,KC,2C,6D,3D,10P,8D,7T,4P,9D,9T,8C,5D,AD,6C,AC,4D,QP,QC,KT,3T,9C,7P,2P,5T,KD"
+}

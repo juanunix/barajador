@@ -10,10 +10,11 @@
     <link rel="icon" href="favicon.png">
 
     <title>Barajador</title>
-
+     
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="css/bselect.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.min.js"></script>
@@ -21,6 +22,7 @@
     <link href="style.css" rel="stylesheet">
     <!-- Menu contextuales -->
     <link href="css/context.bootstrap.css" rel="stylesheet">
+    
       
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -48,51 +50,12 @@
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Baraja<b class="caret"></b></a>
                     <ul class="dropdown-menu w210">
-                        <li class="dropdown-submenu" style="display:none">
-                            <a id="bjAbrir" href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...</a>
-                            <ul class="dropdown-menu">
-                                <li class="disabled"><a href="#">Bicycle Roja</a></li>
-                                <li class="disabled"><a href="#">Bicycle Azul</a></li>
-                                <li class="divider"></li>
-                                <li class="disabled"><a href="#">Más...</a></li>
-                            </ul>
-                        </li>
+                        <li><a id="orden4Kings" href="#" accesskey="n"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nueva<span class="atajo">ALT+N</span></a></li>
+                        <li><a data-toggle="modal" href="#" data-target="#modalAbrir" accesskey="a"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...<span class="atajo">ALT+A</span></a></li>
+                        <li class="divider"></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
-                        <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación</a>
-                            <ul class="dropdown-menu">
-                                <li><a id="orden4Kings" href="#">Four kings</a></li>
-                                <li><a id="ordenBicycle" href="#">Baraja nueva (Bicycle)</a></li>
-                                <li><a id="ordenFournier" href="#">Baraja nueva (Fournier)</a></li>
-                                <li><a id="ordenSoloAces" href="#">Sólo Aces</a></li>
-                                <li><a id="ordenStanyon" href="#">Ellis Stanyon</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rosario</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a id="ordenRosarioEightKings" href="#">Eight Kings threatened...</a></li>
-                                        <li><a id="ordenRosarioDixRois" href="#">Dix huit Rois ne valent...</a></li>
-                                        <li><a id="ordenRosarioUnusQuinque" href="#">Unus quinque noven...</a></li>
-                                        <li style="display:none"><a id="ordenRosarioTodoQuinto" href="#">Todo quinto caballero...</a></li>
-                                        <li style="display:none"><a id="ordenRosarioLasCuatro" href="#">Las cuatro damas...</a></li>
-                                        <li><a id="ordenRosario18Reyes" href="#">18 Reyes sentados entre...</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mnemónica</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a id="ordenTamariz" href="#">Juan Tamariz</a></li>
-                                        <li><a id="ordenAronson" href="#">Simon Aronson</a></li>
-                                        <li><a id="ordenIreland" href="#">Laurie Ireland</a></li>
-                                        <li><a id="ordenNikola" href="#">Louis Nikola</a></li>
-                                        <li><a id="ordenStay" href="#">Stay (J. Russell Duck)</a></li>
-                                        <li><a id="ordenOsterlind" href="#">Richard Osterlind</a></li>
-                                </ul>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal">Personalizada...</a></li>
-                            </ul>
-                        </li>
+                        <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Establecer posiciones...</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Establecer orden</a></li>
                         <li class="divider"></li>
                         <li><a id="mnuGuardarImagen" href="#"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Generar imagen</a></li>
                         <li><a class="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
@@ -149,7 +112,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Módulos</a>
                             <ul class="dropdown-menu">
                                 <li><a id="vrMatriz" href="#" accesskey="q"><span id="txtVerMatriz" class="glyphicon glyphicon-check" aria-hidden="true"></span> Matriz<span class="atajo">Alt+Q</span></a></li>
-                                <li><a id="vrTapete" href="#" accesskey="a"><span id="txtVerTapete" class="glyphicon glyphicon-check" aria-hidden="true"></span> Tapete<span class="atajo">Alt+A</span></a></li>
+                                <li><a id="vrTapete" href="#"><span id="txtVerTapete" class="glyphicon glyphicon-check" aria-hidden="true"></span> Tapete</li>
                                 <li><a id="vrBotonera" href="#" accesskey="z"><span id="txtVerBotonera" class="glyphicon glyphicon-check" aria-hidden="true"></span> Botonera<span class="atajo">Alt+Z</span></a></li>
                                 <li><a id="vrConsola" href="#" accesskey="x"><span id="txtVerConsola" class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Consola<span class="atajo">Alt+X</span></a></li>
                             </ul>
@@ -258,7 +221,52 @@
     </div>
   </div>
 </div>
-      
+    
+<!-- Modal Abrir baraja -->
+<div class="modal fade" id="modalAbrir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir baraja...</h4>
+      </div>
+      <div class="modal-body" style="text-align:justify">
+         <select id="ordenBaraja" class="bselect" data-placeholder="Elije una ordenación...">
+          <option value="">Elije una ordenación...</option>
+          <option value="bicycle">Bicycle</option>
+          <option value="fournier">Fournier</option>
+          <option value="fourKings">Four Kings</option>
+          <option value="eightKings">Eight Kings</option>
+          <option value="dixRois">Dix Rois</option>
+          <option value="dieciochoReyes">Dieciocho Reyes</option>
+          <option value="aronson">Aronson Stack</option>
+          <option value="ireland">Ireland Stack</option>
+          <option value="nikola">Nikola Stack Sistem</option>
+          <option value="osterlind">Osterlind Stack</option>
+          <option value="stanyon">Stanyon System</option>
+          <option value="stay">Stay Stack</option>
+          <option value="tamariz">Mnemónica Tamariz</option>
+          <option value="unusQuinque">Unus Quinque</option>
+          <option value="siStibbens">Si Stibbens</option>
+        </select>
+        <div>
+        <div id="barajaImg"></div>
+        <div id="barajaDesc">
+        <dl>
+          <dt>Descripción:</dt>
+          <dd><div>...</div></dd>
+        </dl>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="abrirStack" type="button" class="btn btn-primary">Abrir</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
 <!-- ordenPersonal -->
 <div class="modal fade" id="modalOrdenPersonal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -433,7 +441,7 @@
   </div>
 </div>
     
-<!-- Modal Stadisticas -->
+<!-- Modal Estadisticas -->
 <div class="modal fade" id="modalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -556,10 +564,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-switch.min.js"></script>
+    <script src="js/bselect.js"></script>
     <script src="js/ie10-viewport-bug-workaround.min.js"></script>
     <script src="js/randomorg-js.min.js"></script>
     <script src="js/lz-string.min.js"></script>

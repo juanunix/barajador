@@ -1,0 +1,6 @@
+{
+    "name": "Dieciocho Reyes",
+    "type": "memorized",
+    "description": "Baraja de 52 cartas en rosario, en donde las cartas se ordenan siguiendo la frase mnemotécnica '18 Reyes sentados entre las 49 damas se van al cine' y utilizando una rotación de palos.'",
+    "faces": "10P,8C,KT,7D,2P,3C,AT,4D,9P,QC,6T,JD,5P,10C,8T,KD,7P,2C,3T,AD,4P,9C,QT,6D,JP,5C,10T,8D,KP,7C,2T,3D,AP,4C,9T,QD,6P,JC,5T,10D,8P,KC,7T,2D,3P,AC,4T,9D,QP,6C,JT,5D"
+}

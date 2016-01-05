@@ -1,0 +1,6 @@
+{
+    "name": "Dix Rois",
+    "type": "memorized",
+    "description": "Baraja de 32 cartas en rosario, en donde las cartas se ordenan siguiendo la frase mnemotécnica 'Dix huit Rois ne valent pas sept Dames' y utilizando una rotación de palos.'",
+    "faces": "10P,8C,KT,9D,JP,AC,7T,QD,10C,8T,KD,9P,JC,AT,7D,QP,10T,8D,KP,9C,JT,AD,7P,QC,10D,8P,KC,9T,JD,AP,7C,QT"
+}

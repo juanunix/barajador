@@ -1,0 +1,11 @@
+{
+    "name": "Mnemónica Tamariz",
+    "type": "memorized",
+    "description": "Baraja ordenada de 52 cartas creada por Juan Tamariz, descrita ampliamente en los dos volúmenes de su libro 'Sinfónica en Mnemónica Mayor' (2004).",
+    "image": {
+        "path": "img/tamariz.png",
+        "width": 300,
+        "height": 200
+    },
+    "faces": "4T,2C,7D,3T,4C,6D,AP,5C,9P,2P,QC,3D,QT,8C,6P,5P,9C,KT,2D,JC,3P,8P,6C,10T,5D,KD,2T,3C,8D,5T,KP,JD,8T,10P,KC,JT,7P,10C,AD,4P,7C,4D,AT,9T,JP,QD,7T,QP,10D,6T,AC,9D"
+}
