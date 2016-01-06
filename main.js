@@ -22,6 +22,8 @@ $( "#mnuGuardarImagen" ).on( "click", screenshot );
 $( "#ordenBaraja" ).on( "change", infoBaraja );
 $( "#abrirStack" ).on( "click", abrirStack );
 
+$( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
+$( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
@@ -148,18 +150,18 @@ function iniciar(){
         abreBaraja();
     }else{
     
-        //abre_stack("fourKings");
+        abre_stack("fourKings");
     }
     
     // Carga las preferencias guardadas
     if ( localStorage.getItem("tapete_fondo") ) {
-        var tapete_fondo = abrirLocal("tapete_fondo");
+        var tapete_fondo = "rgb(0, 3, 29)";// abrirLocal("tapete_fondo");
         $('#colorTapete').val(tapete_fondo);
         $('body').css('background-color',tapete_fondo);
     }
     
     if ( localStorage.getItem("tapete_textura") ) {
-        var tapete_textura = abrirLocal("tapete_textura");
+        var tapete_textura = "night-light" // abrirLocal("tapete_textura");
         $('#texturaTapete').val(tapete_textura);
         $('body').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
     }
@@ -594,6 +596,9 @@ function ejecutarComando(texto){
             case "historial":
             case "hist":
                 historial();
+                return;
+            case "nevar":
+                fsNevar()
                 return;
             case "cortar":
             case "cut":
@@ -1282,8 +1287,6 @@ function abrirStack(){
    var stack = $("#ordenBaraja").val();
    
     if (stack == "") {
-    
-        
         
     } else {
         
@@ -1291,5 +1294,4 @@ function abrirStack(){
         $("#modalAbrir").modal('hide');
                   
     }
-    
 }
