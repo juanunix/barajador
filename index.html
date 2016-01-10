@@ -71,10 +71,7 @@
                         <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
                         <li><a class="sfCato" href="#"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cut And Tunr Over...</a></li>
                         
-                        <li class="collapse"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
                         <li class="divider"></li>
-                        <li><a class="sfMilk" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Alfa / Klondike</a></li>
-                        <li><a class="sfMonge" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Mongue</a></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla faro</a>
                             <ul class="dropdown-menu w200">
@@ -86,6 +83,10 @@
                                 <li><a data-toggle="modal" href="#" data-target="#modalFaro" accesskey=".">Avanzada...</a></li>
                             </ul>
                         </li>
+                        <li><a class="sfMilk" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Alfa / Klondike</a></li>
+                        <li><a class="sfMonge" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Mongue</a></li>
+                        <li><a id="sfAustralian" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla australiana</a></li>
+                        <li><a id="sfAntiAustralian" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla antiaustraliana</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Algoritmo Fisher-Yates</a>
@@ -160,15 +161,18 @@
         <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir">
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
-        <input type="button" class="btn btn-primary sfMilk" value="Alfa">
-        <input type="button" class="btn btn-primary sfMonge" value="Monge">
-        <input type="button" class="btn btn-primary sfCato" value="Cato...">
         <br>
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
         <input type="button" class="btn btn-primary sfFaroInt" value="Faro Int">
         <input type="button" class="btn btn-primary sfAntiFaroExt" value="AntiFaro Ext">
         <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In">
         <input type="button" class="btn btn-primary sfFaroAv" value="Faro...">
+        <br>
+        <input type="button" class="btn btn-primary sfMilk" value="Alfa">
+        <input type="button" class="btn btn-primary sfMonge" value="Monge">
+        <input type="button" class="btn btn-primary sfAustralian" value="Australiana">
+        <input type="button" class="btn btn-primary sfAntiAustralian" value="AntiAustraliana">
+        <input type="button" class="btn btn-primary sfCato" value="Cato...">
         <br>
         <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
@@ -254,7 +258,7 @@
           <option value="siStebbins3">Si Stibbens (3)</option>
           <option value="siStebbins4">Si Stibbens (4)</option>
           <option value="siStebbins5">Si Stibbens (5)</option>
-          <option value="siStibbens7">Si Stibbens (7)</option>
+          <option value="siStebbins7">Si Stibbens (7)</option>
           <option value="skotBop">Skot Bop Stack</option>
           <option value="skotBopSimple">Skot Bop Stack (simple)</option>
         </select>

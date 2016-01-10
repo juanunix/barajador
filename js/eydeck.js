@@ -32,6 +32,8 @@ function EyDeck(cartas){
     this.antiFaroInt = antiFaroInt;
     this.milkSuffle = milkShuffle;
     this.mongeSuffle = mongeShuffle;
+    this.australianShuffle = australianShuffle;
+    this.antiAustralianShuffle = antiAustralianShuffle;
     this.fisherYates = fisherYates;
     this.durstenfeld = durstenfeld;
     this.sattolo = sattolo;
@@ -380,6 +382,42 @@ function mongeShuffle(){
         }
     }
     return "monge";
+}
+
+// Mezcla Austrialana
+function australianShuffle(){
+    var barajaTemp = this.naipe.slice();
+    cantidad = this.naipe.length;
+    var cardTemp;
+    
+    for(var i = 0; i < cantidad ; i++) {
+        
+        cardTemp = barajaTemp.shift();
+        barajaTemp.push(cardTemp);
+        cardTemp = barajaTemp.shift();
+        this.naipe[cantidad-i-1] = cardTemp;
+        
+    }
+    
+    return "australian";
+}
+
+// Mezcla AntiAustrialana
+function antiAustralianShuffle(){
+    var barajaTemp = [];
+    cantidad = this.naipe.length;
+    var cardTemp;
+    
+    for(var i = 0; i < cantidad ; i++) {
+
+        cardTemp = this.naipe.shift();
+        barajaTemp.unshift(cardTemp);
+        cardTemp = barajaTemp.pop();
+        barajaTemp.unshift(cardTemp);
+    }
+    
+    this.naipe = barajaTemp.slice();
+    return "antiAustralian";
 }
 
 // Mezcla pseudoaleatoria Fisher-Yates

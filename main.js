@@ -67,6 +67,8 @@ $( ".sfFaroAv" ).on( "click", faroShow );
 $( ".sfMilk" ).on("click", sfMilk);
 $( ".sfMonge" ).on("click", sfMonge);
 $( ".sfCato" ).on( "click", catoShow );
+$( ".sfAustralian" ).on( "click", sfAustralian );
+$( ".sfAntiAustralian" ).on( "click", sfAntiAustralian );
 $( "#modalCato .btnAplicar" ).on( "click", catoAplicar );
 
 // Otras cosas
@@ -645,6 +647,16 @@ function ejecutarComando(texto){
                 return;
             case "mongue":
                 sfMonge();
+                return;
+            case "australiana":
+            case "downunderdeal":
+            case "dud":
+                sfAustralian();
+                return;
+            case "antiaustraliana":
+            case "antidownunderdeal":
+            case "-dud":
+                sfAntiAustralian();
                 return;
             case "faroext":
             case "fo":
@@ -1327,6 +1339,20 @@ function sfMilk(){
 function sfMonge(){
 
     var salida = barajaActual.mongeSuffle();
+    renderizar();
+    consola(salida);
+}
+
+function sfAustralian(){
+
+    var salida = barajaActual.australianShuffle();
+    renderizar();
+    consola(salida);
+}
+
+function sfAntiAustralian(){
+
+    var salida = barajaActual.antiAustralianShuffle();
     renderizar();
     consola(salida);
 }
