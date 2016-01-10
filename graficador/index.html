@@ -12,13 +12,17 @@
     
     <title>Graficador</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-switch.min.css" rel="stylesheet">
+    
     <!-- Open Graph -->
     <meta property="og:locale" content="es_ES" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
+    <meta property="og:title" content="Graficador de permutaciónes" />
+    <meta property="og:description" content="Herramienta para visualizar gráficamente las permutaciones de una baraja de cartas luego de una mezcla." />
     <meta property="og:url" content="" />
-    <meta property="og:site_name" content="" />
+    <meta property="og:site_name" content="Graficador" />
     <meta property="og:image" content="" />
     
 <style type="text/css">
@@ -44,6 +48,7 @@ label {
     padding:2px;
     vertical-align:middle;
     background:white;
+    cursor: pointer;
 }
 
 #mostrar-ciclos label {
@@ -51,7 +56,7 @@ label {
     display: none;
 }
 #inpEspacio {
-    width: 30px;
+    width: 40px;
     text-align: center;
 }
 #preferencias {
@@ -89,230 +94,22 @@ label {
      <label id="l18"><span id="s18">15</span> <input type="checkbox" id="inp18" checked onChange="dibujar()"></label>
      <label id="l19"><span id="s19">15</span> <input type="checkbox" id="inp19" checked onChange="dibujar()"></label>
      <label id="l20"><span id="s20">15</span> <input type="checkbox" id="inp20" checked onChange="dibujar()"></label>
- </span>
+ </span><br>
+ <input type="checkbox" class="bts" data-size="mini" id="inpRadial" data-label-text="Gráfico" checked data-on-text="Lineal" data-off-text="Circular" data-off-color="primary" onChange="dibujar()">
+ <input type="checkbox" class="bts" data-size="mini" data-label-text="Posiciones" data-on-text="Ver" id="inpPosiciones" checked onChange="dibujar()">
+ <input type="checkbox" class="bts" data-size="mini" data-label-text="R&oacute;tulos" data-on-text="Ver" id="inpRotulos" checked onChange="dibujar()">
+ <input type="checkbox" class="bts" data-size="mini" data-label-text="Partici&oacute;n" data-on-text="Natural" data-off-text="Multiplicativa" id="inpParticion" data-off-color="primary" onChange="dibujar()">
  Zoom: <input id="inpEspacio" type="number" min="1" max="20" value="15" onChange="dibujar()">
- <label>Posiciones:<input type="checkbox" id="inpPosiciones" checked onChange="dibujar()"></label>
- <label>R&oacute;tulos:<input type="checkbox" id="inpRotulos" checked onChange="dibujar()"></label>
- <label>Circular:<input type="checkbox" id="inpRadial" onChange="dibujar()"></label>
-
 </div>
 
 <canvas id="grafico" width="800" height="500"></canvas>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-switch.min.js"></script>
+<script src="main.js"></script>
     
-<script>
-var orden = getQueryVariable("orden");
-    orden = orden.split(",");
-var colores = ["#bf2330","#0ff","#0f0","#00f","#ff0","#f0f","#f00","#888","#7c0741","#280b5d","#146961","#98cb3e","#ef6f2d","#186c68"];
-var oCanvas = document.getElementById("grafico");
-var cxt = oCanvas.getContext("2d");
-var pY = 250;
-var centroX = (800/2);
-var centroY = (500/2);
-var factores;
-
-    
-// Dibuja cada mezcla
-function dM(inicial,final){
-  
-  if (inicial > final) {
-    var tmp = inicial;
-    inicial = final;
-    final = tmp;
-    var signo = "-";
-  } else {
-    var signo = "+";
-    }
-
-  if (document.getElementById("inpRadial").checked){
-  // Lineas
-  cxt.beginPath();
-  posX = centroX + Math.cos(alfa * inicial + modif) * radio;
-  posY = centroY + Math.sin(alfa * inicial + modif) * radio;
-  cxt.moveTo(posX,posY);
-  posX = centroX + Math.cos(alfa * final + modif) * radio;
-  posY = centroY + Math.sin(alfa * final + modif) * radio;
-  cxt.lineTo(posX,posY);
-  cxt.stroke();
-  }else{
-
-  // Arcos
-  diametro = final - inicial;
-  pX = margenX + inicial * dotEspacio -  dotEspacio / 2 + (diametro-1) * dotEspacio/2;
-  pD = diametro * dotEspacio / 2;
-  cxt.beginPath();
-  cxt.arc(pX,pY,pD,0,Math.PI,dir=!dir);
-  cxt.stroke();
-  }
-
-  // Rótulos
-  rotYmargen = 8
-  if (document.getElementById("inpRotulos").checked && !document.getElementById("inpRadial").checked){
-
-    disY = (diametro) * dotEspacio/2;
-    if (dir){
-        rotpY = pY - disY - rotYmargen;
-    } else {
-        rotpY = pY + disY + 4 + rotYmargen;
-    }
-    
-    cxt.fillStyle ="white";
-    cxt.beginPath();
-    cxt.arc(pX,rotpY-2,10,0,Math.PI*2,true);
-    cxt.closePath();
-    cxt.fill();
-    cxt.stroke();
-    cxt.fillStyle ="black";
-    cxt.beginPath();
-    cxt.font = "bold 10px Georgia";
-    cxt.textAlign = "center";
-    cxt.fillText(signo+diametro,pX,rotpY);
- }
-
-}
-
-// Dibuja cada ciclo
-function dCiclo(nums){
-
-  nums = nums.split(",");
-  dir = false;
-
-  for(var i=0;i < nums.length; i++){
-
-    dM(parseInt(nums[i]),parseInt(nums[(i+1)%nums.length]));
-
-  }
-
-}
-
-function dibujar(){
-  // Primero borra el dibujo anterior
-  cxt.fillStyle = "white";
-  cxt.fillRect(0, 0, oCanvas.width, oCanvas.height);
-
-  // Lee las preferencias
-  dotEspacio = document.getElementById("inpEspacio").value;
-  margenX = (800/2) - (orden.length * dotEspacio)/2;
-  alfa = Math.PI*2 / orden.length;
-  modif = alfa * orden.length/2;
-  radio = 200;
-  porSecuencia();
-  // Dibuja los puntos por cada carta
-
-
-  for(var i=0;i < orden.length; i++){
-    
-    cxt.fillStyle ="black";
-    cxt.beginPath();
-    if (document.getElementById("inpRadial").checked){
-      posX = centroX + Math.cos(alfa * i + modif) * radio;
-      posY = centroY + Math.sin(alfa * i + modif) * radio;
-      cxt.arc(posX,posY,1.5,0,Math.PI*2,true);
-    }else{
-      var pX = margenX + dotEspacio * i;
-      cxt.arc(pX,pY,1.5,0,Math.PI*2,true);
-    }
-    
-    cxt.closePath();
-    cxt.fill();
-    
-    if (document.getElementById("inpPosiciones").checked){
-      cxt.font = "10px Georgia";
-      cxt.fillStyle = "black";
-      cxt.textAlign = "center";
-      if (document.getElementById("inpRadial").checked){
-        cxt.fillText(i+1,posX,posY+10);
-      }else{
-	cxt.fillText(i+1,pX,pY+10);
-      }
-    }
-  }
-
-  // mostrando la matriz graficada
-  cxt.font = "12px Georgia";
-  cxt.fillStyle = "black";
-  cxt.textAlign = "left";
-  cxt.fillText(orden,10,25);
-    
-  // Creando la partición de lambda(x)
-  cxt.font = "14px Georgia";
-  cxt.fillStyle = "black";
-  cxt.textAlign = "right";
-  num = String(orden.length);
-  subs = "₀₁₂₃₄₅₆₇₈₉".split("");
-  for(var i=0;i<10;i++){
-    var re = new RegExp(i, "g");
-    num = num.replace(re,subs[i]);
-  }
-  
-  cxt.fillText("λ₍"+num+"₎=("+factores.sort(function(a, b){return b - a;})+")",790,480);
-
-}
-    
-function getQueryVariable(variable)
-{
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
-}
-    
-function porSecuencia(){
-
-tempO = orden.slice();
-var e = 1;
-var ciclos = [];
-factores = [];
-    
-do{
-
-    // Rastrea un ciclo
-    var ciclo = [e];
-    var v = e;
-    var max = 0;
-    while (parseInt(orden[v-1]) != e || max > orden.length ){
-
-     ciclo.push(orden[v-1]);
-     tempO[v-1] = 0;
-     v = orden[v-1];
-     max++;
-
-    }
-    tempO[v-1] =  0;
-
-    ciclos.push(ciclo.toString());
-    
-    factores.push(ciclo.length);
- 
-    
-    // Dibuja el ciclo si tiene más de un paso
-    if (ciclo.length != 1){
-        
-        document.getElementById("l"+(ciclos.length)).style.color = colores[ciclos.length-1];
-        document.getElementById("s"+(ciclos.length)).innerHTML = ciclo[0];
-         document.getElementById("l"+(ciclos.length)).style.display = "inline-block";    
-        if (document.getElementById("inp"+(ciclos.length)).checked){
-            cxt.strokeStyle = colores[ciclos.length-1];
-            dCiclo(ciclo.toString());
-        }
-        
-    } else 
-    {
-        // Oculta los ciclos e 1 paso
-    
-    }
-    
-    // Define el siguiente ciclo a buscar
-    do{e++} while(tempO[e-1] == 0);
-        
-} while (e <= orden.length);
-
-}
-
-dibujar();
-</script>
 </body>
 
 </html>
