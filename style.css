@@ -389,7 +389,7 @@ input[type="color"]{
 }
 
 .w220 {
-    width: 20px;
+    width: 220px;
 }
 
 .w230 {
@@ -463,4 +463,9 @@ input[type="color"]{
 
 #ordenPalos {
     display: none;
+}
+
+#notificaciones .alert {
+    margin-bottom: 0px; 
+    border-radius: 0px;
 }

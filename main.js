@@ -12,20 +12,28 @@ var ordenI;
 var stkImg;
 var stkFaces;
 var stkNumbers;
+var datosSlots;
 // Inicia el menu de herramientas
 
 // Menu HELP
 
+// Barra de notificaciones
+$( "#notificaciones .close" ).on( "click", function(){$("#notificaciones").collapse('hide'); });
+
 // Menu: Baraja
-$( "#orden4Kings" ).on( "click", function(){ abreStack("fourKings") });
+$( "#orden4Kings" ).on( "click", function(){ abreStack() });
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
+$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "'+$("#descargar").attr("download")+'". '+txtDescargas) } );
 $( "#ordenBaraja" ).on( "change", infoBaraja );
 $( "#ordenPalos .bselect" ).on( "change", ordenPalos );
 $( "#abrirStack" ).on( "click", abrirStack );
 $( "#modalAbrir .alert .close" ).on( "click", function(){$("#modalAbrir .alert").css("display","none"); });
+$( ".mnuGuardar").on( "click", modalGuardar );
+$( "#slots").on( "change", infoSlot) ;
+$( "#guardarBaraja").on( "click", guardarBaraja) ;
 
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
@@ -56,7 +64,7 @@ $( ".sfRandomOrg" ).on( "click", sfRandomOrg );
 $( ".sfNumeroAleatorio" ).on( "click", sfNumeroAleatorio );
 
 // Faros
-$( ".sfFaroExt" ).on( "click", sfFaroExt );
+$( ".sfFaroExt" ).on( "click", sfFaroExt);
 $( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
@@ -140,7 +148,33 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
 
 // Inicia el barajador
 function iniciar(){
-
+    // Carga variables según el navegador
+    
+    // Chrome Chrome 1+
+    if (!!window.chrome){
+        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.';
+    }
+    
+    // Firefox Firefox 1+
+    if (typeof InstallTrigger !== 'undefined'){
+        txtDescargas = ' Presiona <b>Ctrl + Mayús + Y</b> para acceder a las Descargas.';
+    }
+    
+    // Internet Explorer 6+
+    if (/*@cc_on!@*/false || !!document.documentMode){
+        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.'
+    }
+    // Safari 3+
+    if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0){
+        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.'
+    }
+    
+    // Opera 8+
+    if (!!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0){
+        txtDescargas = ' Presiona <b>⌘ + Alt + L</b> para acceder a las Descargas.'
+    }
+    
+    
     // Desactivar el menú contextual del navegador
     document.oncontextmenu = function(){return false;}
     
@@ -150,16 +184,16 @@ function iniciar(){
         barajaActual = new EyDeck(abrirSesion("baraja_autosave"));
         var posicionesActuales = abrirSesion("baraja_posiciones_autosave").split(",");
         
-        for (var i=0;i<barajaActual.naipe.length;i++){
+        for (var i=0;i<barajaActual.deck.length;i++){
         
-            barajaActual.naipe[i].id = parseInt(posicionesActuales[i]);
+            barajaActual.deck[i].id = parseInt(posicionesActuales[i]);
             
         }
         
         abreBaraja();
     }else{
     
-        abre_stack("fourKings");
+        abreStack();
     }
     
     // Carga las preferencias guardadas
@@ -230,8 +264,8 @@ function abreBaraja(){
     var contenido = '<ul class="baraja" id="naipes">';
     var rotulos = '';
 
-    for (var i = 0;i < barajaActual.naipe.length ;i++){
-        contenido = contenido + '<li id="'+i+'"><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.naipe[i].id+1)+'</div></a></li>';
+    for (var i = 0;i < barajaActual.deck.length ;i++){
+        contenido = contenido + '<li id="'+i+'"><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.deck[i].id+1)+'</div></a></li>';
         
     }
     contenido = contenido + '</ul>';
@@ -241,7 +275,7 @@ function abreBaraja(){
     contenido = '<ul class="paqueteBaraja" id="paqueteNaipes">';
     var naipeeBorde;
     
-    for (var i = 0;i < barajaActual.naipe.length ;i++){
+    for (var i = 0;i < barajaActual.deck.length ;i++){
         
         if (i % 2 == 0){
             naipeBorde = "borBlanco"
@@ -249,7 +283,7 @@ function abreBaraja(){
             naipeBorde = "borGris"
         }
         
-        contenido = contenido + '<li id="naipe' + i + '"><a class="paqueteNaipe ' + naipeBorde + '" onmousedown="javascript:mostrarCorte('+(barajaActual.naipe.length-i)+');"></a></li>';
+        contenido = contenido + '<li id="naipe' + i + '"><a class="paqueteNaipe ' + naipeBorde + '" onmousedown="javascript:mostrarCorte('+(barajaActual.deck.length-i)+');"></a></li>';
         
     }
     contenido = contenido + '</ul>';
@@ -294,21 +328,21 @@ $("#customApiKeyRandom").val("2dbcb5c9-d4f8-4d19-b1f1-cd5cf3980e97");
 comprobarApiRandom();
 
 function sfRandomOrg(){
-var barajaTemp = barajaActual.naipe.slice();
+var barajaTemp = barajaActual.deck.slice();
 
     var result = JsonApi
     .apikey($("#customApiKeyRandom").val())
     .method('generateIntegers')
     .params({
-        "n": barajaActual.naipe.length,
+        "n": barajaActual.deck.length,
         "min": 0,
-        "max": (barajaActual.naipe.length-1),
+        "max": (barajaActual.deck.length-1),
         "replacement": false,
     })
     .post(function(xhrOrError, stream, body) {
         
-        for (var i = 0; i < barajaActual.naipe.length ; i++){
-            barajaActual.naipe[i] = barajaTemp[body.result.random.data[i]]
+        for (var i = 0; i < barajaActual.deck.length ; i++){
+            barajaActual.deck[i] = barajaTemp[body.result.random.data[i]]
         }
         
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
@@ -319,15 +353,15 @@ var barajaTemp = barajaActual.naipe.slice();
 }
 
 function sfNumeroAleatorio(){
-var barajaTemp = barajaActual.naipe.slice();
+var barajaTemp = barajaActual.deck.slice();
     
-    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (barajaActual.naipe.length-1) + "&numero=" + barajaActual.naipe.length + "&repeticion=0&json=0"
+    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (barajaActual.deck.length-1) + "&numero=" + barajaActual.deck.length + "&repeticion=0&json=0"
         
     $.getJSON(apiUrl, function(contenido){
         consola(contenido)
     
-      //  for (var i = 0; i < barajaActual.naipe.length ; i++){
-    //        barajaActual.naipe[i] = barajaTemp[body.result.random.data[i]]
+      //  for (var i = 0; i < barajaActual.deck.length ; i++){
+    //        barajaActual.deck[i] = barajaTemp[body.result.random.data[i]]
     //    }
         
       //  renderizar();
@@ -417,8 +451,8 @@ function sfAntiFaroInt(cantidad){
 function renderizar(){
      // Calcular órden
         ordenI = [];
-        for (var i = 0;i < barajaActual.naipe.length ;i++){
-            ordenI[barajaActual.naipe[i].id] = i+1;
+        for (var i = 0;i < barajaActual.deck.length ;i++){
+            ordenI[barajaActual.deck[i].id] = i+1;
         }
         $("#vrGraph").attr("href","graficador?orden="+ordenI);
     
@@ -426,23 +460,23 @@ function renderizar(){
     if (true == false){
         
         var contenido = '';
-        for (var i = 0; i < barajaActual.naipe.length;i++){
+        for (var i = 0; i < barajaActual.deck.length;i++){
 
-            switch(barajaActual.naipe[i].charAt(barajaActual.naipe[i].length-1)){
+            switch(barajaActual.deck[i].charAt(barajaActual.deck[i].length-1)){
                 case 'C':
-                    contenido = contenido + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&spades;</big> ';
+                    contenido = contenido + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&spades;</big> ';
                     break;
                 case 'H':
-                    contenido = contenido + '<font color="#dd0000">' + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&hearts;</big></font> ';
+                    contenido = contenido + '<font color="#dd0000">' + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&hearts;</big></font> ';
                     break
                 case 'S':
-                    contenido = contenido + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&clubs;</big> ';
+                    contenido = contenido + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&clubs;</big> ';
                     break;
                 case 'D':
-                    contenido = contenido + '<font color="#dd0000">' + barajaActual.naipe[i].substring(0,barajaActual.naipe[i].length-1) + '<big>&diams;</big></font> ';
+                    contenido = contenido + '<font color="#dd0000">' + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&diams;</big></font> ';
                     break;
                 default:
-                    contenido = contenido + barajaActual.naipe[i]        
+                    contenido = contenido + barajaActual.deck[i]        
             }
 
         } 
@@ -458,11 +492,11 @@ function renderizar(){
     
 
     // Renderiza el tapete
-    for (var i = 0;i < barajaActual.naipe.length;i++){
+    for (var i = 0;i < barajaActual.deck.length;i++){
         $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.png)');
-        $("#naipe"+i + " .rotulo").html((i+1)+"<hr>"+(barajaActual.naipe[i].id+1));
+        $("#naipe"+i + " .rotulo").html((i+1)+"<hr>"+(barajaActual.deck[i].id+1));
         
-        
+
     }
 
     guardarSesion("baraja_autosave",matrizFace);
@@ -483,7 +517,7 @@ $("#naipes").sortable({
 			    update: function(){
 				var ordenElementos = $("#naipes").sortable("toArray");
                 var numero;
-                for (var i = 0; i < barajaActual.naipe.length; i++){
+                for (var i = 0; i < barajaActual.deck.length; i++){
                     numero = parseInt(ordenElementos[i]);
                     if (i !== numero && (i+1) !== numero){
                         barajaActual.move(numero,i);
@@ -817,7 +851,7 @@ function cartaActual(carta){
 }
 
 function eliminarCarta(){
-    barajaActual.naipe.splice(posCartaActual,1);
+    barajaActual.deck.splice(posCartaActual,1);
     abreBaraja();
     consola("eliminar("+parseInt(posCartaActual+1)+")");
 }
@@ -833,36 +867,36 @@ function eliminarCartaX(cual){
         } else {
             if (cual < 0){
                 consola("eliminar("+cual+")");
-                cual = barajaActual.naipe.length + parseInt(cual);
+                cual = barajaActual.deck.length + parseInt(cual);
             } else {
                 consola(cual + " no es un argumento válido.");
                 return;
             }
         }
-        barajaActual.naipe.splice(cual,1);
+        barajaActual.deck.splice(cual,1);
         abreBaraja();
     }
 }
 
 function editarCarta(){
-    $("#modalEditarCarta .posicion").html(" #" + (barajaActual.naipe[posCartaActual].id+1));
-    $("#modalEditarCarta .editarCodigoCara").val(barajaActual.naipe[posCartaActual].face);
-    $("#modalEditarCarta .editarCodigoDorso").val(barajaActual.naipe[posCartaActual].back);
-    $("#modalEditarCarta .editarVer").bootstrapSwitch('state', barajaActual.naipe[posCartaActual].canSee);
-    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.png)');
+    $("#modalEditarCarta .posicion").html(" #" + (barajaActual.deck[posCartaActual].id+1));
+    $("#modalEditarCarta .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
+    $("#modalEditarCarta .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
+    $("#modalEditarCarta .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
+    $("#modalEditarCarta .deck").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.png)');
     $("#modalEditarCarta .editarPosicion").val(posCartaActual+1);
-    $("#modalEditarCarta .editarPosicion").attr("max",barajaActual.naipe.length+1);
-    $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.naipe[posCartaActual].crimp);
-    $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.naipe[posCartaActual].crimpB);
+    $("#modalEditarCarta .editarPosicion").attr("max",barajaActual.deck.length+1);
+    $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.deck[posCartaActual].crimp);
+    $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.deck[posCartaActual].crimpB);
     
-    if (barajaActual.naipe[posCartaActual].crimpTag == ""){
+    if (barajaActual.deck[posCartaActual].crimpTag == ""){
         
         var letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $("#modalEditarCarta .editarCrimpTag").val(letras.split("")[barajaActual.getCrimps().length]);
         
     } else {
     
-        $("#modalEditarCarta .editarCrimpTag").val(barajaActual.naipe[posCartaActual].crimpTag);
+        $("#modalEditarCarta .editarCrimpTag").val(barajaActual.deck[posCartaActual].crimpTag);
     }
     
     $("#modalEditarCarta").modal();
@@ -874,7 +908,7 @@ function mostrarPreviewCarta(){
     }else {
         var preview = $("#modalEditarCarta .editarCodigoDorso").val();
     }
-    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
+    $("#modalEditarCarta .deck").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
 
 }
 
@@ -891,18 +925,18 @@ $( "#modalEditarCarta .editarCrimp" ).on('switchChange.bootstrapSwitch', functio
 
 function editarCartaAplicar(){
     
-    barajaActual.naipe[posCartaActual].face = $(".editarCodigoCara").val();
-    barajaActual.naipe[posCartaActual].back = $(".editarCodigoDorso").val();
-    barajaActual.naipe[posCartaActual].canSee = $(".editarVer").bootstrapSwitch('state');
-    barajaActual.naipe[posCartaActual].crimp = $(".editarCrimp").bootstrapSwitch('state');
-    barajaActual.naipe[posCartaActual].crimpB = !$(".editarCrimpTopBottom").bootstrapSwitch('state');
-    barajaActual.naipe[posCartaActual].crimpTag = $(".editarCrimpTag").val();
+    barajaActual.deck[posCartaActual].face = $(".editarCodigoCara").val();
+    barajaActual.deck[posCartaActual].back = $(".editarCodigoDorso").val();
+    barajaActual.deck[posCartaActual].canSee = $(".editarVer").bootstrapSwitch('state');
+    barajaActual.deck[posCartaActual].crimp = $(".editarCrimp").bootstrapSwitch('state');
+    barajaActual.deck[posCartaActual].crimpB = !$(".editarCrimpTopBottom").bootstrapSwitch('state');
+    barajaActual.deck[posCartaActual].crimpTag = $(".editarCrimpTag").val();
     
     var posNueva = ($("#modalEditarCarta .editarPosicion").val()-1);
     
     if (posCartaActual != posNueva){
 
-        consola(barajaActual.naipe[posCartaActual].face + " > " + posNueva);
+        consola(barajaActual.deck[posCartaActual].face + " > " + posNueva);
         barajaActual.move(posCartaActual,posNueva);
         
     }
@@ -913,8 +947,8 @@ function editarCartaAplicar(){
 
 function sfModalCortar(){
     
-    $("#alNumero").attr('min',-barajaActual.naipe.length+1);
-    $("#alNumero").attr('max',barajaActual.naipe.length-1);
+    $("#alNumero").attr('min',-barajaActual.deck.length+1);
+    $("#alNumero").attr('max',barajaActual.deck.length-1);
     $("#alNumero").val(0);
     
     var crimps = barajaActual.getCrimps();
@@ -922,10 +956,10 @@ function sfModalCortar(){
     for (var i = 0; i < crimps.length; i++){
     
         var posicion = crimps[i];
-        if (barajaActual.naipe[crimps[i]].crimpB){
+        if (barajaActual.deck[crimps[i]].crimpB){
             posicion++;
         }
-        opciones += "<option value="+posicion+">" + barajaActual.naipe[crimps[i]].crimpTag + "</option>";
+        opciones += "<option value="+posicion+">" + barajaActual.deck[crimps[i]].crimpTag + "</option>";
         
     }
     $(".alCrimp select").html(opciones);
@@ -963,10 +997,10 @@ function actualizarCorteCrimp(){
 function mostrarCorte(lugar){
     
     $("#alNumero").val(lugar);
-    lugar = barajaActual.naipe.length - lugar;
+    lugar = barajaActual.deck.length - lugar;
     
-    if (lugar > barajaActual.naipe.length){
-        lugar = lugar - barajaActual.naipe.length;
+    if (lugar > barajaActual.deck.length){
+        lugar = lugar - barajaActual.deck.length;
     }
     
     $("#moduloPaquetes #naipe"+lugar).css('margin-top',"-205px");
@@ -1032,13 +1066,13 @@ function sfVoltearEstas(argumento){
 }
 
 function moverATop(){
-    consola(barajaActual.naipe[posCartaActual].face + " > Top");
+    consola(barajaActual.deck[posCartaActual].face + " > Top");
     barajaActual.toTop(posCartaActual);
     renderizar();
 }
 
 function moverABottom(){
-    consola(barajaActual.naipe[posCartaActual].face + " > Bottom");
+    consola(barajaActual.deck[posCartaActual].face + " > Bottom");
     barajaActual.toBotom(posCartaActual);
     renderizar();  
 }
@@ -1102,16 +1136,16 @@ function abrirLocal(variable){
 
 function catoShow(){
     
-    var cantPar = Math.floor(barajaActual.naipe.length/2)*2;
+    var cantPar = Math.floor(barajaActual.deck.length/2)*2;
     
-    $("#catoCutCant").attr("max", barajaActual.naipe.length );
+    $("#catoCutCant").attr("max", barajaActual.deck.length );
     $("#catoCutCant").val(cantPar/2);
     $(".turnNum").attr("max",  cantPar);
     $("#catoTurnDesde").attr("max", cantPar );
     $("#catoTurnHasta").attr("max", cantPar );
-    $("#catoTurnHasta").val(cantPar);
+    $("#catoTurnHasta").val(Math.floor(cantPar/8)*2);
     
-    $("#modalCato").modal('show');
+    $("#modalCato").modal();
     
 }
 
@@ -1137,36 +1171,45 @@ function catoAplicar(){
     var j = $("#modalCato .multiplicador").val();
     var cortarX;
     var voltearX;
+    var txtMezcla
     for (var i=0;i<j;i++){
         
         // CUT
+        txtMezcla = "Se ha hecho una Mezcla Cato cortando ";
         if( $("#catoCut").bootstrapSwitch('state') ) {
             
-            cortarX = Math.floor(Math.random()*(barajaActual.naipe.length));
+            cortarX = Math.floor(Math.random()*(barajaActual.deck.length));
+            txtMezcla += "librente";
             
         } else {
 
             if ($("#catoTopBotom").bootstrapSwitch('state')){
             
                 cortarX = $("#catoCutCant").val();
+                txtMezcla += cortarX + " cartas desde TOP";
                 
             } else {
             
-                cortarX = "-" + $("#catoCutCant").val();
+                cortarX = $("#catoCutCant").val();
+                txtMezcla += cortarX + " cartas desde BOTTOM";
+                cortarX = "-" + cortarX;
                 
             }
             
         }
         
         // AND TURN
+        txtMezcla += " y dando vuelta ";
         if( $("#catoTurn").bootstrapSwitch('state') ) {
             
             voltearX = $("#modalCato .turnNum").val();
+            txtMezcla += voltearX + " cartas ";
             
         } else {
             var desde = parseInt($("#catoTurnDesde").val());
             var hasta = parseInt($("#catoTurnHasta").val())+2;
             voltearX = (Math.floor(Math.random()* ((hasta - desde)/2))*2)+desde;
+            txtMezcla += "de " + desde + " a " + hasta + " cartas ";
         }
         
         barajaActual.cortar(cortarX);
@@ -1175,14 +1218,21 @@ function catoAplicar(){
         consola("cato("+cortarX+","+voltearX+")");
     }
     
+    if (j == 1 || isNaN(j)){
+        txtMezcla += "una vez.";
+    } else {
+        txtMezcla += j + " veces.";
+    }
+    
+    notificar(txtMezcla,"success");
     renderizar();
     $("#modalCato").modal('hide');
 }
 
 function faroShow(){
     
-    $("#faroParcial").attr("max", barajaActual.naipe.length );
-    $("#faroParcial").val(barajaActual.naipe.length);
+    $("#faroParcial").attr("max", barajaActual.deck.length );
+    $("#faroParcial").val(barajaActual.deck.length);
     $("#modalFaro").modal('show');
     
 }
@@ -1209,10 +1259,12 @@ function faroAplicar(){
     if ( $("#faroAntiFaro").bootstrapSwitch('state') ) {
     
         var mezcla = "faro";
-    
+        var txtMezcla = "Faro";
+        
     } else {
         
         var mezcla = "antifaro";
+        var txtMezcla = "Antifaro";
         
     }
     
@@ -1220,26 +1272,33 @@ function faroAplicar(){
     if ( $("#faroExtInt").bootstrapSwitch('state') ) {
         
         mezcla = mezcla + "ext(";
-    
+        txtMezcla += " Exterior";
+        
     } else {
     
         mezcla = mezcla + "int(";
+        txtMezcla += " Interior";
         
     }
     
     // ¿Total o parcial?
     if ( $("#faroCantidad").bootstrapSwitch('state') ) {
         
-        mezcla = mezcla + barajaActual.naipe.length;
-        
+        mezcla = mezcla + barajaActual.deck.length;
+        txtMezcla += ".";
+
     } else {
         var valor = $('#faroParcial').val();
         
         // ¿Desde top o desde bottom?
-        if ( !$("#faroTopBotom").bootstrapSwitch('state') ){
+        if ($("#faroTopBotom").bootstrapSwitch('state') ){
+            txtMezcla += " de las primeras ";
+        } else {
             mezcla = mezcla + "-";
+            txtMezcla += " de las últimas ";
         }
         
+        txtMezcla += valor + " cartas."
         mezcla = mezcla + valor + ")";
     }
     
@@ -1248,16 +1307,15 @@ function faroAplicar(){
     if ( veces == 1 || !isNaN(valor) ) {
         
         ejecutarComando(mezcla);
-        
+        txtMezcla = "Se ha hecho una mezcla " + txtMezcla;
     } else {
         
-        repetirComando(mezcla,veces)
+        repetirComando(mezcla,veces);
+        txtMezcla = "Se ha hecho " + veces + " mezclas " + txtMezcla;
     }
     
-    
-    // Aplica la mezcla
+    notificar(txtMezcla,'success');
     $("#modalFaro").modal('hide');
-    eval(mezcla);
     
 }
 
@@ -1266,7 +1324,7 @@ function verStats(){
     var redond =  7;
     // Permutaciones posibles
     var permutaciones = 1;
-    for (var i = 1; i <= barajaActual.naipe.length; i++) {
+    for (var i = 1; i <= barajaActual.deck.length; i++) {
         permutaciones = permutaciones * i
 	}
     
@@ -1284,28 +1342,28 @@ function verStats(){
     }
         
     // Mezclas riffle necesaria para desordenar la baraja
-    var mezclasNecesarias = (Math.log(barajaActual.naipe.length) / Math.log(2))*1.5;
+    var mezclasNecesarias = (Math.log(barajaActual.deck.length) / Math.log(2))*1.5;
     mezclasNecesarias = redondeo(mezclasNecesarias,redond);
     
     // Adivinaciones probables
     var adivinacionesProbables = 0;
-    for (var i = 1; i<=barajaActual.naipe.length;i++){
+    for (var i = 1; i<=barajaActual.deck.length;i++){
     
         adivinacionesProbables = adivinacionesProbables + 1 / i;
     }
     
-    var adivinacionesPorcentaje = adivinacionesProbables * 100 / barajaActual.naipe.length;
+    var adivinacionesPorcentaje = adivinacionesProbables * 100 / barajaActual.deck.length;
     adivinacionesPorcentaje = redondeo(adivinacionesPorcentaje,2);
     adivinacionesProbables = redondeo(adivinacionesProbables,redond);
     
     $("#modalStats .barajaMatriz").html("["+barajaActual.getMatriz("face",",")+"]");
-    $("#modalStats .cantidad").html(barajaActual.naipe.length);
-    $("#modalStats .permutaciones").html(barajaActual.naipe.length + "! = " + permutaciones);
-    $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>" + barajaActual.naipe.length + " = " + mezclasNecesarias);
-    $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>" + barajaActual.naipe.length + "</sub> + ... + <sup>1</sup>&frasl;<sub>2</sub> + <sup>1</sup>&frasl;<sub>1</sub> = " + adivinacionesProbables);
+    $("#modalStats .cantidad").html("n = " + barajaActual.deck.length);
+    $("#modalStats .permutaciones").html("n! = " + permutaciones);
+    $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>(n) = " + mezclasNecesarias);
+    $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>n</sub> + ... + <sup>1</sup>&frasl;<sub>2</sub> + <sup>1</sup>&frasl;<sub>1</sub> = " + adivinacionesProbables);
     $("#modalStats .adivinacionesPorcentaje").html(adivinacionesPorcentaje + "%");
-    $("#modalStats .farosOutOrdenan").html("ord<sub>" + barajaActual.naipe.length + "-1</sub>(2) = ");
-    $("#modalStats .farosIntOrdenan").html("ord<sub>" + barajaActual.naipe.length + "+1</sub>(2) = ");
+    $("#modalStats .farosOutOrdenan").html("ord<sub>n-1</sub>(2) = ");
+    $("#modalStats .farosIntOrdenan").html("ord<sub>n+1</sub>(2) = ");
     
 }
 
@@ -1443,4 +1501,125 @@ function abreStack() {
         
         
         
+}
+
+function notificar(texto,tipo){
+    
+    $("#notificaciones .alert").removeClass("alert-success alert-warning alert-info alert-danger");
+    $("#notificaciones .glyphicon").removeClass("glyphicon-ok-sign glyphicon-info-sign exclamation-sign glyphicon-remove-sign")
+    
+    switch (tipo){
+            case "success":
+                $("#notificaciones .alert").addClass("alert-success");
+                $("#notificaciones .glyphicon").addClass("glyphicon-ok-sign");
+            break;
+            case "warning":
+                $("#notificaciones .alert").addClass("alert-warning");
+                $("#notificaciones .glyphicon").addClass("exclamation-sign");
+            break;
+            case "danger":
+                $("#notificaciones .alert").addClass("alert-danger");
+                $("#notificaciones .glyphicon").addClass("glyphicon-remove-sign");
+            break;
+            case "info":
+            default:
+                 $("#notificaciones .alert").addClass("alert-info");
+                $("#notificaciones .glyphicon").addClass("glyphicon-info-sign");
+    }
+    $("#notificaciones").collapse('show');
+    $("#notificaciones .texto").html(texto);
+    
+    var tiempoNot = $("#notificationTime").val()*1000;
+    if (tiempoNot != 0){
+        setTimeout(function(){ $("#notificaciones").collapse('hide'); }, tiempoNot);
+    }
+   
+}
+
+function modalGuardar(){
+   
+   $.getJSON("decks/index.json", function(datos) {
+    
+   var htmlSlots = "<option value=''></option>"
+   
+   for (var i=0; i<4;i++){
+   
+       htmlSlots += "<option value='" + i + "'>"+(i+1)+") ";
+       
+       if (datos[i]["name"] == ""){
+       
+           htmlSlots += " vacío...";
+           
+       } else {
+       
+           htmlSlots += datos[i]["name"];
+               
+       }
+       
+       htmlSlots += "</option>";
+       datosSlots = datos;
+   }
+   
+   $("#slots").html(htmlSlots)
+   $("#slots").bselect({ searchInput : false });
+       
+   });
+    
+   $("#modalGuardar").modal("show");
+}
+
+function infoSlot(){
+
+  var i = parseInt($('#slots :selected').val());
+  
+  $("#deckName input").val(datosSlots[i]["name"]);
+    
+  $("#deckName").collapse("show");
+}
+
+function guardarBaraja(){
+    var nombreProp = $("#deckName input").val().trim();
+    
+    if (nombreProp == "" ){
+    
+    alert("no puede ser vacío");
+        
+    return false;
+        
+    }
+    
+    if (datosSlots[i]["name"] != ""){
+    
+    alert("¿Estás seguro?");
+    return false;
+    
+    }
+    
+    var i = parseInt($('#slots :selected').val());
+    datosSlots[i]["name"] = $("#deckName input").val();
+        
+    // Guarda el index: Decks
+    var fileNombre = "index";
+    var myString = 'data='+JSON.stringify(datosSlots)+"&name="+fileNombre;  //converts json to string and prepends the POST variable name
+    $.ajax({
+       type: "POST",
+       url: "save.php", //the name and location of your php file
+       data: myString,      //add the converted json string to a document.
+       success: function() {} //just to make sure it got to this point.
+    });
+    
+    fileNombre = "deck"+i;
+    myString = 'data='+JSON.stringify(barajaActual)+"&name="+fileNombre;  //converts json to string and prepends the POST variable name
+    $.ajax({
+       type: "POST",
+       url: "save.php", //the name and location of your php file
+       data: myString,      //add the converted json string to a document.
+       success: function() {
+           notificar('¡Se ha guardado "' + datosSlots[i]["name"] + '" exitosamente!','success');
+       } //just to make sure it got to this point.
+    });
+    
+    
+    return false;  //prevents the page from reloading. this helps if you want to bind this whole process to a click event.
+    
 }

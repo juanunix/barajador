@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -53,6 +52,7 @@
                     <ul class="dropdown-menu w210">
                         <li><a id="orden4Kings" href="#" accesskey="n"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nueva<span class="atajo">ALT+N</span></a></li>
                         <li><a data-toggle="modal" href="#" data-target="#modalAbrir" accesskey="a"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...<span class="atajo">ALT+A</span></a></li>
+                        <li><a class="mnuGuardar" href="#" accesskey="s"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar...<span class="atajo">ALT+S</span></a></li>
                         <li class="divider"></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Establecer posiciones...</a></li>
@@ -75,7 +75,7 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla faro</a>
                             <ul class="dropdown-menu w200">
-                                <li><a class="sfFaroExt" href="#" accesskey="o">Faro Exterior<span class="atajo">Alt+O</span></a></li>
+                                <li><a class="sfFaroExt" data-loading-text="mezclando..." href="#" accesskey="o">Faro Exterior<span class="atajo">Alt+O</span></a></li>
                                 <li><a class="sfFaroIn" href="# "accesskey="i">Faro Interior<span class="atajo">Alt+I</span></a></li>
                                 <li><a class="sfAntiFaroExt" href="#" accesskey="l">Antifaro Exterior<span class="atajo">Alt+L</span></a></li>
                                 <li><a class="sfAntiFaroIn" href="#" accesskey="k">Antifaro Interior<span class="atajo">Alt+K</span></a></li>
@@ -107,9 +107,9 @@
                 </li>
                  <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver<b class="caret"></b></a>
-                        <ul class="dropdown-menu w200">
+                        <ul class="dropdown-menu w220">
                          <li><a href="#" id="vrRefresh"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Recargar<span class="atajo">F5</span></a></li>
-                         <li id="liFullScreen"><a href="#" id="vrFullScreen"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> Pantalla completa</a></li>
+                         <li id="liFullScreen"><a href="#" id="vrFullScreen"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> Pantalla completa<span class="atajo">F11</span></a></li>
                             
                          <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Módulos</a>
@@ -121,7 +121,7 @@
                             </ul>
                         </li>
                         <li><a id="vrGraph" href="#" accesskey="g" target="_blank"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Graficar<span class="atajo">Alt+G</span></a></li>
-                        <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="s"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas<span class="atajo"></span></a></li>
+                        <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="m"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Análisis matemático<span class="atajo">Alt+M</span></a></li>
                         <li class="divider"></li>
                         <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalPreferencias"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
                     </ul>
@@ -138,6 +138,11 @@
         </div><!--/.nav-collapse -->
     </div>
 </div>
+<!-- Barra de notificaciones -->
+<div id="notificaciones" class="collapse">
+<div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
+</div>
+    
 <!-- Modulos -->
 <div id="moduloMatriz">
 <div class="input-group matriz input-group-sm">
@@ -147,7 +152,7 @@
       </span>
 </div>
 </div>
-    
+
 <div id="tapeteFondo">
    
     <div id="moduloTapete">
@@ -180,12 +185,35 @@
         <input type="button" class="btn btn-primary sfRandomOrg" value="Azar Random.org">
     </div>
 </div>
-
+    
 <div id="moduloConsola">
 <div id="consola">><input id="consolaInput" type="text"/>
 <div id="consolaOutput"></div>
 </div>
 </div>
+
+<!-- Guardar Baraja -->
+<div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Guardar baraja...</h4>
+      </div>
+      <div class="modal-body">
+        <select id="slots" class="bselect" data-placeholder="Elije un slot">
+        </select>
+        <div id="deckName" class="collapse">
+        Nombre:
+          <input type="text" class="form-control" placeholder="Baraja sin título" required>
+        </div>
+  </div>
+      <div class="modal-footer">
+        <button id="guardarBaraja" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
     
 <!-- Generar Captura -->
 <div class="modal fade" id="modalScreen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -203,7 +231,7 @@
             </div>
       </div>
       <div class="modal-footer">
-        <a id="descargar" class="btn btn-primary" href="#" download="baraja.png">Descargar</a>
+        <a id="descargar" class="btn btn-primary" href="#" download="baraja.png" data-dismiss="modal">Descargar</a>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -515,7 +543,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Estadísticas</h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Análisis matemático</h4>
       </div>
       <div class="modal-body">
         <div class="printable">
@@ -572,6 +600,7 @@
           <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#themeSettings">Tema</a></li>
           <li><a data-toggle="tab" href="#randomSettings">Random.org</a></li>
+          <li><a data-toggle="tab" href="#notificationSettings">Notificaciones</a></li>
         </ul>
 
         <div class="tab-content">
@@ -604,6 +633,7 @@
             </p>
             <p style="text-align: right"><a id="reiniciarTema" href="#">Reiniciar valores por defecto</a></p>
           </div>
+            
           <div id="randomSettings" class="tab-pane fade">
             <p>Preferencias para la mezcla aleatoria a partir del ruido atmosférico utilizando el servicio de <a href="https://www.random.org/" target="_blank">Random.org</a>.</p>
             <div class="form-group">
@@ -618,7 +648,20 @@
               <div class="progress">
                 <div id="randomKeyApiBitsLeft" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="250000" aria-valuemax="250000" style="min-width: 2em;">%</div>
               </div>
-        </div>
+          </div>
+            
+            <div id="notificationSettings" class="tab-pane fade">
+            <p>Preferencias de las notificaciones</p>
+            <div class="form-group">
+            
+            <span class="input-group inputSettings">
+                <input type="number" class="form-control" id="notificationTime" min="0" value="10" max="60">
+            <span class="input-group-addon">seg.</span> 
+            </span> Duración de las notificaciones (0 para indefinidamente).
+          </div>
+              
+              
+          </div>
           
       </div>
       <div class="modal-footer">
@@ -658,23 +701,6 @@
       
     })
     </script>
-                      
-    <!-- Tracking de piwki -->
-    <script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(["setCookieDomain", "*.eypacha.com.ar"]);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//clowntube.tv/clowntube/piwik/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', 2]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-    
-<noscript><p><img src="//clowntube.tv/clowntube/piwik/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
   </body>
     
 </html>
