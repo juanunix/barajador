@@ -9,18 +9,23 @@ var JsonApi = new RandomJs();
 var comandosHistorial = [];
 var comandoHistorialN = 0;
 var ordenI;
+var stkImg;
+var stkFaces;
+var stkNumbers;
 // Inicia el menu de herramientas
 
 // Menu HELP
 
 // Menu: Baraja
-$( "#orden4Kings" ).on( "click", function(){ abreStack("fourKings")});
+$( "#orden4Kings" ).on( "click", function(){ abreStack("fourKings") });
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
 $( "#ordenBaraja" ).on( "change", infoBaraja );
+$( "#ordenPalos .bselect" ).on( "change", ordenPalos );
 $( "#abrirStack" ).on( "click", abrirStack );
+$( "#modalAbrir .alert .close" ).on( "click", function(){$("#modalAbrir .alert").css("display","none"); });
 
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
@@ -61,6 +66,8 @@ $( ".sfFaroAv" ).on( "click", faroShow );
 // otras mezclas
 $( ".sfMilk" ).on("click", sfMilk);
 $( ".sfMonge" ).on("click", sfMonge);
+$( ".sfCato" ).on( "click", catoShow );
+$( "#modalCato .btnAplicar" ).on( "click", catoAplicar );
 
 // Otras cosas
 $( ".vrOrden").on("click", obtenerOrden);
@@ -155,13 +162,13 @@ function iniciar(){
     
     // Carga las preferencias guardadas
     if ( localStorage.getItem("tapete_fondo") ) {
-        var tapete_fondo = "rgb(0, 3, 29)";// abrirLocal("tapete_fondo");
+        var tapete_fondo = abrirLocal("tapete_fondo");
         $('#colorTapete').val(tapete_fondo);
         $('body').css('background-color',tapete_fondo);
     }
     
     if ( localStorage.getItem("tapete_textura") ) {
-        var tapete_textura = "night-light" // abrirLocal("tapete_textura");
+        var tapete_textura = abrirLocal("tapete_textura");
         $('#texturaTapete').val(tapete_textura);
         $('body').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
     }
@@ -197,7 +204,8 @@ function iniciar(){
     }
     
     // crea element bselect
-    $(".bselect").bselect();
+    $("#ordenBaraja").bselect();
+    $("#ordenPalos select").bselect({ searchInput : false });
 }
 
 iniciar();
@@ -607,6 +615,8 @@ function ejecutarComando(texto){
             case "voltear":
             case "turn":
                 sfVoltearEstas(argumento);
+                consola("turn("+argumento+")");
+                renderizar();
                 return;
             case "invertir":
             case "inv":
@@ -748,22 +758,6 @@ $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state)
         $(".rotulo").css('display', 'table-caption');
    }else{
        $(".rotulo").css('display', 'none');
-   }
-});
-
-$( "#faroCantidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
-   if (state){
-        $(".cantidadOpciones").collapse('hide');
-   }else{
-        $(".cantidadOpciones").collapse('show');
-   }
-});
-
-$( "#faroCalidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
-   if (state){
-        $(".calidadOpciones").collapse('hide');
-   }else{
-        $(".calidadOpciones").collapse('show');
    }
 });
 
@@ -1022,8 +1016,6 @@ function sfVoltearEstas(argumento){
     }else{
         barajaActual.turnOver(parseInt(nums[0])-1);
     }
-    consola("turn("+argumento+")");
-    renderizar();
     
 }
 
@@ -1096,11 +1088,108 @@ function abrirLocal(variable){
     
 }
 
-function faroShow(){
+function catoShow(){
+    
+    var cantPar = Math.floor(barajaActual.naipe.length/2)*2;
+    
+    $("#catoCutCant").attr("max", barajaActual.naipe.length );
+    $("#catoCutCant").val(cantPar/2);
+    $(".turnNum").attr("max",  cantPar);
+    $("#catoTurnDesde").attr("max", cantPar );
+    $("#catoTurnHasta").attr("max", cantPar );
+    $("#catoTurnHasta").val(cantPar);
+    
+    $("#modalCato").modal('show');
+    
+}
 
+$( "#catoCut" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $("#modalCato .cantidadOpciones").collapse('hide');
+   }else{
+        $("#modalCato .cantidadOpciones").collapse('show');
+   }
+});
+
+$( "#catoTurn" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $("#modalCato .turnOpciones").collapse('hide');
+        $(".turnNum").removeAttr("disabled");
+   }else{
+       $(".turnNum").attr("disabled","disabled");
+       $("#modalCato .turnOpciones").collapse('show');
+   }
+});
+
+function catoAplicar(){
+    var j = $("#modalCato .multiplicador").val();
+    var cortarX;
+    var voltearX;
+    for (var i=0;i<j;i++){
+        
+        // CUT
+        if( $("#catoCut").bootstrapSwitch('state') ) {
+            
+            cortarX = Math.floor(Math.random()*(barajaActual.naipe.length));
+            
+        } else {
+
+            if ($("#catoTopBotom").bootstrapSwitch('state')){
+            
+                cortarX = $("#catoCutCant").val();
+                
+            } else {
+            
+                cortarX = "-" + $("#catoCutCant").val();
+                
+            }
+            
+        }
+        
+        // AND TURN
+        if( $("#catoTurn").bootstrapSwitch('state') ) {
+            
+            voltearX = $("#modalCato .turnNum").val();
+            
+        } else {
+            var desde = parseInt($("#catoTurnDesde").val());
+            var hasta = parseInt($("#catoTurnHasta").val())+2;
+            voltearX = (Math.floor(Math.random()* ((hasta - desde)/2))*2)+desde;
+        }
+        
+        barajaActual.cortar(cortarX);
+        barajaActual.invertir(voltearX);
+        sfVoltearEstas("1,"+voltearX);
+        consola("cato("+cortarX+","+voltearX+")");
+    }
+    
+    renderizar();
+    $("#modalCato").modal('hide');
+}
+
+function faroShow(){
+    
+    $("#faroParcial").attr("max", barajaActual.naipe.length );
+    $("#faroParcial").val(barajaActual.naipe.length);
     $("#modalFaro").modal('show');
     
 }
+
+$( "#faroCantidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $("#modalFaro .cantidadOpciones").collapse('hide');
+   }else{
+        $("#modalFaro .cantidadOpciones").collapse('show');
+   }
+});
+
+$( "#faroCalidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+        $(".calidadOpciones").collapse('hide');
+   }else{
+        $(".calidadOpciones").collapse('show');
+   }
+});
 
 function faroAplicar(){
     
@@ -1143,7 +1232,7 @@ function faroAplicar(){
     }
     
     // ¿Hay multiplicador?
-        var veces = $(".multiplicador").val();
+        var veces = $("#modalFaro .multiplicador").val();
     if ( veces == 1 || !isNaN(valor) ) {
         
         ejecutarComando(mezcla);
@@ -1155,8 +1244,9 @@ function faroAplicar(){
     
     
     // Aplica la mezcla
-    eval(mezcla);
     $("#modalFaro").modal('hide');
+    eval(mezcla);
+    
 }
 
 function verStats(){
@@ -1250,48 +1340,81 @@ function saberMas(){
 
 }
 
-// Abre una baraja desde el stack JSON
-function abreStack(stack) {
-    $.getJSON("stacks/"+stack+".json", function(datos) {
-        barajaActual = new EyDeck(datos["faces"]);
-        abreBaraja();
-    });
-}
-
 // Actualiza la descripción de
 function infoBaraja(){
    var stack = $("#ordenBaraja").val();
    $.getJSON("stacks/"+stack+".json", function(datos) {
        $("#barajaDesc div").html( datos["description"] );
    
-        var stackImg = datos["image"];
-        
-        if (typeof stackImg === 'undefined'){
+        stkImg = datos["image"];
+        stkFaces = datos["faces"];
+        stkNumbers = datos["numbers"];
+    
+        if (typeof stkImg === 'undefined'){
             
             $("#barajaImg").css("display","none");
             
         } else {
             
-            $("#barajaImg").css('background-image',"url('stacks/"+ stackImg["path"]+"')");
-            $("#barajaImg").css("width", stackImg["width"] + "px");
-            $("#barajaImg").css("height", stackImg["height"] + "px");
-            $("#barajaImg").css("background-size", stackImg["width"] + "px " + stackImg["height"] + "px");
+            $("#barajaImg").css('background-image',"url('stacks/"+ stkImg["path"]+"')");
+            $("#barajaImg").css("width", stkImg["width"] + "px");
+            $("#barajaImg").css("height", stkImg["height"] + "px");
+            $("#barajaImg").css("background-size", stkImg["width"] + "px " + stkImg["height"] + "px");
             $("#barajaImg").css("display","block");
         }
+       
+       if (typeof stkFaces !== 'undefined'){
+           $("#ordenPalos").css("display","none");
+           $("#barajaPref #orden").val(stkFaces);
+           
+       } else {
+           if (typeof stkNumbers !== 'undefined'){
+               ordenPalos;
+               $("#ordenPalos").css("display","block");
+               $("#barajaPref #orden").val(stkNumbers);
+           }
+       }
        
     });
     
 }
 
+function ordenPalos(){
+    var ordPalos = $("#ordenPalos .bselect").val();
+    var ordTemp = stkNumbers.split(",");
+    
+    for (var i=0;i<ordTemp.length;i++){
+        ordTemp[i]=ordTemp[i]+ordPalos.charAt(i%4);
+    }
+    $("#barajaPref #orden").val(ordTemp);
+}
+
 function abrirStack(){
-   var stack = $("#ordenBaraja").val();
-   
-    if (stack == "") {
+    
+    if ($("#barajaPref #orden").val() == '') {
+    
+        $("#modalAbrir .alert .texto").html("¡No se ha seleccionado ninguna ordenación!");
+        $("#modalAbrir .alert").css("display","block");
         
     } else {
         
-        abreStack(stack);
-        $("#modalAbrir").modal('hide');
+        if(typeof stkNumbers !== 'undefined' && $("#ordenPalos .bselect").val() == '') {
+            $("#modalAbrir .alert .texto").html("¡No se ha seleccionado ninguna rotación de palos!");
+            $("#modalAbrir .alert").css("display","block");
+            
+        } else {
+            $("#modalAbrir .alert").css("display","none");
+            $("#modalAbrir").modal('hide');
+            barajaActual = new EyDeck($("#barajaPref #orden").val());
+            abreBaraja();
+        }
                   
     }
+}
+
+// Abre una baraja desde el stack JSON
+function abreStack() {
+        
+        
+        
 }

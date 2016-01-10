@@ -452,6 +452,15 @@ input[type="color"]{
     display: none;
 }
 
-#barajaDesc {
+#barajaDesc, #barajaPref {
     padding: 5px;
+}
+
+#modalAbrir .alert {
+    display: none;
+    margin-bottom: 0px;
+}
+
+#ordenPalos {
+    display: none;
 }

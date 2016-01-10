@@ -69,6 +69,7 @@
                             <li class="collapse"><a href="#" id="sfRepetir"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repetir</a></li>
                         <li><a href="#" class="sfInvertir"><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Invertir</a></li>
                         <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
+                        <li><a class="sfCato" href="#"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cut And Tunr Over...</a></li>
                         
                         <li class="collapse"><a id="sfAustraliana" href="#">Mezcla australiana</a></li>
                         <li class="divider"></li>
@@ -161,6 +162,7 @@
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
         <input type="button" class="btn btn-primary sfMilk" value="Alfa">
         <input type="button" class="btn btn-primary sfMonge" value="Monge">
+        <input type="button" class="btn btn-primary sfCato" value="Cato...">
         <br>
         <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
         <input type="button" class="btn btn-primary sfFaroInt" value="Faro Int">
@@ -231,9 +233,10 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir baraja...</h4>
       </div>
+       <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <span class="texto"></span></div>
       <div class="modal-body" style="text-align:justify">
-         <select id="ordenBaraja" class="bselect" data-placeholder="Elije una ordenación...">
-          <option value="">Elije una ordenación...</option>
+         <select id="ordenBaraja" class="bselect" data-placeholder="Elije una ordenación">
+          <option value=""></option>
           <option value="bicycle">Bicycle</option>
           <option value="fournier">Fournier</option>
           <option value="fourKings">Four Kings</option>
@@ -248,7 +251,12 @@
           <option value="stay">Stay Stack</option>
           <option value="tamariz">Mnemónica Tamariz</option>
           <option value="unusQuinque">Unus Quinque</option>
-          <option value="siStibbens">Si Stibbens</option>
+          <option value="siStebbins3">Si Stibbens (3)</option>
+          <option value="siStebbins4">Si Stibbens (4)</option>
+          <option value="siStebbins5">Si Stibbens (5)</option>
+          <option value="siStibbens7">Si Stibbens (7)</option>
+          <option value="skotBop">Skot Bop Stack</option>
+          <option value="skotBopSimple">Skot Bop Stack (simple)</option>
         </select>
         <div>
         <div id="barajaImg"></div>
@@ -257,6 +265,25 @@
           <dt>Descripción:</dt>
           <dd><div>...</div></dd>
         </dl>
+        </div>
+
+        <div id="barajaPref">
+        <dt>Estructura:</dt>
+            <input type="text" class="form-control" id="orden" readonly>
+            
+            <div id="ordenPalos">
+                <select class="bselect" data-placeholder="Rotación de palos">
+                  <option value=""></option>
+                  <option value="TCPD">&clubs; Trébol, &hearts; Corazón, &spades; Picas, &diams; Diamante</option>
+                  <option value="TDPC">&clubs; Trébol, &diams; Diamante, &spades; Picas, &hearts; Corazón</option>
+                  <option value="CPDT">&hearts; Corazón, &spades; Picas, &diams; Diamante, &clubs; Trébol</option>
+                  <option value="CTDP">&hearts; Corazón, &clubs; Trébol, &diams; Diamante, &spades; Picas</option>
+                  <option value="PDTC">&spades; Picas, &diams; Diamante, &clubs; Trébol, &hearts; Corazón</option>
+                  <option value="PCTD">&spades; Picas, &hearts; Corazón, &clubs; Trébol, &diams; Diamante</option>
+                  <option value="DTCP">&diams; Diamante, &clubs; Trébol, &hearts; Corazón, &spades; Picas</option>
+                  <option value="DPCT">&diams; Diamante, &spades; Picas, &hearts; Corazón, &clubs; Trébol</option>
+                </select>
+            </div>
         </div>
         </div>
       </div>
@@ -394,7 +421,7 @@
     </div>
   </div>
 </div>
-    
+
 <!-- Modal Faro Avanzada -->
 <div class="modal fade" id="modalFaro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
@@ -430,6 +457,42 @@
               <input type="number" class="form-control" value="1" min="1" max="99">
               <span class="input-group-addon">%</span>
             </span></div></td>
+            </tr>
+          </table>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary btnAplicar">Aplicar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Cato Avanzada -->
+<div class="modal fade" id="modalCato" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Mezcla "Cut And Turn Over"</h4>
+      </div>
+      <div class="modal-body" style="text-align:justify">
+          <table>
+            <tr>
+                <td>Cantidad:<br/><input type="number" class="form-control inputSettings multiplicador" value="10" min="1" max="99"></td>
+                <td>Corte:<br/><input id="catoCut" type="checkbox" data-off-color="primary" data-on-text="Azar" data-off-text="Número" class="form-control" checked></td>
+            </tr>
+                <td><div class="collapse cantidadOpciones">Cartas:<input id="catoCutCant" type="number" min="1" max="52" value="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></div></td>
+                <td><div class="collapse cantidadOpciones">Desde:<br/><input id="catoTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control" type="checkbox" checked></div></td>
+            </tr>
+              <tr>
+                <td>Voltea:<br/><input id="catoTurn" type="checkbox" data-off-color="primary" data-on-text="Siempre" data-off-text="Azar" class="form-control" checked></td>
+                <td>Número:<br/><input type="number" class="form-control inputSettings turnNum" value="2" min="2" step="2" max="52"></td>
+            </tr>
+                <td><div class="collapse turnOpciones">Desde:<input id="catoTurnDesde" type="number" value="2" min="2" step="2" max="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></div></td>
+                <td><div class="collapse turnOpciones">Hasta:<br/><input id="catoTurnHasta" type="number" value="52" min="2" step="2" max="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></td>
             </tr>
           </table>
       
@@ -521,7 +584,7 @@
                 <option value="pana-light">Pana (light)</option>
                 <option value="pana-dark">Pana (dark)</option>
             </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" data-size="auto" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked> Posiciones absolutas y relativas<br/>
+            <input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked> Posiciones absolutas y relativas<br/>
             <input id="colorConsola" class="inputSettings" type="color" value="#000000"> Fondo de la consola<br/>
             <input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"> Texto de la consola<br/>
             <select id="fuenteConsola" class="inputSettings">
@@ -611,7 +674,3 @@
   </body>
     
 </html>
-<<<<<<< HEAD
-</html>
-=======
->>>>>>> 45972c65a76e79338cb4f3cf70f08530db8ed9d0
