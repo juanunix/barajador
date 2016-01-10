@@ -154,8 +154,6 @@ function dibujar(){
     particion = sumandos.join("+");
       
   } else {
-  
-    //if (sumandos.length != 1){
         
         var sumandosM = 1;
         particion = [];
@@ -167,14 +165,20 @@ function dibujar(){
                 
             } else {
                 
-                particion.push(sumandos[i-1]+"·"+sumandosM);
+                if (sumandosM == 1) {
+                    
+                    particion.push(sumandos[i-1]);
+                    
+                } else {
+                    
+                    particion.push(sumandos[i-1]+"·"+sumandosM);
+                }
+                
                 sumandosM = 1;
             }
         }
         
         particion = particion.join("+");
-      
-    //}
         
   }
     
