@@ -1,7 +1,7 @@
 {
     "name": "Mnemónica Tamariz",
     "type": "memorized",
-    "description": "Baraja ordenada de 52 cartas creada por Juan Tamariz, descrita ampliamente en los dos volúmenes de su libro 'Sinfónica en Mnemónica Mayor' (2004).",
+    "description": "Baraja ordenada de 52 cartas creada por Juan Tamariz, descrita ampliamente en los dos volúmenes de su libro 'Sinfónica en Mnemónica Mayor' (2004). Combina ventajas de las mnemónias anteriores con muchas nuevas, entre ellas la posibilidad de convertirse en 'Baraja Espejo' (lo que permite una gran cantidad de juegos), el partir de una baraja nueva (recién abierta si se desea), gran cantidad de juegos de deletreo y de exhibición de póquer, de Chinchón, de black jack, siete y media, bridge, aparición completa de cualquiera de los palos, y otros muchos juegos específicos de tipo mental, historias narradas por las cartas...",
     "image": {
         "path": "img/tamariz.png",
         "width": 300,

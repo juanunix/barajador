@@ -2,5 +2,5 @@
     "name": "Unus Quinque",
     "type": "memorized",
     "description": "Baraja de 52 cartas en rosario, en donde las cartas se ordenan siguiendo la frase mnemotécnica 'Unus quinque noven fámulus sex quatuor duo Rex septem acto faemina trina decem' y utilizando una rotación de palos.'",
-    "faces": "AP,5C,9T,JD,6P,4C,2T,KD,7P,8C,QT,3D,10P,AC,5T,9D,JP,6C,4T,2D,KP,7C,8T,QD,3P,10C,AT,5D,9P,JC,6T,4D,2P,KC,7T,8D,QP,3C,10T,AD,5P,9C,JT,6D,4P,2C,KT,7D,8P,QC,3T,10D"
+    "numbers": "A,5,9,J,6,4,2,K,7,8,Q,3,10,A,5,9,J,6,4,2,K,7,8,Q,3,10,A,5,9,J,6,4,2,K,7,8,Q,3,10,A,5,9,J,6,4,2,K,7,8,Q,3,10"
 }
