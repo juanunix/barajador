@@ -303,10 +303,6 @@ input[type="color"]{
     margin-bottom: 22px;
 }
 
-#moduloConsola {
-    display:none;
-}
-
 #consola {
     background: black;
     color: white;
