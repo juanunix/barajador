@@ -51,7 +51,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Baraja<b class="caret"></b></a>
                     <ul class="dropdown-menu w210">
                         <li><a id="orden4Kings" href="#" accesskey="n"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nueva<span class="atajo">ALT+N</span></a></li>
-                        <li><a data-toggle="modal" href="#" data-target="#modalAbrir" accesskey="a"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...<span class="atajo">ALT+A</span></a></li>
+                        <li><a data-toggle="modal" href="#" data-target="#modalAbrirOrdenacion" accesskey="a"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...<span class="atajo">ALT+A</span></a></li>
                         <li><a class="mnuGuardar" href="#" accesskey="s"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar...<span class="atajo">ALT+S</span></a></li>
                         <li class="divider"></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
@@ -105,6 +105,7 @@
                         </li>
                     </ul>
                 </li>
+                </li>
                  <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver<b class="caret"></b></a>
                         <ul class="dropdown-menu w220">
@@ -139,10 +140,12 @@
     </div>
 </div>
 <!-- Barra de notificaciones -->
-<div id="notificaciones" class="collapse">
+<div id="barraTop">
+<div class="notificaciones collapse">
 <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
 </div>
-    
+</div>
+
 <!-- Modulos -->
 <div id="moduloMatriz">
 <div class="input-group matriz input-group-sm">
@@ -199,6 +202,9 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Guardar baraja...</h4>
+      </div>
+      <div class="notificaciones collapse">
+          <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
       </div>
       <div class="modal-body">
         <select id="slots" class="bselect" data-placeholder="Elije un slot">
@@ -258,15 +264,17 @@
   </div>
 </div>
     
-<!-- Modal Abrir baraja -->
-<div class="modal fade" id="modalAbrir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal Abrir Baraja Ordenada -->
+<div class="modal fade" id="modalAbrirOrdenacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir baraja...</h4>
       </div>
-       <div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <span class="texto"></span></div>
+      <div class="notificaciones collapse">
+          <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
+      </div>
       <div class="modal-body" style="text-align:justify">
          <select id="ordenBaraja" class="bselect" data-placeholder="Elije una ordenación">
           <option value=""></option>
@@ -335,6 +343,9 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Ordenación personalizada</h4>
+      </div>
+      <div class="notificaciones collapse">
+          <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
       </div>
       <div class="modal-body">
           Ingrese todas las cartas separándolas por comas. Para más ayuda lea la <a href="docs#matriz" target="_blank">documentación</a>.<br><br>
@@ -595,6 +606,9 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias</h4>
+      </div>
+      <div class="notificaciones collapse">
+          <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
       </div>
       <div class="modal-body" style="text-align:justify">
           

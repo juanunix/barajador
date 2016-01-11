@@ -18,7 +18,10 @@ var datosSlots;
 // Menu HELP
 
 // Barra de notificaciones
-$( "#notificaciones .close" ).on( "click", function(){$("#notificaciones").collapse('hide'); });
+$( "#barraTop notificaciones .close" ).on( "click", function(){$("#barraTop .notificaciones").collapse('hide'); });
+$( "#modalAbrirOrdenacion notificaciones .close" ).on( "click", function(){$("#modalAbrirOrdenacion .notificaciones").collapse('hide'); });
+$( "#modalOrdenPersonal notificaciones .close" ).on( "click", function(){$("#modalOrdenPersonal .notificaciones").collapse('hide'); });
+$( "#modalPreferencias notificaciones .close" ).on( "click", function(){$("#modalPreferencias .notificaciones").collapse('hide'); });
 
 // Menu: Baraja
 $( "#orden4Kings" ).on( "click", function(){ abreStack() });
@@ -26,16 +29,14 @@ $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
-$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "'+$("#descargar").attr("download")+'". '+txtDescargas) } );
+$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "' + $("#descargar").attr("download") + '". ' + txtDescargas,"success") } );
 $( "#ordenBaraja" ).on( "change", infoBaraja );
 $( "#ordenPalos .bselect" ).on( "change", ordenPalos );
 $( "#abrirStack" ).on( "click", abrirStack );
-$( "#modalAbrir .alert .close" ).on( "click", function(){$("#modalAbrir .alert").css("display","none"); });
 $( ".mnuGuardar").on( "click", modalGuardar );
 $( "#slots").on( "change", infoSlot) ;
 $( "#guardarBaraja").on( "click", guardarBaraja) ;
 
-$( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 
 //$( "#bjAjustes" ).on( "click", bjAjustes );
@@ -248,7 +249,16 @@ iniciar();
 
 // Ordenar personalizadamente
 function ordenarPersonal(){
-    barajaActual = new EyDeck($("#ordenPersonal").val()); 
+    
+    var oP = $("#ordenPersonal").val().trim();
+    
+    if (oP == ""){
+        
+        notificar("La baraja debe tener al menos una carta.","warning","#modalOrdenPersonal");
+        return false;
+    }
+    
+    barajaActual = new EyDeck(oP); 
     abreBaraja();
 }
 
@@ -1477,18 +1487,17 @@ function abrirStack(){
     
     if ($("#barajaPref #orden").val() == '') {
     
-        $("#modalAbrir .alert .texto").html("¡No se ha seleccionado ninguna ordenación!");
-        $("#modalAbrir .alert").css("display","block");
+        notificar("¡No se ha seleccionado ninguna ordenación!","warning","#modalAbrirOrdenacion");
         
     } else {
         
         if(typeof stkNumbers !== 'undefined' && $("#ordenPalos .bselect").val() == '') {
-            $("#modalAbrir .alert .texto").html("¡No se ha seleccionado ninguna rotación de palos!");
-            $("#modalAbrir .alert").css("display","block");
+            
+            notificar("¡No se ha seleccionado ninguna rotación de palos!","warning","#modalAbrirOrdenacion");
             
         } else {
-            $("#modalAbrir .alert").css("display","none");
-            $("#modalAbrir").modal('hide');
+            $("#modalAbrirOrdenacion .alert").collapse("hide");
+            $("#modalAbrirOrdenacion").modal('hide');
             barajaActual = new EyDeck($("#barajaPref #orden").val());
             abreBaraja();
         }
@@ -1503,35 +1512,39 @@ function abreStack() {
         
 }
 
-function notificar(texto,tipo){
+function notificar(texto,tipo,lugar){
     
-    $("#notificaciones .alert").removeClass("alert-success alert-warning alert-info alert-danger");
-    $("#notificaciones .glyphicon").removeClass("glyphicon-ok-sign glyphicon-info-sign exclamation-sign glyphicon-remove-sign")
+    if (typeof lugar === "undefined"){
+        lugar = "#barraTop";
+    }
+    
+    $(lugar+" .notificaciones .alert").removeClass("alert-success alert-warning alert-info alert-danger");
+    $(lugar+" .notificaciones .glyphicon").removeClass("glyphicon-ok-sign glyphicon-info-sign glyphicon-exclamation-sign glyphicon-remove-sign")
     
     switch (tipo){
             case "success":
-                $("#notificaciones .alert").addClass("alert-success");
-                $("#notificaciones .glyphicon").addClass("glyphicon-ok-sign");
+                $(lugar+" .notificaciones .alert").addClass("alert-success");
+                $(lugar+" .notificaciones .glyphicon").addClass("glyphicon-ok-sign");
             break;
             case "warning":
-                $("#notificaciones .alert").addClass("alert-warning");
-                $("#notificaciones .glyphicon").addClass("exclamation-sign");
+                $(lugar+" .notificaciones .alert").addClass("alert-warning");
+                $(lugar+" .notificaciones .glyphicon").addClass("glyphicon-exclamation-sign");
             break;
             case "danger":
-                $("#notificaciones .alert").addClass("alert-danger");
-                $("#notificaciones .glyphicon").addClass("glyphicon-remove-sign");
+                $(lugar+" .notificaciones .alert").addClass("alert-danger");
+                $(lugar+" .notificaciones .glyphicon").addClass("glyphicon-remove-sign");
             break;
             case "info":
             default:
-                 $("#notificaciones .alert").addClass("alert-info");
-                $("#notificaciones .glyphicon").addClass("glyphicon-info-sign");
+                $(lugar+" .notificaciones .alert").addClass("alert-info");
+                $(lugar+" .notificaciones .glyphicon").addClass("glyphicon-info-sign");
     }
-    $("#notificaciones").collapse('show');
-    $("#notificaciones .texto").html(texto);
+    $(lugar+" .notificaciones").collapse('show');
+    $(lugar+" .notificaciones .texto").html(texto);
     
     var tiempoNot = $("#notificationTime").val()*1000;
     if (tiempoNot != 0){
-        setTimeout(function(){ $("#notificaciones").collapse('hide'); }, tiempoNot);
+        setTimeout(function(){ $(lugar+" .notificaciones").collapse('hide'); }, tiempoNot);
     }
    
 }
