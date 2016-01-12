@@ -9,6 +9,7 @@ var JsonApi = new RandomJs();
 var comandosHistorial = [];
 var comandoHistorialN = 0;
 var ordenI;
+var stkName;
 var stkImg;
 var stkFaces;
 var stkNumbers;
@@ -18,18 +19,18 @@ var datosSlots;
 // Menu HELP
 
 // Barra de notificaciones
-$( "#barraTop notificaciones .close" ).on( "click", function(){$("#barraTop .notificaciones").collapse('hide'); });
-$( "#modalAbrirOrdenacion notificaciones .close" ).on( "click", function(){$("#modalAbrirOrdenacion .notificaciones").collapse('hide'); });
-$( "#modalOrdenPersonal notificaciones .close" ).on( "click", function(){$("#modalOrdenPersonal .notificaciones").collapse('hide'); });
-$( "#modalPreferencias notificaciones .close" ).on( "click", function(){$("#modalPreferencias .notificaciones").collapse('hide'); });
+$( "#barraTop .notificaciones .close" ).on( "click", function(){$("#barraTop .notificaciones").collapse('hide'); });
+$( "#modalAbrirOrdenacion .notificaciones .close" ).on( "click", function(){$("#modalAbrirOrdenacion .notificaciones").collapse('hide'); });
+$( "#modalOrdenPersonal .notificaciones .close" ).on( "click", function(){$("#modalOrdenPersonal .notificaciones").collapse('hide'); });
+$( "#modalPreferencias .notificaciones .close" ).on( "click", function(){$("#modalPreferencias .notificaciones").collapse('hide'); });
 
 // Menu: Baraja
-$( "#orden4Kings" ).on( "click", function(){ abreStack() });
+$( "#orden4Kings" ).on( "click", abreDefault );
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
-$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "' + $("#descargar").attr("download") + '". ' + txtDescargas,"success") } );
+//$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "' + $("#descargar").attr("download") + '". ' + txtDescargas,"success") } );
 $( "#ordenBaraja" ).on( "change", infoBaraja );
 $( "#ordenPalos .bselect" ).on( "change", ordenPalos );
 $( "#abrirStack" ).on( "click", abrirStack );
@@ -47,6 +48,9 @@ $( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
 $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 $( "#reiniciarTema" ).on( "click", reiniciarTema );
 $( "#fuenteConsolaSize" ).on( "change", cambiarFuenteSizeConsola );
+$( "#relativasTipo" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
+$( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
+$( "#unoceroRotulos" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
 
 $( "#sfRepetir" ).on( "click", sfRepetir );
 $( ".sfInvertir" ).on( "click", sfInvertir );
@@ -74,10 +78,13 @@ $( ".sfFaroAv" ).on( "click", faroShow );
 
 // otras mezclas
 $( ".sfMilk" ).on("click", sfMilk);
-$( ".sfMonge" ).on("click", sfMonge);
+$( ".sfMongeDown" ).on("click", sfMongeDown);
 $( ".sfCato" ).on( "click", catoShow );
-$( ".sfAustralian" ).on( "click", sfAustralian );
-$( ".sfAntiAustralian" ).on( "click", sfAntiAustralian );
+$( ".sfDud" ).on( "click", sfDud );
+$( ".sfAntiDud" ).on( "click", sfAntiDud );
+$( ".sfUdd" ).on( "click", sfUdd );
+$( ".sfAntiUdd" ).on( "click", sfAntiUdd );
+
 $( "#modalCato .btnAplicar" ).on( "click", catoAplicar );
 
 // Otras cosas
@@ -90,9 +97,8 @@ $( ".saberMas" ).on( "click", saberMas );
 $( "#vrRefresh" ).on( "click", refresh );
 $( "#vrFullScreen" ).on( "click", vrFullScreen );
 $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
-$( "#vrTapete" ).on( "click", {name: "Tapete"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
-$( "#vrConsola" ).on( "click", {name: "Consola"}, verModulos );
+$( "#mostrarConsola" ).on('switchChange.bootstrapSwitch', {name: "Consola"}, verModulos );
 $( "#vrStats" ).on( "click", verStats );
 $( "#modalStats .printStats" ).on( "click", printStats );
 
@@ -192,9 +198,10 @@ function iniciar(){
         }
         
         abreBaraja();
+        
     }else{
     
-        abreStack();
+        abreDefault();
     }
     
     // Carga las preferencias guardadas
@@ -240,9 +247,10 @@ function iniciar(){
         $("#liFullScreen").show();
     }
     
-    // crea element bselect
+    // Crea los elementos bselect
     $("#ordenBaraja").bselect();
     $("#ordenPalos select").bselect({ searchInput : false });
+    
 }
 
 iniciar();
@@ -257,7 +265,6 @@ function ordenarPersonal(){
         notificar("La baraja debe tener al menos una carta.","warning","#modalOrdenPersonal");
         return false;
     }
-    
     barajaActual = new EyDeck(oP); 
     abreBaraja();
 }
@@ -282,6 +289,7 @@ function abreBaraja(){
     
     $("#tapete").html(contenido);
     
+    // Simulador de corte
     contenido = '<ul class="paqueteBaraja" id="paqueteNaipes">';
     var naipeeBorde;
     
@@ -338,6 +346,7 @@ $("#customApiKeyRandom").val("2dbcb5c9-d4f8-4d19-b1f1-cd5cf3980e97");
 comprobarApiRandom();
 
 function sfRandomOrg(){
+disButtons(true);
 var barajaTemp = barajaActual.deck.slice();
 
     var result = JsonApi
@@ -358,6 +367,7 @@ var barajaTemp = barajaActual.deck.slice();
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
         consola("radomOrg");
+        disButtons(false);
         
     });
 }
@@ -461,9 +471,20 @@ function sfAntiFaroInt(cantidad){
 function renderizar(){
      // Calcular órden
         ordenI = [];
-        for (var i = 0;i < barajaActual.deck.length ;i++){
-            ordenI[barajaActual.deck[i].id] = i+1;
+        var carlos;
+        try{
+            
+            for (var i = 0;i < barajaActual.deck.length ;i++){
+                ordenI[barajaActual.deck[i].id] = i+1;
+            } 
+            
+        } catch( err ) {
+            notificar("Se ha producido un Error inesperado. <a href='javascript:location.reload();' class='alert-link'>Recargue</a> para poder continuar usando el programa con normalidad. <code>"+ err+"</code>","fire");
+            disButtons(true);
+        }finally {
+        
         }
+        
         $("#vrGraph").attr("href","graficador?orden="+ordenI);
     
     // Renderiza la Matriz v Ascii
@@ -504,11 +525,10 @@ function renderizar(){
     // Renderiza el tapete
     for (var i = 0;i < barajaActual.deck.length;i++){
         $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.png)');
-        $("#naipe"+i + " .rotulo").html((i+1)+"<hr>"+(barajaActual.deck[i].id+1));
-        
-
     }
-
+    
+    mostrarRotulos();
+    
     guardarSesion("baraja_autosave",matrizFace);
     guardarSesion("baraja_posiciones_autosave",barajaActual.getMatriz("id",","));
     reordenable();
@@ -547,24 +567,29 @@ function verModulos(event){
     mModulo = "txtVer" + event.data.name;
     xModulo = "#modulo" + event.data.name;
     
+        if (event.data.name == "Consola"){
+    
+            if ($("#mostrarConsola").bootstrapSwitch('state')){
+                $("#consolaInput").focus();
+                $(xModulo).collapse("show");
+                $(".setConsola").collapse("show");
+            } else {
+                $(xModulo).collapse("hide");
+                $(".setConsola").collapse("hide");
+            }
+            return;
+        }
     // Muestra el módulo seleccionado
     if( document.getElementById(mModulo).className == vrChck0 ){
          
         document.getElementById(mModulo).className = vrChck1;
-        $(xModulo).css('display', 'block');
-        
-        // Si se muestra la consola darle foco al input
-        if (event.data.name == "Consola"){
-            
-            $("#consolaInput").focus();
-            
-        }
+        $(xModulo).collapse("show");
         
     // Oculta el módulo seleccionado
     }else{
         
         document.getElementById(mModulo).className = vrChck0;
-        $(xModulo).css('display', 'none');
+        $(xModulo).collapse("hide");
     }
 }
 // Input a consola
@@ -632,7 +657,10 @@ function ejecutarComando(texto){
             case "version":
                 consola('Barajador v0.1 (beta)');
                 return;
-            case "limpiar":
+            case "nueva":
+            case "new":
+                abreDefault();
+                return;
             case "clear":
             case "clr":
                 $("#consolaOutput").text("");
@@ -650,9 +678,6 @@ function ejecutarComando(texto){
             case "historial":
             case "hist":
                 historial();
-                return;
-            case "nevar":
-                fsNevar()
                 return;
             case "cortar":
             case "cut":
@@ -689,18 +714,18 @@ function ejecutarComando(texto){
             case "klondike":
                 sfMilk();
                 return;
-            case "mongue":
-                sfMonge();
+            case "mongueDown":
+                sfMongeDown();
                 return;
             case "australiana":
             case "downunderdeal":
             case "dud":
-                sfAustralian();
+                sfDud();
                 return;
             case "antiaustraliana":
             case "antidownunderdeal":
             case "-dud":
-                sfAntiAustralian();
+                sfAntiDud();
                 return;
             case "faroext":
             case "fo":
@@ -791,7 +816,7 @@ function screenshotConsola(){
             var screenS = new Image();
             screenS = canvas.toDataURL("image/png");
             screenS = screenS.replace("image/png", "image/octet-stream");
-            consola("Imagen generada. Haga <a href=" + screenS + " download='" + $("#modalScreen input").val()+".png" + "'>click aquí</a> para descargar");
+            consola("Imagen generada. Haga <a href='" + screenS + "' download='" + $("#modalScreen input").val()+".png" + "' target='_blank'>click aquí</a> para descargar");
 
         }
     });
@@ -809,13 +834,58 @@ function cambiarTexturaTapete(){
     guardarLocal("tapete_textura",tapete_textura);
 }
 
-$( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', function(event, state) {
+$( "#mostrarAyudas" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
-        $(".rotulo").css('display', 'table-caption');
+        $('[data-toggle="popover"]').popover();
    }else{
-       $(".rotulo").css('display', 'none');
+       $('[data-toggle="popover"]').popover('destroy');
    }
 });
+
+// Crea los elementos popover
+    
+    
+    
+function mostrarRotulos(){
+
+var relativo;
+var inicia;
+    
+    mostrarRotulos
+    if($("#unoceroRotulos").bootstrapSwitch('state')){
+        inicia = 1;
+    } else {
+        inicia = 0;
+    }
+        
+    if($("#mostrarRotulos").bootstrapSwitch('state')){
+        
+        $(".setRotulos").collapse("show");
+        
+        for (var i = 0;i < barajaActual.deck.length;i++){
+
+            relativo = (barajaActual.deck[i].id+inicia);
+
+            // ¿Decimal o Binario?
+            if(!$("#relativasTipo").bootstrapSwitch('state')){
+
+                relativo = (relativo.toString(2)); 
+                relativo = relativo.split("");
+                relativo = "<table><tr><td>" + relativo.join("<br>") + "</td></tr></table>";
+
+            }
+
+            $("#naipe"+i + " .rotulo").html((i+inicia)+"<hr>"+relativo);
+        }
+     
+        $(".rotulo").css('display', 'table-caption');
+        
+    } else {
+    
+        $(".rotulo").css('display', 'none');
+        $(".setRotulos").collapse("hide");
+    }
+}
 
 function cambiarColorConsola(){
     var color = $('#colorConsola').val();
@@ -850,7 +920,7 @@ function reiniciarTema(){
     localStorage.removeItem("consola_texto");
     localStorage.removeItem("consola_fuente");
     localStorage.removeItem("consola_fuenteSize");
-    location.reload();
+    notificar("Se han restaurado los valores por defecto. <a href='javascript:location.reload();' class='alert-link'>Recargue</a> para aplicar los cambios","success","#modalPreferencias")
 }
 
 // Menú contextual sobre naipe
@@ -893,7 +963,7 @@ function editarCarta(){
     $("#modalEditarCarta .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
     $("#modalEditarCarta .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
     $("#modalEditarCarta .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
-    $("#modalEditarCarta .deck").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.png)');
+    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.png)');
     $("#modalEditarCarta .editarPosicion").val(posCartaActual+1);
     $("#modalEditarCarta .editarPosicion").attr("max",barajaActual.deck.length+1);
     $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.deck[posCartaActual].crimp);
@@ -918,7 +988,7 @@ function mostrarPreviewCarta(){
     }else {
         var preview = $("#modalEditarCarta .editarCodigoDorso").val();
     }
-    $("#modalEditarCarta .deck").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
+    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
 
 }
 
@@ -1397,30 +1467,44 @@ function redondeo(numero,decimales){
 // Mezcla Alfa
 function sfMilk(){
 
-    var salida = barajaActual.milkSuffle();
+    var salida = barajaActual.milk();
     renderizar();
     consola(salida);
     
 }
 
 // Mezcla Monge
-function sfMonge(){
+function sfMongeDown(){
 
-    var salida = barajaActual.mongeSuffle();
+    var salida = barajaActual.mongeDown();
     renderizar();
     consola(salida);
 }
 
-function sfAustralian(){
+function sfDud(){
 
-    var salida = barajaActual.australianShuffle();
+    var salida = barajaActual.downUnderDeal();
     renderizar();
     consola(salida);
 }
 
-function sfAntiAustralian(){
+function sfAntiDud(){
 
-    var salida = barajaActual.antiAustralianShuffle();
+    var salida = barajaActual.antiDownUnderDeal();
+    renderizar();
+    consola(salida);
+}
+
+function sfUdd(){
+
+    var salida = barajaActual.underDownDeal();
+    renderizar();
+    consola(salida);
+}
+
+function sfAntiUdd(){
+
+    var salida = barajaActual.antiUnderDownDeal();
     renderizar();
     consola(salida);
 }
@@ -1439,7 +1523,8 @@ function infoBaraja(){
    var stack = $("#ordenBaraja").val();
    $.getJSON("stacks/"+stack+".json", function(datos) {
        $("#barajaDesc div").html( datos["description"] );
-   
+    
+        stkName =  datos["name"];
         stkImg = datos["image"];
         stkFaces = datos["faces"];
         stkNumbers = datos["numbers"];
@@ -1468,7 +1553,7 @@ function infoBaraja(){
                $("#barajaPref #orden").val(stkNumbers);
            }
        }
-       
+
     });
     
 }
@@ -1477,9 +1562,24 @@ function ordenPalos(){
     var ordPalos = $("#ordenPalos .bselect").val();
     var ordTemp = stkNumbers.split(",");
     
-    for (var i=0;i<ordTemp.length;i++){
-        ordTemp[i]=ordTemp[i]+ordPalos.charAt(i%4);
+    if(stkName == "Four Kings"){
+        
+        var j=0
+        for (var i=0;i<ordTemp.length;i++){
+            ordTemp[i]=ordTemp[i]+ordPalos.charAt(j);
+            if (i%13 == 12){
+            j++
+            }
+        }
+        
+    } else {
+    
+        for (var i=0;i<ordTemp.length;i++){
+            ordTemp[i]=ordTemp[i]+ordPalos.charAt(i%4);
+        }
     }
+    
+    
     $("#barajaPref #orden").val(ordTemp);
 }
 
@@ -1506,9 +1606,11 @@ function abrirStack(){
 }
 
 // Abre una baraja desde el stack JSON
-function abreStack() {
+function abreDefault() {
         
-        
+barajaActual = new EyDeck("AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD"); 
+    abreBaraja(); 
+    consola('nueva');
         
 }
 
@@ -1519,7 +1621,7 @@ function notificar(texto,tipo,lugar){
     }
     
     $(lugar+" .notificaciones .alert").removeClass("alert-success alert-warning alert-info alert-danger");
-    $(lugar+" .notificaciones .glyphicon").removeClass("glyphicon-ok-sign glyphicon-info-sign glyphicon-exclamation-sign glyphicon-remove-sign")
+    $(lugar+" .notificaciones .glyphicon").removeClass("glyphicon-ok-sign glyphicon-info-sign glyphicon-exclamation-sign glyphicon-remove-sign glyphicon-fire")
     
     switch (tipo){
             case "success":
@@ -1534,6 +1636,11 @@ function notificar(texto,tipo,lugar){
                 $(lugar+" .notificaciones .alert").addClass("alert-danger");
                 $(lugar+" .notificaciones .glyphicon").addClass("glyphicon-remove-sign");
             break;
+             case "fire":
+                $(lugar+" .notificaciones .alert").addClass("alert-danger");
+                $(lugar+" .notificaciones .glyphicon").addClass("glyphicon-fire");
+            break;
+            
             case "info":
             default:
                 $(lugar+" .notificaciones .alert").addClass("alert-info");
@@ -1634,5 +1741,11 @@ function guardarBaraja(){
     
     
     return false;  //prevents the page from reloading. this helps if you want to bind this whole process to a click event.
+    
+}
+
+function disButtons(estado){
+
+    $(".btn.btn-primary").prop("disabled",estado);
     
 }

@@ -30,10 +30,12 @@ function EyDeck(cartas){
     this.faroInt = faroInt;
     this.antiFaroExt = antiFaroExt;
     this.antiFaroInt = antiFaroInt;
-    this.milkSuffle = milkShuffle;
-    this.mongeSuffle = mongeShuffle;
-    this.australianShuffle = australianShuffle;
-    this.antiAustralianShuffle = antiAustralianShuffle;
+    this.milk = milk;
+    this.mongeDown = mongeDown;
+    this.downUnderDeal = downUnderDeal;
+    this.antiDownUnderDeal = antiDownUnderDeal;
+    this.underDownDeal = underDownDeal;
+    this.antiUnderDownDeal = antiUnderDownDeal
     this.fisherYates = fisherYates;
     this.durstenfeld = durstenfeld;
     this.sattolo = sattolo;
@@ -353,26 +355,36 @@ function antiFaroInt(cantidad){
 }
 
 // Mezcla Alfa / Klondike / Milk
-function milkShuffle(){
+function milk(){
     var barajaTemp = this.deck.slice();    
     cantidad = this.deck.length;
-    // AT,2T,3T,4T,5T,6T,7T,8T,9T,10T
+
+    if (cantidad % 2 == 1){
+        notificar("Aún no se ha implementado el algoritmo para hacer Mezcla Alfa con una baraja impar","warning");
+        return "";
+    }
+    
     for (var i = 0; i < cantidad; i++){
         if ( i % 2 == 0 ){
             this.deck[i+1] = barajaTemp[((cantidad - i) / 2) - 1];
         } else {
-            if ( cantidad % 2 == 0 || i < cantidad - 1){
+           // if (cantidad % 2 == 0 || (cantidad % 2 == 1 && i != cantidad - 1)){
                 this.deck[i-1] = barajaTemp[(cantidad  + i - 1)/2];
-            }
+          //  }
         }
     }
     return "milk";
 }
 
-// Mezcla Monge
-function mongeShuffle(){
+// Mezcla Monge Down
+function mongeDown(){
     var barajaTemp = this.deck.slice();    
     cantidad = this.deck.length;
+    
+    if (cantidad % 2 == 1){
+        notificar("Aún no se ha implementado el algoritmo para hacer Mezcla Monge Down con una baraja impar","warning");
+        return "";
+    }
     
     for (var i = 0; i < cantidad; i++){
         if ( i % 2 == 0 ){
@@ -381,11 +393,11 @@ function mongeShuffle(){
             this.deck[(cantidad  + i - 1)/2] = barajaTemp[i-1];
         }
     }
-    return "monge";
+    return "mongeDown";
 }
 
-// Mezcla Austrialana
-function australianShuffle(){
+// Mezcla DownUnderDeal
+function downUnderDeal(){
     var barajaTemp = this.deck.slice();
     cantidad = this.deck.length;
     var cardTemp;
@@ -394,16 +406,17 @@ function australianShuffle(){
         
         cardTemp = barajaTemp.shift();
         barajaTemp.push(cardTemp);
+        
         cardTemp = barajaTemp.shift();
         this.deck[cantidad-i-1] = cardTemp;
         
     }
     
-    return "australian";
+    return "downUnderDeal";
 }
 
-// Mezcla AntiAustrialana
-function antiAustralianShuffle(){
+// Mezcla antiDownUnderDeal
+function antiDownUnderDeal(){
     var barajaTemp = [];
     cantidad = this.deck.length;
     var cardTemp;
@@ -412,13 +425,58 @@ function antiAustralianShuffle(){
 
         cardTemp = this.deck.shift();
         barajaTemp.unshift(cardTemp);
+        
         cardTemp = barajaTemp.pop();
         barajaTemp.unshift(cardTemp);
     }
     
     this.deck = barajaTemp.slice();
-    return "antiAustralian";
+    return "antiDownUnderDeal";
 }
+
+// Mezcla UnderDownDeal
+function underDownDeal(){
+    
+    var barajaTemp = this.deck.slice();
+    cantidad = this.deck.length;
+    var cardTemp;
+    
+    for(var i = 0; i < cantidad ; i++) {
+        
+        if(i != 0){
+            cardTemp = barajaTemp.shift();
+            barajaTemp.push(cardTemp);
+        }
+        cardTemp = barajaTemp.shift();
+        this.deck[cantidad-i-1] = cardTemp;
+        
+    }
+    
+    return "underDownDeal";
+}
+
+// Mezcla antiUnderDownDeal
+function antiUnderDownDeal(){
+    var barajaTemp = [];
+    cantidad = this.deck.length;
+    var cardTemp;
+    
+    for(var i = 0; i < cantidad ; i++) {
+
+        cardTemp = this.deck.shift();
+        barajaTemp.unshift(cardTemp);
+        
+        if (i != (cantidad-1)){
+            cardTemp = barajaTemp.pop();
+            barajaTemp.unshift(cardTemp);
+        }
+    }
+    
+    this.deck = barajaTemp.slice();
+    return "antiUnderDownDeal";
+    
+}
+
 
 // Mezcla pseudoaleatoria Fisher-Yates
 function fisherYates(){

@@ -106,8 +106,10 @@ input[type="color"]{
     display: inline-table;
     height: 22px;
     vertical-align: bottom;
-    padding: 0px 0px 0px 5px;
-    padding-left: 5px;
+}
+
+th {
+    background: #eee;
 }
 
 .aL {
@@ -126,7 +128,9 @@ input[type="color"]{
     text-align: justify;
 }
 
-.inputSettings input {
+.inputSettings input,
+#modalCato input,
+#modalFaro input {
     height: 22px;
     padding: 0px;
     text-align: right;
@@ -303,6 +307,15 @@ input[type="color"]{
     margin-bottom: 22px;
 }
 
+.rotulo table {
+    height:100px;
+    width:16px;
+}
+
+.rotulo td {
+    vertical-align:bottom;
+}
+
 #consola {
     background: black;
     color: white;
@@ -465,3 +478,8 @@ input[type="color"]{
     margin-bottom: 0px; 
     border-radius: 0px;
 }
+
+.notificaciones code {
+    float: right;
+}
+    

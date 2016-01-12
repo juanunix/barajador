@@ -52,7 +52,7 @@
                     <ul class="dropdown-menu w210">
                         <li><a id="orden4Kings" href="#" accesskey="n"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nueva<span class="atajo">ALT+N</span></a></li>
                         <li><a data-toggle="modal" href="#" data-target="#modalAbrirOrdenacion" accesskey="a"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...<span class="atajo">ALT+A</span></a></li>
-                        <li><a class="mnuGuardar" href="#" accesskey="s"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar...<span class="atajo">ALT+S</span></a></li>
+                        <li class="collapse"><a class="mnuGuardar" href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar...<span class="atajo">ALT+S</span></a></li>
                         <li class="divider"></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Establecer posiciones...</a></li>
@@ -73,9 +73,9 @@
                         
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla faro</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Faro</a>
                             <ul class="dropdown-menu w200">
-                                <li><a class="sfFaroExt" data-loading-text="mezclando..." href="#" accesskey="o">Faro Exterior<span class="atajo">Alt+O</span></a></li>
+                                <li><a class="sfFaroExt" href="#" accesskey="o">Faro Exterior<span class="atajo">Alt+O</span></a></li>
                                 <li><a class="sfFaroIn" href="# "accesskey="i">Faro Interior<span class="atajo">Alt+I</span></a></li>
                                 <li><a class="sfAntiFaroExt" href="#" accesskey="l">Antifaro Exterior<span class="atajo">Alt+L</span></a></li>
                                 <li><a class="sfAntiFaroIn" href="#" accesskey="k">Antifaro Interior<span class="atajo">Alt+K</span></a></li>
@@ -83,10 +83,17 @@
                                 <li><a data-toggle="modal" href="#" data-target="#modalFaro" accesskey=".">Avanzada...</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Australiana</a>
+                            <ul class="dropdown-menu w200">
+                                <li><a class="sfDud" href="#">Down Under Deal</a></li>
+                                <li><a class="sfUdd" href="#">Under Down Deal</a></li>
+                                <li><a class="sfAntiDud" href="#">Anti Down Under Deal</a></li>
+                                <li><a class="sfAntiUdd" href="#">Anti Under Down Deal</a></li>
+                            </ul>
+                        </li>
                         <li><a class="sfMilk" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Alfa / Klondike</a></li>
-                        <li><a class="sfMonge" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Mongue</a></li>
-                        <li><a id="sfAustralian" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla australiana</a></li>
-                        <li><a id="sfAntiAustralian" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla antiaustraliana</a></li>
+                        <li><a class="sfMongeDown" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Mongue Down</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Algoritmo Fisher-Yates</a>
@@ -116,9 +123,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Módulos</a>
                             <ul class="dropdown-menu">
                                 <li><a id="vrMatriz" href="#" accesskey="q"><span id="txtVerMatriz" class="glyphicon glyphicon-check" aria-hidden="true"></span> Matriz<span class="atajo">Alt+Q</span></a></li>
-                                <li><a id="vrTapete" href="#"><span id="txtVerTapete" class="glyphicon glyphicon-check" aria-hidden="true"></span> Tapete</li>
                                 <li><a id="vrBotonera" href="#" accesskey="z"><span id="txtVerBotonera" class="glyphicon glyphicon-check" aria-hidden="true"></span> Botonera<span class="atajo">Alt+Z</span></a></li>
-                                <li><a id="vrConsola" href="#" accesskey="x"><span id="txtVerConsola" class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> Consola<span class="atajo">Alt+X</span></a></li>
                             </ul>
                         </li>
                         <li><a id="vrGraph" href="#" accesskey="g" target="_blank"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Graficar<span class="atajo">Alt+G</span></a></li>
@@ -166,26 +171,32 @@
     </div>
     
     <div id="moduloBotonera" class="botonera">
-        <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden">
-        <input type="button" class="btn btn-primary sfInvertir" value="Invertir">
+        <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Reinicia las posiciones relativas equiparándolas con las absolutas.">
+        <input type="button" class="btn btn-primary sfInvertir" value="Invertir" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Invierte una a una el orden de las cartas.">
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
         <br>
-        <input type="button" class="btn btn-primary sfFaroExt" value="Faro Ext">
-        <input type="button" class="btn btn-primary sfFaroInt" value="Faro Int">
-        <input type="button" class="btn btn-primary sfAntiFaroExt" value="AntiFaro Ext">
-        <input type="button" class="btn btn-primary sfAntiFaroIn" value="AntiFaro In">
         <input type="button" class="btn btn-primary sfFaroAv" value="Faro...">
+        <input type="button" class="btn btn-primary sfFaroExt" value="Exterior" data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla Faro Exterior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1ra posición en su lugar.">
+        <input type="button" class="btn btn-primary sfFaroInt" value="Interior" data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla Faro Interior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1da posición en segundo lugar.">
+        <input type="button" class="btn btn-primary sfAntiFaroExt" value="-Exterior" data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla Antifaro Exterior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 1ra posición en su lugar.">
+        <input type="button" class="btn btn-primary sfAntiFaroIn" value="-Interior" data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla Antifaro Interior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 2ra posición en primer lugar.">
         <br>
-        <input type="button" class="btn btn-primary sfMilk" value="Alfa">
-        <input type="button" class="btn btn-primary sfMonge" value="Monge">
-        <input type="button" class="btn btn-primary sfAustralian" value="Australiana">
-        <input type="button" class="btn btn-primary sfAntiAustralian" value="AntiAustraliana">
-        <input type="button" class="btn btn-primary sfCato" value="Cato...">
+        <input type="button" class="collapse btn btn-primary sfAustralianaAv" value="Australiana...">
+        <input type="button" class="btn btn-primary sfDud" value="DUD" data-toggle="popover" data-trigger="hover" data-placement="top" title="Down Under Deal (Australiana)" data-content="Teniendo baraja en la mano, coloca la primer carta debajo y la siguiente se coloca en la mesa. Se repite la operación hasta que no queden cartas en la mano.">
+        <input type="button" class="btn btn-primary sfAntiDud" value="-DUD" data-toggle="popover" data-trigger="hover" data-placement="top" title="Down Under Deal (inversa)" data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
+        <input type="button" class="btn btn-primary sfUdd" value="UDD" data-toggle="popover" data-trigger="hover" data-placement="top" title="Under Down Deal" data-content="Teniendo baraja en la mano, coloca la primer carta en la mesa y la siguiente se coloca debajo de la baraja. Se repite la operación hasta que no queden cartas en la mano.">
+        <input type="button" class="btn btn-primary sfAntiUdd" value="-UDD" data-toggle="popover" data-trigger="hover" data-placement="top" title="Deshace una mezcla Under Down Deal." data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
+        
         <br>
-        <input type="button" class="btn btn-primary sfFisherYates" value="Azar Fisher-Yates">
-        <input type="button" class="btn btn-primary sfDurstenfeld" value="Azar Durstenfeld">
-        <input type="button" class="btn btn-primary sfSattolo" value="Azar Sattolo">
-        <input type="button" class="btn btn-primary sfRandomOrg" value="Azar Random.org">
+        <input type="button" class="btn btn-primary sfMilk" value="Alfa" data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla Alfa / Milk Shuffle / Klondike" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
+        <input type="button" class="btn btn-primary sfMongeDown" value="MongeDown" data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla Monge Down (Mezcla Alfa Inversa)" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta debajo y la siguiente arriba de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
+        <input type="button" class="btn btn-primary sfCato" value="Cato..." data-toggle="popover" data-trigger="hover" data-placement="top" title="Mezcla CATO (Cut And Turn Over)" data-content="Se realiza un corte y luego voltean dos cartas. Se repite este proceso las veces que se desee. También pueden voltear cualquier cantidad par de cartas.">
+        <br>
+        <input type="button" class="btn btn-primary sfFisherYates" value="Fisher-Yates" data-toggle="popover" data-trigger="hover" data-placement="top"  title="Azar Fisher-Yates" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación original.">
+        <input type="button" class="btn btn-primary sfDurstenfeld" value="Durstenfeld" data-toggle="popover" data-trigger="hover" data-placement="top" title="Azar Durstenfeld" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Durstenfeld.">
+        <input type="button" class="btn btn-primary sfSattolo" value="Sattolo" data-toggle="popover" data-trigger="hover" data-placement="top" title="Azar Sattolo" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Sattolo (ninguna carta ocupará la posición original luego de la mezcla).">
+        
+        <input type="button" class="btn btn-primary sfRandomOrg" value="Random.org" data-toggle="popover" data-trigger="hover" data-placement="top" title="Azar Random.org" data-content="Mezcla aleatoria a partir del ruido atmosférico, utilizando el servicio Random.Org a través de la API ofrecida en su web.">
     </div>
 </div>
     
@@ -292,10 +303,10 @@
           <option value="stay">Stay Stack</option>
           <option value="tamariz">Mnemónica Tamariz</option>
           <option value="unusQuinque">Unus Quinque</option>
-          <option value="siStebbins3">Si Stibbens (3)</option>
-          <option value="siStebbins4">Si Stibbens (4)</option>
-          <option value="siStebbins5">Si Stibbens (5)</option>
-          <option value="siStebbins7">Si Stibbens (7)</option>
+          <option value="siStebbins3">Si Stebbins (3)</option>
+          <option value="siStebbins4">Si Stebbins (4)</option>
+          <option value="siStebbins5">Si Stebbins (5)</option>
+          <option value="siStebbins7">Si Stebbins (7)</option>
           <option value="skotBop">Skot Bop Stack</option>
           <option value="skotBopSimple">Skot Bop Stack (simple)</option>
         </select>
@@ -613,39 +624,72 @@
       <div class="modal-body" style="text-align:justify">
           
           <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#themeSettings">Tema</a></li>
+          <li class="active"><a data-toggle="tab" href="#themeSettings">Ver</a></li>
           <li><a data-toggle="tab" href="#randomSettings">Random.org</a></li>
-          <li><a data-toggle="tab" href="#notificationSettings">Notificaciones</a></li>
         </ul>
 
         <div class="tab-content">
           <div id="themeSettings" class="tab-pane fade in active">
-            <p>Preferencias del Tema actual</p>
-            <p>
-            <input id="colorTapete" type="color" value="#40001b"> Color del tapete<br/>
-            <select id="texturaTapete" class="inputSettings">
-                <option value="none">Ninguna</option>
-                <option value="suits-light" selected>Suits (light)</option>
-                <option value="suits-dark">Suits (dark)</option>
-                <option value="night-light">Night (light)</option>
-                <option value="night-dark">Night (dark)</option>
-                <option value="pana-light">Pana (light)</option>
-                <option value="pana-dark">Pana (dark)</option>
-            </select> Textura del tapete<br/>
-            <input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked> Posiciones absolutas y relativas<br/>
-            <input id="colorConsola" class="inputSettings" type="color" value="#000000"> Fondo de la consola<br/>
-            <input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"> Texto de la consola<br/>
-            <select id="fuenteConsola" class="inputSettings">
-                <option value='"Courier New", monospace'>Courier New</option>
-                <option value='"Lucida Console", Monaco, monospace' selected>Lucila Console</option>
-                <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Sans</option>
-            </select> Tipografía de la consola<br/>
-            <span class="input-group inputSettings">
-              <input id="fuenteConsolaSize" type="number" class="form-control" value="10" min="7" max="24">
-              <span class="input-group-addon">pt</span>
-            </span>
-            Tamaño de la fuente<br/>
-            </p>
+              
+            <table class="table table-condensed">
+                <tr><th colspan="4">Tapete</th></tr>
+                <tr>
+                    <td>Color</td>
+                    <td width="80px"><input id="colorTapete" type="color" value="#40001b"></td>
+                    
+                    <td>Textura</td>
+                    <td width="80px"><select id="texturaTapete" class="inputSettings">
+                        <option value="none">Ninguna</option>
+                        <option value="suits-light" selected>Suits (light)</option>
+                        <option value="suits-dark">Suits (dark)</option>
+                        <option value="night-light">Night (light)</option>
+                        <option value="night-dark">Night (dark)</option>
+                        <option value="pana-light">Pana (light)</option>
+                        <option value="pana-dark">Pana (dark)</option>
+                        </select></td>
+                </tr>
+                <tr><th colspan="3">Consola</th><th><input id="mostrarConsola" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="x" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
+                <tr class="setConsola">
+                    <td>Fondo</td>
+                    <td><input id="colorConsola" class="inputSettings" type="color" value="#000000"></td>
+                    
+                    <td>Texto</td>
+                    <td><input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"></td>
+                </tr>
+                <tr class="setConsola">
+                    <td>Tipografía</td>
+                    <td><select id="fuenteConsola" class="inputSettings">
+                        <option value='"Courier New", monospace'>Courier New</option>
+                        <option value='"Lucida Console", Monaco, monospace' selected>Lucila Console</option>
+                        <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Sans</option>
+                        </select></td>
+                    <td>Tamaño</td>
+                    <td><span class="input-group inputSettings">
+                        <input id="fuenteConsolaSize" type="number" class="form-control" value="10" min="7" max="24">
+                        <span class="input-group-addon">pt</span>
+                        </span></td>
+                 </tr>
+                 <tr><th colspan="3">Rótulos en las cartas</th><th><input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
+                 <tr class="setRotulos">
+                    <td>Comienza en</td>
+                    <td><input id="unoceroRotulos" data-size="mini" data-label-width="50" data-handle-width="50" class="inputSettings form-control" type="checkbox" data-on-text="1" data-off-text="0" data-off-color="primary" checked></td>
+                    
+                    <td>Relativas</td>
+                    <td><input id="relativasTipo" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="0" data-on-text="Decimal" data-off-text="Binario" data-off-color="primary" checked></td>
+                </tr>
+                <tr><th colspan="2">Notificaciones</th><th colspan="2">Textos de ayuda</th></tr>
+                <tr>
+                    <td>Duración (0 para "siempre")</td>
+                    <td><span class="input-group inputSettings">
+                        <input type="number" class="form-control" id="notificationTime" min="0" value="10" max="60">
+                        <span class="input-group-addon">seg.</span> 
+                        </span></td>
+                    
+                    <td>En botones</td>
+                    <td><input id="mostrarAyudas" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="?" data-on-text="Mostrar" data-off-text="Ocultar"></td>
+                </tr>
+            </table>
+
             <p style="text-align: right"><a id="reiniciarTema" href="#">Reiniciar valores por defecto</a></p>
           </div>
             
@@ -664,17 +708,6 @@
                 <div id="randomKeyApiBitsLeft" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="250000" aria-valuemax="250000" style="min-width: 2em;">%</div>
               </div>
           </div>
-            
-            <div id="notificationSettings" class="tab-pane fade">
-            <p>Preferencias de las notificaciones</p>
-            <div class="form-group">
-            
-            <span class="input-group inputSettings">
-                <input type="number" class="form-control" id="notificationTime" min="0" value="10" max="60">
-            <span class="input-group-addon">seg.</span> 
-            </span> Duración de las notificaciones (0 para indefinidamente).
-          </div>
-              
               
           </div>
           
