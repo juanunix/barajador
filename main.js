@@ -100,7 +100,9 @@ $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#mostrarConsola" ).on('switchChange.bootstrapSwitch', {name: "Consola"}, verModulos );
 $( "#vrStats" ).on( "click", verStats );
-$( "#modalStats .printStats" ).on( "click", printStats );
+$( ".printStats" ).on( "click", printStats );
+$( ".helpStats" ).on( "click", helpStats );
+$( ".closeStats" ).on( "click", closeHelpStats );
 
 // Editar carta
 $( "#modalEditarCarta .editarCodigoCara" ).on( "keyup", mostrarPreviewCarta );
@@ -836,9 +838,12 @@ function cambiarTexturaTapete(){
 
 $( "#mostrarAyudas" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
-        $('[data-toggle="popover"]').popover();
+        $('.botonera [data-toggle="popover"]').popover({
+        placement: "top",
+        html: true,
+        container: 'body'});
    }else{
-       $('[data-toggle="popover"]').popover('destroy');
+       $('.botonera [data-toggle="popover"]').popover('destroy');
    }
 });
 
@@ -1436,20 +1441,63 @@ function verStats(){
     adivinacionesPorcentaje = redondeo(adivinacionesPorcentaje,2);
     adivinacionesProbables = redondeo(adivinacionesProbables,redond);
     
-    $("#modalStats .barajaMatriz").html("["+barajaActual.getMatriz("face",",")+"]");
-    $("#modalStats .cantidad").html("n = " + barajaActual.deck.length);
+    var faroTotal = barajaActual.deck.length;
+    
+    if (isOdd(barajaActual.deck.length)){
+        faroTotal++;
+    }
+    var j = productoCiclos(ordenI);
+    var s = [];
+    // Crea el producto de los ciclos de las permutaciones
+    var prodCiclos = "";
+    for (i=0;i<j.length;i++){
+        prodCiclos += "(" + j[i].join(" ") + ")";
+        
+        s[i] = j[i].length
+        
+    }
+    
+    var ordenCiclos = "λ₍<sub>n</sub>₎=(" + partition(s,true).join("+") + ")";
+    
+    $("#modalStats .barajaMatriz").html("["+barajaActual.getMatriz("face",", ")+"]");
+    $("#modalStats .cantidad").html("n = " + barajaActual.deck.length+"<sub>10</sub> = "+barajaActual.deck.length.toString(2)+"<sub>2</sub>");
     $("#modalStats .permutaciones").html("n! = " + permutaciones);
-    $("#modalStats .mezclasNecesarias").html("<sup>3</sup>&frasl;<sub>2</sub> log<sub>2</sub>(n) = " + mezclasNecesarias);
-    $("#modalStats .adivinacionesProbables").html("<sup>1</sup>&frasl;<sub>n</sub> + ... + <sup>1</sup>&frasl;<sub>2</sub> + <sup>1</sup>&frasl;<sub>1</sub> = " + adivinacionesProbables);
+    $("#modalStats .mezclasNecesarias").html("= " + mezclasNecesarias);
+    $("#modalStats .adivinacionesProbables").html("= " + adivinacionesProbables);
     $("#modalStats .adivinacionesPorcentaje").html(adivinacionesPorcentaje + "%");
-    $("#modalStats .farosOutOrdenan").html("ord<sub>n-1</sub>(2) = ");
-    $("#modalStats .farosIntOrdenan").html("ord<sub>n+1</sub>(2) = ");
+    $("#modalStats .farosOutOrdenan").html("= "+mOrder(2,faroTotal-1));
+    $("#modalStats .farosIntOrdenan").html("= "+mOrder(2,faroTotal+1));
+    $("#modalStats .barajaPermutaciones").html("P = ("+ordenI.join(" ")+")");
+    $("#modalStats .descompCiclica").html("C<sub>P</sub> = "+prodCiclos);
+    $("#modalStats .ordenCiclos").html(ordenCiclos);
+    $("#modalStats .periodoPermutacion").html("m.c.m("+delDuplicates(s,true).join(",")+") = " + lcm(s));
     
 }
 
 function printStats(){
 
     $(".printable").print();
+    
+}
+
+function helpStats(){
+
+    $('#modalStats [data-toggle="popover"]').popover({
+        placement: "bottom",
+        html: true,
+        container: 'body',
+        trigger: 'click'
+    });
+    
+    $('#modalStats td').addClass("statAyuda");
+    
+   
+}
+
+function closeHelpStats(){
+    
+    $('#modalStats [data-toggle="popover"]').popover('destroy');    
+    $('#modalStats td').removeClass("statAyuda");
     
 }
 

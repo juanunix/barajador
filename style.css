@@ -425,8 +425,11 @@ th {
     padding: 2px 5px;
 }
 
-#modalStats .modal-body {
-    font-size: 9pt;
+.printable td {
+    
+    font-family: "Liberation Serif";
+    font-size: 12pt;
+    text-align: center;
 }
 
 .input-group-addon {
@@ -482,4 +485,11 @@ th {
 .notificaciones code {
     float: right;
 }
-    
+
+.statAyuda {
+    cursor: pointer;
+}
+
+.statAyuda:hover {
+    outline: dashed 1.5px red;
+}
