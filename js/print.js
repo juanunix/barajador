@@ -37,7 +37,10 @@ jQuery.fn.print = function(){
     // Grab all the style tags and copy to the new
     // document so that we capture look and feel of
     // the current document.
-    var estilo = "body{font-family:Verdana;font-size:10pt;}"
+    var estilo = "body{font-family:'Liberation Serif';}"
+    estilo += "td{font-size:12pt;text-align:center;padding: 8px;line-height: 1.42857143;vertical-align: top;border-top: 1px solid #ddd;}";
+    estilo += "img{vertical-align:middle}";
+    
     // Create a temp document DIV to hold the style tags.
     // This is the only way I could find to get the style
     // tags into IE.
@@ -52,7 +55,7 @@ jQuery.fn.print = function(){
     objDoc.write( "<html>" );
     objDoc.write( "<head>" );
     objDoc.write( "<title>" );
-    objDoc.write( document.title + " v1.0 - Estadísticas" );
+    objDoc.write( document.title + " v1.0 - Análisis matemático" );
     objDoc.write( "</title>" );
     objDoc.write( "<style>");
     objDoc.write( estilo );
@@ -60,7 +63,7 @@ jQuery.fn.print = function(){
     objDoc.write( jStyleDiv.html() );
     objDoc.write( "</head>" );
     objDoc.write( "<body>" );
-    objDoc.write( "<h1>Informe</h1>" );
+    objDoc.write( "<h2>Informe</h2>" );
     objDoc.write( this.html() );
     objDoc.write( "</body>" );
     objDoc.write( "</html>" );
