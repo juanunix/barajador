@@ -1,8 +1,8 @@
 //Inicializa las variables globales
-var imgDeck = "wiki";
-var imgBack = "bicycle-red";
+var imgDeck = "wiki2";
 var vrChck0 = "glyphicon glyphicon-unchecked";
 var vrChck1 = "glyphicon glyphicon-check";
+var clip;
 var posCartaActual;
 var lugarAnt;
 var JsonApi = new RandomJs();
@@ -89,6 +89,7 @@ $( "#modalCato .btnAplicar" ).on( "click", catoAplicar );
 
 // Otras cosas
 $( ".vrOrden").on("click", obtenerOrden);
+//$( "#click-to-copy").on("click", copiarOrden);
 
 // Inversores
 $( ".saberMas" ).on( "click", saberMas );
@@ -102,7 +103,8 @@ $( "#mostrarConsola" ).on('switchChange.bootstrapSwitch', {name: "Consola"}, ver
 $( "#vrStats" ).on( "click", verStats );
 $( ".printStats" ).on( "click", printStats );
 $( ".helpStats" ).on( "click", helpStats );
-$( ".closeStats" ).on( "click", closeHelpStats );
+$('#modalStats').on('hidden.bs.modal', function () {closeHelpStats();})
+$( "#modalStats td" ).on( "click", clickTdStats );
 
 // Editar carta
 $( "#modalEditarCarta .editarCodigoCara" ).on( "keyup", mostrarPreviewCarta );
@@ -244,14 +246,31 @@ function iniciar(){
         $('#consola').css('font-size',consola_fuenteSize+'pt');
     }
     
+    // iniciar los BootstrapSwitch
+    $(function(argument) {
+      $.fn.bootstrapSwitch.defaults.onText = 'SI';
+      $.fn.bootstrapSwitch.defaults.offText = 'NO'; 
+      $.fn.bootstrapSwitch.defaults.size = 'mini';
+      $.fn.bootstrapSwitch.defaults.handleWidth = 49;
+      $('[type="checkbox"]').bootstrapSwitch();
+      
+    })
+    
+     // Crea los elementos bselect
+    $("#ordenBaraja").bselect();
+    $("#ordenPalos select").bselect({ searchInput : false });
+    
+    // Habilita la función de copiado al portapapeles
+    zeroClip();
+    
+    // Show the full screen button
     if($.support.fullscreen){
-        // Show the full screen button
         $("#liFullScreen").show();
     }
     
-    // Crea los elementos bselect
-    $("#ordenBaraja").bselect();
-    $("#ordenPalos select").bselect({ searchInput : false });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
     
 }
 
@@ -1483,7 +1502,7 @@ function printStats(){
 function helpStats(){
 
     $('#modalStats [data-toggle="popover"]').popover({
-        placement: "bottom",
+        placement: "auto",
         html: true,
         container: 'body',
         trigger: 'click'
@@ -1492,6 +1511,16 @@ function helpStats(){
     $('#modalStats td').addClass("statAyuda");
     
    
+}
+
+function clickTdStats(){
+
+    if($('#modalStats td').hasClass("statAyuda")){
+        closeHelpStats();
+        helpStats();  
+        $(this).popover('show')
+    }
+    
 }
 
 function closeHelpStats(){
@@ -1796,4 +1825,25 @@ function disButtons(estado){
 
     $(".btn.btn-primary").prop("disabled",estado);
     
+}
+
+// ZeroClipboard
+function zeroClip() {
+    clip = new ZeroClipboard.Client();
+    clip.setHandCursor( true );
+    clip.addEventListener('load', function (client) {
+        //notificar("Flash movie loaded and ready.");
+    });
+
+    clip.addEventListener('mouseOver', function (client) {
+        
+        clip.setText( $('#matriz').val() );
+        //notificar("Clip set: "+ $('#matriz').val());
+    });
+
+    clip.addEventListener('complete', function (client, text) {
+        //notificar("Matriz copiada al portapepeles","success");
+    });
+
+    clip.glue( 'click-to-copy', 'copy-container' );
 }
