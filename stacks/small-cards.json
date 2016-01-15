@@ -1,9 +1,14 @@
 {
     "name": "Small cards",
     "description": "Baraja francesa de estética pixelar.",
+    "preview": {
+        "path": "img/small-cards.png",
+        "width": 200,
+        "height": 150
+    },
     "images": {
-	"path": "small-cards",
-	"fileType": "png"
+        "path": "small-cards",
+        "fileType": "png"
     },
     "faces": "AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD,J1,J2"
 }

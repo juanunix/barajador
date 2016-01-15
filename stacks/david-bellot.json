@@ -1,6 +1,11 @@
 {
     "name": "David Bellot",
     "description": "Baraja francesa de licencia GFDL diseñada por David Bellot, publicada en Wikimedia Commons.",
+        "preview": {
+        "path": "img/david-bellot.jpg",
+        "width": 200,
+        "height": 150
+    },
     "images":{
         "path":  "david-bellot",
         "fileType": "png"
