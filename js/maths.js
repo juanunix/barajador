@@ -143,3 +143,11 @@ function partition(arr,mult){
     return out;
     
 }
+
+// Left Circular Shift con registro variable
+function leftCircularShift(num,bits){
+    num = num.toString(2);
+    num = parseInt(num.substr(1,num.length-1)+num.substr(0,1),2);
+    num = parseInt(num,2);
+    return num;
+}
