@@ -9,8 +9,8 @@ body {
     -webkit-user-select: none;
     -ms-user-select:none;
     user-select:none;
-    background-color: #40001b;
-    background-image: url("img/table/suits-light.png");
+    background-color: #222;
+    background-image: url("img/backgrounds/suits-light.png");
 }
 
 .dropdown-submenu {
@@ -279,11 +279,11 @@ th {
     border-bottom: 1px solid silver;
 }
 
-#modalEditarCarta .naipe {
+#modalEditarAgregar .naipe {
     cursor:default;
 }
 
-#modalEditarCarta .detalles {
+#modalEditarAgregar .detalles {
     display: inline-block;
     width: 100px;
     height: 140px;
@@ -458,22 +458,17 @@ th {
     padding-bottom: 30px;
 }
 
-#barajaImg {
+.barajaImg {
     float: left;
     margin-right: 5px;
     display: none;
 }
 
-#barajaDesc, #barajaPref {
+.barajaDesc {
     padding: 5px;
 }
 
-#modalAbrir .alert {
-    display: none;
-    margin-bottom: 0px;
-}
-
-#ordenPalos {
+.ordenPalos {
     display: none;
 }
 
@@ -492,4 +487,24 @@ th {
 
 .statAyuda:hover {
     outline: dashed 1.5px red;
+}
+
+#modalAbrirDeck table{
+    margin-bottom: 0px;
+}
+
+#modalAbrirDeck table td {
+    padding-bottom: 0px;
+    height: 40px;
+    vertical-align: baseline;
+}
+
+#modalAbrirDeck .modal-body {
+    padding-bottom: 0px;
+}
+
+.opciones {
+    display: inline-block;
+    width: 100%;
+    margin-top: 5px;
 }
