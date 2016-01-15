@@ -3,7 +3,7 @@
     "type": "sequential",
     "description": "Baraja ordenada de 52 cartas creada por Ellis Stanyon descrita en la publicación 'Stanyon's Magic' de Julio de 1913.",
     "faces": "AD,3T,6C,10P,2D,4T,7C,JP,3D,5T,8C,QP,4D,6T,9C,KP,5D,7T,10C,AP,6D,8T,JC,2P,7D,9T,QC,3P,8D,10T,KC,4P,9D,JT,AC,5P,10D,QT,2C,6P,JD,KT,3C,7P,QD,AT,4C,8P,KD,2T,5C,9P",
-    "image": {
+    "preview": {
         "path": "img/stanyon.jpg",
         "width": 143,
         "height": 200

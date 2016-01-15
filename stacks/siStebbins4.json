@@ -2,7 +2,7 @@
     "name": "Si Stebbins (4)",
     "type": "sequential",
     "description": "Baraja ordenada de 52 cartas, creada por llamado William H. Coffren o popularmente conocido como Si Stebbins. Él descubrió la relación secuencial de los 13 valores de un palo, viendo que al añadir 3 a cada valor se lograban todos sin repetirse ninguno.<br><br>En este caso se suman 4 para determinar el valor del a siguiente carta y el palo se determina por la rotación elegida.",
-    "image": {
+    "preview": {
         "path": "img/sistebbins.png",
         "width": 137,
         "height": 180

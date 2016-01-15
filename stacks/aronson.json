@@ -2,5 +2,10 @@
     "name": "Aronson Stack",
     "type": "memorized",
     "description": "Baraja ordenada de 52 cartas creada por Simon Aronson, presentada en el libro 'A Stack to Remember' (1979) y reeditada en el libro 'Bound to Please' (1994).",
+    "preview": {
+        "path": "img/aronson.png",
+        "width": 143,
+        "height": 143
+    },
     "faces": "JP,KT,5T,2C,9P,AP,3C,6T,8D,AT,10P,5C,2D,KD,7D,8T,3P,AD,7P,5P,QD,AC,8P,3D,7C,QC,5D,7T,4C,KC,4D,10D,JT,JC,10T,JD,4P,10C,6C,3T,2P,9C,KP,6P,4T,8C,9T,QP,6D,QT,2T,9D"
 }

@@ -2,7 +2,7 @@
     "name": "Fournier",
     "type": "ordered",
     "description": "Naipes de Heraclio Fournier S.A. es una conocida empresa dedicada a la fabricación de naipes, con sede en Vitoria (Álava) y fábrica en Villarreal de Álava (Álava). Es propiedad de la United States Playing Card Company, que a su vez forma parte del conglomerado Jarden Corp. con sede en Rye, Nueva York.",
-    "image": {
+    "preview": {
         "path": "img/fournier.png",
         "width": 143,
         "height": 200
