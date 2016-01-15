@@ -51,12 +51,12 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Baraja<b class="caret"></b></a>
                     <ul class="dropdown-menu w210">
                         <li><a id="orden4Kings" href="#" accesskey="n"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nueva<span class="atajo">ALT+N</span></a></li>
-                        <li><a data-toggle="modal" href="#" data-target="#modalAbrirOrdenacion" accesskey="a"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir...<span class="atajo">ALT+A</span></a></li>
+                        <li><a data-toggle="modal" href="#" data-target="#modalAbrirDeck" accesskey="A"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Abrir baraja...<span class="atajo">ALT+A</span></a></li>
+                        <li><a data-toggle="modal" href="#" data-target="#modalAbrirStack" accesskey="T"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Ordenar baraja...<span class="atajo">ALT+T</span></a></li>
                         <li class="collapse"><a class="mnuGuardar" href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar...<span class="atajo">ALT+S</span></a></li>
                         <li class="divider"></li>
                         <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Reiniciar posiciones</a></li>
-                        <li><a class="reiniciarPosiciones" href="#"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Establecer posiciones...</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Establecer orden</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#modalOrdenPersonal"><span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span> Personalizar estructura</a></li>
                         <li class="divider"></li>
                         <li><a id="mnuGuardarImagen" href="#"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Generar imagen</a></li>
                         <li><a class="mnuGenerarQr" href="#"><span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> Generar QR</a></li>
@@ -130,6 +130,14 @@
                         <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="m"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Análisis matemático<span class="atajo">Alt+M</span></a></li>
                         <li class="divider"></li>
                         <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalPreferencias"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
+                    </ul>
+                </li>
+                 <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Estudiar<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                         <li><a href="#" id="estMemo">Memorización órden</a></li>
+                         <li><a href="#" id="estCant">Estimación de cortes</a></li>
+                         <li><a href="#" id="estFaro">Entramiento en Mezclas Faro</a></li>
                     </ul>
                 </li>
                 <li>
@@ -250,7 +258,7 @@
       </div>
       <div class="modal-footer">
         <a id="descargar" class="btn btn-primary" href="#" download="baraja.png" data-dismiss="modal">Descargar</a>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
@@ -274,9 +282,9 @@
     </div>
   </div>
 </div>
-    
-<!-- Modal Abrir Baraja Ordenada -->
-<div class="modal fade" id="modalAbrirOrdenacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<!-- Modal Abrir Baraja -->
+<div class="modal fade" id="modalAbrirDeck" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -287,7 +295,66 @@
           <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
       </div>
       <div class="modal-body" style="text-align:justify">
-         <select id="ordenBaraja" class="bselect" data-placeholder="Elije una ordenación">
+         <select class="selectBaraja bselect" data-placeholder="Elije una baraja">
+          <option value=""></option>
+          <option value="bicycle">Bicycle</option>
+          <option value="cburnett">Cburnett</option>
+          <option value="small-cards">Small cards</option>
+          <option value="david-bellot">David Bellot</option>
+          <option value="galvanic">Sean Whelan - Galvanic</option>
+          <option value="playingarts-1">Playing Arts - Edition One</option>
+          <option value="playingarts-2">Playing Arts - Edition Two</option>
+          <option value="gigposters-1">Gig Posters - Deck #1</option>
+          <option value="gigposters-2">Gig Posters - Deck #2</option>
+          <option value="gigposters-3">Gig Posters - Deck #3</option>
+          <option value="infinite-colission">Infinite Colission</option>
+        </select>
+        <div>
+        <div class="barajaImg"></div>
+        <div class="barajaDesc">
+        <dl>
+          <dt>Descripción:</dt>
+          <dd><div>...</div></dd>
+        </dl>
+        </div>
+        <div class="opciones">
+        <dt>Opciones:</dt>
+        <table class="table">
+            <tr>
+                <td>Color de los dorsos:</td>
+                <td width="90px"><select class="selectDorsos bselect" data-placeholder="...">
+                  <option value=""></option>
+                  <option value="DR">Rojo</option>
+                  <option value="DA">Azul</option>
+                </select></td>
+                <td>Mantener orden actual:</td>
+                <td width="90px"><input type="checkbox" class="mantenerOrden" data-on-text="Si" data-off-text="No" class="form-control"></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btnAbrir">Abrir</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Abrir Ordenadación -->
+<div class="modal fade" id="modalAbrirStack" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Ordenar baraja...</h4>
+      </div>
+      <div class="notificaciones collapse">
+          <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
+      </div>
+      <div class="modal-body" style="text-align:justify">
+         <select class="bselect selectBaraja" data-placeholder="Elije una ordenación">
           <option value=""></option>
           <option value="bicycle">Bicycle</option>
           <option value="fournier">Fournier</option>
@@ -308,22 +375,24 @@
           <option value="siStebbins5">Si Stebbins (5)</option>
           <option value="siStebbins7">Si Stebbins (7)</option>
           <option value="skotBop">Skot Bop Stack</option>
+          <option value="woStack">Wo Stack</option>
           <option value="skotBopSimple">Skot Bop Stack (simple)</option>
         </select>
         <div>
-        <div id="barajaImg"></div>
-        <div id="barajaDesc">
+        <div class="barajaImg"></div>
+        <div class="barajaDesc">
         <dl>
           <dt>Descripción:</dt>
           <dd><div>...</div></dd>
         </dl>
         </div>
 
-        <div id="barajaPref">
+        </div>
+        <div class="opciones">
         <dt>Estructura:</dt>
-            <input type="text" class="form-control" id="orden" readonly>
+            <input type="text" class="form-control orden" readonly>
             
-            <div id="ordenPalos">
+            <div class="ordenPalos">
                 <select class="bselect" data-placeholder="Rotación de palos">
                   <option value=""></option>
                   <option value="TCPD">&clubs; Trébol, &hearts; Corazón, &spades; Picas, &diams; Diamante</option>
@@ -337,11 +406,10 @@
                 </select>
             </div>
         </div>
-        </div>
       </div>
       <div class="modal-footer">
-        <button id="abrirStack" type="button" class="btn btn-primary">Abrir</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary btnAbrir">Abrir</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
@@ -365,19 +433,19 @@
       </div>
       <div class="modal-footer"> 
         <a id="abrirOrdenPersonal" class="btn btn-primary" href="#" data-dismiss="modal">Abrir</a>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
       
-<!-- Modal Edición de carta -->
-<div class="modal fade" id="modalEditarCarta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal Editar / Agregar de carta -->
+<div class="modal fade" id="modalEditarAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Carta <span class="posicion"></span></h4>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon" aria-hidden="true"></span><span class="titulo"></span></h4>
       </div>
       <div class="modal-body" style="text-align:justify">
           <div class="naipe"></div>
@@ -408,7 +476,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary btnAplicar">Aplicar</button>
+        <button type="button" class="btn btn-primary btnAplicar"></button>
       </div>
     </div>
   </div>
@@ -657,7 +725,7 @@
                 <tr><th colspan="4">Tapete</th></tr>
                 <tr>
                     <td>Color</td>
-                    <td width="80px"><input id="colorTapete" type="color" value="#40001b"></td>
+                    <td width="80px"><input id="colorTapete" type="color" value="#222222"></td>
                     
                     <td>Textura</td>
                     <td width="80px"><select id="texturaTapete" class="inputSettings">
@@ -668,6 +736,10 @@
                         <option value="night-dark">Night (dark)</option>
                         <option value="pana-light">Pana (light)</option>
                         <option value="pana-dark">Pana (dark)</option>
+                        <option value="emily-arkin-light">Emily Arkin (light)</option>
+                        <option value="emily-arkin-dark">Emily Arkin (dark)</option>
+                        <option value="big-suits-light">Big suits (light)</option>
+                        <option value="big-suits-dark">Big suits (dark)</option>
                         </select></td>
                 </tr>
                 <tr><th colspan="3">Consola</th><th><input id="mostrarConsola" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="x" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>

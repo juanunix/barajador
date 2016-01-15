@@ -1,5 +1,7 @@
 //Inicializa las variables globales
-var imgDeck = "wiki2";
+var imgDeck = "cburnett";
+var imgType = "png";
+var imgDorso = "DA";
 var vrChck0 = "glyphicon glyphicon-unchecked";
 var vrChck1 = "glyphicon glyphicon-check";
 var clip;
@@ -11,6 +13,7 @@ var comandoHistorialN = 0;
 var ordenI;
 var stkName;
 var stkImg;
+var stkPrev;
 var stkFaces;
 var stkNumbers;
 var datosSlots;
@@ -20,7 +23,7 @@ var datosSlots;
 
 // Barra de notificaciones
 $( "#barraTop .notificaciones .close" ).on( "click", function(){$("#barraTop .notificaciones").collapse('hide'); });
-$( "#modalAbrirOrdenacion .notificaciones .close" ).on( "click", function(){$("#modalAbrirOrdenacion .notificaciones").collapse('hide'); });
+$( "#modalAbrirStack .notificaciones .close" ).on( "click", function(){$("#modalAbrirStack .notificaciones").collapse('hide'); });
 $( "#modalOrdenPersonal .notificaciones .close" ).on( "click", function(){$("#modalOrdenPersonal .notificaciones").collapse('hide'); });
 $( "#modalPreferencias .notificaciones .close" ).on( "click", function(){$("#modalPreferencias .notificaciones").collapse('hide'); });
 
@@ -31,9 +34,17 @@ $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
 //$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "' + $("#descargar").attr("download") + '". ' + txtDescargas,"success") } );
-$( "#ordenBaraja" ).on( "change", infoBaraja );
-$( "#ordenPalos .bselect" ).on( "change", ordenPalos );
-$( "#abrirStack" ).on( "click", abrirStack );
+
+// Abrir bajara
+
+$( "#modalAbrirDeck .selectBaraja" ).on( "change", infoBaraja );
+$( "#modalAbrirDeck .btnAbrir" ).on( "click", abrirBaraja );
+
+// Abrir ordenación
+$( "#modalAbrirStack .selectBaraja" ).on( "change", infoStack );
+$( "#modalAbrirStack .ordenPalos .bselect" ).on( "change", ordenPalos );
+$( "#modalAbrirStack .btnAbrir" ).on( "click", abrirStack );
+
 $( ".mnuGuardar").on( "click", modalGuardar );
 $( "#slots").on( "change", infoSlot) ;
 $( "#guardarBaraja").on( "click", guardarBaraja) ;
@@ -107,10 +118,10 @@ $('#modalStats').on('hidden.bs.modal', function () {closeHelpStats();})
 $( "#modalStats td" ).on( "click", clickTdStats );
 
 // Editar carta
-$( "#modalEditarCarta .editarCodigoCara" ).on( "keyup", mostrarPreviewCarta );
-$( "#modalEditarCarta .editarCodigoDorso" ).on( "keyup", mostrarPreviewCarta );
-$( "#modalEditarCarta .editarVer" ).on('switchChange.bootstrapSwitch', mostrarPreviewCarta);
-$( "#modalEditarCarta .btnAplicar" ).on( "click", editarCartaAplicar );
+$( "#modalEditarAgregar .editarCodigoCara" ).on( "keyup", mostrarPreviewCarta );
+$( "#modalEditarAgregar .editarCodigoDorso" ).on( "keyup", mostrarPreviewCarta );
+$( "#modalEditarAgregar .editarVer" ).on('switchChange.bootstrapSwitch', mostrarPreviewCarta);
+$( "#modalEditarAgregar .btnAplicar" ).on( "click", editarAgregarAplicar );
 
 // Cambiar nombre del archivo modalScreen
 $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
@@ -159,54 +170,6 @@ $( "#nombreImagenBaraja" ).on( "change", cambiarNombreArchivo );
 
 // Inicia el barajador
 function iniciar(){
-    // Carga variables según el navegador
-    
-    // Chrome Chrome 1+
-    if (!!window.chrome){
-        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.';
-    }
-    
-    // Firefox Firefox 1+
-    if (typeof InstallTrigger !== 'undefined'){
-        txtDescargas = ' Presiona <b>Ctrl + Mayús + Y</b> para acceder a las Descargas.';
-    }
-    
-    // Internet Explorer 6+
-    if (/*@cc_on!@*/false || !!document.documentMode){
-        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.'
-    }
-    // Safari 3+
-    if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0){
-        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.'
-    }
-    
-    // Opera 8+
-    if (!!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0){
-        txtDescargas = ' Presiona <b>⌘ + Alt + L</b> para acceder a las Descargas.'
-    }
-    
-    
-    // Desactivar el menú contextual del navegador
-    document.oncontextmenu = function(){return false;}
-    
-    
-    // ¿Había una baraja abierta en la sesión?
-    if ( sessionStorage.getItem("baraja_autosave") ) {
-        barajaActual = new EyDeck(abrirSesion("baraja_autosave"));
-        var posicionesActuales = abrirSesion("baraja_posiciones_autosave").split(",");
-        
-        for (var i=0;i<barajaActual.deck.length;i++){
-        
-            barajaActual.deck[i].id = parseInt(posicionesActuales[i]);
-            
-        }
-        
-        abreBaraja();
-        
-    }else{
-    
-        abreDefault();
-    }
     
     // Carga las preferencias guardadas
     if ( localStorage.getItem("tapete_fondo") ) {
@@ -218,7 +181,7 @@ function iniciar(){
     if ( localStorage.getItem("tapete_textura") ) {
         var tapete_textura = abrirLocal("tapete_textura");
         $('#texturaTapete').val(tapete_textura);
-        $('body').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
+        $('body').css('background-image',"url('img/backgrounds/"+ tapete_textura + ".png')");
     }
     
     if ( localStorage.getItem("consola_fondo") ) {
@@ -246,6 +209,33 @@ function iniciar(){
         $('#consola').css('font-size',consola_fuenteSize+'pt');
     }
     
+    if ( localStorage.getItem("imgDeck") ) {
+        imgDeck = abrirLocal("imgDeck");
+        imgType = abrirLocal("imgType");
+    }
+    
+    // ¿Había una baraja abierta en la sesión?
+    if ( sessionStorage.getItem("baraja_autosave") ) {
+        barajaActual = new EyDeck(abrirSesion("baraja_autosave"));
+        var posicionesActuales = abrirSesion("baraja_posiciones_autosave").split(",");
+        
+        for (var i=0;i<barajaActual.deck.length;i++){
+        
+            barajaActual.deck[i].id = parseInt(posicionesActuales[i]);
+            
+        }
+        
+        abreBaraja();
+        
+    }else{
+    
+        abreDefault();
+    }
+    
+    // Desactivar el menú contextual del navegador
+    document.oncontextmenu = function(){return false;}
+    
+    
     // iniciar los BootstrapSwitch
     $(function(argument) {
       $.fn.bootstrapSwitch.defaults.onText = 'SI';
@@ -257,8 +247,10 @@ function iniciar(){
     })
     
      // Crea los elementos bselect
-    $("#ordenBaraja").bselect();
-    $("#ordenPalos select").bselect({ searchInput : false });
+    $("#modalAbrirDeck .selectBaraja").bselect();
+    $("#modalAbrirDeck .selectDorsos").bselect({ searchInput : false });
+    $("#modalAbrirStack .selectBaraja").bselect();
+    $("#modalAbrirStack .ordenPalos select").bselect({ searchInput : false });
     
     // Habilita la función de copiado al portapapeles
     zeroClip();
@@ -271,6 +263,31 @@ function iniciar(){
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+    
+    // Carga variables según el navegador
+    // Chrome Chrome 1+
+    if (!!window.chrome){
+        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.';
+    }
+    
+    // Firefox Firefox 1+
+    if (typeof InstallTrigger !== 'undefined'){
+        txtDescargas = ' Presiona <b>Ctrl + Mayús + Y</b> para acceder a las Descargas.';
+    }
+    
+    // Internet Explorer 6+
+    if (/*@cc_on!@*/false || !!document.documentMode){
+        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.'
+    }
+    // Safari 3+
+    if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0){
+        txtDescargas = ' Presiona <b>Ctrl + J</b> para acceder a las Descargas.'
+    }
+    
+    // Opera 8+
+    if (!!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0){
+        txtDescargas = ' Presiona <b>⌘ + Alt + L</b> para acceder a las Descargas.'
+    }
     
 }
 
@@ -545,7 +562,7 @@ function renderizar(){
 
     // Renderiza el tapete
     for (var i = 0;i < barajaActual.deck.length;i++){
-        $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.png)');
+        $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.' + imgType +')');
     }
     
     mostrarRotulos();
@@ -851,7 +868,7 @@ function cambiarColorTapete(){
 
 function cambiarTexturaTapete(){
     var tapete_textura = $('#texturaTapete').val();
-    $('body').css('background-image',"url('img/table/"+ tapete_textura + ".png')");
+    $('body').css('background-image',"url('img/backgrounds/"+ tapete_textura + ".png')");
     guardarLocal("tapete_textura",tapete_textura);
 }
 
@@ -982,71 +999,107 @@ function eliminarCartaX(cual){
     }
 }
 
+function agregarCarta(){
+    
+    $("#modalEditarAgregar h4 .glyphicon").removeClass("glyphicon-edit").addClass("glyphicon-plus");
+    $("#modalEditarAgregar h4 .titulo").html(" Agregar carta...");
+    $("#modalEditarAgregar .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
+    $("#modalEditarAgregar .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
+    $("#modalEditarAgregar .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
+    $("#modalEditarAgregar .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.' + imgType+')');
+    $("#modalEditarAgregar .editarPosicion").val(posCartaActual+1);
+    $("#modalEditarAgregar .editarPosicion").attr("max",barajaActual.deck.length+1);
+    $("#modalEditarAgregar .btnAplicar").html('Agregar');
+    $("#modalEditarAgregar").modal();
+}
+
 function editarCarta(){
-    $("#modalEditarCarta .posicion").html(" #" + (barajaActual.deck[posCartaActual].id+1));
-    $("#modalEditarCarta .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
-    $("#modalEditarCarta .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
-    $("#modalEditarCarta .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
-    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.png)');
-    $("#modalEditarCarta .editarPosicion").val(posCartaActual+1);
-    $("#modalEditarCarta .editarPosicion").attr("max",barajaActual.deck.length+1);
-    $("#modalEditarCarta .editarCrimp").bootstrapSwitch('state', barajaActual.deck[posCartaActual].crimp);
-    $("#modalEditarCarta .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.deck[posCartaActual].crimpB);
+    $("#modalEditarAgregar h4 .glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-edit");
+    $("#modalEditarAgregar h4 .titulo").html(" Editar carta #" + (barajaActual.deck[posCartaActual].id+1));
+    $("#modalEditarAgregar .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
+    $("#modalEditarAgregar .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
+    $("#modalEditarAgregar .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
+    $("#modalEditarAgregar .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.' + imgType+')');
+    $("#modalEditarAgregar .editarPosicion").val(posCartaActual+1);
+    $("#modalEditarAgregar .editarPosicion").attr("max",barajaActual.deck.length+1);
+    $("#modalEditarAgregar .editarCrimp").bootstrapSwitch('state', barajaActual.deck[posCartaActual].crimp);
+    $("#modalEditarAgregar .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.deck[posCartaActual].crimpB);
+    $("#modalEditarAgregar .btnAplicar").html('Aplicar');
     
     if (barajaActual.deck[posCartaActual].crimpTag == ""){
         
         var letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $("#modalEditarCarta .editarCrimpTag").val(letras.split("")[barajaActual.getCrimps().length]);
+        $("#modalEditarAgregar .editarCrimpTag").val(letras.split("")[barajaActual.getCrimps().length]);
         
     } else {
     
-        $("#modalEditarCarta .editarCrimpTag").val(barajaActual.deck[posCartaActual].crimpTag);
+        $("#modalEditarAgregar .editarCrimpTag").val(barajaActual.deck[posCartaActual].crimpTag);
     }
     
-    $("#modalEditarCarta").modal();
+    $("#modalEditarAgregar").modal();
 }
 
 function mostrarPreviewCarta(){
-    if ($( "#modalEditarCarta .editarVer" ).bootstrapSwitch('state')){
-        var preview = $("#modalEditarCarta .editarCodigoCara").val();
+    if ($( "#modalEditarAgregar .editarVer" ).bootstrapSwitch('state')){
+        var preview = $("#modalEditarAgregar .editarCodigoCara").val();
     }else {
-        var preview = $("#modalEditarCarta .editarCodigoDorso").val();
+        var preview = $("#modalEditarAgregar .editarCodigoDorso").val();
     }
-    $("#modalEditarCarta .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.png)');
+    $("#modalEditarAgregar .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + preview + '.'+imgType+')');
 
 }
 
-$( "#modalEditarCarta .editarCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
+$( "#modalEditarAgregar .editarCrimp" ).on('switchChange.bootstrapSwitch', function(event, state) {
    if (state){
-       $( "#modalEditarCarta .editarCrimpTipo" ).collapse('show');
+       $( "#modalEditarAgregar .editarCrimpTipo" ).collapse('show');
        
        
    }else{
-       $( "#modalEditarCarta .editarCrimpTipo" ).collapse('hide');
+       $( "#modalEditarAgregar .editarCrimpTipo" ).collapse('hide');
    }
 });
 
 
-function editarCartaAplicar(){
+function editarAgregarAplicar(){
     
-    barajaActual.deck[posCartaActual].face = $(".editarCodigoCara").val();
-    barajaActual.deck[posCartaActual].back = $(".editarCodigoDorso").val();
-    barajaActual.deck[posCartaActual].canSee = $(".editarVer").bootstrapSwitch('state');
-    barajaActual.deck[posCartaActual].crimp = $(".editarCrimp").bootstrapSwitch('state');
-    barajaActual.deck[posCartaActual].crimpB = !$(".editarCrimpTopBottom").bootstrapSwitch('state');
-    barajaActual.deck[posCartaActual].crimpTag = $(".editarCrimpTag").val();
+    $("#modalEditarAgregar .btnAplicar").prop("disabled",true)
+    var cCara = $(".editarCodigoCara").val();
+    var cDorso = $(".editarCodigoDorso").val();
+    var cCS = $(".editarVer").bootstrapSwitch('state');
+    var cCrimpA = $(".editarCrimp").bootstrapSwitch('state');
+    var cCrimpB = !$(".editarCrimpTopBottom").bootstrapSwitch('state');
+    var cCrimpT = $(".editarCrimpTag").val();
+    var posNueva = ($("#modalEditarAgregar .editarPosicion").val()-1);
     
-    var posNueva = ($("#modalEditarCarta .editarPosicion").val()-1);
-    
-    if (posCartaActual != posNueva){
-
-        consola(barajaActual.deck[posCartaActual].face + " > " + posNueva);
-        barajaActual.move(posCartaActual,posNueva);
+    if( $("#modalEditarAgregar .btnAplicar").html()  == "Aplicar"){
         
-    }
+        barajaActual.deck[posCartaActual] = {
+            "face": cCara,
+            "back": cDorso,
+            "canSee": cCS,
+            "crimp": cCrimpA,
+            "crimpB": cCrimpB,
+            "crimpTag": cCrimpT
+        }
+        
+        if (posCartaActual != posNueva){
+
+            consola("#"+posCartaActual + " > #" + posNueva);
+            barajaActual.move(posCartaActual,posNueva);
+
+        }
+        
+    } else {
+        
+        barajaActual.add(posNueva,cCara,cDorso,cCS,cCrimpA,cCrimpB,cCrimpT);
     
+    }
+
+    abreBaraja();
     renderizar();
-    $("#modalEditarCarta").modal('hide');
+    
+    $("#modalEditarAgregar").modal('hide');
+    $("#modalEditarAgregar .btnAplicar").prop("disabled",false)
 }
 
 function sfModalCortar(){
@@ -1595,48 +1648,122 @@ function saberMas(){
 
 }
 
-// Actualiza la descripción de
+// Actualiza la información de la baraja
 function infoBaraja(){
-   var stack = $("#ordenBaraja").val();
-   $.getJSON("stacks/"+stack+".json", function(datos) {
-       $("#barajaDesc div").html( datos["description"] );
     
-        stkName =  datos["name"];
-        stkImg = datos["image"];
-        stkFaces = datos["faces"];
-        stkNumbers = datos["numbers"];
     
-        if (typeof stkImg === 'undefined'){
-            
-            $("#barajaImg").css("display","none");
-            
-        } else {
-            
-            $("#barajaImg").css('background-image',"url('stacks/"+ stkImg["path"]+"')");
-            $("#barajaImg").css("width", stkImg["width"] + "px");
-            $("#barajaImg").css("height", stkImg["height"] + "px");
-            $("#barajaImg").css("background-size", stkImg["width"] + "px " + stkImg["height"] + "px");
-            $("#barajaImg").css("display","block");
-        }
-       
-       if (typeof stkFaces !== 'undefined'){
-           $("#ordenPalos").css("display","none");
-           $("#barajaPref #orden").val(stkFaces);
-           
-       } else {
-           if (typeof stkNumbers !== 'undefined'){
-               ordenPalos;
-               $("#ordenPalos").css("display","block");
-               $("#barajaPref #orden").val(stkNumbers);
-           }
-       }
+    var deck = $("#modalAbrirDeck .selectBaraja").val();
+    $.getJSON("stacks/"+deck+".json", function(datos) {
+        
+    $("#modalAbrirDeck .barajaDesc div").html( datos["description"] );
+    stkPrev = datos["preview"];
+    stkImg = datos["images"];
+    stkFaces = datos["faces"];
+    
+    if (typeof stkPrev === 'undefined'){
+
+        $("#modalAbrirDeck .barajaImg").css("display","none");
+
+    } else {
+
+        $("#modalAbrirDeck .barajaImg").css('background-image',"url('stacks/"+ stkPrev["path"]+"')");
+        $("#modalAbrirDeck .barajaImg").css("width", stkPrev["width"] + "px");
+        $("#modalAbrirDeck .barajaImg").css("height", stkPrev["height"] + "px");
+        $("#modalAbrirDeck .barajaImg").css("background-size", stkPrev["width"] + "px " + stkPrev["height"] + "px");
+        $("#modalAbrirDeck .barajaImg").css("display","block");
+    }
+    
+    //notificar("ImgDeck: " +stkImg,"warning","#modalAbrirDeck");
+    
 
     });
+    
+       
+}
+
+function abrirBaraja(){
+
+     if ($("#modalAbrirDeck .selectBaraja").val() == '') {
+        
+        notificar("¡No se ha seleccionado ninguna baraja!","warning","#modalAbrirDeck");
+        
+    } else {
+        
+        if (typeof stkImg === 'undefined' || stkImg == 'default'){
+            imgDeck = 'cburnett';
+            imgType = 'png';
+        } else {
+            imgDeck = stkImg["path"];
+            imgType = stkImg["fileType"];
+        }
+        
+        if($("#modalAbrirDeck .selectDorsos").val() == ''){
+            imgDorso = "DA";
+        } else {
+            imgDorso = $("#modalAbrirDeck .selectDorsos").val();
+        }
+        
+        guardarLocal("imgDeck",imgDeck);
+        guardarLocal("imgType",imgType);
+        
+        $("#modalAbrirDeck .alert").collapse("hide");
+        $("#modalAbrirDeck").modal('hide');
+
+        if (!$("#modalAbrirDeck .mantenerOrden").bootstrapSwitch('state')){
+            barajaActual = new EyDeck(stkFaces,imgDorso);
+            abreBaraja();
+        }
+        renderizar();
+    
+    }
+}
+    
+// Actualiza la descripción del Stack
+function infoStack(){
+    var stack = $("#modalAbrirStack .selectBaraja").val();
+    $.getJSON("stacks/"+stack+".json", function(datos) {
+       
+    $("#modalAbrirStack .barajaDesc div").html( datos["description"] );
+    stkName =  datos["name"];
+    stkPrev = datos["preview"];
+    stkFaces = datos["faces"];
+    stkNumbers = datos["numbers"];
+       
+    if (typeof stkPrev === 'undefined'){
+
+        $("#modalAbrirStack .barajaImg").css("display","none");
+
+    } else {
+
+        $("#modalAbrirStack .barajaImg").css('background-image',"url('stacks/"+ stkPrev["path"]+"')");
+        $("#modalAbrirStack .barajaImg").css("width", stkPrev["width"] + "px");
+        $("#modalAbrirStack .barajaImg").css("height", stkPrev["height"] + "px");
+        $("#modalAbrirStack .barajaImg").css("background-size", stkPrev["width"] + "px " + stkPrev["height"] + "px");
+        $("#modalAbrirStack .barajaImg").css("display","block");
+    }
+
+   if (typeof stkFaces !== 'undefined'){
+
+       $("#modalAbrirStack .ordenPalos").css("display","none");
+       $("#modalAbrirStack .opciones .orden").val(stkFaces);
+
+   } else {
+
+       if (typeof stkNumbers !== 'undefined'){
+
+           $("#modalAbrirStack .ordenPalos").css("display","block");
+           $("#modalAbrirStack .opciones .orden").val(stkNumbers);
+           ordenPalos();
+       }
+   }
+
+   });
     
 }
 
 function ordenPalos(){
-    var ordPalos = $("#ordenPalos .bselect").val();
+    
+    var ordPalos = $("#modalAbrirStack .ordenPalos .bselect").val();
     var ordTemp = stkNumbers.split(",");
     
     if(stkName == "Four Kings"){
@@ -1657,25 +1784,27 @@ function ordenPalos(){
     }
     
     
-    $("#barajaPref #orden").val(ordTemp);
+    $("#modalAbrirStack .opciones .orden").val(ordTemp);
 }
 
 function abrirStack(){
     
-    if ($("#barajaPref #orden").val() == '') {
-    
-        notificar("¡No se ha seleccionado ninguna ordenación!","warning","#modalAbrirOrdenacion");
+    if ($("#modalAbrirStack .opciones .orden").val() == '') {
+        
+        notificar("¡No se ha seleccionado ninguna ordenación!","warning","#modalAbrirStack");
         
     } else {
         
-        if(typeof stkNumbers !== 'undefined' && $("#ordenPalos .bselect").val() == '') {
+        notificar("","","#modalAbrirStack"); // ¿Porqué si comento esta línea se para la ejecución?
+        
+        if(typeof stkNumbers !== 'undefined' && $("#modalAbrirStack .ordenPalos .bselect").val() == '') {
             
-            notificar("¡No se ha seleccionado ninguna rotación de palos!","warning","#modalAbrirOrdenacion");
+            notificar("¡No se ha seleccionado ninguna rotación de palos!","warning","#modalAbrirStack");
             
         } else {
-            $("#modalAbrirOrdenacion .alert").collapse("hide");
-            $("#modalAbrirOrdenacion").modal('hide');
-            barajaActual = new EyDeck($("#barajaPref #orden").val());
+            $("#modalAbrirStack .alert").collapse("hide");
+            $("#modalAbrirStack").modal('hide');
+            barajaActual = new EyDeck($("#modalAbrirStack .opciones .orden").val());
             abreBaraja();
         }
                   
@@ -1687,7 +1816,6 @@ function abreDefault() {
         
 barajaActual = new EyDeck("AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD"); 
     abreBaraja(); 
-    consola('nueva');
         
 }
 

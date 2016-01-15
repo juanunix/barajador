@@ -176,9 +176,10 @@ $(document).ready(function(){
         {divider:!0},
         {text: 'Cortar por acá', href: '#', icon: 'random', action: cortarPorAca},
         {text: 'Voltear', href: '#', icon: 'retweet', action: voltearEsta},
-		{text: 'Remover', href: '#', icon: 'remove-circle', action: eliminarCarta},
+        {text: 'Agregar', href: '#', icon: 'plus', action: agregarCarta},
+        {text: 'Editar', href: '#', icon: 'edit', action: editarCarta},
         {divider:!0},
-		{text: 'Editar', href: '#', icon: 'edit', action: editarCarta},
+		{text: 'Remover', href: '#', icon: 'remove-circle', action: eliminarCarta},
 	]);
 	
 	context.settings({compress: true, above: 'dropdown'});

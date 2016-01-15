@@ -3,20 +3,25 @@
 // Web: github.com/eypacha/barajador/blob/master/js/eydeck.js
 
 // Crea el objeto de la baraja
-function EyDeck(cartas){
+function EyDeck(cartas,dorsos){
     var deck = cartas.split(",");
+    
+    if (typeof dorsos === 'undefined'){
+        dorsos = "DA";
+    }
     
     // Construye los naipes individuales
     this.deck = [];
     for (var i = 0; i < deck.length; i++){
         
-        this.deck[i] = new naipe(i,deck[i]);
+        this.deck[i] = new naipe(i,deck[i],dorsos);
     }
     
     // Definiendo funciones
     this.getMatriz = getMatriz;
     this.setOrder = setOrder;
     this.refreshOrder = refreshOrder;
+    this.add = add;
     this.move = move;
     this.toTop = toTop;
     this.toBottom = toBottom;
@@ -43,12 +48,12 @@ function EyDeck(cartas){
 }
 
 // Crea el objeto del naipe individual
-function naipe(i,cara){
+function naipe(i,cara,dorso){
     
     // Definiendo aributos por default
     this.id = i;
     this.face = cara;
-    this.back = "DA";
+    this.back = dorso;
     this.canSee = true;
     this.crimp = false;
     this.crimpB = false;
@@ -553,9 +558,24 @@ function move(de,hasta){
         
     var barajaTemp =  this.deck.slice();
     this.deck.splice(de,1);
-    var paqueteA = this.deck.slice(0,hasta);
-    var paqueteB = this.deck.slice(hasta);
-    paqueteA.push(barajaTemp[de]);
-    this.deck = paqueteA.concat(paqueteB); ;
+    this.deck.splice(hasta,0,barajaTemp[de]);
+    
+}
+
+// Agregar una carta
+function add(n,a,b,c,d,e,f){
+
+    var barajaTemp = {
+        "id": this.deck.length,
+        "face": a,
+        "back": b,
+        "canSee": c,
+        "crimp": d,
+        "crimpB": e,
+        "crimpTag": f
+        
+    };
+    
+    this.deck.splice(n,0,barajaTemp);
     
 }
