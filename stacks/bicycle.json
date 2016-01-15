@@ -7,5 +7,9 @@
         "width": 143,
         "height": 200
     },
+    "images":{
+        "path":  "bicycle",
+        "fileType": "png"
+	},
     "faces": "AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,KD,QD,JD,10D,9D,8D,7D,6D,5D,4D,3D,2D,AD,KP,QP,JP,10P,9P,8P,7P,6P,5P,4P,3P,2P,AP"
 }
