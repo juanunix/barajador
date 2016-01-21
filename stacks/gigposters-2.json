@@ -1,11 +1,6 @@
 {
     "name": "GigPosters - Deck #2",
     "description": "Baraja #2 diseñada por un colectivo de artistas independientes, usuarios del sitio <a href='http://gigposters.com'>Gig Posters</a>.",
-        "preview": {
-        "path": "img/gigposters-2.jpg",
-        "width": 200,
-        "height": 150
-    },
     "images":{
         "path":  "gigposters-2",
         "fileType": "jpg"
