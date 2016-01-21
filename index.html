@@ -15,6 +15,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-switch.min.css" rel="stylesheet">
     <link href="css/bselect.css" rel="stylesheet">
+    <link href="css/bootstrap-slider.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.min.js"></script>
@@ -69,8 +70,10 @@
                             <li class="collapse"><a href="#" id="sfRepetir"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Repetir</a></li>
                         <li><a href="#" class="sfInvertir"><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Invertir</a></li>
                         <li><a class="sfCut" href="#" accesskey="c"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cortar...<span class="atajo">ALT+C</span></a></li>
-                        <li><a class="sfCato" href="#"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Cut And Tunr Over...</a></li>
-                        
+                        <li class="divider"></li>
+                        <li><a class="sfRiffle" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Riffle</a></li>
+                        <li><a class="sfAntiRiffle" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Riffle inversa</a></li>
+                        <li><a class="sfCato" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Cut And Tunr Over...</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Faro</a>
@@ -92,8 +95,15 @@
                                 <li><a class="sfAntiUdd" href="#">Anti Under Down Deal</a></li>
                             </ul>
                         </li>
-                        <li><a class="sfMilk" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Alfa / Klondike</a></li>
-                        <li><a class="sfMongeDown" href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Mezcla Mongue Down</a></li>
+                        <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Milk Shuffle</a>
+                            <ul class="dropdown-menu w200">
+                                <li><a class="sfMilk" href="#">Mezcla Alfa / Klondike</a></li>
+                                <li><a class="sfMilk" href="#">Mezcla "Omega"</a></li>
+                                <li><a class="sfMongeDown" href="#">Mezcla Mongue Down</a></li>
+                                <li><a class="sfMongeUp" href="#">Mezcla Mongue Up</a></li>
+                            </ul>
+                        </li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Algoritmo Fisher-Yates</a>
@@ -136,8 +146,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Estudiar<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                          <li><a href="#" id="estMemo">Memorización órden</a></li>
-                         <li><a href="#" id="estCant">Estimación de cortes</a></li>
-                         <li><a href="#" id="estFaro">Entramiento en Mezclas Faro</a></li>
+                         <li><a href="#" id="estCant" class="comingSoon">Estimación de cortes</a></li>
+                         <li><a href="#" id="estFaro" class="comingSoon">Entramiento en Mezclas Faro</a></li>
                     </ul>
                 </li>
                 <li>
@@ -168,7 +178,6 @@
       </span>
 </div>
 </div>
-
 <div id="tapeteFondo">
    
     <div id="moduloTapete">
@@ -182,6 +191,8 @@
         <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden" data-toggle="popover" data-trigger="hover" data-content="Reinicia las posiciones relativas equiparándolas con las absolutas.">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir" data-toggle="popover" data-trigger="hover" data-content="Invierte una a una el orden de las cartas.">
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
+        <input type="button" class="btn btn-primary sfSeparaRojasNegras" value="Rojas/Negras" data-toggle="popover" data-trigger="hover" data-content="Separa la baraja por colores, dejando las rojas arriba y las negras abajo, manteniendo el órden relativo entre ellas.">
+        <input type="button" class="btn btn-primary sfSeparaNegrasRojas" value="Negras/Rojas" data-toggle="popover" data-trigger="hover" data-content="Separa la baraja por colores, dejando las negra arriba y las rojas abajo, manteniendo el órden relativo entre ellas.">
         <br>
         <input type="button" class="btn btn-primary sfFaroAv" value="Faro...">
         <input type="button" class="btn btn-primary sfFaroExt" value="Exterior" data-toggle="popover" data-trigger="hover" data-title="<span class='glyphicon glyphicon-random' aria-hidden='true'></span> Mezcla Faro Exterior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1ra posición en su lugar.">
@@ -189,15 +200,17 @@
         <input type="button" class="btn btn-primary sfAntiFaroExt" value="-Exterior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Exterior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 1ra posición en su lugar.">
         <input type="button" class="btn btn-primary sfAntiFaroIn" value="-Interior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Interior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 2ra posición en primer lugar.">
         <br>
-        <input type="button" class="collapse btn btn-primary sfAustralianaAv" value="Australiana...">
+        <input type="button" class="btn btn-primary sfRiffle" value="Riffle" data-toggle="popover" data-trigger="hover" data-title="Mezcla Riffle / Americana / Por hojeo" data-content="Se corta la baraja en dos paquetes de similar tamaño para luego intercalarlas alternandolas.">
+        <input type="button" class="btn btn-primary sfAntiRiffle" value="AntiRiffle" data-toggle="popover" data-trigger="hover" data-title="Anti Rifle" data-content="Desimbrica las cartas en tods paquetes, teniendo cada carta las mismas probabilidades de ir a parar a un paquete o al otro. A continuación coloca un paquete encima de otro.">
         <input type="button" class="btn btn-primary sfDud" value="DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (Australiana)" data-content="Teniendo baraja en la mano, coloca la primer carta debajo y la siguiente se coloca en la mesa. Se repite la operación hasta que no queden cartas en la mano.">
         <input type="button" class="btn btn-primary sfAntiDud" value="-DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (inversa)" data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
         <input type="button" class="btn btn-primary sfUdd" value="UDD" data-toggle="popover" data-trigger="hover" data-title="Under Down Deal" data-content="Teniendo baraja en la mano, coloca la primer carta en la mesa y la siguiente se coloca debajo de la baraja. Se repite la operación hasta que no queden cartas en la mano.">
         <input type="button" class="btn btn-primary sfAntiUdd" value="-UDD" data-toggle="popover" data-trigger="hover" data-title="Deshace una mezcla Under Down Deal." data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
-        
         <br>
         <input type="button" class="btn btn-primary sfMilk" value="Alfa" data-toggle="popover" data-trigger="hover" data-data-title="Mezcla Alfa / Milk Shuffle / Klondike" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
-        <input type="button" class="btn btn-primary sfMongeDown" value="MongeDown" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Down (Mezcla Alfa Inversa)" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta debajo y la siguiente arriba de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
+        <input type="button" class="btn btn-primary sfOmega" value="Omega" data-toggle="popover" data-trigger="hover" data-data-title="Mezcla Alfa" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
+        <input type="button" class="btn btn-primary sfMongeDown" value="MongeDown" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Down" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta debajo y la siguiente arriba de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
+        <input type="button" class="btn btn-primary sfMongeUp" value="MongeUp" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Up" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta arriba y la siguiente abajo de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
         <input type="button" class="btn btn-primary sfCato" value="Cato..." data-toggle="popover" data-trigger="hover" data-title="Mezcla CATO (Cut And Turn Over)" data-content="Se realiza un corte y luego voltean dos cartas. Se repite este proceso las veces que se desee. También pueden voltear cualquier cantidad par de cartas.">
         <br>
         <input type="button" class="btn btn-primary sfFisherYates" value="Fisher-Yates" data-toggle="popover" data-trigger="hover"  data-title="Azar Fisher-Yates" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación original.">
@@ -207,7 +220,6 @@
         <input type="button" class="btn btn-primary sfRandomOrg" value="Random.org" data-toggle="popover" data-trigger="hover" data-title="Azar Random.org" data-content="Mezcla aleatoria a partir del ruido atmosférico, utilizando el servicio Random.Org a través de la API ofrecida en su web.">
     </div>
 </div>
-    
 <div id="moduloConsola">
 <div id="consola">><input id="consolaInput" type="text"/>
 <div id="consolaOutput"></div>
@@ -298,9 +310,9 @@
          <select class="selectBaraja bselect" data-placeholder="Elije una baraja">
           <option value=""></option>
           <option value="bicycle">Bicycle</option>
-          <option value="cburnett">Cburnett</option>
-          <option value="small-cards">Small cards</option>
-          <option value="david-bellot">David Bellot</option>
+          <option value="small-cards">Small pixel cards</option>
+          <option value="cburnett">Wikicommos - Cburnett</option>
+          <option value="david-bellot">Wikicommos - David Bellot</option>
           <option value="galvanic">Sean Whelan - Galvanic</option>
           <option value="playingarts-1">Playing Arts - Edition One</option>
           <option value="playingarts-2">Playing Arts - Edition Two</option>
@@ -406,7 +418,7 @@
                 </select>
             </div>
         </div>
-      </div>
+  </div><!---->
       <div class="modal-footer">
         <button type="button" class="btn btn-primary btnAbrir">Abrir</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -592,7 +604,6 @@
   </div>
 </div>
 
-
 <!-- Modal Cato Avanzada -->
 <div class="modal fade" id="modalCato" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
@@ -649,8 +660,8 @@
                   <td data-toggle="popover" data-title="Permutaciones posibles" data-content="En una baraja con cartas hay n! (factorial de n) permutaciones posibles:<br><pre>n! = 1 × 2 × 3 × … × n-1 × n</pre>"><span class="permutaciones"></span></td>
               </tr>
               <tr>
-                  <td data-toggle="popover" data-title="Mezclas Faro Exterior para ordenar" data-content="Para saber cuántas Mezclas Faro Exterior se necesitan en una baraja de n cartas para volver al órden inicial se debe averiguar el órden multiplicativo de 2 módulo n-1."><img src="img/maths/ord_2(n-1).png"><span class="farosOutOrdenan"></span></td>
-                  <td data-toggle="popover" data-title="Mezclas Faro Interior para ordenar" data-content="Para saber cuántas Mezclas Faro Interior se necesitan en una baraja de n cartas para volver al órden inicial se debe averiguar el órden multiplicativo de 2 módulo n+1."><img src="img/maths/ord_2(n+1).png"><span class="farosIntOrdenan"></span></td>
+                  <td data-toggle="popover" data-title="Mezclas Faro Exterior para ordenar" data-content="Para saber cuántas Mezclas Faro Exterior se necesitan en una baraja de n cartas para volver al órden inicial se debe averiguar el órden multiplicativo de 2 módulo n-1.">ord<sub>2</sub>(n-1)<span class="farosOutOrdenan"></span></td>
+                  <td data-toggle="popover" data-title="Mezclas Faro Interior para ordenar" data-content="Para saber cuántas Mezclas Faro Interior se necesitan en una baraja de n cartas para volver al órden inicial se debe averiguar el órden multiplicativo de 2 módulo n+1.">ord<sub>2</sub>(n+1)<span class="farosIntOrdenan"></span></td>
               </tr>
               <tr>
                   <td data-toggle="popover" data-title="Mezclas necesarias para alcanzar el azar" data-content="Cantidad de mezclas riffle (a la americana) necesarias para romper todos los patrones existentes en una baraja de n cartas.<br>Para más información <a href='http://statweb.stanford.edu/~cgates/PERSI/papers/bayer92.pdf' target='blank'>click aquí</a>."><img src="img/maths/32log_2(n).png"><span class="mezclasNecesarias"></span></td>
@@ -699,7 +710,88 @@
     </div>
   </div>
 </div>
-      
+  
+<!-- Modal Estudiar orden -->
+<div class="modal fade" id="modalEstMemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Estudiar ordenación</h4>
+      </div>
+      <div class="notificaciones collapse">
+          <div class="alert alert-dismissible fade in" role="alert"> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button><span class="glyphicon" aria-hidden="true"></span> <span class="texto"></span></div>
+      </div>
+      <div class="modal-body">
+      <div class="respasaEjercita">
+       <select class="bselect selectBaraja" data-placeholder="Elije una ordenación">
+          <option value=""></option>
+          <option value="actual">Baraja actual</option>
+          <option value="tamariz">Mnemónica Tamariz</option>
+          <option value="aronson">Aronson Stack</option>
+          <option value="ireland">Ireland Stack</option>
+          <option value="nikola">Nikola Stack Sistem</option>
+          <option value="osterlind">Osterlind Stack</option>
+          <option value="stanyon">Stanyon System</option>
+          <option value="stay">Stay Stack</option>
+          <option value="skotBop">Skot Bop Stack</option>
+          <option value="woStack">Wo Stack</option>
+          <option value="skotBopSimple">Skot Bop Stack (simple)</option>
+        </select>
+        <div class="row equal">
+  <div class="col-md-6">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>Repasa</h3>
+        <p class="aJ">Se mostrarán las cartas a intervalos de tiempos regulares y junto a ellas su número de orden. Avanza y retrocede de forma manual o de forma automática. <i>Si es tu primera vez, empieza por aquí.</i></p>
+        <p class="aC"><a href="#" id="btnRepasa" class="btn btn-primary btn-lg" role="button">Empezar</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>Ejercita</h3>
+        <p class="aJ">Se mostrarán las cartas y tendrás que indicar en qué numero se encuentra o mostraremos el número y deberás indicar cuál es la carta que se ubica en la posición solicitada. <i>Conoce tu puntuación.</i></p>
+        <p class="aC"><a href="#" id="btnEjercita" class="btn btn-primary btn-lg" role="button">Empezar</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+       </div>
+        <table class="table memo">
+        <tr>
+            <td rowspan="3" width="170px"><div class="naipe big uno"></div></td>
+            <td height="75px"><input id="ordenCara" type="text" class="form-control big" maxlength="3" value="AP"></td>
+            <td rowspan="3" width="170px"><div class="naipe big dos"></div></td>
+        </tr>
+        <tr>
+            <td height="75px"><input type="text" id="ordenNumero" class="form-control big" maxlength="3" value="23"></td>
+        </tr>
+        <tr>
+            <td>
+            <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-primary ant">Anterior</button>
+            <button type="button" class="btn btn-success" id="play"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-danger" id="stop"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-primary sig">Siguiente</button></td>
+            </div>
+        </tr>
+        <tr>
+            <td colspan="3" class="nombreCarta"></td>
+        </tr>
+        </table>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary sonido"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-primary volver">Volver</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
 <!-- Modal SETTINGS -->
 <div class="modal fade" id="modalPreferencias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -715,6 +807,7 @@
           
           <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#themeSettings">Ver</a></li>
+          <li><a data-toggle="tab" href="#soundSettings">Sonido</a></li>
           <li><a data-toggle="tab" href="#randomSettings">Random.org</a></li>
         </ul>
 
@@ -802,6 +895,12 @@
                 <div id="randomKeyApiBitsLeft" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="250000" aria-valuemax="250000" style="min-width: 2em;">%</div>
               </div>
           </div>
+             
+          <div id="soundSettings" class="tab-pane fade">
+            <p>Preferencias de audio y sonido.</p>
+            Volumen: <input id="setVolumen" type="text" class="slider" value="" data-slider-max="150" data-slider-value="100" data-slider-tooltip="hide"> <span class="lblVolumen">100%</span>
+             
+          </div>
               
           </div>
           
@@ -812,22 +911,22 @@
     </div>
   </div>
 </div>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
+
+<!--Scripts finales-->
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-switch.min.js"></script>
+    <script src="js/bootstrap-slider.js"></script>
     <script src="js/bselect.js"></script>
     <script src="js/ie10-viewport-bug-workaround.min.js"></script>
     <script src="js/randomorg-js.min.js"></script>
     <script src="js/lz-string.min.js"></script>
     <script src="js/jquery.fullscreen.js"></script>
     <script src="js/zeroClipboard.js"></script>
+    <script src="js/eymaths.js"></script>
     <script src="js/eydeck.js"></script>
-    <script src="js/maths.js"></script>
+    <script src="js/howler.js"></script>
     <script src="main.js"></script>
     <script src="js/context.js"></script>
     <script src="js/html2canvas.min.js"></script>

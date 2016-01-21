@@ -1,8 +1,10 @@
-// Constructor de la clase EyDeck!
+// Nombre: Ey Deck!
 // Autor: Ey Pacha! 
-// Web: github.com/eypacha/barajador/blob/master/js/eydeck.js
+// Descripción: Librería para manejo de barajade cartas.
+//              Caras, dorsos, volteos, cortes, mezclas, cartas marcadas, y más...
+// Web: github.com/eypacha/barajador/blob/master/js/eydeck.js*/
 
-// Crea el objeto de la baraja
+// Consctructor del objeto de la baraja
 function EyDeck(cartas,dorsos){
     var deck = cartas.split(",");
     
@@ -19,6 +21,9 @@ function EyDeck(cartas,dorsos){
     
     // Definiendo funciones
     this.getMatriz = getMatriz;
+    this.get2Bfaces = get2Bfaces;
+    this.getReds = getReds;
+    this.getBlacks = getBlacks;
     this.setOrder = setOrder;
     this.refreshOrder = refreshOrder;
     this.add = add;
@@ -36,11 +41,15 @@ function EyDeck(cartas,dorsos){
     this.antiFaroExt = antiFaroExt;
     this.antiFaroInt = antiFaroInt;
     this.milk = milk;
+    this.omega = omega;
     this.mongeDown = mongeDown;
+    this.mongeUp = mongeUp;
     this.downUnderDeal = downUnderDeal;
     this.antiDownUnderDeal = antiDownUnderDeal;
     this.underDownDeal = underDownDeal;
     this.antiUnderDownDeal = antiUnderDownDeal
+    this.riffle = riffle;
+    this.antiRiffle = antiRiffle;
     this.fisherYates = fisherYates;
     this.durstenfeld = durstenfeld;
     this.sattolo = sattolo;
@@ -62,19 +71,41 @@ function naipe(i,cara,dorso){
 }
 
 // Genera un string con las propiedades separadas por comas
+function get2Bfaces(){
+    
+    var cadena = "";
+    
+    for (var i = 0; i < this.deck.length; i++){
+        cadena += ("00"+(i+1)).slice(-2) + this.deck[i].face.slice(-2) + "  ";
+    }
+    
+    return cadena
+}
+
 function getMatriz(propiedad,delimitador){
     
     var cadena = "";
     
     for (var i = 0; i < this.deck.length - 1; i++){
-    
-        cadena += eval("this.deck[i]."+propiedad) + delimitador ;
-        
+        cadena += intentar(this.deck[i],propiedad) + delimitador;
     }
     
-    cadena +=  eval("this.deck[this.deck.length-1]."+propiedad);
+    cadena +=  intentar(this.deck[this.deck.length-1],propiedad);
     
     return cadena
+}
+
+function intentar(objeto, propiedad) {
+    if (objeto) {
+        try {
+            var resul = objeto[propiedad]; 
+            return resul;
+        } catch (err) {
+            console.error("Intento fallido: " + err.message);
+        }
+    } else {
+        console.error(objeto + " no está definida");
+    }
 }
 
 // Actualiza los Ids (Posiciones relativas)
@@ -359,46 +390,100 @@ function antiFaroInt(cantidad){
     
 }
 
-// Mezcla Alfa / Klondike / Milk
+// Mezcla Alfa
 function milk(){
-    var barajaTemp = this.deck.slice();    
-    cantidad = this.deck.length;
+    var barajaTemp = [];    
+    var n = this.deck.length;
 
-    if (cantidad % 2 == 1){
-        notificar("Aún no se ha implementado el algoritmo para hacer Mezcla Alfa con una baraja impar","warning");
-        return "";
+    var deck = this.deck;
+    
+    for (var i = 0; i < n; i++){
+        
+        if (i % 2 == 0) {
+            
+            barajaTemp.unshift(deck.pop());
+            
+        } else {
+        
+            barajaTemp.unshift(deck.shift());
+        }
+
     }
     
-    for (var i = 0; i < cantidad; i++){
-        if ( i % 2 == 0 ){
-            this.deck[i+1] = barajaTemp[((cantidad - i) / 2) - 1];
+    this.deck = this.deck.concat(barajaTemp);
+    return "alfa";
+}
+
+// Mezcla Omega
+function omega(){
+    var barajaTemp = [];    
+    var n = this.deck.length;
+
+    var deck = this.deck;
+    
+    for (var i = 0; i < n; i++){
+        
+        if (i % 2 == 0) {
+            
+            barajaTemp.unshift(deck.shift());
+            
         } else {
-           // if (cantidad % 2 == 0 || (cantidad % 2 == 1 && i != cantidad - 1)){
-                this.deck[i-1] = barajaTemp[(cantidad  + i - 1)/2];
-          //  }
+        
+            barajaTemp.unshift(deck.pop());
         }
+
     }
-    return "milk";
+    
+    this.deck = barajaTemp;
+    return "omega";
 }
 
 // Mezcla Monge Down
 function mongeDown(){
-    var barajaTemp = this.deck.slice();    
-    cantidad = this.deck.length;
     
-    if (cantidad % 2 == 1){
-        notificar("Aún no se ha implementado el algoritmo para hacer Mezcla Monge Down con una baraja impar","warning");
-        return "";
-    }
+    var barajaTemp = [];    
+    var n = this.deck.length;
+    var deck = this.deck;
     
-    for (var i = 0; i < cantidad; i++){
-        if ( i % 2 == 0 ){
-            this.deck[((cantidad - i) / 2) - 1] = barajaTemp[i+1];
+    for (var i = 0; i < n; i++){
+
+        if (i % 2 == 0){
+        
+            barajaTemp.unshift(deck[i]);
+            
         } else {
-            this.deck[(cantidad  + i - 1)/2] = barajaTemp[i-1];
+        
+            barajaTemp.push(deck[i]);
         }
+
     }
+    
+    this.deck = barajaTemp
     return "mongeDown";
+}
+
+// Mezcla Monge Up
+function mongeUp(){
+    
+    var barajaTemp = [];    
+    var n = this.deck.length;
+    var deck = this.deck;
+    
+    for (var i = 0; i < n; i++){
+
+        if (i % 2 == 0){
+        
+            barajaTemp.push(deck[i]);
+            
+        } else {
+        
+            barajaTemp.unshift(deck[i]);    
+        }
+
+    }
+    
+    this.deck = barajaTemp
+    return "mongeUp";
 }
 
 // Mezcla DownUnderDeal
@@ -463,10 +548,10 @@ function underDownDeal(){
 // Mezcla antiUnderDownDeal
 function antiUnderDownDeal(){
     var barajaTemp = [];
-    cantidad = this.deck.length;
+    var n = this.deck.length;
     var cardTemp;
     
-    for(var i = 0; i < cantidad ; i++) {
+    for(var i = 0; i < n ; i++) {
 
         cardTemp = this.deck.shift();
         barajaTemp.unshift(cardTemp);
@@ -482,6 +567,66 @@ function antiUnderDownDeal(){
     
 }
 
+// Mezcla antiRiffle
+function riffle(){
+    var c = this.deck.length;
+    
+    if (c > 170){
+        notificar("¡¿Quieres mezclar " + c + " cartas?! ¡Pero qué manos grandes! Disculpas pero aún no hemos implementado el algoritmo para tantas cartas... :S","warning");
+        return;
+    }
+                  
+    // Divide la baraja en dos paquetes similares
+    var num = rdomBinom(c);
+    var a = this.deck.slice(0,num);
+    var b = this.deck.slice(num);
+    var barajaTemp = [];
+    
+    // Realiza mezcla
+    var r;
+    do {
+        
+        r = Math.random();
+        if(r < a.length/(a.length+b.length)){
+        
+            barajaTemp.unshift(a.pop());
+            
+        } else {
+        
+            barajaTemp.unshift(b.pop());
+        }
+        
+    
+    } while(a.length != 0);
+    
+    // Rearma la baraja
+    this.deck = b.concat(barajaTemp); 
+    return "riffle";
+    
+}
+
+// Mezcla antiRiffle
+function antiRiffle(){
+
+    var barajaTemp = this.deck.slice();
+    var n = this.deck.length;
+    for (var i=0; i<n;i++){
+        
+        if(rdomUnif(1)){
+            
+            this.deck.splice((n-i-1),1);
+            
+        } else {
+            
+            barajaTemp.splice((n-i-1),1);
+            
+        }
+ 
+    }
+    this.deck = this.deck.concat(barajaTemp);
+    return "antiRiffle";
+    
+}
 
 // Mezcla pseudoaleatoria Fisher-Yates
 function fisherYates(){
@@ -556,7 +701,7 @@ function toBottom(posCarta){
 // Mover una carta
 function move(de,hasta){
         
-    var barajaTemp =  this.deck.slice();
+    var barajaTemp = this.deck.slice();
     this.deck.splice(de,1);
     this.deck.splice(hasta,0,barajaTemp[de]);
     
@@ -578,4 +723,103 @@ function add(n,a,b,c,d,e,f){
     
     this.deck.splice(n,0,barajaTemp);
     
+}
+
+// es roja?
+function isRed(id){
+    var suit = this.deck[id].face.slice(-1);
+    return suit == "C" || suit == "D";
+}
+
+// es negra?
+function isBlack(id){
+    var suit = this.deck[id].face.slice(-1);
+    return suit == "P" || suit == "T";
+}
+
+function getReds(){
+    var rojas = [];
+    for(var i=0;i<this.deck.length;i++){
+        if(isRed(i)){
+            rojas.push(this.deck[i])
+        }
+    }
+    return rojas;
+}
+
+function getBlacks(){
+    var negras = [];
+    for(var i=0;i<this.deck.length;i++){
+        if(isBlack(i)){
+            negras.push(this.deck[i])
+        }
+    }
+    return negras;
+}
+
+function aTexto(carta){
+
+    var suit = carta.slice(-1);
+    
+    switch(suit){
+        case "P":
+        suit = " de Picas";
+        break;
+        case "T":
+        suit = " de Trébol";
+        break;
+        case "C":
+        suit = " de Corazón";
+        break;
+        case "D":
+        suit = " de Diamantes";
+        break;
+    }
+    
+    var numero = carta.substr(0,carta.length-1);
+    
+    switch(numero){
+        case "A":
+        numero = "As";
+        break;
+        case "2":
+        numero = "Dos";
+        break;
+        case "3":
+        numero = "Tres";
+        break;
+        case "4":
+        numero = "Cuatro";
+        break;
+        case "5":
+        numero = "Cinco";
+        break;
+        case "6":
+        numero = "Seis";
+        break;
+        case "7":
+        numero = "Siete";
+        break;
+        case "8":
+        numero = "Ocho";
+        break;
+        case "9":
+        numero = "Nueve";
+        break;
+        case "10":
+        numero = "Diez";
+        break;
+        case "J":
+        numero = "Jota";
+        break;
+        case "Q":
+        numero = "Reina";
+        break;
+        case "K":
+        numero = "Rey";
+        break;
+        
+    }
+    
+    return numero + suit;
 }

@@ -508,3 +508,77 @@ th {
     width: 100%;
     margin-top: 5px;
 }
+
+.slider {
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+.slider-selection {
+	background: silver;
+}
+
+.naipe.big {
+    width: 150px;
+    height: 210px;
+    background-size: 150px 210px;
+}
+
+.memo input.big {
+    text-align: center;
+    height: 70px;
+    font-size: 45pt;
+    padding: 0px;
+    line-height: 100%;
+    text-shadow: 0px 4px silver;
+}
+
+.memo {
+    display:none;
+}
+
+.memo input.big.dos {
+    color: purple;
+}
+
+.nombreCarta {
+    text-align: center;
+    font-size: 35px;
+    color: purple;
+    border-top: 0 !important;
+    padding: 0px !important;
+}
+
+#play.btn {
+    width: 54px;
+}
+
+#stop.btn {
+    width: 54px;
+    display: none;
+}
+
+.sonido {
+
+    float: left;
+    display: none;
+}
+
+.volver {
+    display: none;
+}
+@media screen and (min-width: 768px) {
+  .equal, .equal > div[class*='col-'] {  
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      flex:1 0 auto;
+  }
+  .row.equal {
+    padding-left: 10px;
+    padding-right: 15px;
+}
+}
