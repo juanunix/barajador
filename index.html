@@ -145,7 +145,7 @@
                  <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Estudiar<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                         <li><a href="#" id="estMemo">Memorización órden</a></li>
+                         <li><a href="#" id="estMemo">Memorización de órden</a></li>
                          <li><a href="#" id="estCant" class="comingSoon">Estimación de cortes</a></li>
                          <li><a href="#" id="estFaro" class="comingSoon">Entramiento en Mezclas Faro</a></li>
                     </ul>
@@ -193,26 +193,27 @@
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
         <input type="button" class="btn btn-primary sfSeparaRojasNegras" value="Rojas/Negras" data-toggle="popover" data-trigger="hover" data-content="Separa la baraja por colores, dejando las rojas arriba y las negras abajo, manteniendo el órden relativo entre ellas.">
         <input type="button" class="btn btn-primary sfSeparaNegrasRojas" value="Negras/Rojas" data-toggle="popover" data-trigger="hover" data-content="Separa la baraja por colores, dejando las negra arriba y las rojas abajo, manteniendo el órden relativo entre ellas.">
-        <br>
+        
         <input type="button" class="btn btn-primary sfFaroAv" value="Faro...">
         <input type="button" class="btn btn-primary sfFaroExt" value="Exterior" data-toggle="popover" data-trigger="hover" data-title="<span class='glyphicon glyphicon-random' aria-hidden='true'></span> Mezcla Faro Exterior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1ra posición en su lugar.">
         <input type="button" class="btn btn-primary sfFaroInt" value="Interior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Faro Interior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1da posición en segundo lugar.">
         <input type="button" class="btn btn-primary sfAntiFaroExt" value="-Exterior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Exterior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 1ra posición en su lugar.">
         <input type="button" class="btn btn-primary sfAntiFaroIn" value="-Interior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Interior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 2ra posición en primer lugar.">
-        <br>
         <input type="button" class="btn btn-primary sfRiffle" value="Riffle" data-toggle="popover" data-trigger="hover" data-title="Mezcla Riffle / Americana / Por hojeo" data-content="Se corta la baraja en dos paquetes de similar tamaño para luego intercalarlas alternandolas.">
         <input type="button" class="btn btn-primary sfAntiRiffle" value="AntiRiffle" data-toggle="popover" data-trigger="hover" data-title="Anti Rifle" data-content="Desimbrica las cartas en tods paquetes, teniendo cada carta las mismas probabilidades de ir a parar a un paquete o al otro. A continuación coloca un paquete encima de otro.">
+    
+        <br>
+
         <input type="button" class="btn btn-primary sfDud" value="DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (Australiana)" data-content="Teniendo baraja en la mano, coloca la primer carta debajo y la siguiente se coloca en la mesa. Se repite la operación hasta que no queden cartas en la mano.">
         <input type="button" class="btn btn-primary sfAntiDud" value="-DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (inversa)" data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
         <input type="button" class="btn btn-primary sfUdd" value="UDD" data-toggle="popover" data-trigger="hover" data-title="Under Down Deal" data-content="Teniendo baraja en la mano, coloca la primer carta en la mesa y la siguiente se coloca debajo de la baraja. Se repite la operación hasta que no queden cartas en la mano.">
         <input type="button" class="btn btn-primary sfAntiUdd" value="-UDD" data-toggle="popover" data-trigger="hover" data-title="Deshace una mezcla Under Down Deal." data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
-        <br>
         <input type="button" class="btn btn-primary sfMilk" value="Alfa" data-toggle="popover" data-trigger="hover" data-data-title="Mezcla Alfa / Milk Shuffle / Klondike" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
         <input type="button" class="btn btn-primary sfOmega" value="Omega" data-toggle="popover" data-trigger="hover" data-data-title="Mezcla Alfa" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
         <input type="button" class="btn btn-primary sfMongeDown" value="MongeDown" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Down" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta debajo y la siguiente arriba de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
         <input type="button" class="btn btn-primary sfMongeUp" value="MongeUp" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Up" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta arriba y la siguiente abajo de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
         <input type="button" class="btn btn-primary sfCato" value="Cato..." data-toggle="popover" data-trigger="hover" data-title="Mezcla CATO (Cut And Turn Over)" data-content="Se realiza un corte y luego voltean dos cartas. Se repite este proceso las veces que se desee. También pueden voltear cualquier cantidad par de cartas.">
-        <br>
+       <!-- <br>-->
         <input type="button" class="btn btn-primary sfFisherYates" value="Fisher-Yates" data-toggle="popover" data-trigger="hover"  data-title="Azar Fisher-Yates" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación original.">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Durstenfeld" data-toggle="popover" data-trigger="hover" data-title="Azar Durstenfeld" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Durstenfeld.">
         <input type="button" class="btn btn-primary sfSattolo" value="Sattolo" data-toggle="popover" data-trigger="hover" data-title="Azar Sattolo" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Sattolo (ninguna carta ocupará la posición original luego de la mezcla).">
@@ -753,7 +754,7 @@
       <div class="caption">
         <h3>Ejercita</h3>
         <p class="aJ">Se mostrarán las cartas y tendrás que indicar en qué numero se encuentra o mostraremos el número y deberás indicar cuál es la carta que se ubica en la posición solicitada. <i>Conoce tu puntuación.</i></p>
-        <p class="aC"><a href="#" id="btnEjercita" class="btn btn-primary btn-lg" role="button">Empezar</a></p>
+        <p class="aC"><a href="#" id="btnEjercita" class="btn btn-primary btn-lg" role="button">Próximamente...</a></p>
       </div>
     </div>
   </div>
@@ -897,9 +898,31 @@
           </div>
              
           <div id="soundSettings" class="tab-pane fade">
+           
             <p>Preferencias de audio y sonido.</p>
-            Volumen: <input id="setVolumen" type="text" class="slider" value="" data-slider-max="150" data-slider-value="100" data-slider-tooltip="hide"> <span class="lblVolumen">100%</span>
-             
+            <table class="table">
+            <tr>
+                <th colspan="3">Lecturas</th>
+            </tr>
+            <tr>
+            <td>Voz:</td>
+            <td colspan="2" class="pb0">
+            <select class="selectVoz bselect">
+              <option value="miguel">Miguel (Latinoamérica)</option>
+            </select>
+            </td>
+            </tr>
+            <tr>
+            <td>Volumen:</td>
+            <td class="slider300w"><input id="setVolumen" type="text" class="slider" value="" data-slider-max="150" data-slider-value="100" data-slider-tooltip="hide"></td>
+            <td class="lblVolumen w90">100%</td>
+            </tr>
+            <tr>
+            <td>Pausas:</td>
+            <td class="slider300w"><input id="setSeparac" type="text" class="slider" value="" data-slider-max="2000" data-slider-value="250" data-slider-tooltip="hide"></td>
+            <td class="lblSeparac w90">250ms.</td>
+            </tr>
+            </table>
           </div>
               
           </div>

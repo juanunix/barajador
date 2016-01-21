@@ -413,6 +413,22 @@ th {
     width: 250px;
 }
 
+#soundSettings td {
+    vertical-align: middle;
+}
+
+.slider300w .slider-horizontal {
+    
+    width: 300px;
+    
+}
+
+.pb0 {
+    
+    padding-bottom: 0px !important;
+    
+}
+
 .bgYellow {
     background: yellow;
 }

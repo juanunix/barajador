@@ -763,16 +763,16 @@ function aTexto(carta){
     
     switch(suit){
         case "P":
-        suit = " de Picas";
+        suit = " de picas";
         break;
         case "T":
-        suit = " de Trébol";
+        suit = " de trébol";
         break;
         case "C":
-        suit = " de Corazón";
+        suit = " de corazones";
         break;
         case "D":
-        suit = " de Diamantes";
+        suit = " de diamantes";
         break;
     }
     

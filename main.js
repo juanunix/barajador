@@ -57,6 +57,7 @@ $( "#relativasTipo" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
 $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
 $( "#unoceroRotulos" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
 $( "#setVolumen" ).on('slide', setVolumen);
+$( "#setSeparac" ).on('slide', setSeparac);
 
 $( "#sfRepetir" ).on( "click", sfRepetir );
 $( ".sfInvertir" ).on( "click", sfInvertir );
@@ -248,12 +249,14 @@ function iniciar(){
       
     })
     
-    sndVolume = $('.slider').slider();
+    sndVolume = $('#setVolumen').slider();
+    sndSeparac = $('#setSeparac').slider();
      // Crea los elementos bselect
     $(".selectBaraja").bselect();
     $(".selectDorsos").bselect({ searchInput : false });
     $(".selectBaraja").bselect();
     $("#modalAbrirStack .ordenPalos select").bselect({ searchInput : false });
+    $(".selectVoz").bselect({ searchInput : false });
     
     // Habilita la función de copiado al portapapeles
     zeroClip();
@@ -728,6 +731,12 @@ function ejecutarComando(texto){
             case "mongueDown":
                 sfMongeDown();
                 return;
+            case "omega":
+                sfOmega();
+                return;
+            case "mongueUp":
+                sfMongeUp();
+                return;
             case "australiana":
             case "downunderdeal":
             case "dud":
@@ -737,6 +746,12 @@ function ejecutarComando(texto){
             case "antidownunderdeal":
             case "-dud":
                 sfAntiDud();
+                return;
+            case "riffle":
+                sfRiffle();
+                return;
+            case "antiriffle":
+                sfAntiRiffle();
                 return;
             case "faroext":
             case "fo":
@@ -753,6 +768,23 @@ function ejecutarComando(texto){
             case "antifaroint":
             case "-fi":
                 sfAntiFaroInt(argumento);
+                return;
+            case "separarrojasnegras":
+            case "seprb":
+            case "seprn":
+                sfSeparaRojasNegras();
+                return;
+            case "separarnegrasrojas":
+            case "sepbr":
+            case "sepnr":
+                sfSeparaRojasNegras();
+                return;
+            case "leer":
+                sonido.playString(barajaActual.get2Bfaces());
+                return;
+            case "leer stop":
+            case "parar lectura":
+                sonido.stop();
                 return;
             case "generarqr":
             case "qr":
@@ -1943,6 +1975,14 @@ function setVolumen(){
     sonido.volume(volumen);
 }
 
+
+function setSeparac(){
+    
+    var separac = sndSeparac.slider('getValue');
+    $('.lblSeparac').html(separac+"ms.");
+    sonido.sprite()["  "][1] = separac;
+}
+
 function btnRepasar(){
     
     var memoOrden;
@@ -1984,6 +2024,10 @@ function estudiarVolver(){
     $('#modalEstMemo .sonido').css("display","none");
     $("table.memo").css("display","none");
     $(".respasaEjercita").css("display","inline-block");
+    
+    if (typeof memoRepaso !== 'undefined'){
+        clearInterval(memoRepasoLoop);
+    }
 }
 
 function repasaOrden(baraja){
@@ -2106,6 +2150,6 @@ var sonido = new Howl({
     '45': [113150, 1100],'46': [114267, 1100],'47': [115475, 1100],'48': [116602, 900],
     '49': [117558, 1100],'50': [118617, 0800],'51': [119379, 1000],'52': [120512, 1200],
     '53': [121669, 1300],'54': [122951, 1200],'J1': [124263, 600],'J2': [124263, 600],
-    '  ': [126173, 200]
+    '  ': [126173, 250]
   }
 });
