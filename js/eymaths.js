@@ -1,19 +1,19 @@
 // ¿Es par? 
-isPair = function(n){
+function isPair(n){
 
     return (n % 2 == 0);
 
 }
 
 // ¿Es impar? 
-isOdd = function(n){
+function isOdd(n){
 
     return (n % 2 == 1);
 
 }
 
 // Minimo común múltiplo
-lcm = function(o){
+function lcm(o){
     for(var i, j, n, d, r = 1; (n = o.pop()) != undefined;)
         while(n > 1){
             if(n % 2){
@@ -27,9 +27,8 @@ lcm = function(o){
     return r;
 };
 
-
 // Máximo común divisor
-gcd = function(a, b) {
+function gcd(a, b) {
     if ( ! b) {
         return a;
     }
@@ -38,7 +37,7 @@ gcd = function(a, b) {
 };
 
 // Orden multiplicativo
-mOrder = function (a, n){
+function mOrder(a, n){
     if (gcd(a, n) > 1){
         return 0;
     }else{
@@ -50,6 +49,19 @@ mOrder = function (a, n){
         }
         return order;
     }
+}
+
+// Factorial de un número
+function fact(n){
+    var f = 1;
+    
+    if (n != 0 && n != 1){
+        for (var i = 1; i <= n; i++) {
+            f = f * i
+        }
+    }
+    return f;
+    
 }
 
 // Obtiene el producto de los ciclos de la permutación
@@ -146,8 +158,42 @@ function partition(arr,mult){
 
 // Left Circular Shift con registro variable
 function leftCircularShift(num,bits){
-    num = num.toString(2);
-    num = parseInt(num.substr(1,num.length-1)+num.substr(0,1),2);
-    num = parseInt(num,2);
-    return num;
+num = num.toString(2);
+num = parseInt(num.substr(1,num.length-1)+num.substr(0,1),2);
+num = parseInt(num,2);
+return num;
+}
+
+// Random con probabilidad de distribución lineal n=1 para devolver true / false
+function rdomUnif(n){
+
+var r = Math.random()*(n+1);
+r = Math.floor(r);
+return r;
+
+}
+
+// Random con probabilidad de distrubición binomial
+function rdomBinom(n){
+var prob = [];
+var s = 0;
+var r = Math.random();
+var num = n;
+    
+for (i=0; i <= n;i++){
+    
+   if(typeof prob[i-1] !== 'undefined'){
+        s = prob[i-1];
+   }
+       
+   prob[i] = s + (fact(n)/(fact(i)*fact((n-i))))/Math.pow(2,n);
+    
+   if (r < prob[i]){
+     num = i;
+     break;
+   }
+} 
+
+return num; 
+    
 }
