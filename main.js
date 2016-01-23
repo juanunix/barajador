@@ -181,11 +181,12 @@ function iniciar(){
     // ¿Había una baraja abierta en la sesión?
     if ( sessionStorage.getItem("baraja_autosave") ) {
         barajaActual = new EyDeck(abrirSesion("baraja_autosave"));
-        var posicionesActuales = abrirSesion("baraja_posiciones_autosave").split(",");
+        var posicionesActuales = abrirSesion("baraja_posiciones_autosave")
+        alert(posicionesActuales);
+        posicionesActuales = posicionesActuales.split(",");
+        for (var i=0;i<barajaActual.card.length;i++){
         
-        for (var i=0;i<barajaActual.deck.length;i++){
-        
-            barajaActual.deck[i].id = parseInt(posicionesActuales[i]);
+            barajaActual.card[i].id = parseInt(posicionesActuales[i]);
             
         }
         
@@ -280,9 +281,9 @@ function abreBaraja(){
      
     var contenido = '<ul class="baraja" id="naipes">';
     var rotulos = '';
-    deck = barajaActual.deck;
-    for (var i = 0;i < barajaActual.deck.length ;i++){
-        contenido = contenido + '<li id="'+i+'"><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.deck[i].id+1)+'</div></a></li>';
+    deck = barajaActual.card;
+    for (var i = 0;i < barajaActual.card.length ;i++){
+        contenido = contenido + '<li id="'+i+'"><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.card[i].id+1)+'</div></a></li>';
         
     }
     contenido = contenido + '</ul>';
@@ -293,7 +294,7 @@ function abreBaraja(){
     contenido = '<ul class="paqueteBaraja" id="paqueteNaipes">';
     var naipeeBorde;
     
-    for (var i = 0;i < barajaActual.deck.length ;i++){
+    for (var i = 0;i < barajaActual.card.length ;i++){
         
         if (i % 2 == 0){
             naipeBorde = "borBlanco"
@@ -301,7 +302,7 @@ function abreBaraja(){
             naipeBorde = "borGris"
         }
         
-        contenido = contenido + '<li id="naipe' + i + '"><a class="paqueteNaipe ' + naipeBorde + '" onmousedown="javascript:mostrarCorte('+(barajaActual.deck.length-i)+');"></a></li>';
+        contenido = contenido + '<li id="naipe' + i + '"><a class="paqueteNaipe ' + naipeBorde + '" onmousedown="javascript:mostrarCorte('+(barajaActual.card.length-i)+');"></a></li>';
         
     }
     contenido = contenido + '</ul>';
@@ -340,21 +341,21 @@ function sfSattolo() {
 }
 function sfRandomOrg(){
 disButtons(true);
-var barajaTemp = barajaActual.deck.slice();
+var barajaTemp = barajaActual.card.slice();
 
     var result = JsonApi
     .apikey($("#customApiKeyRandom").val())
     .method('generateIntegers')
     .params({
-        "n": barajaActual.deck.length,
+        "n": barajaActual.card.length,
         "min": 0,
-        "max": (barajaActual.deck.length-1),
+        "max": (barajaActual.card.length-1),
         "replacement": false,
     })
     .post(function(xhrOrError, stream, body) {
         
-        for (var i = 0; i < barajaActual.deck.length ; i++){
-            barajaActual.deck[i] = barajaTemp[body.result.random.data[i]]
+        for (var i = 0; i < barajaActual.card.length ; i++){
+            barajaActual.card[i] = barajaTemp[body.result.random.data[i]]
         }
         
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
@@ -365,17 +366,17 @@ var barajaTemp = barajaActual.deck.slice();
     });
 }
 function sfNumeroAleatorio(){
-var barajaTemp = barajaActual.deck.slice();
+var barajaTemp = barajaActual.card.slice();
     
     notificar("Servicio inactivo por inconvenientes ajenos a nuestra página","warning");
     return;
-    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (barajaActual.deck.length-1) + "&numero=" + barajaActual.deck.length + "&repeticion=0&json=0"
+    var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (barajaActual.card.length-1) + "&numero=" + barajaActual.card.length + "&repeticion=0&json=0"
         
     $.getJSON(apiUrl, function(contenido){
         /*consola(contenido)*/
     
-      //  for (var i = 0; i < barajaActual.deck.length ; i++){
-    //        barajaActual.deck[i] = barajaTemp[body.result.random.data[i]]
+      //  for (var i = 0; i < barajaActual.card.length ; i++){
+    //        barajaActual.card[i] = barajaTemp[body.result.random.data[i]]
     //    }
         
       //  renderizar();
@@ -455,8 +456,8 @@ function renderizar(){
         var carlos;
         try{
             
-            for (var i = 0;i < barajaActual.deck.length ;i++){
-                ordenI[barajaActual.deck[i].id] = i+1;
+            for (var i = 0;i < barajaActual.card.length ;i++){
+                ordenI[barajaActual.card[i].id] = i+1;
             } 
             
         } catch( err ) {
@@ -473,23 +474,23 @@ function renderizar(){
     if (true == false){
         
         var contenido = '';
-        for (var i = 0; i < barajaActual.deck.length;i++){
+        for (var i = 0; i < barajaActual.card.length;i++){
 
-            switch(barajaActual.deck[i].charAt(barajaActual.deck[i].length-1)){
+            switch(barajaActual.card[i].charAt(barajaActual.card[i].length-1)){
                 case 'C':
-                    contenido = contenido + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&spades;</big> ';
+                    contenido = contenido + barajaActual.card[i].substring(0,barajaActual.card[i].length-1) + '<big>&spades;</big> ';
                     break;
                 case 'H':
-                    contenido = contenido + '<font color="#dd0000">' + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&hearts;</big></font> ';
+                    contenido = contenido + '<font color="#dd0000">' + barajaActual.card[i].substring(0,barajaActual.card[i].length-1) + '<big>&hearts;</big></font> ';
                     break
                 case 'S':
-                    contenido = contenido + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&clubs;</big> ';
+                    contenido = contenido + barajaActual.card[i].substring(0,barajaActual.card[i].length-1) + '<big>&clubs;</big> ';
                     break;
                 case 'D':
-                    contenido = contenido + '<font color="#dd0000">' + barajaActual.deck[i].substring(0,barajaActual.deck[i].length-1) + '<big>&diams;</big></font> ';
+                    contenido = contenido + '<font color="#dd0000">' + barajaActual.card[i].substring(0,barajaActual.card[i].length-1) + '<big>&diams;</big></font> ';
                     break;
                 default:
-                    contenido = contenido + barajaActual.deck[i]        
+                    contenido = contenido + barajaActual.card[i]        
             }
 
         } 
@@ -505,7 +506,7 @@ function renderizar(){
     
 
     // Renderiza el tapete
-    for (var i = 0;i < barajaActual.deck.length;i++){
+    for (var i = 0;i < barajaActual.card.length;i++){
         $("#naipe"+i).css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(i) + '.' + imgType +')');
     }
     
@@ -528,7 +529,7 @@ $("#naipes").sortable({
 			    update: function(){
 				var ordenElementos = $("#naipes").sortable("toArray");
                 var numero;
-                for (var i = 0; i < barajaActual.deck.length; i++){
+                for (var i = 0; i < barajaActual.card.length; i++){
                     numero = parseInt(ordenElementos[i]);
                     if (i !== numero && (i+1) !== numero){
                         barajaActual.move(numero,i);
@@ -861,9 +862,9 @@ var inicia;
         
         $(".setRotulos").collapse("show");
         
-        for (var i = 0;i < barajaActual.deck.length;i++){
+        for (var i = 0;i < barajaActual.card.length;i++){
 
-            relativo = (barajaActual.deck[i].id+inicia);
+            relativo = (barajaActual.card[i].id+inicia);
 
             // ¿Decimal o Binario?
             if(!$("#relativasTipo").bootstrapSwitch('state')){
@@ -926,7 +927,7 @@ function cartaActual(carta){
 }
 
 function eliminarCarta(){
-    barajaActual.deck.splice(posCartaActual,1);
+    barajaActual.card.splice(posCartaActual,1);
     abreBaraja();
     consola("eliminar("+parseInt(posCartaActual+1)+")");
 }
@@ -941,13 +942,13 @@ function eliminarCartaX(cual){
         } else {
             if (cual < 0){
                 consola("eliminar("+cual+")");
-                cual = barajaActual.deck.length + parseInt(cual);
+                cual = barajaActual.card.length + parseInt(cual);
             } else {
                 consola(cual + " no es un argumento válido.");
                 return;
             }
         }
-        barajaActual.deck.splice(cual,1);
+        barajaActual.card.splice(cual,1);
         abreBaraja();
     }
 }
@@ -955,36 +956,36 @@ function agregarCarta(){
     
     $("#modalEditarAgregar h4 .glyphicon").removeClass("glyphicon-edit").addClass("glyphicon-plus");
     $("#modalEditarAgregar h4 .titulo").html(" Agregar carta...");
-    $("#modalEditarAgregar .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
-    $("#modalEditarAgregar .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
-    $("#modalEditarAgregar .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
+    $("#modalEditarAgregar .editarCodigoCara").val(barajaActual.card[posCartaActual].face);
+    $("#modalEditarAgregar .editarCodigoDorso").val(barajaActual.card[posCartaActual].back);
+    $("#modalEditarAgregar .editarVer").bootstrapSwitch('state', barajaActual.card[posCartaActual].canSee);
     $("#modalEditarAgregar .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.' + imgType+')');
     $("#modalEditarAgregar .editarPosicion").val(posCartaActual+1);
-    $("#modalEditarAgregar .editarPosicion").attr("max",barajaActual.deck.length+1);
+    $("#modalEditarAgregar .editarPosicion").attr("max",barajaActual.card.length+1);
     $("#modalEditarAgregar .btnAplicar").html('Agregar');
     $("#modalEditarAgregar").modal();
 }
 function editarCarta(){
     $("#modalEditarAgregar h4 .glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-edit");
-    $("#modalEditarAgregar h4 .titulo").html(" Editar carta #" + (barajaActual.deck[posCartaActual].id+1));
-    $("#modalEditarAgregar .editarCodigoCara").val(barajaActual.deck[posCartaActual].face);
-    $("#modalEditarAgregar .editarCodigoDorso").val(barajaActual.deck[posCartaActual].back);
-    $("#modalEditarAgregar .editarVer").bootstrapSwitch('state', barajaActual.deck[posCartaActual].canSee);
+    $("#modalEditarAgregar h4 .titulo").html(" Editar carta #" + (barajaActual.card[posCartaActual].id+1));
+    $("#modalEditarAgregar .editarCodigoCara").val(barajaActual.card[posCartaActual].face);
+    $("#modalEditarAgregar .editarCodigoDorso").val(barajaActual.card[posCartaActual].back);
+    $("#modalEditarAgregar .editarVer").bootstrapSwitch('state', barajaActual.card[posCartaActual].canSee);
     $("#modalEditarAgregar .naipe").css('backgroundImage', 'url(img/decks/' + imgDeck + '/' + barajaActual.getValue(posCartaActual) + '.' + imgType+')');
     $("#modalEditarAgregar .editarPosicion").val(posCartaActual+1);
-    $("#modalEditarAgregar .editarPosicion").attr("max",barajaActual.deck.length+1);
-    $("#modalEditarAgregar .editarCrimp").bootstrapSwitch('state', barajaActual.deck[posCartaActual].crimp);
-    $("#modalEditarAgregar .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.deck[posCartaActual].crimpB);
+    $("#modalEditarAgregar .editarPosicion").attr("max",barajaActual.card.length+1);
+    $("#modalEditarAgregar .editarCrimp").bootstrapSwitch('state', barajaActual.card[posCartaActual].crimp);
+    $("#modalEditarAgregar .editarCrimpTopBottom").bootstrapSwitch('state', !barajaActual.card[posCartaActual].crimpB);
     $("#modalEditarAgregar .btnAplicar").html('Aplicar');
     
-    if (barajaActual.deck[posCartaActual].crimpTag == ""){
+    if (barajaActual.card[posCartaActual].crimpTag == ""){
         
         var letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $("#modalEditarAgregar .editarCrimpTag").val(letras.split("")[barajaActual.getCrimps().length]);
         
     } else {
     
-        $("#modalEditarAgregar .editarCrimpTag").val(barajaActual.deck[posCartaActual].crimpTag);
+        $("#modalEditarAgregar .editarCrimpTag").val(barajaActual.card[posCartaActual].crimpTag);
     }
     
     $("#modalEditarAgregar").modal();
@@ -1020,7 +1021,7 @@ function editarAgregarAplicar(){
     
     if( $("#modalEditarAgregar .btnAplicar").html()  == "Aplicar"){
         
-        barajaActual.deck[posCartaActual] = {
+        barajaActual.card[posCartaActual] = {
             "face": cCara,
             "back": cDorso,
             "canSee": cCS,
@@ -1062,8 +1063,8 @@ $( "#modalCortar .alNumeroCrimp" ).on('switchChange.bootstrapSwitch', function(e
 });
 function sfModalCortar(){
     
-    $("#alNumero").attr('min',-barajaActual.deck.length+1);
-    $("#alNumero").attr('max',barajaActual.deck.length-1);
+    $("#alNumero").attr('min',-barajaActual.card.length+1);
+    $("#alNumero").attr('max',barajaActual.card.length-1);
     $("#alNumero").val(0);
     
     var crimps = barajaActual.getCrimps();
@@ -1071,10 +1072,10 @@ function sfModalCortar(){
     for (var i = 0; i < crimps.length; i++){
     
         var posicion = crimps[i];
-        if (barajaActual.deck[crimps[i]].crimpB){
+        if (barajaActual.card[crimps[i]].crimpB){
             posicion++;
         }
-        opciones += "<option value="+posicion+">" + barajaActual.deck[crimps[i]].crimpTag + "</option>";
+        opciones += "<option value="+posicion+">" + barajaActual.card[crimps[i]].crimpTag + "</option>";
         
     }
     $(".alCrimp select").html(opciones);
@@ -1097,10 +1098,10 @@ function actualizarCorteCrimp(){
 function mostrarCorte(lugar){
     
     $("#alNumero").val(lugar);
-    lugar = barajaActual.deck.length - lugar;
+    lugar = barajaActual.card.length - lugar;
     
-    if (lugar > barajaActual.deck.length){
-        lugar = lugar - barajaActual.deck.length;
+    if (lugar > barajaActual.card.length){
+        lugar = lugar - barajaActual.card.length;
     }
     
     $("#moduloPaquetes #naipe"+lugar).css('margin-top',"-205px");
@@ -1162,12 +1163,12 @@ function sfVoltearEstas(argumento){
 }
 
 function moverATop(){
-    consola(barajaActual.deck[posCartaActual].face + " > Top");
+    consola(barajaActual.card[posCartaActual].face + " > Top");
     barajaActual.toTop(posCartaActual);
     renderizar();
 }
 function moverABottom(){
-    consola(barajaActual.deck[posCartaActual].face + " > Bottom");
+    consola(barajaActual.card[posCartaActual].face + " > Bottom");
     barajaActual.toBotom(posCartaActual);
     renderizar();  
 }
@@ -1239,9 +1240,9 @@ $( "#catoTurn" ).on('switchChange.bootstrapSwitch', function(event, state) {
 });
 function catoShow(){
     
-    var cantPar = Math.floor(barajaActual.deck.length/2)*2;
+    var cantPar = Math.floor(barajaActual.card.length/2)*2;
     
-    $("#catoCutCant").attr("max", barajaActual.deck.length );
+    $("#catoCutCant").attr("max", barajaActual.card.length );
     $("#catoCutCant").val(cantPar/2);
     $(".turnNum").attr("max",  cantPar);
     $("#catoTurnDesde").attr("max", cantPar );
@@ -1262,7 +1263,7 @@ function catoAplicar(){
         txtMezcla = "Se ha hecho una Mezcla Cato cortando ";
         if( $("#catoCut").bootstrapSwitch('state') ) {
             
-            cortarX = Math.floor(Math.random()*(barajaActual.deck.length));
+            cortarX = Math.floor(Math.random()*(barajaActual.card.length));
             txtMezcla += "librente";
             
         } else {
@@ -1328,8 +1329,8 @@ $( "#faroCalidad" ).on('switchChange.bootstrapSwitch', function(event, state) {
 });
 function faroShow(){
     
-    $("#faroParcial").attr("max", barajaActual.deck.length );
-    $("#faroParcial").val(barajaActual.deck.length);
+    $("#faroParcial").attr("max", barajaActual.card.length );
+    $("#faroParcial").val(barajaActual.card.length);
     $("#modalFaro").modal('show');
     
 }
@@ -1364,7 +1365,7 @@ function faroAplicar(){
     // ¿Total o parcial?
     if ( $("#faroCantidad").bootstrapSwitch('state') ) {
         
-        mezcla = mezcla + barajaActual.deck.length;
+        mezcla = mezcla + barajaActual.card.length;
         txtMezcla += ".";
 
     } else {
@@ -1403,7 +1404,7 @@ function verStats(){
     
     var redond =  7;
     // Permutaciones posibles
-    var factorial = fact(barajaActual.deck.length);
+    var factorial = fact(barajaActual.card.length);
     var ePlus = factorial.toString().indexOf("e+") ;
 
     if (ePlus != -1){
@@ -1417,23 +1418,23 @@ function verStats(){
     }
         
     // Mezclas riffle necesaria para desordenar la baraja
-    var mezclasNecesarias = (Math.log(barajaActual.deck.length) / Math.log(2))*1.5;
+    var mezclasNecesarias = (Math.log(barajaActual.card.length) / Math.log(2))*1.5;
     mezclasNecesarias = redondeo(mezclasNecesarias,redond);
     
     // Adivinaciones probables
     var adivinacionesProbables = 0;
-    for (var i = 1; i<=barajaActual.deck.length;i++){
+    for (var i = 1; i<=barajaActual.card.length;i++){
     
         adivinacionesProbables = adivinacionesProbables + 1 / i;
     }
     
-    var adivinacionesPorcentaje = adivinacionesProbables * 100 / barajaActual.deck.length;
+    var adivinacionesPorcentaje = adivinacionesProbables * 100 / barajaActual.card.length;
     adivinacionesPorcentaje = redondeo(adivinacionesPorcentaje,2);
     adivinacionesProbables = redondeo(adivinacionesProbables,redond);
     
-    var faroTotal = barajaActual.deck.length;
+    var faroTotal = barajaActual.card.length;
     
-    if (isOdd(barajaActual.deck.length)){
+    if (isOdd(barajaActual.card.length)){
         faroTotal++;
     }
     var j = productoCiclos(ordenI);
@@ -1450,7 +1451,7 @@ function verStats(){
     var ordenCiclos = "λ₍<sub>n</sub>₎=(" + partition(s,true).join("+") + ")";
     
     $("#modalStats .barajaMatriz").html("["+barajaActual.getMatriz("face",", ")+"]");
-    $("#modalStats .cantidad").html("n = " + barajaActual.deck.length+"<sub>10</sub> = "+barajaActual.deck.length.toString(2)+"<sub>2</sub> = "+barajaActual.deck.length.toString(4)+"<sub>4</sub>");
+    $("#modalStats .cantidad").html("n = " + barajaActual.card.length+"<sub>10</sub> = "+barajaActual.card.length.toString(2)+"<sub>2</sub> = "+barajaActual.card.length.toString(4)+"<sub>4</sub>");
     $("#modalStats .permutaciones").html("n! = " + factorial);
     $("#modalStats .mezclasNecesarias").html("= " + mezclasNecesarias);
     $("#modalStats .adivinacionesProbables").html("= " + adivinacionesProbables);
@@ -1574,7 +1575,7 @@ function sfTriangular(){
 }
 function sfSeparaRojasNegras(){
 
-    barajaActual.deck = barajaActual.getReds().concat(barajaActual.getBlacks());
+    barajaActual.card = barajaActual.getReds().concat(barajaActual.getBlacks());
     renderizar();
     consola("separaRojasNegras");
     
@@ -1582,7 +1583,7 @@ function sfSeparaRojasNegras(){
 
 function sfSeparaNegrasRojas(){
 
-    barajaActual.deck = barajaActual.getBlacks().concat(barajaActual.getReds());
+    barajaActual.card = barajaActual.getBlacks().concat(barajaActual.getReds());
     renderizar();
     consola("separaNegrasRojas");
     

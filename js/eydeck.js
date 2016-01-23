@@ -13,10 +13,10 @@ function EyDeck(cartas,dorsos){
     }
     
     // Construye los naipes individuales
-    this.deck = [];
+    this.card = [];
     for (var i = 0; i < deck.length; i++){
         
-        this.deck[i] = new naipe(i,deck[i],dorsos);
+        this.card[i] = new naipe(i,deck[i],dorsos);
     }
     
     // Definiendo funciones
@@ -76,8 +76,8 @@ function get2Bfaces(){
     
     var cadena = "";
     
-    for (var i = 0; i < this.deck.length; i++){
-        cadena += ("00"+(i+1)).slice(-2) + this.deck[i].face.slice(-2) + "  ";
+    for (var i = 0; i < this.card.length; i++){
+        cadena += ("00"+(i+1)).slice(-2) + this.card[i].face.slice(-2) + "  ";
     }
     
     return cadena
@@ -87,11 +87,11 @@ function getMatriz(propiedad,delimitador){
     
     var cadena = "";
     
-    for (var i = 0; i < this.deck.length - 1; i++){
-        cadena += intentar(this.deck[i],propiedad) + delimitador;
+    for (var i = 0; i < this.card.length - 1; i++){
+        cadena += intentar(this.card[i],propiedad) + delimitador;
     }
     
-    cadena +=  intentar(this.deck[this.deck.length-1],propiedad);
+    cadena +=  intentar(this.card[this.card.length-1],propiedad);
     
     return cadena
 }
@@ -112,8 +112,8 @@ function intentar(objeto, propiedad) {
 // Actualiza los Ids (Posiciones relativas)
 function refreshOrder(){
     
-    for (var i = 0; i < this.deck.length; i++){
-        this.deck[i].id = i;
+    for (var i = 0; i < this.card.length; i++){
+        this.card[i].id = i;
     }
 }
 
@@ -122,9 +122,9 @@ function getCrimps(){
 
     var ides = [];
     
-    for (var i = 0; i < this.deck.length; i++){
+    for (var i = 0; i < this.card.length; i++){
         
-        if (this.deck[i].crimp){
+        if (this.card[i].crimp){
          
             ides.push(i);
             
@@ -140,9 +140,9 @@ function getCrimps(){
 function getCardById(idParam){
 
     var result;
-    for(i in this.deck){
-        if(this.deck[i].id === idParam){
-            result = this.deck[i];
+    for(i in this.card){
+        if(this.card[i].id === idParam){
+            result = this.card[i];
             break;
         }
     }
@@ -154,10 +154,10 @@ function getCardById(idParam){
 function setOrder(cadena){
 
     var ides = cadena.split(",");
-    var barajaTemp = this.deck.splice();
+    var barajaTemp = this.card.splice();
     for (var i = 0; i < ides.length; i++){
     
-        barajaActual.deck[i] = barajaTemp.getCardById[i];
+        barajaActual.card[i] = barajaTemp.getCardById[i];
     
     }
 }
@@ -165,13 +165,13 @@ function setOrder(cadena){
 // Devuelve la cara visible de la carta
 function getValue(carta) {
     
-    if (this.deck[carta].canSee){
+    if (this.card[carta].canSee){
     
-        return this.deck[carta].face;
+        return this.card[carta].face;
         
     } else {
     
-        return this.deck[carta].back;
+        return this.card[carta].back;
         
     }
 
@@ -180,16 +180,16 @@ function getValue(carta) {
 // Voltea la carta
 function turnOver(carta){
     
-    if (isNaN(carta) || carta >= this.deck.length){
+    if (isNaN(carta) || carta >= this.card.length){
     
-        for (var i=0; i < this.deck.length; i++){
+        for (var i=0; i < this.card.length; i++){
         
-            this.deck[i].canSee = !this.deck[i].canSee;
+            this.card[i].canSee = !this.card[i].canSee;
             
         }
     } else {
     
-        this.deck[carta].canSee = !this.deck[carta].canSee;
+        this.card[carta].canSee = !this.card[carta].canSee;
     }
     
 }
@@ -197,9 +197,9 @@ function turnOver(carta){
 // Cortar
 function cortar(cantidad){
     
-    var paqueteA = this.deck.slice(0,cantidad);
-    var paqueteB = this.deck.slice(cantidad);
-    this.deck = paqueteB.concat(paqueteA); 
+    var paqueteA = this.card.slice(0,cantidad);
+    var paqueteB = this.card.slice(cantidad);
+    this.card = paqueteB.concat(paqueteA); 
     return "cortar("+cantidad+")";
     
 }
@@ -208,27 +208,27 @@ function cortar(cantidad){
 function invertir(cantidad){
     
     // ¿Total o parcial?
-    if (isNaN(cantidad) || cantidad >= this.deck.length){
+    if (isNaN(cantidad) || cantidad >= this.card.length){
 
-        this.deck.reverse();
+        this.card.reverse();
         return "invertir";
         
     } else {
         if (cantidad > 0){
         
-        var paqueteA = this.deck.slice(0,cantidad);
-        var paqueteB = this.deck.slice(cantidad); 
+        var paqueteA = this.card.slice(0,cantidad);
+        var paqueteB = this.card.slice(cantidad); 
         paqueteA = paqueteA.reverse()
-        this.deck = paqueteA.concat(paqueteB);
+        this.card = paqueteA.concat(paqueteB);
             
     } else {
         if (cantidad < 0){
             
-            cantidad = this.deck.length + parseInt(cantidad);
-            var paqueteA = this.deck.slice(0,cantidad);
-            var paqueteB = this.deck.slice(cantidad);
+            cantidad = this.card.length + parseInt(cantidad);
+            var paqueteA = this.card.slice(0,cantidad);
+            var paqueteB = this.card.slice(cantidad);
             paqueteB = paqueteB.reverse();
-            this.deck = paqueteA.concat(paqueteB);
+            this.card = paqueteA.concat(paqueteB);
             
         }
     }
@@ -240,12 +240,12 @@ function invertir(cantidad){
 // Faro Exterior
 function faroExt(cantidad){
     var desde = 0;
-    var barajaTemp = this.deck.slice();
+    var barajaTemp = this.card.slice();
     var total;
     
     // ¿Total o parcial?
-    if (isNaN(cantidad) || Math.abs(cantidad) >= this.deck.length || !cantidad){
-        cantidad = this.deck.length;
+    if (isNaN(cantidad) || Math.abs(cantidad) >= this.card.length || !cantidad){
+        cantidad = this.card.length;
         total = true;
         
     } else {
@@ -255,7 +255,7 @@ function faroExt(cantidad){
     
     // Si es negativo cuenta X cartas hasta Bottom
     if (cantidad < 0) {
-        desde = this.deck.length + cantidad -1;
+        desde = this.card.length + cantidad -1;
         cantidad = Math.abs(cantidad);
     }
     
@@ -263,10 +263,10 @@ function faroExt(cantidad){
     for (var i = 0; i < cantidad ;i++){
         if ( cantidad % 2 == 0 ){
             if ( i < cantidad - 1 ){
-                this.deck[(2*i) % (cantidad-1) + desde] = barajaTemp[i + desde]
+                this.card[(2*i) % (cantidad-1) + desde] = barajaTemp[i + desde]
             }       
         }else{
-            this.deck[(2*i) % cantidad + desde] = barajaTemp[i + desde]
+            this.card[(2*i) % cantidad + desde] = barajaTemp[i + desde]
         }
     }
     
@@ -280,12 +280,12 @@ function faroExt(cantidad){
 // Faro Interior
 function faroInt(cantidad){
     var desde = 0;
-    var barajaTemp = this.deck.slice();
+    var barajaTemp = this.card.slice();
     var total;
     
     // ¿Total o parcial?
-    if (isNaN(cantidad) || Math.abs(cantidad) >= this.deck.length || !cantidad){
-        cantidad = this.deck.length;
+    if (isNaN(cantidad) || Math.abs(cantidad) >= this.card.length || !cantidad){
+        cantidad = this.card.length;
         total = true;
     } else {
         total = false;
@@ -293,16 +293,16 @@ function faroInt(cantidad){
     
     // Si es negativo cuenta X cartas hasta Bottom
     if (cantidad < 0) {
-        desde = this.deck.length + cantidad -1;
+        desde = this.card.length + cantidad -1;
         cantidad = Math.abs(cantidad);
     }
     
     // Realiza la mezcla
     for (var i = 0; i < cantidad;i++){
         if ( cantidad % 2 == 0 ){
-            this.deck[(2*i+1) % (cantidad+1) + desde] = barajaTemp[i + desde]
+            this.card[(2*i+1) % (cantidad+1) + desde] = barajaTemp[i + desde]
         }else{
-            this.deck[(2*i+1) % (cantidad) + desde] = barajaTemp[i + desde]
+            this.card[(2*i+1) % (cantidad) + desde] = barajaTemp[i + desde]
         }
     }
     
@@ -317,12 +317,12 @@ function faroInt(cantidad){
 function antiFaroExt(cantidad){
 
     var desde = 0;
-    var barajaTemp = this.deck.slice();
+    var barajaTemp = this.card.slice();
     var total;
     
     // ¿Total o parcial?
-    if (isNaN(cantidad) || Math.abs(cantidad) >= this.deck.length || !cantidad){
-        cantidad = this.deck.length;
+    if (isNaN(cantidad) || Math.abs(cantidad) >= this.card.length || !cantidad){
+        cantidad = this.card.length;
         total = true;
     } else {
         total = false;
@@ -330,7 +330,7 @@ function antiFaroExt(cantidad){
     
     // Si es negativo cuenta X cartas hasta Bottom
     if (cantidad < 0) {
-        desde = this.deck.length + cantidad -1;
+        desde = this.card.length + cantidad -1;
         cantidad = Math.abs(cantidad);
     }
     
@@ -338,10 +338,10 @@ function antiFaroExt(cantidad){
     for (var i = 0; i < cantidad;i++){
         if ( cantidad % 2 == 0 ){
             if ( i < cantidad - 1 ){
-                this.deck[i + desde] = barajaTemp[(2*i) % (cantidad-1) + desde]
+                this.card[i + desde] = barajaTemp[(2*i) % (cantidad-1) + desde]
             }       
         }else{
-            this.deck[i + desde] = barajaTemp[(2*i) % cantidad + desde]
+            this.card[i + desde] = barajaTemp[(2*i) % cantidad + desde]
         }
     }
     
@@ -357,12 +357,12 @@ function antiFaroExt(cantidad){
 function antiFaroInt(cantidad){
 
     var desde = 0;
-    var barajaTemp = this.deck.slice();
+    var barajaTemp = this.card.slice();
     var total;
     
     // ¿Total o parcial?
-    if (isNaN(cantidad) || Math.abs(cantidad) >= this.deck.length || !cantidad){
-        cantidad = this.deck.length;
+    if (isNaN(cantidad) || Math.abs(cantidad) >= this.card.length || !cantidad){
+        cantidad = this.card.length;
         total = true;
     } else {
         total = false;
@@ -370,16 +370,16 @@ function antiFaroInt(cantidad){
     
     // Si es negativo cuenta X cartas hasta Bottom
     if (cantidad < 0) {
-        desde = this.deck.length + cantidad -1;
+        desde = this.card.length + cantidad -1;
         cantidad = Math.abs(cantidad);
     }
     
     // Realiza la mezcla
     for (var i = 0; i < cantidad;i++){
         if ( cantidad % 2 == 0 ){
-            this.deck[i + desde] = barajaTemp[(2*i+1) % (cantidad+1) + desde]
+            this.card[i + desde] = barajaTemp[(2*i+1) % (cantidad+1) + desde]
         }else{
-            this.deck[i + desde] = barajaTemp[(2*i+1) % (cantidad) + desde]
+            this.card[i + desde] = barajaTemp[(2*i+1) % (cantidad) + desde]
         }
     }
     
@@ -394,9 +394,9 @@ function antiFaroInt(cantidad){
 // Mezcla Alfa
 function milk(){
     var barajaTemp = [];    
-    var n = this.deck.length;
+    var n = this.card.length;
 
-    var deck = this.deck;
+    var deck = this.card;
     
     for (var i = 0; i < n; i++){
         
@@ -411,16 +411,16 @@ function milk(){
 
     }
     
-    this.deck = this.deck.concat(barajaTemp);
+    this.card = this.card.concat(barajaTemp);
     return "alfa";
 }
 
 // Mezcla Omega
 function omega(){
     var barajaTemp = [];    
-    var n = this.deck.length;
+    var n = this.card.length;
 
-    var deck = this.deck;
+    var deck = this.card;
     
     for (var i = 0; i < n; i++){
         
@@ -435,7 +435,7 @@ function omega(){
 
     }
     
-    this.deck = barajaTemp;
+    this.card = barajaTemp;
     return "omega";
 }
 
@@ -443,8 +443,8 @@ function omega(){
 function mongeDown(){
     
     var barajaTemp = [];    
-    var n = this.deck.length;
-    var deck = this.deck;
+    var n = this.card.length;
+    var deck = this.card;
     
     for (var i = 0; i < n; i++){
 
@@ -459,7 +459,7 @@ function mongeDown(){
 
     }
     
-    this.deck = barajaTemp
+    this.card = barajaTemp
     return "mongeDown";
 }
 
@@ -467,8 +467,8 @@ function mongeDown(){
 function mongeUp(){
     
     var barajaTemp = [];    
-    var n = this.deck.length;
-    var deck = this.deck;
+    var n = this.card.length;
+    var deck = this.card;
     
     for (var i = 0; i < n; i++){
 
@@ -483,14 +483,14 @@ function mongeUp(){
 
     }
     
-    this.deck = barajaTemp
+    this.card = barajaTemp
     return "mongeUp";
 }
 
 // Mezcla DownUnderDeal
 function downUnderDeal(){
-    var barajaTemp = this.deck.slice();
-    cantidad = this.deck.length;
+    var barajaTemp = this.card.slice();
+    cantidad = this.card.length;
     var cardTemp;
     
     for(var i = 0; i < cantidad ; i++) {
@@ -499,7 +499,7 @@ function downUnderDeal(){
         barajaTemp.push(cardTemp);
         
         cardTemp = barajaTemp.shift();
-        this.deck[cantidad-i-1] = cardTemp;
+        this.card[cantidad-i-1] = cardTemp;
         
     }
     
@@ -509,27 +509,27 @@ function downUnderDeal(){
 // Mezcla antiDownUnderDeal
 function antiDownUnderDeal(){
     var barajaTemp = [];
-    cantidad = this.deck.length;
+    cantidad = this.card.length;
     var cardTemp;
     
     for(var i = 0; i < cantidad ; i++) {
 
-        cardTemp = this.deck.shift();
+        cardTemp = this.card.shift();
         barajaTemp.unshift(cardTemp);
         
         cardTemp = barajaTemp.pop();
         barajaTemp.unshift(cardTemp);
     }
     
-    this.deck = barajaTemp.slice();
+    this.card = barajaTemp.slice();
     return "antiDownUnderDeal";
 }
 
 // Mezcla UnderDownDeal
 function underDownDeal(){
     
-    var barajaTemp = this.deck.slice();
-    cantidad = this.deck.length;
+    var barajaTemp = this.card.slice();
+    cantidad = this.card.length;
     var cardTemp;
     
     for(var i = 0; i < cantidad ; i++) {
@@ -539,7 +539,7 @@ function underDownDeal(){
             barajaTemp.push(cardTemp);
         }
         cardTemp = barajaTemp.shift();
-        this.deck[cantidad-i-1] = cardTemp;
+        this.card[cantidad-i-1] = cardTemp;
         
     }
     
@@ -549,12 +549,12 @@ function underDownDeal(){
 // Mezcla antiUnderDownDeal
 function antiUnderDownDeal(){
     var barajaTemp = [];
-    var n = this.deck.length;
+    var n = this.card.length;
     var cardTemp;
     
     for(var i = 0; i < n ; i++) {
 
-        cardTemp = this.deck.shift();
+        cardTemp = this.card.shift();
         barajaTemp.unshift(cardTemp);
         
         if (i != (cantidad-1)){
@@ -563,14 +563,14 @@ function antiUnderDownDeal(){
         }
     }
     
-    this.deck = barajaTemp.slice();
+    this.card = barajaTemp.slice();
     return "antiUnderDownDeal";
     
 }
 
 // Mezcla antiRiffle
 function riffle(){
-    var c = this.deck.length;
+    var c = this.card.length;
     
     if (c > 170){
         notificar("¡¿Quieres mezclar " + c + " cartas?! ¡Pero qué manos grandes! Disculpas pero aún no hemos implementado el algoritmo para tantas cartas... :S","warning");
@@ -579,8 +579,8 @@ function riffle(){
                   
     // Divide la baraja en dos paquetes similares
     var num = rdomBinom(c);
-    var a = this.deck.slice(0,num);
-    var b = this.deck.slice(num);
+    var a = this.card.slice(0,num);
+    var b = this.card.slice(num);
     var barajaTemp = [];
     
     // Realiza mezcla
@@ -601,7 +601,7 @@ function riffle(){
     } while(a.length != 0);
     
     // Rearma la baraja
-    this.deck = b.concat(barajaTemp); 
+    this.card = b.concat(barajaTemp); 
     return "riffle";
     
 }
@@ -609,13 +609,13 @@ function riffle(){
 // Mezcla antiRiffle
 function antiRiffle(){
 
-    var barajaTemp = this.deck.slice();
-    var n = this.deck.length;
+    var barajaTemp = this.card.slice();
+    var n = this.card.length;
     for (var i=0; i<n;i++){
         
         if(rdomUnif(1)){
             
-            this.deck.splice((n-i-1),1);
+            this.card.splice((n-i-1),1);
             
         } else {
             
@@ -624,7 +624,7 @@ function antiRiffle(){
         }
  
     }
-    this.deck = this.deck.concat(barajaTemp);
+    this.card = this.card.concat(barajaTemp);
     return "antiRiffle";
     
 }
@@ -632,17 +632,17 @@ function antiRiffle(){
 // Mezcla pseudoaleatoria Fisher-Yates
 function fisherYates(){
 
-    var barajaTemp = this.deck.slice();
-    var n = this.deck.length;
+    var barajaTemp = this.card.slice();
+    var n = this.card.length;
     var i;
-    this.deck = [];
+    this.card = [];
     // Mientras queden cartas por mezclar...
     while (n) {
         // Elije una carta del remanente...
         i = Math.floor(Math.random() * n--);
 
         // Y la agrega al nuevo array
-        this.deck.push(barajaTemp.splice(i, 1)[0]);
+        this.card.push(barajaTemp.splice(i, 1)[0]);
     }
     
     return ("fisherYates");
@@ -652,7 +652,7 @@ function fisherYates(){
 // Mezcla pseudoaleatoria Durstenfeld
 function durstenfeld(){
     
-    var counter = this.deck.length, temp, index;
+    var counter = this.card.length, temp, index;
 
     // While there are elements in the array
     while (counter > 0) {
@@ -663,9 +663,9 @@ function durstenfeld(){
         counter--;
 
         // And swap the last element with it
-        temp = this.deck[counter];
-        this.deck[counter] = this.deck[index];
-        this.deck[index] = temp;
+        temp = this.card[counter];
+        this.card[counter] = this.card[index];
+        this.card[index] = temp;
     }
     
     return "durstenfeld";
@@ -674,12 +674,12 @@ function durstenfeld(){
 // Mezcla speudoaleatoria Sattolo
 function sattolo(){
 
-     for (var i = 0; i < this.deck.length - 1; i++) {
-        var j = i + 1 + Math.floor(Math.random() * (this.deck.length - i - 1));
+     for (var i = 0; i < this.card.length - 1; i++) {
+        var j = i + 1 + Math.floor(Math.random() * (this.card.length - i - 1));
 
-        var temp = this.deck[j];
-        this.deck[j] = this.deck[i];
-        this.deck[i] = temp;
+        var temp = this.card[j];
+        this.card[j] = this.card[i];
+        this.card[i] = temp;
     }
     
     return "sattolo";
@@ -716,24 +716,24 @@ notificar(cadena)
 
 // Mover una carta a Top 
 function toTop(posCarta){
-    var barajaTemp =  this.deck.slice();
-    this.deck.splice(posCarta,1);
-    this.deck.unshift(barajaTemp[posCarta]);
+    var barajaTemp =  this.card.slice();
+    this.card.splice(posCarta,1);
+    this.card.unshift(barajaTemp[posCarta]);
 }
 
 // Mover una carta a Bottom
 function toBottom(posCarta){
-    var barajaTemp = this.deck.slice();
-    this.deck.splice(posCarta,1);
-    this.deck.push(barajaTemp[posCarta]);
+    var barajaTemp = this.card.slice();
+    this.card.splice(posCarta,1);
+    this.card.push(barajaTemp[posCarta]);
 }
 
 // Mover una carta
 function move(de,hasta){
         
-    var barajaTemp = this.deck.slice();
-    this.deck.splice(de,1);
-    this.deck.splice(hasta,0,barajaTemp[de]);
+    var barajaTemp = this.card.slice();
+    this.card.splice(de,1);
+    this.card.splice(hasta,0,barajaTemp[de]);
     
 }
 
@@ -741,7 +741,7 @@ function move(de,hasta){
 function add(n,a,b,c,d,e,f){
 
     var barajaTemp = {
-        "id": this.deck.length,
+        "id": this.card.length,
         "face": a,
         "back": b,
         "canSee": c,
@@ -751,7 +751,7 @@ function add(n,a,b,c,d,e,f){
         
     };
     
-    this.deck.splice(n,0,barajaTemp);
+    this.card.splice(n,0,barajaTemp);
     
 }
 
@@ -769,9 +769,9 @@ function isBlack(carta){
 
 function getReds(){
     var rojas = [];
-    for(var i=0;i<this.deck.length;i++){
-        if(isRed(this.deck[i])){
-            rojas.push(this.deck[i])
+    for(var i=0;i<this.card.length;i++){
+        if(isRed(this.card[i])){
+            rojas.push(this.card[i])
         }
     }
     return rojas;
@@ -779,9 +779,9 @@ function getReds(){
 
 function getBlacks(){
     var negras = [];
-    for(var i=0;i<this.deck.length;i++){
-        if(isBlack(this.deck[i])){
-            negras.push(this.deck[i])
+    for(var i=0;i<this.card.length;i++){
+        if(isBlack(this.card[i])){
+            negras.push(this.card[i])
         }
     }
     return negras;
