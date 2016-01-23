@@ -85,43 +85,95 @@
             </figure>
         </p>
         <p>Tal como en una extención en cinta la primer carta comenzando por la derecha (A<big>&clubs;</big>) corresponderá a la carta en posición de TOP y la primer carta comenzando por la derecha  (K<big>&diams;</big>) corresponderá a la carta en posisión de BOTTOM.</p>
+        <p>Podrá volver rápidamente a esta configuración eligiendo "Baraja" / "Nueva en la barra de herramientas o simplemente presionando <code>ALT+N</code>.</p>
     </div>
 </div>
 
- <div id="posiciones">
+<div id="abrirBaraja">
     <div class="container">
-        <h2>Posiciones absolutas y relativas</h2>
-        <p>Ajustando las preferencias (o presionando <code>ALT+R</code>) puede activar o desactivar la vista de los números de posiciones sobre cada una de las cartas.</p>
+        <h1>Abrir baraja</h1>
+        <p>Eligiendo la opción "Baraja" / "Abrir baraja..." se le desplegará la siguiente ventana:</p>
         <p>
             <figure>
-                <img src="img/baraja-posiciones.png" alt="Baraja extendida en cinta">
-                <figcaption>Fig 2: Baraja con la vista de posiciones activada</figcaption>
+                <img src="img/abrir-baraja.png" alt="Ventana de Ventana de apertura de barajas">
+                <figcaption>Fig 2: Ventana de apertura de barajas.</figcaption>
             </figure>
         </p>
-        <p>Como notará cada una de la cartas tiene dos números, estos representan las posiciones:</p>
-        <ul class="dl-horizontal">
-            <li><b>Absoluta:</b><br/>
-            Arriba del índice. No se modifica con las mezclas. Indica el lugar que se encuentra la carta contando desde Top.<br/><br/></li>
-            <li><b>Relativa:</b><br/>
-            Debajo del índice. Se modifica con las mezclas. Indica dónde se encontraba la carta antes de mezclar.</li>
-        </ul>
-        <p>Como podrá comprobarlo en la baraja de la figura arriba, el 9<big>&spades;</big> ocupa la posición 18, habiendo comenzado en la posición 35 contando desde Top.</p>
+        <p>En ella podrá elegir entre distintos modelos de barajas, que se mostrarán tal como si las sacara nuevas de su estuche. ¡En algunos casos hasta deberá sacarle las cartas de publicidad! También podrá elegir el color de los dorsos y si desea usar el ordenamiento de fábrica o en su lugar conservar toas las propiedades de su baraja ya abierta.</p>
     </div>
 </div>
-      
-<div id="matriz">
+
+<div id="ordenarBaraja">
     <div class="container">
-        <h2>Matriz</h2>
-        <p>Conceptualmente una baraja de cartas es una matriz unidireccional, una lista de elementos ordenados (cartas virtuales en este caso).</p>
-        <figure>
-            <img src="img/varias-matrices.png" alt="Varias matrices">
-            <figcaption>Fig 3: Varias matrices</figcaption>
-        </figure>
-        <p>En la figura de arriba se pueden ver tres paquetes distintos de cartas, sus matrices se representan separando cada carta con comas.</p>
-        <p>Para el full del primer caso <code class="cards">KT,KC,KP,8C,8T</code>, para el paquete del centro <code class="cards">AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC</code> y para el último paquete <code class="cards">6T,2D,6T,JC,5D,9T</code>.</p>
+        <h1>Ordenar baraja</h1>
+        <p>Eligiendo la opción "Baraja" / "Ordenar baraja..." se le desplegará la siguiente ventana:</p>
+        <p>
+            <figure>
+                <img src="img/ordenar-baraja.png" alt="Ventana de ordenaciones">
+                <figcaption>Fig 3: Ventana de ordenaciones.</figcaption>
+            </figure>
+        </p>
+        <p>En ella podrá elegir entre distintos ordenamientos, secuenciales, nmemónicos y de fábrica conservando el diseño de su baraja actual. En algunos casos, como en el de la figura de arriba debería elegir, por ejemplo, qué rotación de palos desea utilizar.</p>
     </div>
 </div>
-      
+
+<div id="moverCarta">
+    <div class="container">
+        <h1>Moviendo una carta</h1>
+        <p>Para mover un único naipe de lugar, podrá hacerlo fácilmente usando el mouse:</p>
+        <p>
+            <figure>
+                <img src="img/mover-carta.png" alt="Mover carta">
+                <figcaption>Fig 4: Moviendo el 4 de Picas entre el Ocho y Nueve de Corazones.</figcaption>
+            </figure>
+        </p>
+        <p>Para hacerlo sólo deberá hacer presionar el con el boton primario del mouse y arrastrar el mismo hasta la posición elegida. Suelte para confirmar.</p>
+    </div>
+</div>
+
+ <div id="modificarCarta">
+    <div class="container">
+        <h2>Modificando las cartas</h2>
+        <p>Haciendo click con el boton secundario de su mouse sobre una carta desplegará un menú con varias opciones, que le permitirán modificar la carta seleccionada:</p>
+        <p>
+            <figure>
+                <img src="img/menu-carta.png" alt="Menú contextual. Opciones de carta">
+                <figcaption>Fig 5: Desplegando el menú sobre una carta</figcaption>
+            </figure>
+        <ul class="dl-horizontal">
+            <li><b>Mover a Top:</b><br/>
+            Mueve la carta a la primera posición, dejándo la primera desde los dorsos, última desde las caras.</li>
+            <li><b>Mover a Bottom:</b><br/>
+            Mueve la carta a la última posición, dejándo la primera desde las caras, última desde los dorsos.</li>
+            <li><b>Cortar por acá:</b><br/>
+            Corta las cartas por el lugar indicado, dejando la carta seleccionada como primera desde los dorsos.</li>
+            <li><b>Voltear:</b><br/>
+            Da vuelta la carta dejándola dorso arriba si estaba de cara y viceversa.</li>
+            <li><b>Agregar:</b><br/>
+            Permite agregar una carta o duplicar la carta seleccionada.</li>
+            <li><b>Editar:</b><br/>
+            Permite cambiar los atributos dela carta seleccionada.</li>
+            <li><b>Remover:</b><br/>
+            Elimina la carta de la baraja actual. La misma no podrá recuperarse.</li>
+        </ul>
+    </div>
+</div>
+
+ <div id="agregarEditar">
+    <div class="container">
+        <h2>Agregar / Editar carta</h2>
+        <p>Eligiendo cualquiera estas dos opcioens se le desplegará una ventana como la siguiente:</p>
+        <p>
+            <figure>
+                <img src="img/editar-carta.png" alt="Editar una carta">
+                <figcaption>Fig 6: Editando una carta</figcaption>
+            </figure>
+        </p>
+        <p>En dicha ventana podrá elegir entre varias opciones, cambiar su cara, cambiar su dorso, elegir de qué lado quiere que quede a la vista, determinar su posición y también podrá marcarla carta haciendole un crimp. En la figura de arriba se trata de la ventana de edición por lo cual todos los cambios se aplicarán sobre la carta seleccionada. La ventana de Agregar cuenta con las mismas opciones pero en su lugar trabajará sobre una copia de la carta actual.</p>
+        </ul>
+    </div>
+</div>
+
 <div id="matrizcodigos">
     <div class="container">
         <h2>Códigos</h2>
@@ -155,7 +207,109 @@
         </dl>
     </div>
 </div>
+
+<div id="posiciones">
+    <div class="container">
+        <h2>Posiciones absolutas y relativas</h2>
+        <p>Ajustando las preferencias (o presionando <code>ALT+R</code>) puede activar o desactivar la vista de los números de posiciones sobre cada una de las cartas.</p>
+        <p>
+            <figure>
+                <img src="img/baraja-posiciones.png" alt="Baraja extendida en cinta">
+                <figcaption>Fig 7: Baraja con la vista de posiciones activada</figcaption>
+            </figure>
+        </p>
+        <p>Como notará cada una de la cartas tiene dos números, estos representan las posiciones:</p>
+        <ul class="dl-horizontal">
+            <li><b>Absoluta:</b><br/>
+            Arriba del índice. No se modifica con las mezclas. Indica el lugar que se encuentra la carta contando desde Top.<br/><br/></li>
+            <li><b>Relativa:</b><br/>
+            Debajo del índice. Se modifica con las mezclas. Indica dónde se encontraba la carta antes de mezclar.</li>
+        </ul>
+        <p>Como podrá comprobarlo en la baraja de la figura arriba, el 9<big>&spades;</big> ocupa la posición 18, habiendo comenzado en la posición 35 contando desde Top.</p>
+    </div>
+</div>
+
+ <div id="posicionesOpciones">
+    <div class="container">
+        <h2>Más sobre las posiciones</h2>
+        <p>Ajustando las preferencias (o presionando <code>ALT+0</code>) cambiar alternar entre el sistema decimal (base 10) y el sistema binario (base2) como manera de representación de las posiciones relativas. El sistema binario le puede ser muy útil en varios casos, sobre todo al operar con mezclas matemáticas.</p>
+        <p>
+            <figure>
+                <img src="img/baraja-posiciones-opciones.png" alt="Distintas maneras de representación">
+                <figcaption>Fig 7: Distintas maneras de representar las posiciones.</figcaption>
+            </figure>
+        </p>
+        <p>La figura de la izquierda despliga la vista binaria de las posciiones. En este caso, como se ha partido de todas las cartas e un palo ordenado, la posición relativa coincide con el valor de la carta. Por Ejemplo: el 9 de Trébol, ocupa la posición 1001<sub>2</sub> o 9<sub>10</sub>.</p>
+        <p>La figura de la derecha nos muestra la vista en base decimal, pero en este caso se ha elegido comenzar a numerar desde 0 en lugar de 1. Dicha opción se puede ajustar en las preferencias o mediante el atajo <code>ALT+SHIFT+0</code></p>
+    </div>
+</div>
       
+<div id="matriz">
+    <div class="container">
+        <h2>Orden secuencial</h2>
+        <p>Conceptualmente una baraja de cartas es un conjunto ordenado: una secuencia de elementos (cartas virtuales en este caso). Cada elemento tiene varios atributos: una cara, un dorso, orientación, marcas, etc). Para fines prácticos, la mayoría de las veces bastará en centrarse en las caras de las mismas.</p>
+        <figure>
+            <img src="img/varias-matrices.png" alt="Varias matrices">
+            <figcaption>Fig 8: Varios paquetes.</figcaption>
+        </figure>
+        <p>En la figura de arriba, la secuencia de sus caras se representan separando cada código con comas. Para el full del primer caso <code class="cards">KT,KC,KP,8C,8T</code>, para el paquete del centro <code class="cards">AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC</code> y para el último paquete <code class="cards">6T,2D,6T,JC,5D,9T</code>.</p>
+    </div>
+</div> 
+
+<div id="matriz">
+    <div class="container">
+        <h2>Ordenando y mezclando</h2>
+        <p>Un corte, una mezcla, o una ordenación es una clasificación que tienen las permutaciones que se le puede aplicar al conjuntos de cartas. Podrá aplicarlas eligiendo cada tipo de permutación en el Menú "Mezclar", usando los atajos del teclado, introduciendo los comandos en la consola o utilizando la botonera que se encuentra debajo de la baraja:</p>
+         <div id="moduloBotonera" class="botonera">
+        <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden" data-toggle="collapse" aria-controls="colReiniciar">
+        <input type="button" class="btn btn-primary sfInvertir" value="Invertir" data-toggle="popover" data-trigger="hover" data-content="Invierte una a una el orden de las cartas.">
+        <input type="button" class="btn btn-primary sfCut" value="Cortar...">
+        <input type="button" class="btn btn-primary sfSeparaRojasNegras" value="Rojas/Negras" data-toggle="popover" data-trigger="hover" data-content="Separa la baraja por colores, dejando las rojas arriba y las negras abajo, manteniendo el órden relativo entre ellas.">
+        <input type="button" class="btn btn-primary sfSeparaNegrasRojas" value="Negras/Rojas" data-toggle="popover" data-trigger="hover" data-content="Separa la baraja por colores, dejando las negra arriba y las rojas abajo, manteniendo el órden relativo entre ellas.">
+        <input type="button" class="btn btn-primary sfFaroAv" value="Faro...">
+        <input type="button" class="btn btn-primary sfFaroExt" value="Exterior" data-toggle="popover" data-trigger="hover" data-title="<span class='glyphicon glyphicon-random' aria-hidden='true'></span> Mezcla Faro Exterior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1ra posición en su lugar.">
+        <input type="button" class="btn btn-primary sfFaroInt" value="Interior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Faro Interior" data-content="Las cartas se dividen en dos paquetes iguales y intercalan una a una, dejando la carta de la 1da posición en segundo lugar.">
+        <input type="button" class="btn btn-primary sfAntiFaroExt" value="-Exterior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Exterior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 1ra posición en su lugar.">
+        <input type="button" class="btn btn-primary sfAntiFaroIn" value="-Interior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Interior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 2ra posición en primer lugar.">
+        <input type="button" class="btn btn-primary sfRiffle" value="Riffle" data-toggle="popover" data-trigger="hover" data-title="Mezcla Riffle / Americana / Por hojeo" data-content="Se corta la baraja en dos paquetes de similar tamaño para luego intercalarlas alternandolas.">
+        <input type="button" class="btn btn-primary sfAntiRiffle" value="AntiRiffle" data-toggle="popover" data-trigger="hover" data-title="Anti Rifle" data-content="Desimbrica las cartas en tods paquetes, teniendo cada carta las mismas probabilidades de ir a parar a un paquete o al otro. A continuación coloca un paquete encima de otro.">
+        <input type="button" class="btn btn-primary sfTriangular" value="Tirangular" data-toggle="popover" data-trigger="hover" data-title="Mezcla triangular Up" data-content="Se colocan las cartas de izquierdaa derecha en filas, una carta en la primer columna, dos en la segunda, tres en la tercera, etc. A continuación se recogen por columnas no se como">
+        <input type="button" class="btn btn-primary sfDud" value="DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (Australiana)" data-content="Teniendo baraja en la mano, coloca la primer carta debajo y la siguiente se coloca en la mesa. Se repite la operación hasta que no queden cartas en la mano.">
+        <input type="button" class="btn btn-primary sfAntiDud" value="-DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (inversa)" data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
+        <input type="button" class="btn btn-primary sfUdd" value="UDD" data-toggle="popover" data-trigger="hover" data-title="Under Down Deal" data-content="Teniendo baraja en la mano, coloca la primer carta en la mesa y la siguiente se coloca debajo de la baraja. Se repite la operación hasta que no queden cartas en la mano.">
+        <input type="button" class="btn btn-primary sfAntiUdd" value="-UDD" data-toggle="popover" data-trigger="hover" data-title="Deshace una mezcla Under Down Deal." data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
+        <input type="button" class="btn btn-primary sfMilk" value="Alfa" data-toggle="popover" data-trigger="hover" data-data-title="Mezcla Alfa / Milk Shuffle / Klondike" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
+        <input type="button" class="btn btn-primary sfOmega" value="Omega" data-toggle="popover" data-trigger="hover" data-data-title="Mezcla Alfa" data-content="Teniendo la baraja en la mano, se pelan al mismo tiempo la carta superior e inferior para luego depositarlas en la mesa. Se repite hasta que no queden cartas en las manos." >
+        <input type="button" class="btn btn-primary sfMongeDown" value="MongeDown" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Down" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta debajo y la siguiente arriba de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
+        <input type="button" class="btn btn-primary sfMongeUp" value="MongeUp" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Up" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta arriba y la siguiente abajo de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
+        <input type="button" class="btn btn-primary sfCato" value="Cato..." data-toggle="popover" data-trigger="hover" data-title="Mezcla CATO (Cut And Turn Over)" data-content="Se realiza un corte y luego voltean dos cartas. Se repite este proceso las veces que se desee. También pueden voltear cualquier cantidad par de cartas.">
+       <!-- <br>-->
+        <input type="button" class="btn btn-primary sfFisherYates" value="Fisher-Yates" data-toggle="popover" data-trigger="hover"  data-title="Azar Fisher-Yates" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación original.">
+        <input type="button" class="btn btn-primary sfDurstenfeld" value="Durstenfeld" data-toggle="popover" data-trigger="hover" data-title="Azar Durstenfeld" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Durstenfeld.">
+        <input type="button" class="btn btn-primary sfSattolo" value="Sattolo" data-toggle="popover" data-trigger="hover" data-title="Azar Sattolo" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Sattolo (ninguna carta ocupará la posición original luego de la mezcla).">
+        
+        <input type="button" class="btn btn-primary sfRandomOrg" value="Random.org" data-toggle="popover" data-trigger="hover" data-title="Azar Random.org" data-content="Mezcla aleatoria a partir del ruido atmosférico, utilizando el servicio Random.Org a través de la API ofrecida en su web.">
+        <figcaption>Presiona un botón para ver la descripción.</figcaption>
+    </div>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1" class="btn btn-primary">Reiniciar orden</a> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2" class="btn btn-primary">Invertir</a>
+  
+      <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+      <div class="panel-body">
+      Reinicia las posiciones relativas equiparándolas con las absolutas.
+      </div>
+      </div>
+      
+      <div id="collapse2" class="panel-collapse collapse" role="tabpanel">
+      <div class="panel-body">
+      Invierte el órden de las cartas.
+      </div>
+      </div>
+
+  
+    </div>
+    </div>
+</div> 
 
 <div id="consola">
     <div class="container">

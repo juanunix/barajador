@@ -74,7 +74,7 @@ body {
     color: #cdbfe3;
     text-shadow: 0 1px 0 rgba(0,0,0,.1);
     background-color: #40001b;
-    background-image: url("../img/table/suits-light.png");
+    background-image: url("../img/backgrounds/suits-dark.png");
 }
 
 .bs-docs-header h1 {
@@ -109,6 +109,13 @@ figcaption {
 code {
     font-weight: bold;
 }
+.botonera {
+    text-align: center;
+}
+
+.botonera input[type="button"] {
+    margin-bottom: 5px;
+}
 
 @media (min-width: 768px){
     .bs-docs-header {
@@ -117,7 +124,7 @@ code {
         font-size: 24px;
         text-align: left;
     }
-    
+
     .bs-docs-header h1 {
         font-size: 60px;
         line-height: 1;
