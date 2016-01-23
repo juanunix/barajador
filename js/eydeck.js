@@ -69,6 +69,7 @@ function naipe(i,cara,dorso){
     this.crimpB = false;
     this.crimpTag = "";
     
+        
 }
 
 // Genera un string con las propiedades separadas por comas
@@ -157,7 +158,7 @@ function setOrder(cadena){
     var barajaTemp = this.card.splice();
     for (var i = 0; i < ides.length; i++){
     
-        barajaActual.card[i] = barajaTemp.getCardById[i];
+        this.card[i] = barajaTemp.getCardById[i];
     
     }
 }
