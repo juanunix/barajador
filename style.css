@@ -316,36 +316,15 @@ th {
     vertical-align:bottom;
 }
 
-#consola {
+#moduloConsola {
     background: black;
-    color: white;
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size:10pt;
     clear:both;
     position:absolute;
     bottom:0;
     left:0;
     width: 100%;
-}
-
-#consolaInput {
-    background: transparent;
-    width: calc(100% - 30px);
-    border: 0px solid;
-    white-space: pre;
-    padding-left: 5px;
-}
-
-#consolaInput:focus {
-    outline: none;
-}
-
-#consolaOutput {
-    border-top: 1px solid;
-    height: 100px;
-    overflow-y: scroll;
-    white-space: pre;
-    padding: 2px;
+    height: 120px;
+    border-top: solid 1px grey;
 }
 
 .centrado {

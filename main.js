@@ -48,14 +48,14 @@ $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 //$( "#bjAjustes" ).on( "click", bjAjustes );
 $( "#colorTapete" ).on( "change", cambiarColorTapete );
 $( "#texturaTapete" ).on( "change", cambiarTexturaTapete );
-$( "#colorConsola" ).on( "change", cambiarColorConsola );
-$( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
-$( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 $( "#reiniciarTema" ).on( "click", reiniciarTema );
-$( "#fuenteConsolaSize" ).on( "change", cambiarFuenteSizeConsola );
 $( "#relativasTipo" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
 $( "#mostrarRotulos" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
 $( "#unoceroRotulos" ).on('switchChange.bootstrapSwitch', mostrarRotulos);
+$( "#fuenteConsolaSize" ).on( "change", cambiarFuenteSizeConsola );
+$( "#colorConsolaTexto" ).on( "change", cambiarColorConsolaTexto );
+$( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
+$( "#colorConsola" ).on( "change", cambiarColorConsola );
 $( "#setVolumen" ).on('slide', setVolumen);
 $( "#setSeparac" ).on('slide', setSeparac);
 
@@ -74,7 +74,7 @@ $( ".sfSattolo" ).on( "click", sfSattolo );
 $( ".sfRandomOrg" ).on( "click", sfRandomOrg );
 $( ".sfNumeroAleatorio" ).on( "click", sfNumeroAleatorio );
 // Faros
-$( ".sfFaroExt" ).on( "click", sfFaroExt);
+$( ".sfFaroExt" ).on( "click", faroext);
 $( ".sfFaroInt" ).on( "click", sfFaroInt );
 $( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
 $( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
@@ -92,6 +92,7 @@ $( ".sfUdd" ).on( "click", sfUdd );
 $( ".sfAntiUdd" ).on( "click", sfAntiUdd );
 $( ".sfRiffle" ).on( "click", sfRiffle );
 $( ".sfAntiRiffle" ).on( "click", sfAntiRiffle );
+$( ".sfTriangular" ).on( "click", sfTriangular );
 
 $( ".sfSeparaRojasNegras" ).on( "click", sfSeparaRojasNegras );
 $( ".sfSeparaNegrasRojas" ).on( "click", sfSeparaNegrasRojas );
@@ -131,47 +132,6 @@ $( ".volver" ).on( "click", estudiarVolver );
 $( ".sonido" ).on( "click", toggleSound );
 $( "#btnEjercita" ).on( "click", btnEjercita );
 
-// Entrar comando en consola
- $('#consolaInput').keydown(function(event){  
-       var keycode = (event.keyCode ? event.keyCode : event.which);  
-      // ENTER
-      if(keycode == '13'){
-          
-           inputConsola();
-           comandoHistorialN = 0;
-      } else {
-        // FLECHA DE ARRIBA
-        if (keycode == '38'){ 
-            if (comandosHistorial.length != 0){
-            var regresivo = comandosHistorial.length - comandoHistorialN;
-            
-                if (regresivo > 0){
-                    
-                    $("#consolaInput").val(comandosHistorial[regresivo-1]);
-                    comandoHistorialN++;
-                    
-                }
-            return false;
-
-            }
-        } else {
-            // Flecha abajo
-            if (keycode = '40'){
-            
-                if (comandosHistorial.length != 0){
-                var regresivo = comandosHistorial.length - comandoHistorialN + 2;
-                    
-                    if (regresivo < comandosHistorial.length + 1) {
-                    
-                    $("#consolaInput").val(comandosHistorial[regresivo-1]);
-                    comandoHistorialN--;
-    
-                    }
-                }
-            }
-        }
-      }
- });  
 function iniciar(){
     
     // Carga las preferencias guardadas
@@ -190,32 +150,33 @@ function iniciar(){
     if ( localStorage.getItem("consola_fondo") ) {
         var consola_fondo = abrirLocal("consola_fondo");
         $('#colorConsola').val(consola_fondo);
-        $('#consola').css('background',consola_fondo);        
+        cambiarColorConsola();      
     }
     
     if ( localStorage.getItem("consola_texto") ) {
         var consola_texto = abrirLocal("consola_texto");
         $('#colorConsolaTexto').val(consola_texto);
-        $('#consola').css('color',consola_texto);
+        cambiarColorConsolaTexto();
         
     }
     
     if ( localStorage.getItem("consola_fuente") ) {
         var consola_fuente = abrirLocal("consola_fuente");
         $('#fuenteConsola').val(consola_fuente);
-        $('#consola').css('font-family',consola_fuente);
+        cambiarFuenteConsola();
     }
     
     if ( localStorage.getItem("consola_fuenteSize") ) {
-        var consola_fuenteSize = abrirLocal("consola_fuenteSize");
-        $('#fuenteConsolaSize').val(consola_fuenteSize);
-        $('#consola').css('font-size',consola_fuenteSize+'pt');
+       var consola_fuenteSize = abrirLocal("consola_fuenteSize");
+       $('#fuenteConsolaSize').val(consola_fuenteSize);
+       cambiarFuenteSizeConsola();
     }
     
     if ( localStorage.getItem("imgDeck") ) {
         imgDeck = abrirLocal("imgDeck");
         imgType = abrirLocal("imgType");
     }
+    
     
     // ¿Había una baraja abierta en la sesión?
     if ( sessionStorage.getItem("baraja_autosave") ) {
@@ -312,14 +273,14 @@ function ordenarPersonal(){
 }
 function reiniciarPosiciones(){
     barajaActual.refreshOrder();
-    consola('reiniciar');
+    /*consola('reiniciar');*/
     abreBaraja();
 }
 function abreBaraja(){
      
     var contenido = '<ul class="baraja" id="naipes">';
     var rotulos = '';
-
+    deck = barajaActual.deck;
     for (var i = 0;i < barajaActual.deck.length ;i++){
         contenido = contenido + '<li id="'+i+'"><a class="naipe" id="naipe' + i + '" onmousedown="javascript:cartaActual('+i+')"><div class="rotulo">'+(barajaActual.deck[i].id+1)+'</div></a></li>';
         
@@ -362,20 +323,20 @@ function sfFisherYates() {
    
     var salida = barajaActual.fisherYates();
     renderizar();
-    consola(salida);
+    /*consola(salida);*/
 }
 function sfDurstenfeld() {
 
     var salida = barajaActual.durstenfeld();
     renderizar();
-    consola(salida);
+    /*consola(salida);*/
     
 }
 function sfSattolo() {
     
     var salida = barajaActual.sattolo();
     renderizar();
-    consola(salida);
+    /*consola(salida);*/
 }
 function sfRandomOrg(){
 disButtons(true);
@@ -398,7 +359,7 @@ var barajaTemp = barajaActual.deck.slice();
         
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
-        consola("radomOrg");
+        /*consola("radomOrg");*/
         disButtons(false);
         
     });
@@ -411,7 +372,7 @@ var barajaTemp = barajaActual.deck.slice();
     var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (barajaActual.deck.length-1) + "&numero=" + barajaActual.deck.length + "&repeticion=0&json=0"
         
     $.getJSON(apiUrl, function(contenido){
-        consola(contenido)
+        /*consola(contenido)*/
     
       //  for (var i = 0; i < barajaActual.deck.length ; i++){
     //        barajaActual.deck[i] = barajaTemp[body.result.random.data[i]]
@@ -454,38 +415,38 @@ function sfInvertir(cantidad){
     
         var salida = barajaActual.invertir(cantidad);
         renderizar();
-        consola(salida);
+        /*consola(salida);*/
     
 }
 function sfOverhand(){
  //   alert("MEZCLA EN LAS MANOS")
 }
-function sfFaroExt(cantidad){
+function faroext(cantidad){
     
     var salida = barajaActual.faroExt(cantidad);
     renderizar();
-    consola(salida);
+    /*consola(salida);*/
 
 }
 function sfFaroInt(cantidad){
 
     var salida = barajaActual.faroInt(cantidad);
     renderizar();
-    consola(salida);
+    /*consola(salida);*/
     
 }
 function sfAntiFaroExt(cantidad){
  
     var salida = barajaActual.antiFaroExt(cantidad);
     renderizar();
-    consola(salida);
+    /*consola(salida);*/
     
 }
 function sfAntiFaroInt(cantidad){
 
     var salida = barajaActual.antiFaroInt(cantidad);
     renderizar();
-    consola(salida);  
+    /*consola(salida);*/  
 }
 
 function renderizar(){
@@ -588,7 +549,7 @@ function verModulos(event){
         if (event.data.name == "Consola"){
     
             if ($("#mostrarConsola").bootstrapSwitch('state')){
-                $("#consolaInput").focus();
+                $("#moduloConsola").focus();
                 $(xModulo).collapse("show");
                 $(".setConsola").collapse("show");
             } else {
@@ -612,10 +573,15 @@ function verModulos(event){
 }
 function inputConsola(){
     var txtOrden = $("#consolaInput").val();
-    comandosHistorial.push(txtOrden);
-    txtOrden = txtOrden.toLowerCase()
+    //comandosHistorial.push(txtOrden);
+    //txtOrden = txtOrden.toLowerCase()
     $("#consolaInput").val("");
+    //salida = eval("("+txtOrden+")();");
+    salida = eval("("+txtOrden+")");
+    consola(salida);
+    // Defainiendo el parseador :)
     
+    return;
     // Divide el input de la consola al encontrar un ";" generando así una secuencia de órdenes.
     txtOrden = txtOrden.split(";");
 
@@ -677,7 +643,7 @@ function ejecutarComando(texto){
                 return;
             case "clear":
             case "clr":
-                $("#consolaOutput").text("");
+                clear();
                 return;
             case "recargar":
             case "refresh":
@@ -755,7 +721,7 @@ function ejecutarComando(texto){
                 return;
             case "faroext":
             case "fo":
-                sfFaroExt(argumento);
+                faroext(argumento);
                 return;
             case "faroint":
             case "fi":
@@ -780,11 +746,13 @@ function ejecutarComando(texto){
                 sfSeparaRojasNegras();
                 return;
             case "leer":
+                consola('Comenzando lectura, escriba "stop" para detener...');
+                cargarSonido("miguel");
                 sonido.playString(barajaActual.get2Bfaces());
                 return;
-            case "leer stop":
-            case "parar lectura":
+            case "stop":
                 sonido.stop();
+                consola('Se ha detenido la lectura.');
                 return;
             case "generarqr":
             case "qr":
@@ -919,23 +887,24 @@ var inicia;
 }
 function cambiarColorConsola(){
     var color = $('#colorConsola').val();
-    $('#consola').css('background',color);
+    $('#moduloConsola, .terminal-output, .cmd').css('background',color);
     guardarLocal("consola_fondo",color);
 }
 function cambiarColorConsolaTexto(){
     var color = $('#colorConsolaTexto').val();
-    $('#consola').css('color',color);
+    $('.terminal-output, .cmd').css('color',color);
     guardarLocal("consola_texto",color);
 }
 function cambiarFuenteConsola(){
     var fuente = $('#fuenteConsola').val();
-    $('#consola').css('font-family',fuente);
+    $('.terminal-output, .cmd').css('font-family',fuente);
     guardarLocal("consola_fuente",fuente);
     
 }
 function cambiarFuenteSizeConsola(){
     var fuenteSize = $('#fuenteConsolaSize').val();
-    $('#consola').css('font-size',fuenteSize+'pt');
+    $('.terminal-output, .cmd').css('font-size',fuenteSize+'pt');
+    $('.terminal div').css('margin-bottom',(fuenteSize-10)+'px');
     guardarLocal("consola_fuenteSize",fuenteSize);
     
 }
@@ -1598,6 +1567,11 @@ function sfRiffle(){
     consola(salida);
 }
 
+function sfTriangular(){
+    
+    var salida = barajaActual.triangular();
+    
+}
 function sfSeparaRojasNegras(){
 
     barajaActual.deck = barajaActual.getReds().concat(barajaActual.getBlacks());
@@ -2096,7 +2070,8 @@ function repasaMostrar(id){
     $(".nombreCarta").html(aTexto(barajaMemo[id]));
     
     if($('#modalEstMemo .sonido span').hasClass("glyphicon-volume-up")){
-    
+        
+        cargarSonido("miguel");
         sonido.playString(("00"+(id+1)).slice(-2) + barajaMemo[id].slice(-2));
     
     }
@@ -2120,8 +2095,9 @@ function estudiarStop(){
     
 }
 
-var sonido = new Howl({
-  urls: ['audio/miguel.mp3'],
+function cargarSonido(nombre){
+sonido = new Howl({
+  urls: ['audio/'+nombre+'.mp3'],
   sprite: {
     'AP': [00000, 1000],'2P': [01289, 1000],'3P': [02703, 1000],'4P': [03980, 1000],
     '5P': [05347, 1100],'6P': [06816, 1000],'7P': [08193, 1200],'8P': [09778, 1000],
@@ -2153,3 +2129,5 @@ var sonido = new Howl({
     '  ': [126173, 250]
   }
 });
+
+}

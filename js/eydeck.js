@@ -47,7 +47,8 @@ function EyDeck(cartas,dorsos){
     this.downUnderDeal = downUnderDeal;
     this.antiDownUnderDeal = antiDownUnderDeal;
     this.underDownDeal = underDownDeal;
-    this.antiUnderDownDeal = antiUnderDownDeal
+    this.antiUnderDownDeal = antiUnderDownDeal;
+    this.triangular = triangular;
     this.riffle = riffle;
     this.antiRiffle = antiRiffle;
     this.fisherYates = fisherYates;
@@ -684,6 +685,35 @@ function sattolo(){
     return "sattolo";
 }
 
+function triangular(){
+var tRows = [];
+var i,j,k = 0;
+var arrayTest = [0,1,2,3,4,6,7,8,9,10];
+
+tRows[0] = [];
+cadena = "";
+do{
+
+    tRows[k].push(arrayTest[i]);
+    j++;
+
+    if(j == (k+1)){
+
+        j=0;
+        k++;
+        tRows[k] = [];
+
+    }
+    i++;
+}while(i < arrayTest.length);
+
+for (var l = 0;l < tRows.length;l++){
+    cadena == cadena + tRows[l].join(",") + "/";
+}
+    
+notificar(cadena)
+}
+
 // Mover una carta a Top 
 function toTop(posCarta){
     var barajaTemp =  this.deck.slice();
@@ -726,21 +756,21 @@ function add(n,a,b,c,d,e,f){
 }
 
 // es roja?
-function isRed(id){
-    var suit = this.deck[id].face.slice(-1);
+function isRed(carta){
+    var suit = carta.face.slice(-1);
     return suit == "C" || suit == "D";
 }
 
 // es negra?
-function isBlack(id){
-    var suit = this.deck[id].face.slice(-1);
+function isBlack(carta){
+    var suit = carta.face.slice(-1);
     return suit == "P" || suit == "T";
 }
 
 function getReds(){
     var rojas = [];
     for(var i=0;i<this.deck.length;i++){
-        if(isRed(i)){
+        if(isRed(this.deck[i])){
             rojas.push(this.deck[i])
         }
     }
@@ -750,7 +780,7 @@ function getReds(){
 function getBlacks(){
     var negras = [];
     for(var i=0;i<this.deck.length;i++){
-        if(isBlack(i)){
+        if(isBlack(this.deck[i])){
             negras.push(this.deck[i])
         }
     }

@@ -16,6 +16,7 @@
     <link href="css/bootstrap-switch.min.css" rel="stylesheet">
     <link href="css/bselect.css" rel="stylesheet">
     <link href="css/bootstrap-slider.css" rel="stylesheet">
+    <link href="css/jquery.terminal-0.9.3.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.min.js"></script>
@@ -23,6 +24,7 @@
     <link href="style.css" rel="stylesheet">
     <!-- Menu contextuales -->
     <link href="css/context.bootstrap.css" rel="stylesheet">
+    
     
       
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -134,6 +136,7 @@
                             <ul class="dropdown-menu">
                                 <li><a id="vrMatriz" href="#" accesskey="q"><span id="txtVerMatriz" class="glyphicon glyphicon-check" aria-hidden="true"></span> Matriz<span class="atajo">Alt+Q</span></a></li>
                                 <li><a id="vrBotonera" href="#" accesskey="z"><span id="txtVerBotonera" class="glyphicon glyphicon-check" aria-hidden="true"></span> Botonera<span class="atajo">Alt+Z</span></a></li>
+                                <li><a id="vrConsola" href="#" accesskey="x"><span id="txtVerConsola" class="glyphicon glyphicon-check" aria-hidden="true"></span> Consola<span class="atajo">Alt+X</span></a></li>
                             </ul>
                         </li>
                         <li><a id="vrGraph" href="#" accesskey="g" target="_blank"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Graficar<span class="atajo">Alt+G</span></a></li>
@@ -204,6 +207,7 @@
     
         <br>
 
+        <input type="button" class="btn btn-primary sfTriangular" value="Tirangular" data-toggle="popover" data-trigger="hover" data-title="Mezcla triangular Up" data-content="Se colocan las cartas de izquierdaa derecha en filas, una carta en la primer columna, dos en la segunda, tres en la tercera, etc. A continuación se recogen por columnas no se como">
         <input type="button" class="btn btn-primary sfDud" value="DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (Australiana)" data-content="Teniendo baraja en la mano, coloca la primer carta debajo y la siguiente se coloca en la mesa. Se repite la operación hasta que no queden cartas en la mano.">
         <input type="button" class="btn btn-primary sfAntiDud" value="-DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (inversa)" data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
         <input type="button" class="btn btn-primary sfUdd" value="UDD" data-toggle="popover" data-trigger="hover" data-title="Under Down Deal" data-content="Teniendo baraja en la mano, coloca la primer carta en la mesa y la siguiente se coloca debajo de la baraja. Se repite la operación hasta que no queden cartas en la mano.">
@@ -221,9 +225,7 @@
         <input type="button" class="btn btn-primary sfRandomOrg" value="Random.org" data-toggle="popover" data-trigger="hover" data-title="Azar Random.org" data-content="Mezcla aleatoria a partir del ruido atmosférico, utilizando el servicio Random.Org a través de la API ofrecida en su web.">
     </div>
 </div>
-<div id="moduloConsola">
-<div id="consola">><input id="consolaInput" type="text"/>
-<div id="consolaOutput"></div>
+<div id="moduloConsola" class="collapse in">
 </div>
 </div>
 
@@ -661,12 +663,12 @@
                   <td data-toggle="popover" data-title="Permutaciones posibles" data-content="En una baraja con cartas hay n! (factorial de n) permutaciones posibles:<br><pre>n! = 1 × 2 × 3 × … × n-1 × n</pre>"><span class="permutaciones"></span></td>
               </tr>
               <tr>
-                  <td data-toggle="popover" data-title="Mezclas Faro Exterior para ordenar" data-content="Para saber cuántas Mezclas Faro Exterior se necesitan en una baraja de n cartas para volver al órden inicial se debe averiguar el órden multiplicativo de 2 módulo n-1.">ord<sub>2</sub>(n-1)<span class="farosOutOrdenan"></span></td>
-                  <td data-toggle="popover" data-title="Mezclas Faro Interior para ordenar" data-content="Para saber cuántas Mezclas Faro Interior se necesitan en una baraja de n cartas para volver al órden inicial se debe averiguar el órden multiplicativo de 2 módulo n+1.">ord<sub>2</sub>(n+1)<span class="farosIntOrdenan"></span></td>
+                  <td data-toggle="popover" data-title="Mezclas Faro Exterior para ordenar" data-content="Para saber cuántas Mezclas Faro Exterior se necesitan en una baraja de n cartas para volver al orden inicial se debe averiguar el <a href='https://es.wikipedia.org/wiki/Orden_multiplicativo' target='blank'>orden multiplicativo</a> de 2 módulo n-1.">ord<sub>2</sub>(n-1)<span class="farosOutOrdenan"></span></td>
+                  <td data-toggle="popover" data-title="Mezclas Faro Interior para ordenar" data-content="Para saber cuántas Mezclas Faro Interior se necesitan en una baraja de n cartas para volver al irden inicial se debe averiguar el <a href='https://es.wikipedia.org/wiki/Orden_multiplicativo' target='blank'>orden multiplicativo</a> de 2 módulo n+1.">ord<sub>2</sub>(n+1)<span class="farosIntOrdenan"></span></td>
               </tr>
               <tr>
                   <td data-toggle="popover" data-title="Mezclas necesarias para alcanzar el azar" data-content="Cantidad de mezclas riffle (a la americana) necesarias para romper todos los patrones existentes en una baraja de n cartas.<br>Para más información <a href='http://statweb.stanford.edu/~cgates/PERSI/papers/bayer92.pdf' target='blank'>click aquí</a>."><img src="img/maths/32log_2(n).png"><span class="mezclasNecesarias"></span></td>
-                  <td data-toggle="popover" data-title="Adivinaciones probables" data-content="Estadísticamente se pueden adivinar un promedio de H(n)  cartas siendo el número total de la baraja el n-ésimo número de la Serie Armónica:<br><pre>H<sub>n</sub> = <sup>1</sup>/<sub>1</sub> + <sup>1</sup>/<sub>2</sub> + <sup>1</sup>/<sub>3</sub> + … + <sup>1</sup>/<sub>n</sub></pre>"><img src="img/maths/h(n).png"> <span class="adivinacionesProbables"></span> (<span class="adivinacionesPorcentaje"></span>)</td>
+                  <td data-toggle="popover" data-title="Adivinaciones probables" data-content="Estadísticamente se pueden adivinar un promedio de H(n)  cartas siendo el número total de la baraja el n-ésimo número de la <a href='https://es.wikipedia.org/wiki/Serie_armónica_(matemática)' target='blank'>Serie armónica</a>:<br><pre>H<sub>n</sub> = <sup>1</sup>/<sub>1</sub> + <sup>1</sup>/<sub>2</sub> + <sup>1</sup>/<sub>3</sub> + … + <sup>1</sup>/<sub>n</sub></pre>"><img src="img/maths/h(n).png"> <span class="adivinacionesProbables"></span> (<span class="adivinacionesPorcentaje"></span>)</td>
               </tr>
               <tr>
               <td colspan="2" data-toggle="popover" data-title="Permutaciones" data-content="Los sucesivos valores indican el valor ordinal que ocupa cada elemento en relación al conjunto inicial. Es decir el lugar donde se encuentran las cartas luego de mezclarlas."><span class="barajaPermutaciones"></span></td>    
@@ -842,7 +844,7 @@
                     <td><input id="colorConsola" class="inputSettings" type="color" value="#000000"></td>
                     
                     <td>Texto</td>
-                    <td><input id="colorConsolaTexto" class="inputSettings" type="color" value="#ffffff"></td>
+                    <td><input id="colorConsolaTexto" class="inputSettings" type="color" value="#aaaaaa"></td>
                 </tr>
                 <tr class="setConsola">
                     <td>Tipografía</td>
@@ -860,10 +862,10 @@
                  <tr><th colspan="3">Rótulos en las cartas</th><th><input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
                  <tr class="setRotulos">
                     <td>Comienza en</td>
-                    <td><input id="unoceroRotulos" data-size="mini" data-label-width="50" data-handle-width="50" class="inputSettings form-control" type="checkbox" data-on-text="1" data-off-text="0" data-off-color="primary" checked></td>
+                    <td><input id="unoceroRotulos" data-size="mini" data-label-width="50" data-handle-width="50" class="inputSettings form-control" type="checkbox" accesskey="0" data-on-text="1" data-off-text="0" data-off-color="primary" checked></td>
                     
                     <td>Relativas</td>
-                    <td><input id="relativasTipo" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="0" data-on-text="Decimal" data-off-text="Binario" data-off-color="primary" checked></td>
+                    <td><input id="relativasTipo" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="=" data-on-text="Decimal" data-off-text="Binario" data-off-color="primary" checked></td>
                 </tr>
                 <tr><th colspan="2">Notificaciones</th><th colspan="2">Textos de ayuda</th></tr>
                 <tr>
@@ -954,6 +956,55 @@
     <script src="js/context.js"></script>
     <script src="js/html2canvas.min.js"></script>
     <script src="js/print.js"></script>
+    <script src="js/jquery.terminal-0.9.3.js"></script>
+    <script src="js/jquery.mousewheel-min.js"></script>
   </body>
     
 </html>
+
+
+<script>
+
+jQuery(document).ready(function($) {
+    var id = 1;
+    $('#moduloConsola').terminal(function(command, term) {
+        if (command == 'help') {
+            term.echo("haga <a href='docs' target='blank'>click aquí</a> para ver la ayuda",{raw:true});
+        } else if (command == 'faro'){
+            term.push(function(command, term) {
+                if (command == 'help') {
+                    term.echo('La mezcla faro separa la baraja de n cartas dos paquetes A y B, donde A = B (para n mod 2 = 0) y A = B + 1 || A = B - 1 (para n mod 2 = 1)');
+                } else if (command == 'ext') {
+                    sfFaroExt();
+                    term.echo('faroExt(52)');
+                } else {
+                    term.echo('se desconoce el comando ' + command);
+                }
+            }, {
+                prompt: 'faro> ',
+                name: 'faro'});
+        } else if (command == "js") {
+            term.push(function(command, term) {
+                var result = window.eval(command);
+                if (result != undefined) {
+                    
+                    term.echo("  < "+String(result));
+                } 
+            }, {
+                name: 'js',
+                prompt: '> '});
+        } else {
+            term.echo("se desconoce el comando " + command);
+        }
+    }, {
+        greetings: '',
+        prompt: 'user@eydeck:~$ ' 
+       /* onBlur: function() {
+            // prevent loosing focus
+            return false;
+        }*/
+    });
+    
+});
+    
+</script>
