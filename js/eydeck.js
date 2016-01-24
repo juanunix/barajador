@@ -55,6 +55,11 @@ function EyDeck(cartas,dorsos){
     this.durstenfeld = durstenfeld;
     this.sattolo = sattolo;
     
+    this.toString = function(){
+        
+        return "barajaActual";
+        
+    }
 }
 
 // Crea el objeto del naipe individual
@@ -69,6 +74,11 @@ function naipe(i,cara,dorso){
     this.crimpB = false;
     this.crimpTag = "";
     
+    this.toString = function(){
+        
+        return "[ face:" + this.face + ", back:" + this.back + " ]";
+        
+    }
         
 }
 

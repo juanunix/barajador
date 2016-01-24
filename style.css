@@ -420,6 +420,12 @@ th {
     padding: 2px 5px;
 }
 
+.sinBordeTop{
+
+    border-top: none !important;
+    
+}
+
 .printable td {
     
     font-family: "Liberation Serif";

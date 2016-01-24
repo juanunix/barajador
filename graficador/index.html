@@ -15,6 +15,7 @@
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     
     <!-- Open Graph -->
     <meta property="og:locale" content="es_ES" />
@@ -25,91 +26,25 @@
     <meta property="og:site_name" content="Graficador" />
     <meta property="og:image" content="" />
     
-<style type="text/css">
-body { 
-    background-color: #40001b;
-    background-image: url("../img/table/suits-light.png");
-    text-align: center;
-    margin:0px 0px;
-}
-
-canvas {
-    border: 1px solid black;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    background: white;
-}
-label {
-    border: 1px solid grey;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    padding:2px;
-    vertical-align:middle;
-    background:white;
-    cursor: pointer;
-}
-
-#mostrar-ciclos label {
-    font-weight: bold;
-    display: none;
-}
-#inpEspacio {
-    width: 40px;
-    text-align: center;
-}
-#preferencias {
-    background: #eee;
-    padding: 5px 0px;
-    margin-bottom:20px;
-    -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
-}
-</style>
 </head>
 
 <body>
+<canvas id="grafico" width="800" height="500"></canvas>
 
-<div id="preferencias">Ciclos:
- <span id="mostrar-ciclos">
-     <label id="l1"><span id="s1">1</span> <input type="checkbox" id="inp1" checked onChange="dibujar()"></label>
-     <label id="l2"><span id="s2">2</span> <input type="checkbox" id="inp2" checked onChange="dibujar()"></label>
-     <label id="l3"><span id="s3">3</span> <input type="checkbox" id="inp3" checked onChange="dibujar()"></label>
-     <label id="l4"><span id="s4">4</span> <input type="checkbox" id="inp4" checked onChange="dibujar()"></label>
-     <label id="l5"><span id="s5">5</span> <input type="checkbox" id="inp5" checked onChange="dibujar()"></label>
-     <label id="l6"><span id="s6">6</span> <input type="checkbox" id="inp6" checked onChange="dibujar()"></label>
-     <label id="l7"><span id="s7">7</span> <input type="checkbox" id="inp7" checked onChange="dibujar()"></label>
-     <label id="l8"><span id="s8">8</span> <input type="checkbox" id="inp8" checked onChange="dibujar()"></label>
-     <label id="l9"><span id="s9">9</span> <input type="checkbox" id="inp9" checked onChange="dibujar()"></label>
-     <label id="l10"><span id="s10">10</span> <input type="checkbox" id="inp10" checked onChange="dibujar()"></label>
-     <label id="l11"><span id="s11">11</span> <input type="checkbox" id="inp11" checked onChange="dibujar()"></label>
-     <label id="l12"><span id="s12">12</span> <input type="checkbox" id="inp12" checked onChange="dibujar()"></label>
-     <label id="l13"><span id="s13">13</span> <input type="checkbox" id="inp13" checked onChange="dibujar()"></label>
-     <label id="l14"><span id="s14">14</span> <input type="checkbox" id="inp14" checked onChange="dibujar()"></label>
-     <label id="l15"><span id="s15">15</span> <input type="checkbox" id="inp15" checked onChange="dibujar()"></label>
-     <label id="l16"><span id="s16">15</span> <input type="checkbox" id="inp16" checked onChange="dibujar()"></label>
-     <label id="l17"><span id="s17">15</span> <input type="checkbox" id="inp17" checked onChange="dibujar()"></label>
-     <label id="l18"><span id="s18">15</span> <input type="checkbox" id="inp18" checked onChange="dibujar()"></label>
-     <label id="l19"><span id="s19">15</span> <input type="checkbox" id="inp19" checked onChange="dibujar()"></label>
-     <label id="l20"><span id="s20">15</span> <input type="checkbox" id="inp20" checked onChange="dibujar()"></label>
- </span><br>
+
+<div id="mostrar-ciclos"></div>
+<div id="preferencias">
  <input type="checkbox" class="bts" data-size="mini" id="inpRadial" data-label-text="Gráfico" checked data-on-text="Lineal" data-off-text="Circular" data-off-color="primary" onChange="dibujar()">
  <input type="checkbox" class="bts" data-size="mini" data-label-text="Posiciones" data-on-text="Ver" id="inpPosiciones" checked onChange="dibujar()">
  <input type="checkbox" class="bts" data-size="mini" data-label-text="R&oacute;tulos" data-on-text="Ver" id="inpRotulos" checked onChange="dibujar()">
- <input type="checkbox" class="bts" data-size="mini" data-label-text="Partici&oacute;n" data-on-text="Natural" data-off-text="Multiplicativa" id="inpParticion" data-off-color="primary" onChange="dibujar()">
  Zoom: <input id="inpEspacio" type="number" min="1" max="20" value="15" onChange="dibujar()">
 </div>
-
-<canvas id="grafico" width="800" height="500"></canvas>
 
 <script src="../js/jquery.min.js"></script>
 <script src="../js/jquery-ui.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/bootstrap-switch.min.js"></script>
 <script src="main.js"></script>
-    
 </body>
 
 </html>

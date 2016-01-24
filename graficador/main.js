@@ -3,12 +3,29 @@ var orden = getQueryVariable("orden");
 var colores = ["#bf2330","#0ff","#0f0","#00f","#ff0","#f0f","#f00","#888","#7c0741","#280b5d","#146961","#98cb3e","#ef6f2d","#186c68"];
 var oCanvas = document.getElementById("grafico");
 var cxt = oCanvas.getContext("2d");
-var pY = 250;
-var centroX = (800/2);
-var centroY = (500/2);
 var sumandos;
+var ciclosArray = [];
+var primera = true;
 
+function setFullscreen(){
+    $("#grafico").attr("width",window.innerWidth+"px")
+    $("#grafico").attr("height",(window.innerHeight+46)+"px")
     
+    var w = window.innerWidth / grafico.width;
+    var h = (window.innerHeight+46) / grafico.height;
+    var scale = Math.min(h, w);
+    grafico.style.width = (grafico.width * scale) + 'px';
+    grafico.style.height = (grafico.height * scale) + 'px';
+    grafico.style.position = 'fixed';
+    grafico.style.left = '50%';
+    grafico.style.top = '50%';
+    grafico.style.marginLeft = -(grafico.width * scale) / 2 + 'px';
+    grafico.style.marginTop = -(grafico.height * scale) / 2 + 'px';
+
+}
+
+setFullscreen();
+
 // Dibuja cada mezcla
 function dM(inicial,final){
   
@@ -82,13 +99,17 @@ function dCiclo(nums){
 }
 
 function dibujar(){
+    pY = (grafico.height/2);
+    centroX = (grafico.width/2);
+    centroY = (grafico.height/2);
   // Primero borra el dibujo anterior
+    
   cxt.fillStyle = "white";
   cxt.fillRect(0, 0, oCanvas.width, oCanvas.height);
 
   // Lee las preferencias
   dotEspacio = $("#inpEspacio").val();
-  margenX = (800/2) - (orden.length * dotEspacio)/2;
+  margenX = (grafico.width/2) - (orden.length * dotEspacio)/2;
   alfa = Math.PI*2 / orden.length;
   modif = alfa * orden.length/2;
   radio = 200;
@@ -127,11 +148,11 @@ function dibujar(){
     }
   }
 
-  // mostrando la matriz graficada
+  /*// mostrando la matriz graficada
   cxt.font = "12px Georgia";
   cxt.fillStyle = "black";
   cxt.textAlign = "left";
-  cxt.fillText(orden,10,25);
+  cxt.fillText(orden,10,22);
     
   // Creando la partición de lambda(x)
   cxt.font = "14px Georgia";
@@ -182,8 +203,8 @@ function dibujar(){
         
   }
     
-  cxt.fillText("λ₍"+num+"₎=("+particion+")",790,480);
-
+  cxt.fillText("λ₍"+num+"₎=("+particion+")",900,600);
+*/
 }
     
 function getQueryVariable(variable)
@@ -223,17 +244,24 @@ do{
     ciclos.push(ciclo.toString());
     
     sumandos.push(ciclo.length);
- 
     
-    // Dibuja el ciclo si tiene más de un paso
+    // Crea checkbox del ciclo si tiene más de un paso
     if (ciclo.length != 1){
+        
+        if ( primera ) {    
+        
+            $("<div class='itemCiclo'><label id='l"+ciclos.length+"'><span id='s"+ciclos.length+"'>1</span> <input type='checkbox' id='inp"+ciclos.length+"' checked onChange='dibujar()'></label></div>").appendTo("#mostrar-ciclos");
+        
+        }
         
         $("#l"+(ciclos.length)).css("color",colores[ciclos.length-1]);
         $("#s"+(ciclos.length)).html(ciclo[0]);
         $("#l"+(ciclos.length)).css("display","inline-block");
+        
         if ($("#inp"+(ciclos.length)).prop("checked")){
             cxt.strokeStyle = colores[ciclos.length-1];
             dCiclo(ciclo.toString());
+        
         }
         
     } else 
@@ -246,7 +274,11 @@ do{
     do{e++} while(tempO[e-1] == 0);
         
 } while (e <= orden.length);
-
+    
+if (primera){
+    primera = false;
+}
+    
 }
 
 dibujar();

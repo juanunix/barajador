@@ -182,7 +182,7 @@ function iniciar(){
     if ( sessionStorage.getItem("baraja_autosave") ) {
         deck = new EyDeck(abrirSesion("baraja_autosave"));
         var posicionesActuales = abrirSesion("baraja_posiciones_autosave")
-        alert(posicionesActuales);
+        
         posicionesActuales = posicionesActuales.split(",");
         for (var i=0;i<deck.card.length;i++){
         
@@ -467,8 +467,7 @@ function renderizar(){
         }finally {
         
         }
-        
-        $("#vrGraph").attr("href","graficador?orden="+ordenI);
+    
     
     // Renderiza la Matriz v Ascii
     if (true == false){
@@ -572,17 +571,8 @@ function verModulos(event){
         $(xModulo).collapse("hide");
     }
 }
-function inputConsola(){
-    var txtOrden = $("#consolaInput").val();
-    //comandosHistorial.push(txtOrden);
-    //txtOrden = txtOrden.toLowerCase()
-    $("#consolaInput").val("");
-    //salida = eval("("+txtOrden+")();");
-    salida = eval("("+txtOrden+")");
-    consola(salida);
-    // Defainiendo el parseador :)
-    
-    return;
+function parseador(txtOrden){
+    alert(txtOrden);
     // Divide el input de la consola al encontrar un ";" generando así una secuencia de órdenes.
     txtOrden = txtOrden.split(";");
 
@@ -596,7 +586,7 @@ function inputConsola(){
             if (txtComando.length == 2){
                 
                 if (isNaN(parseInt(txtComando[1]))){
-                    consola("'" + txtComando[1] + "' no es un multiplicador válido.")
+                    //consola("'" + txtComando[1] + "' no es un multiplicador válido.")
                 }else{
                 
                     txtComando[1] = parseInt(txtComando[1]);
@@ -747,13 +737,11 @@ function ejecutarComando(texto){
                 sfSeparaRojasNegras();
                 return;
             case "leer":
-                consola('Comenzando lectura, escriba "stop" para detener...');
                 cargarSonido("miguel");
                 sonido.playString(deck.get2Bfaces());
                 return;
             case "stop":
                 sonido.stop();
-                consola('Se ha detenido la lectura.');
                 return;
             case "generarqr":
             case "qr":
@@ -766,7 +754,7 @@ function ejecutarComando(texto){
             case "":
                 return;
             default:
-                consola(texto + ": No se encontró la orden");
+                //consola(texto + ": No se encontró la orden");
                 return;
         }
 }
@@ -909,6 +897,14 @@ function cambiarFuenteSizeConsola(){
     guardarLocal("consola_fuenteSize",fuenteSize);
     
 }
+
+$( "#mostrarErrores" ).on('switchChange.bootstrapSwitch', function(event, state) {
+   if (state){
+       $('.exception.stack-trace').css("display","inline-block");
+   }else{
+       $('.exception.stack-trace').css("display","none");
+   }
+});
 function reiniciarTema(){
     localStorage.removeItem("tapete_fondo");
     localStorage.removeItem("tapete_textura");

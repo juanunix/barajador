@@ -651,12 +651,19 @@
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Análisis matemático</h4>
       </div>
       <div class="modal-body">
-        <div class="printable">
-            
-            
+       <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#resumen">Resumen</a></li>
+          <li><a data-toggle="tab" href="#grafico">Gráfico</a></li>
+        </ul>
+
+        <div class="tab-content printable">
+            <div id="grafico" class="tab-pane fade">
+             <canvas></canvas>
+            </div>
+          <div id="resumen" class="tab-pane fade in active">
           <table class="table">
               <tr>
-                  <td colspan="2" data-toggle="popover" data-title="Matriz de la baraja" data-content="Representación en texto de el orden de la baraja, en donde cada elemento se encuentra separado por comas Para más información sobre la codificación <a href='docs/#matriz' target='blank'>click aquí</a>."><span class="barajaMatriz"></span></td>
+                  <td class="sinBordeTop" colspan="2" data-toggle="popover" data-title="Matriz de la baraja" data-content="Representación en texto de el orden de la baraja, en donde cada elemento se encuentra separado por comas Para más información sobre la codificación <a href='docs/#matriz' target='blank'>click aquí</a>."><span class="barajaMatriz"></span></td>
               </tr>
               <tr>
                   <td data-toggle="popover" data-title="Cantidad de cartas" data-content="n es un número natural que representa el total de cartas de la baraja, expresado en notación en el sistema decimal (n<sub>10</sub>) y en binario (n<sub>2</sub>). Desde ese valor partirán la mayoría de las fórmulas posteriores."><span class="cantidad"></span></td>
@@ -681,8 +688,10 @@
               <td data-toggle="popover" data-title="Periodo de la permutación" data-content="El período represetan el Mínimo Común Múltiplo de la de las longitudes de los ciclo. Dando por tanto el número de permutaciones P necesarias para volver al estado inicial."><span class="periodoPermutacion"></span></td>
               </tr>
           </table>        
-        </div>
+           
+            </div>
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-primary helpStats">?</button>
         <button type="button" class="btn btn-primary printStats">Imprimir</button>
@@ -859,6 +868,15 @@
                         <span class="input-group-addon">pt</span>
                         </span></td>
                  </tr>
+                 <tr class="setConsola">
+                    <td>Descripción de errores</td>
+                    <td><input id="mostrarErrores" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" data-on-text="Mostrar" data-off-text="Ocultar"></td>
+                    <td>Lineas</td>
+                    <td><span class="input-group inputSettings">
+                        <input id="fuenteConsolaSize" type="number" class="form-control" value="120" min="20" max="400" step="10">
+                        <span class="input-group-addon">px</span>
+                        </span></td>
+                 </tr>
                  <tr><th colspan="3">Rótulos en las cartas</th><th><input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
                  <tr class="setRotulos">
                     <td>Comienza en</td>
@@ -970,31 +988,19 @@ jQuery(document).ready(function($) {
     $('#moduloConsola').terminal(function(command, term) {
         if (command == 'help') {
             term.echo("haga <a href='docs' target='blank'>click aquí</a> para ver la ayuda",{raw:true});
-        } else if (command == 'faro'){
-            term.push(function(command, term) {
-                if (command == 'help') {
-                    term.echo('La mezcla faro separa la baraja de n cartas dos paquetes A y B, donde A = B (para n mod 2 = 0) y A = B + 1 || A = B - 1 (para n mod 2 = 1)');
-                } else if (command == 'ext') {
-                    sfFaroExt();
-                    term.echo('faroExt(52)');
-                } else {
-                    term.echo('se desconoce el comando ' + command);
-                }
-            }, {
-                prompt: 'faro> ',
-                name: 'faro'});
         } else if (command == "js") {
             term.push(function(command, term) {
                 var result = window.eval(command);
                 if (result != undefined) {
                     
-                    term.echo("  < "+String(result));
+                    term.echo("< "+String(result));
                 } 
             }, {
                 name: 'js',
                 prompt: '> '});
         } else {
-            term.echo("se desconoce el comando " + command);
+            parseador(command);
+            //term.echo("se desconoce el comando " + command);
         }
     }, {
         greetings: '',

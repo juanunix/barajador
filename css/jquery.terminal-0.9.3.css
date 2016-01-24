@@ -267,3 +267,8 @@
 .terminal a:hover {
     color: red;
 }
+
+.exception.stack-trace {
+    
+    display: none;
+}
