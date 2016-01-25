@@ -95,7 +95,7 @@ do{
         
 } while (e <= orden.length);
 
-    return producto;
+    return producto
 }
 
 // Eliminar elementos repetidos y unos

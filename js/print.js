@@ -37,9 +37,12 @@ jQuery.fn.print = function(){
     // Grab all the style tags and copy to the new
     // document so that we capture look and feel of
     // the current document.
-    var estilo = "body{font-family:'Liberation Serif';}"
+    var estilo = "body{font-family:'Liberation Serif';text-align:center}"
     estilo += "td{font-size:12pt;text-align:center;padding: 8px;line-height: 1.42857143;vertical-align: top;border-top: 1px solid #ddd;}";
     estilo += "img{vertical-align:middle}";
+    estilo += "canvas{display:none}";
+    estilo += "#graficar{text-align:center}";
+    estilo += "#graphOptions,input{display:none}";
     
     // Create a temp document DIV to hold the style tags.
     // This is the only way I could find to get the style
@@ -63,7 +66,7 @@ jQuery.fn.print = function(){
     objDoc.write( jStyleDiv.html() );
     objDoc.write( "</head>" );
     objDoc.write( "<body>" );
-    objDoc.write( "<h2>Informe</h2>" );
+    objDoc.write( "<h3>Análisis de la baraja actual</h3>" );
     objDoc.write( this.html() );
     objDoc.write( "</body>" );
     objDoc.write( "</html>" );

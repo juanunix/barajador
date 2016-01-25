@@ -426,6 +426,25 @@ th {
     
 }
 
+.imprimiblenovisible {
+    display: none;
+}
+
+#graficar {
+    text-align: center;
+    padding-top: 0px;
+}
+
+#graficoFs {
+    background: white;
+    padding-top:10px;
+}
+
+#contenedor {
+    overflow: hidden;
+    height: 430px;   
+}
+
 .printable td {
     
     font-family: "Liberation Serif";
@@ -488,6 +507,38 @@ th {
 
 .statAyuda:hover {
     outline: dashed 1.5px red;
+}
+
+#grafico {
+    width: 550px;
+    height: 350px;
+    
+}
+#graphOptions{
+    position: absolute;
+    right: 20px;
+    text-align: right;
+}
+
+#mostrar-ciclos label {
+    display: inline;
+    max-width: 100%;
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+
+#inpEspacio {
+    width: 45px;
+    text-align: right;
+}
+
+.itemCiclo{
+    font-size:10pt;
+    cursor: pointer;
+}
+
+.itemCiclo input {
+    display: none;
 }
 
 #modalAbrirDeck table{

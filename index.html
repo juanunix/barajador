@@ -139,7 +139,7 @@
                                 <li><a id="vrConsola" href="#" accesskey="x"><span id="txtVerConsola" class="glyphicon glyphicon-check" aria-hidden="true"></span> Consola<span class="atajo">Alt+X</span></a></li>
                             </ul>
                         </li>
-                        <li><a id="vrGraph" href="#" accesskey="g" target="_blank"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Graficar<span class="atajo">Alt+G</span></a></li>
+                       <!-- <li><a class="graflink" href="#" accesskey="g" target="_blank"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Graficar<span class="atajo">Alt+G</span></a></li>-->
                         <li><a id="vrStats" href="#" data-toggle="modal" data-target="#modalStats" accesskey="m"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Análisis matemático<span class="atajo">Alt+M</span></a></li>
                         <li class="divider"></li>
                         <li><a href="#" data-toggle="modal" accesskey="p" data-target="#modalPreferencias"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Preferencias...<span class="atajo">Alt+P</span></a></li>
@@ -343,7 +343,7 @@
                   <option value="DA">Azul</option>
                 </select></td>
                 <td>Mantener orden actual:</td>
-                <td width="90px"><input type="checkbox" class="mantenerOrden" data-on-text="Si" data-off-text="No" class="form-control"></td>
+                <td width="90px"><input type="checkbox" class="mantenerOrden chk" data-on-text="Si" data-off-text="No" class="form-control"></td>
             </tr>
         </table>
         </div>
@@ -467,7 +467,7 @@
           <div class="detalles">
               <table>
                 <tr>
-                  <td colspan="2" style="padding-bottom: 10px"><input type="checkbox" class="editarVer" data-size="small" data-handle-width="58" data-off-color="primary" data-on-text="Cara" data-off-text="Dorso" class="form-control" checked></td>
+                  <td colspan="2" style="padding-bottom: 10px"><input type="checkbox" class="editarVer chk" data-size="small" data-handle-width="58" data-off-color="primary" data-on-text="Cara" data-off-text="Dorso" class="form-control" checked></td>
                 </tr>
                 <tr>
                  <td><input type="text" class="editarCodigoCara form-control aC" maxlength="3" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"></td>
@@ -481,11 +481,11 @@
             </div>
           <table>
             <tr>
-                <td>Crimp:<br/><input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control"></td>
+                <td>Crimp:<br/><input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control chk"></td>
             </tr>
             <tr>
-                <td><div class="editarCrimpTipo collapse">Tipo:<br/><input type="checkbox" class="editarCrimpTopBottom form-control" data-off-color="primary" data-on-text="A Top" data-off-text="A Bottom" data-handle-width="69"></div></td>
-                <td><div class="editarCrimpTipo collapse">Etiqueta:<br/><input type="text" class="editarCrimpTag form-control inputSettings w90" maxlength="10"></div></td>
+                <td><div class="editarCrimpTipo collapse">Tipo:<br/><input type="checkbox" class="editarCrimpTopBottom form-control chk" data-off-color="primary" data-on-text="A Top" data-off-text="A Bottom" data-handle-width="69"></div></td>
+                <td><div class="editarCrimpTipo collapse chk">Etiqueta:<br/><input type="text" class="editarCrimpTag form-control inputSettings w90" maxlength="10"></div></td>
             </tr>
         </table>
       </div>
@@ -572,19 +572,19 @@
           <table>
             <tr>
                 <td>Cantidad:<br/><input type="number" class="form-control inputSettings multiplicador" value="1" min="1" max="99"></td>
-                <td>Mezcla:<br/><input id="faroAntiFaro" type="checkbox" data-off-color="primary" data-on-text="Faro" data-off-text="Antifaro" class="form-control" checked></td>
+                <td>Mezcla:<br/><input id="faroAntiFaro" type="checkbox" data-off-color="primary" data-on-text="Faro" data-off-text="Antifaro" class="form-control chk" checked></td>
             </tr>
             <tr>
-                <td>Tipo:<br/><input id="faroExtInt" type="checkbox" data-off-color="primary" data-on-text="Exterior" data-off-text="Interior" class="form-control" checked></td>
-                <td><br/><input type="checkbox" id="faroCantidad" data-off-color="primary" data-on-text="Total" data-off-text="Parcial" class="form-control" checked></td>
+                <td>Tipo:<br/><input id="faroExtInt" type="checkbox" data-off-color="primary" data-on-text="Exterior" data-off-text="Interior" class="form-control chk" checked></td>
+                <td><br/><input type="checkbox" id="faroCantidad" data-off-color="primary" data-on-text="Total" data-off-text="Parcial" class="form-control chk" checked></td>
             </tr>
             <tr>
                 <td><div class="collapse cantidadOpciones">Cartas:<input id="faroParcial" type="number" min="1" max="52" value="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></div></td>
-                <td><div class="collapse cantidadOpciones">Desde:<br/><input id="faroTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control" type="checkbox" checked></div></td>
+                <td><div class="collapse cantidadOpciones">Desde:<br/><input id="faroTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control chk" type="checkbox" checked></div></td>
             </tr>
             
             <tr class="collapse">
-                <td colspan="2">Calidad:<br/><input type="checkbox" id="faroCalidad" data-off-color="primary" data-on-text="Perfecta" data-off-text="Imperfecta" class="form-control" data-handle-width="118" checked></td>
+                <td colspan="2">Calidad:<br/><input type="checkbox" id="faroCalidad" data-off-color="primary" data-on-text="Perfecta" data-off-text="Imperfecta" class="form-control chk" data-handle-width="118" checked></td>
             </tr>
             <tr>
                 <td><div class="collapse calidadOpciones">Imperf de corte:<br/><span class="input-group inputSettings">
@@ -619,13 +619,13 @@
           <table>
             <tr>
                 <td>Cantidad:<br/><input type="number" class="form-control inputSettings multiplicador" value="10" min="1" max="99"></td>
-                <td>Corte:<br/><input id="catoCut" type="checkbox" data-off-color="primary" data-on-text="Azar" data-off-text="Número" class="form-control" checked></td>
+                <td>Corte:<br/><input id="catoCut" type="checkbox" data-off-color="primary" data-on-text="Azar" data-off-text="Número" class="form-control chk" checked></td>
             </tr>
                 <td><div class="collapse cantidadOpciones">Cartas:<input id="catoCutCant" type="number" min="1" max="52" value="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></div></td>
-                <td><div class="collapse cantidadOpciones">Desde:<br/><input id="catoTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control" type="checkbox" checked></div></td>
+                <td><div class="collapse cantidadOpciones">Desde:<br/><input id="catoTopBotom" data-off-color="primary" data-on-text="TOP" data-off-text="BOTTOM" class="form-control chk" type="checkbox" checked></div></td>
             </tr>
               <tr>
-                <td>Voltea:<br/><input id="catoTurn" type="checkbox" data-off-color="primary" data-on-text="Siempre" data-off-text="Azar" class="form-control" checked></td>
+                <td>Voltea:<br/><input id="catoTurn" type="checkbox" data-off-color="primary" data-on-text="Siempre" data-off-text="Azar" class="form-control chk" checked></td>
                 <td>Número:<br/><input type="number" class="form-control inputSettings turnNum" value="2" min="2" step="2" max="52"></td>
             </tr>
                 <td><div class="collapse turnOpciones">Desde:<input id="catoTurnDesde" type="number" value="2" min="2" step="2" max="52" class="form-control" style="width: 120px; height:22px; padding:0px; text-align:right"></div></td>
@@ -653,13 +653,30 @@
       <div class="modal-body">
        <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#resumen">Resumen</a></li>
-          <li><a data-toggle="tab" href="#grafico">Gráfico</a></li>
+          <li><a data-toggle="tab" href="#graficar">Gráfico</a></li>
         </ul>
-
         <div class="tab-content printable">
-            <div id="grafico" class="tab-pane fade">
-             <canvas></canvas>
+          <div id="graficar" class="tab-pane fade">
+            <div id="contenedor">
+            <div id="graficoFs">
+             <div id="graphOptions">
+             <button id="graphfs" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></a>
+             <button id="graphop" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#optionsCollapse"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
+             <div class="collapse" id="optionsCollapse">
+                 <div class="well">
+                     <input type="checkbox" class="bts chk" data-size="mini" id="inpRadial" data-label-text="Gráfico" checked data-on-text="Lineal" data-off-text="Circular" data-off-color="primary" onChange="dibujarGraph('grafico')">
+                     <input type="checkbox" class="bts chk" data-size="mini" data-label-text="Posiciones" data-on-text="Ver" id="inpPosiciones" checked onChange="dibujarGraph('grafico')">
+                     <input type="checkbox" class="bts chk" data-size="mini" data-label-text="R&oacute;tulos" data-on-text="Ver" id="inpRotulos" checked onChange="dibujarGraph('grafico')">
+     Zoom: <input id="inpEspacio" type="number" min="1" max="25" value="20" onChange="dibujarGraph('grafico')">
+                   </div>
             </div>
+             </div>
+             <canvas id="grafico" width="1100" height="700"></canvas>
+             <div id="mostrar-ciclos"></div>
+             <img id="grafoA" src="" class="imprimiblenovisible" style="width:100%">
+          </div>
+          </div>
+          </div>
           <div id="resumen" class="tab-pane fade in active">
           <table class="table">
               <tr>
@@ -687,9 +704,10 @@
               <td data-toggle="popover" data-title="Partición del orden los ciclos" data-content="Orden de los ciclos expresados como partición multiplicativa de n:<br><img src='img/maths/partition.png'>"><span class="ordenCiclos"></span></td>
               <td data-toggle="popover" data-title="Periodo de la permutación" data-content="El período represetan el Mínimo Común Múltiplo de la de las longitudes de los ciclo. Dando por tanto el número de permutaciones P necesarias para volver al estado inicial."><span class="periodoPermutacion"></span></td>
               </tr>
-          </table>        
+          </table>      
            
             </div>
+          
       </div>
       
       <div class="modal-footer">
@@ -847,7 +865,7 @@
                         <option value="big-suits-dark">Big suits (dark)</option>
                         </select></td>
                 </tr>
-                <tr><th colspan="3">Consola</th><th><input id="mostrarConsola" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="x" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
+                <tr><th colspan="3">Consola</th><th><input id="mostrarConsola" data-size="mini" data-label-width="56" class="inputSettings form-control chk" type="checkbox" accesskey="x" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
                 <tr class="setConsola">
                     <td>Fondo</td>
                     <td><input id="colorConsola" class="inputSettings" type="color" value="#000000"></td>
@@ -870,20 +888,20 @@
                  </tr>
                  <tr class="setConsola">
                     <td>Descripción de errores</td>
-                    <td><input id="mostrarErrores" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" data-on-text="Mostrar" data-off-text="Ocultar"></td>
+                    <td><input id="mostrarErrores" data-size="mini" data-label-width="56" class="inputSettings form-control chk" type="checkbox" data-on-text="Mostrar" data-off-text="Ocultar"></td>
                     <td>Lineas</td>
                     <td><span class="input-group inputSettings">
                         <input id="fuenteConsolaSize" type="number" class="form-control" value="120" min="20" max="400" step="10">
                         <span class="input-group-addon">px</span>
                         </span></td>
                  </tr>
-                 <tr><th colspan="3">Rótulos en las cartas</th><th><input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
+                 <tr><th colspan="3">Rótulos en las cartas</th><th><input id="mostrarRotulos" data-size="mini" data-label-width="56" class="inputSettings form-control chk" type="checkbox" accesskey="r" data-on-text="Mostrar" data-off-text="Ocultar" checked></th></tr>
                  <tr class="setRotulos">
                     <td>Comienza en</td>
-                    <td><input id="unoceroRotulos" data-size="mini" data-label-width="50" data-handle-width="50" class="inputSettings form-control" type="checkbox" accesskey="0" data-on-text="1" data-off-text="0" data-off-color="primary" checked></td>
+                    <td><input id="unoceroRotulos" data-size="mini" data-label-width="50" data-handle-width="50" class="inputSettings form-control chk" type="checkbox" accesskey="0" data-on-text="1" data-off-text="0" data-off-color="primary" checked></td>
                     
                     <td>Relativas</td>
-                    <td><input id="relativasTipo" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="=" data-on-text="Decimal" data-off-text="Binario" data-off-color="primary" checked></td>
+                    <td><input id="relativasTipo" data-size="mini" data-label-width="56" class="inputSettings form-control chk" type="checkbox" accesskey="=" data-on-text="Decimal" data-off-text="Binario" data-off-color="primary" checked></td>
                 </tr>
                 <tr><th colspan="2">Notificaciones</th><th colspan="2">Textos de ayuda</th></tr>
                 <tr>
@@ -894,7 +912,7 @@
                         </span></td>
                     
                     <td>En botones</td>
-                    <td><input id="mostrarAyudas" data-size="mini" data-label-width="56" class="inputSettings form-control" type="checkbox" accesskey="?" data-on-text="Mostrar" data-off-text="Ocultar"></td>
+                    <td><input id="mostrarAyudas" data-size="mini" data-label-width="56" class="inputSettings form-control chk" type="checkbox" accesskey="?" data-on-text="Mostrar" data-off-text="Ocultar"></td>
                 </tr>
             </table>
 
@@ -992,15 +1010,28 @@ jQuery(document).ready(function($) {
             term.push(function(command, term) {
                 var result = window.eval(command);
                 if (result != undefined) {
+
+                    if(String(result).substr(0, 10+command.length) == "function " + command+ "("){
+                        
+                        var result = window.eval(command+"()");
+                        
+                        if (result != undefined) {
+                            term.echo("< "+String(result));
+                        }
+                        
+                    } else {
+                        
+                        term.echo("< "+String(result));
+                        /*term.echo("< "+String(result).substr(0, 10+command.length) == "function " + command+ "(");*/
+                    }
                     
-                    term.echo("< "+String(result));
                 } 
             }, {
                 name: 'js',
                 prompt: '> '});
         } else {
             parseador(command);
-            //term.echo("se desconoce el comando " + command);
+           // term.echo("se desconoce el comando " + command);
         }
     }, {
         greetings: '',

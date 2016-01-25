@@ -18,6 +18,8 @@ var stkFaces;
 var stkNumbers;
 var datosSlots;
 var repasoSeg = 3000;
+var primera = true;
+var colores = ["#bf2330","#0ff","#0f0","#00f","#ff0","#f0f","#f00","#666","#7c0741","#280b5d","#146961","#98cb3e","#ef6f2d","#337ab7","#3c763d","#8a6d3b","#e91e63","#f44336","#9c27b0","#67aAb7","#3f51b5","#2196f3","#4caf50","#ffc107","#563300"];
 
 // Barra de notificaciones
 $( "#barraTop .notificaciones .close" ).on( "click", function(){$("#barraTop .notificaciones").collapse('hide'); });
@@ -106,6 +108,7 @@ $( ".saberMas" ).on( "click", saberMas );
 // Menu: Ver Check / UnCheck
 $( "#vrRefresh" ).on( "click", refresh );
 $( "#vrFullScreen" ).on( "click", vrFullScreen );
+$( "#graphfs" ).on( "click", graficofullscreen );
 $( "#vrMatriz" ).on( "click", {name: "Matriz"}, verModulos );
 $( "#vrBotonera" ).on( "click", {name: "Botonera"}, verModulos );
 $( "#mostrarConsola" ).on('switchChange.bootstrapSwitch', {name: "Consola"}, verModulos );
@@ -207,7 +210,7 @@ function iniciar(){
       $.fn.bootstrapSwitch.defaults.offText = 'NO'; 
       $.fn.bootstrapSwitch.defaults.size = 'mini';
       $.fn.bootstrapSwitch.defaults.handleWidth = 49;
-      $('[type="checkbox"]').bootstrapSwitch();
+      $('[type="checkbox"].chk').bootstrapSwitch();
       
     })
     
@@ -462,12 +465,12 @@ function renderizar(){
             
         } catch( err ) {
             notificar("Se ha producido un Error inesperado. <a href='javascript:location.reload();' class='alert-link'>Recargue</a> para poder continuar usando el programa con normalidad. <code>"+ err +"</code>","fire");
-            alert(deck.getMatriz("face",","));
             disButtons(true);
         }finally {
         
         }
     
+        /*$("li .graflink").attr("href","graficador?orden="+ordenI);*/
     
     // Renderiza la Matriz v Ascii
     if (true == false){
@@ -572,10 +575,10 @@ function verModulos(event){
     }
 }
 function parseador(txtOrden){
-    alert(txtOrden);
+    
     // Divide el input de la consola al encontrar un ";" generando así una secuencia de órdenes.
     txtOrden = txtOrden.split(";");
-
+    
     // Ejecuta cada órden
     for (var i = 0;i < txtOrden.length;i++){
         
@@ -760,7 +763,7 @@ function ejecutarComando(texto){
 }
 function consola(texto){
     
-    document.getElementById("consolaOutput").innerHTML = texto + "\n" + document.getElementById("consolaOutput").innerHTML;
+   // document.getElementById("consolaOutput").innerHTML = texto + "\n" + document.getElementById("consolaOutput").innerHTML;
     
 }
 function generarQr(){
@@ -1185,9 +1188,28 @@ function refresh(){
     
     location.reload();
 }
+
 function vrFullScreen(){
     
-    $('body').fullScreen();
+    $("body").fullScreen();
+    
+}
+
+function graficofullscreen(){
+    
+    if($("#graphfs span").hasClass("glyphicon-fullscreen")){
+        
+        $("#grafico").css("width",1100);
+        $("#grafico").css("height",700);
+        $("#graphfs span").removeClass("glyphicon-fullscreen").addClass("glyphicon-resize-small");
+        $("#graficoFs").fullScreen();
+        
+    } else {
+        $("#grafico").css("width",550);
+        $("#grafico").css("height",350);
+        $("#graphfs span").removeClass("glyphicon-resize-small").addClass("glyphicon-fullscreen");
+        $("#graficoFs").cancelFullScreen();
+    }
     
 }
 
@@ -1433,7 +1455,7 @@ function verStats(){
     if (isOdd(deck.card.length)){
         faroTotal++;
     }
-    var j = productoCiclos(ordenI);
+    j = productoCiclos(ordenI);
     var s = [];
     // Crea el producto de los ciclos de las permutaciones
     var prodCiclos = "";
@@ -1458,6 +1480,10 @@ function verStats(){
     $("#modalStats .descompCiclica").html("C<sub>P</sub> = "+prodCiclos);
     $("#modalStats .ordenCiclos").html(ordenCiclos);
     $("#modalStats .periodoPermutacion").html("m.c.m("+delDuplicates(s,true).join(",")+") = " + lcm(s));
+    
+    $("#mostrar-ciclos").html("");
+    primera = true;
+    dibujarGraph("grafico");
     
 }
 function printStats(){
@@ -1594,7 +1620,8 @@ function sfAntiRiffle(){
 
 function obtenerOrden(){
 
-    consola(ordenI);
+    return ordenI;
+    
 }
 
 function saberMas(){
@@ -2089,7 +2116,172 @@ function estudiarStop(){
     $("#stop").css("display","none");
     clearInterval(memoRepasoLoop);
     $("#play").css("display","inline-block");
+    $("#play").css("display","inline-block");
     
+}
+
+function dibujarGraph(objeto){
+    
+    var oCanvas = document.getElementById(objeto);
+    pY = (oCanvas.height/2);
+    centroX = (oCanvas.width/2);
+    centroY = (oCanvas.height/2);
+    
+    
+    cxt = oCanvas.getContext("2d");
+    cxt.fillStyle = "white";
+    cxt.fillRect(0, 0, oCanvas.width, oCanvas.height);
+    
+    escala = $("#inpEspacio").val();
+    margenX = (oCanvas.width/2) - (ordenI.length * escala)/2;
+    alfa = Math.PI*2 / ordenI.length;
+    modif = alfa * ordenI.length/2;
+    radio = escala * 16;
+    
+    dibujaSecuencia();
+    
+    // Dibuja puntos por cada carta
+    for(var i=0;i < ordenI.length; i++){
+    
+        cxt.fillStyle ="black";
+        cxt.beginPath();
+        
+        if ($("#inpRadial").bootstrapSwitch('state')){ // ¿Es radial?
+
+          var pX = margenX + escala * i;
+          cxt.arc(pX,pY,escala/10,0,Math.PI*2,true);
+
+        }else{
+
+          posX = centroX + Math.cos(alfa * (i+1) + modif) * radio;
+          posY = centroY + Math.sin(alfa * (i+1) + modif) * radio;
+          cxt.arc(posX,posY,escala/10,0,Math.PI*2,true);
+
+        }
+    
+        cxt.closePath();
+        cxt.fill();
+        
+    if ($("#inpPosiciones").bootstrapSwitch('state')){ // posiciones?
+        cxt.font = "15px Georgia";
+        cxt.fillStyle = "grey";
+        cxt.textAlign = "center";
+        if ($("#inpRadial").bootstrapSwitch('state')){ //¿Es radial?
+            cxt.fillText(i+1,pX,pY+15);
+        }else{
+         cxt.fillText(i+1,posX,posY+10);
+        }
+    }
+        
+    }
+    
+    $("#grafoA").attr("src",oCanvas.toDataURL())
+}
+
+function dibujaSecuencia(){
+
+for(var i=0;i<j.length;i++){
+    
+    // Crea checkbox del ciclo si tiene más de un paso
+    if (j[i].length != 1){
+        
+        if ( primera ) {    
+        
+            $("<label id='l"+i+"' class='itemCiclo'><span id='s"+i+"'></span> <input type='checkbox' id='inp"+i+"' checked onClick=dibujarGraph('grafico')></label>&nbsp;").appendTo("#mostrar-ciclos");
+            $("#s"+i).html("("+j[i].join(" ")+")");
+        
+        }
+        
+        
+        if ($("#inp"+i).prop("checked")){
+            $("#l"+i).css("color",colores[i % colores.length]);
+            cxt.strokeStyle = colores[i % colores.length];
+            dCiclo(j[i]);
+        
+        } else {
+            $("#l"+i).css("color","silver");
+        }
+        
+    } 
+        
+} 
+  
+if (primera){
+    primera = false;
+}
+        
+}
+
+// dibuja cada ciclo
+function dCiclo(nums){
+
+  dir = false;
+
+  for(var i=0;i < nums.length; i++){
+
+    dM(parseInt(nums[i]),parseInt(nums[(i+1)%nums.length]));
+
+  }
+    
+// Dibuja cada mezcla
+function dM(inicial,final){
+  
+  if (inicial > final) {
+    var tmp = inicial;
+    inicial = final;
+    final = tmp;
+    var signo = "-";
+  } else {
+    var signo = "+";
+    }
+    
+  if ($("#inpRadial").bootstrapSwitch('state')){ //¿Es radial?
+      // Arcos
+      diametro = final - inicial;
+      pX = margenX + inicial * escala -  escala / 2 + (diametro-1) * escala/2;
+      pD = diametro * escala / 2;
+      cxt.beginPath();
+      cxt.arc(pX,pY,pD,0,Math.PI,dir=!dir);
+      cxt.stroke();
+  }else{
+      // Lineas
+      cxt.beginPath();
+      posX = centroX + Math.cos(alfa * inicial + modif) * radio;
+      posY = centroY + Math.sin(alfa * inicial + modif) * radio;
+      cxt.moveTo(posX,posY);
+      posX = centroX + Math.cos(alfa * final + modif) * radio;
+      posY = centroY + Math.sin(alfa * final + modif) * radio;
+      cxt.lineTo(posX,posY);
+      cxt.stroke();
+  }
+
+  // Rótulos
+  rotYmargen = 12;
+  if ($("#inpRotulos").bootstrapSwitch('state') && $("#inpRadial").bootstrapSwitch('state')){
+  
+
+    disY = (diametro) * escala/2;
+    if (dir){
+        rotpY = pY - disY - rotYmargen;
+    } else {
+        rotpY = pY + disY + 6 + rotYmargen;
+    }
+    
+    cxt.fillStyle ="white";
+    cxt.beginPath();
+    cxt.arc(pX,rotpY-2,15,0,Math.PI*2,true);
+    cxt.closePath();
+    cxt.fill();
+    cxt.stroke();
+    cxt.fillStyle = "#404040";
+    cxt.beginPath();
+    cxt.font = "bold 15px Georgia";
+    cxt.textAlign = "center";
+    cxt.fillText(signo+diametro,pX,rotpY);
+ }
+
+}
+
 }
 
 function cargarSonido(nombre){

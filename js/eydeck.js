@@ -540,7 +540,7 @@ function antiDownUnderDeal(){
 function underDownDeal(){
     
     var barajaTemp = this.card.slice();
-    cantidad = this.card.length;
+    n = this.card.length;
     var cardTemp;
     
     for(var i = 0; i < cantidad ; i++) {
@@ -550,7 +550,7 @@ function underDownDeal(){
             barajaTemp.push(cardTemp);
         }
         cardTemp = barajaTemp.shift();
-        this.card[cantidad-i-1] = cardTemp;
+        this.card[n-i-1] = cardTemp;
         
     }
     
@@ -568,7 +568,7 @@ function antiUnderDownDeal(){
         cardTemp = this.card.shift();
         barajaTemp.unshift(cardTemp);
         
-        if (i != (cantidad-1)){
+        if (i != (n-1)){
             cardTemp = barajaTemp.pop();
             barajaTemp.unshift(cardTemp);
         }
