@@ -17,6 +17,7 @@ function EyDeck(cartas,dorsos){
     for (var i = 0; i < deck.length; i++){
         
         this.card[i] = new naipe(i,deck[i],dorsos);
+        
     }
     
     // Definiendo funciones
@@ -24,6 +25,7 @@ function EyDeck(cartas,dorsos){
     this.get2Bfaces = get2Bfaces;
     this.getReds = getReds;
     this.getBlacks = getBlacks;
+    this.getColors = getColors;
     this.setOrder = setOrder;
     this.refreshOrder = refreshOrder;
     this.add = add;
@@ -34,11 +36,11 @@ function EyDeck(cartas,dorsos){
     this.getCrimps = getCrimps;
     this.getValue = getValue;
     this.turnOver = turnOver;
-    this.cortar = cortar;
+    this.cut = cut;
     this.invertir = invertir;
-    this.faroExt = faroExt;
+    this.faroOut = faroOut;
     this.faroInt = faroInt;
-    this.antiFaroExt = antiFaroExt;
+    this.antiFaroOut = antiFaroOut;
     this.antiFaroInt = antiFaroInt;
     this.milk = milk;
     this.omega = omega;
@@ -57,10 +59,10 @@ function EyDeck(cartas,dorsos){
     
     this.toString = function(){
         
-        return "barajaActual";
+        return "s";
         
     }
-}
+
 
 // Crea el objeto del naipe individual
 function naipe(i,cara,dorso){
@@ -73,13 +75,23 @@ function naipe(i,cara,dorso){
     this.crimp = false;
     this.crimpB = false;
     this.crimpTag = "";
-    
+    this.isRed = isRed;
+    this.isBlack = isBlack;
     this.toString = function(){
         
-        return "[ face:" + this.face + ", back:" + this.back + " ]";
+        return "" + this.face; // + ":" + this.back + "";
         
     }
-        
+    
+    function isRed(){
+        var suit = this.face.slice(-1);
+        return suit == "C" || suit == "D";
+    }
+
+    function isBlack(){
+        var suit = this.face.slice(-1);
+        return suit == "P" || suit == "T";
+    }
 }
 
 // Genera un string con las propiedades separadas por comas
@@ -206,12 +218,11 @@ function turnOver(carta){
 }
 
 // Cortar
-function cortar(cantidad){
+function cut(cantidad){
     
     var paqueteA = this.card.slice(0,cantidad);
     var paqueteB = this.card.slice(cantidad);
     this.card = paqueteB.concat(paqueteA); 
-    return "cortar("+cantidad+")";
     
 }
 
@@ -249,7 +260,7 @@ function invertir(cantidad){
 }
 
 // Faro Exterior
-function faroExt(cantidad){
+function faroOut(cantidad){
     var desde = 0;
     var barajaTemp = this.card.slice();
     var total;
@@ -270,7 +281,7 @@ function faroExt(cantidad){
         cantidad = Math.abs(cantidad);
     }
     
-    // Realiza la mezccla
+    // Realiza la mezcla
     for (var i = 0; i < cantidad ;i++){
         if ( cantidad % 2 == 0 ){
             if ( i < cantidad - 1 ){
@@ -281,11 +292,6 @@ function faroExt(cantidad){
         }
     }
     
-    if (total){
-        return "faroExt";
-    } else {
-        return "faroExt("+cantidad+")";
-    }
 }
 
 // Faro Interior
@@ -317,15 +323,10 @@ function faroInt(cantidad){
         }
     }
     
-    if (total){
-        return "faroInt";
-    } else {
-        return "faroInt("+cantidad+")";
-    }
 }
 
 // Antifaro Exterior
-function antiFaroExt(cantidad){
+function antiFaroOut(cantidad){
 
     var desde = 0;
     var barajaTemp = this.card.slice();
@@ -354,12 +355,6 @@ function antiFaroExt(cantidad){
         }else{
             this.card[i + desde] = barajaTemp[(2*i) % cantidad + desde]
         }
-    }
-    
-    if (total){
-        return "antiFaroExt";
-    } else {
-        return "antiFaroExt("+cantidad+")";
     }
     
 }
@@ -394,11 +389,6 @@ function antiFaroInt(cantidad){
         }
     }
     
-    if (total){
-        return "antiFaroInt";
-    } else {
-        return "antiFaroExt("+cantidad+")";
-    }    
     
 }
 
@@ -423,7 +413,6 @@ function milk(){
     }
     
     this.card = this.card.concat(barajaTemp);
-    return "alfa";
 }
 
 // Mezcla Omega
@@ -447,7 +436,7 @@ function omega(){
     }
     
     this.card = barajaTemp;
-    return "omega";
+
 }
 
 // Mezcla Monge Down
@@ -471,7 +460,7 @@ function mongeDown(){
     }
     
     this.card = barajaTemp
-    return "mongeDown";
+
 }
 
 // Mezcla Monge Up
@@ -495,7 +484,7 @@ function mongeUp(){
     }
     
     this.card = barajaTemp
-    return "mongeUp";
+
 }
 
 // Mezcla DownUnderDeal
@@ -514,7 +503,6 @@ function downUnderDeal(){
         
     }
     
-    return "downUnderDeal";
 }
 
 // Mezcla antiDownUnderDeal
@@ -533,7 +521,7 @@ function antiDownUnderDeal(){
     }
     
     this.card = barajaTemp.slice();
-    return "antiDownUnderDeal";
+
 }
 
 // Mezcla UnderDownDeal
@@ -554,7 +542,6 @@ function underDownDeal(){
         
     }
     
-    return "underDownDeal";
 }
 
 // Mezcla antiUnderDownDeal
@@ -575,7 +562,6 @@ function antiUnderDownDeal(){
     }
     
     this.card = barajaTemp.slice();
-    return "antiUnderDownDeal";
     
 }
 
@@ -613,7 +599,6 @@ function riffle(){
     
     // Rearma la baraja
     this.card = b.concat(barajaTemp); 
-    return "riffle";
     
 }
 
@@ -636,7 +621,6 @@ function antiRiffle(){
  
     }
     this.card = this.card.concat(barajaTemp);
-    return "antiRiffle";
     
 }
 
@@ -655,8 +639,6 @@ function fisherYates(){
         // Y la agrega al nuevo array
         this.card.push(barajaTemp.splice(i, 1)[0]);
     }
-    
-    return ("fisherYates");
     
 }
 
@@ -678,8 +660,7 @@ function durstenfeld(){
         this.card[counter] = this.card[index];
         this.card[index] = temp;
     }
-    
-    return "durstenfeld";
+
 }
 
 // Mezcla speudoaleatoria Sattolo
@@ -692,8 +673,7 @@ function sattolo(){
         this.card[j] = this.card[i];
         this.card[i] = temp;
     }
-    
-    return "sattolo";
+
 }
 
 function triangular(){
@@ -766,22 +746,10 @@ function add(n,a,b,c,d,e,f){
     
 }
 
-// es roja?
-function isRed(carta){
-    var suit = carta.face.slice(-1);
-    return suit == "C" || suit == "D";
-}
-
-// es negra?
-function isBlack(carta){
-    var suit = carta.face.slice(-1);
-    return suit == "P" || suit == "T";
-}
-
 function getReds(){
     var rojas = [];
     for(var i=0;i<this.card.length;i++){
-        if(isRed(this.card[i])){
+        if(this.card[i].isRed()){
             rojas.push(this.card[i])
         }
     }
@@ -791,13 +759,34 @@ function getReds(){
 function getBlacks(){
     var negras = [];
     for(var i=0;i<this.card.length;i++){
-        if(isBlack(this.card[i])){
+        if(this.card[i].isBlack()){
             negras.push(this.card[i])
         }
     }
     return negras;
 }
 
+function getColors(red,black,unknow){
+    
+    if (typeof red === 'undefined'){red = "R"}
+    if (typeof black === 'undefined'){black = "B"}
+    if (typeof unknow === 'undefined'){unknow = "?"}
+    
+    var colores = "";
+    
+    
+    for(var i=0;i<this.card.length;i++){
+        if(this.card[i].isRed()){
+            colores += red;
+        } else if (this.card[i].isBlack()){
+            colores += black;
+        } else {
+            colores += unknow;
+        }
+    }
+    return colores;
+}
+    
 function aTexto(carta){
 
     var suit = carta.slice(-1);
@@ -863,4 +852,6 @@ function aTexto(carta){
     }
     
     return numero + suit;
+}
+    
 }

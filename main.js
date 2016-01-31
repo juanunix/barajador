@@ -1,4 +1,6 @@
-//Inicializa las variables globales
+//Inicializa las constantes y variables globales
+const appName = "Ey Deck!";
+const appVersion = "1.0 (beta)";
 var imgDeck = "bicycle";
 var imgType = "png";
 var imgDorso = "DA";
@@ -27,12 +29,12 @@ $( "#modalAbrirStack .notificaciones .close" ).on( "click", function(){$("#modal
 $( "#modalOrdenPersonal .notificaciones .close" ).on( "click", function(){$("#modalOrdenPersonal .notificaciones").collapse('hide'); });
 $( "#modalPreferencias .notificaciones .close" ).on( "click", function(){$("#modalPreferencias .notificaciones").collapse('hide'); });
 // Menu: Baraja
-$( "#orden4Kings" ).on( "click", abreDefault );
+$( "#orden4Kings" ).on( "click", newDeck );
 $( ".reiniciarPosiciones" ).on( "click", reiniciarPosiciones);
 $( "#abrirOrdenPersonal" ).on( "click", ordenarPersonal);
 $( ".mnuGenerarQr" ).on( "click", generarQr );
 $( "#mnuGuardarImagen" ).on( "click", screenshot );
-//$( "#descargar" ).on( "click", function(){ notificar('Ya se está descargando el archivo "' + $("#descargar").attr("download") + '". ' + txtDescargas,"success") } );
+$( "#descargarImg" ).on( "click", function(){ notificar('Ya se está descargando el archivo "' + $("#descargarImg").attr("download") + '". ' + txtDescargas,"success") } );
 // Abrir bajara
 $( "#modalAbrirDeck .selectBaraja" ).on( "change", infoBaraja );
 $( "#modalAbrirDeck .btnAbrir" ).on( "click", abrirBaraja );
@@ -60,8 +62,6 @@ $( "#fuenteConsola" ).on( "change", cambiarFuenteConsola );
 $( "#colorConsola" ).on( "change", cambiarColorConsola );
 $( "#setVolumen" ).on('slide', setVolumen);
 $( "#setSeparac" ).on('slide', setSeparac);
-
-$( "#sfRepetir" ).on( "click", sfRepetir );
 $( ".sfInvertir" ).on( "click", sfInvertir );
 // Cortar
 $( ".sfCut" ).on( "click", sfModalCortar );
@@ -76,10 +76,10 @@ $( ".sfSattolo" ).on( "click", sfSattolo );
 $( ".sfRandomOrg" ).on( "click", sfRandomOrg );
 $( ".sfNumeroAleatorio" ).on( "click", sfNumeroAleatorio );
 // Faros
-$( ".sfFaroExt" ).on( "click", faroext);
-$( ".sfFaroInt" ).on( "click", sfFaroInt );
-$( ".sfAntiFaroExt" ).on( "click", sfAntiFaroExt );
-$( ".sfAntiFaroIn" ).on( "click", sfAntiFaroInt );
+$( ".sfFaroExt" ).on( "click", faroOut);
+$( ".sfFaroInt" ).on( "click", faroInt );
+$( ".sfAntiFaroExt" ).on( "click", antiFaroOut );
+$( ".sfAntiFaroIn" ).on( "click", antiFaroInt );
 $( "#modalFaro .btnAplicar" ).on( "click", faroAplicar );
 $( ".sfFaroAv" ).on( "click", faroShow );
 // otras mezclas
@@ -92,9 +92,11 @@ $( ".sfDud" ).on( "click", sfDud );
 $( ".sfAntiDud" ).on( "click", sfAntiDud );
 $( ".sfUdd" ).on( "click", sfUdd );
 $( ".sfAntiUdd" ).on( "click", sfAntiUdd );
-$( ".sfRiffle" ).on( "click", sfRiffle );
+$( ".sfRiffle" ).on( "click", riffle );
 $( ".sfAntiRiffle" ).on( "click", sfAntiRiffle );
+$( ".sfOverhand" ).on( "click", overhand );
 $( ".sfTriangular" ).on( "click", sfTriangular );
+$( ".sfTiar" ).on( "click", tiarShow );
 
 $( ".sfSeparaRojasNegras" ).on( "click", sfSeparaRojasNegras );
 $( ".sfSeparaNegrasRojas" ).on( "click", sfSeparaNegrasRojas );
@@ -197,7 +199,7 @@ function iniciar(){
         
     }else{
     
-        abreDefault();
+        newDeck();
     }
     
     // Desactivar el menú contextual del navegador
@@ -327,20 +329,20 @@ function sfFisherYates() {
    
     var salida = deck.fisherYates();
     renderizar();
-    /*consola(salida);*/
+    /*return salida;*/
 }
 function sfDurstenfeld() {
 
     var salida = deck.durstenfeld();
     renderizar();
-    /*consola(salida);*/
+    /*return salida;*/
     
 }
 function sfSattolo() {
     
     var salida = deck.sattolo();
     renderizar();
-    /*consola(salida);*/
+    /*return salida;*/
 }
 function sfRandomOrg(){
 disButtons(true);
@@ -363,8 +365,8 @@ var barajaTemp = deck.card.slice();
         
         comprobarApiRandom(body.result.requestsLeft, body.result.bitsLeft);
         renderizar();
-        /*consola("radomOrg");*/
         disButtons(false);
+        return;
         
     });
 }
@@ -376,14 +378,13 @@ var barajaTemp = deck.card.slice();
     var apiUrl = "http://numero-aleatorio.com/generadores/servicio-json/?desde=0&hasta=" + (deck.card.length-1) + "&numero=" + deck.card.length + "&repeticion=0&json=0"
         
     $.getJSON(apiUrl, function(contenido){
-        /*consola(contenido)*/
+        
     
       //  for (var i = 0; i < deck.card.length ; i++){
     //        deck.card[i] = barajaTemp[body.result.random.data[i]]
     //    }
         
       //  renderizar();
-    //    consola("numero-aleatorio.com");
     });
 }
 function comprobarApiRandom(numRequest,numBits){
@@ -419,38 +420,38 @@ function sfInvertir(cantidad){
     
         var salida = deck.invertir(cantidad);
         renderizar();
-        /*consola(salida);*/
+        /*return salida;*/
     
 }
 function sfOverhand(){
  //   alert("MEZCLA EN LAS MANOS")
 }
-function faroext(cantidad){
+function faroOut(cantidad){
     
-    var salida = deck.faroExt(cantidad);
+    var salida = deck.faroOut(cantidad);
     renderizar();
-    /*consola(salida);*/
+    return salida;
 
 }
-function sfFaroInt(cantidad){
+function faroInt(cantidad){
 
     var salida = deck.faroInt(cantidad);
     renderizar();
-    /*consola(salida);*/
+    return salida;
     
 }
-function sfAntiFaroExt(cantidad){
+function antiFaroOut(cantidad){
  
-    var salida = deck.antiFaroExt(cantidad);
+    var salida = deck.antiFaroOut(cantidad);
     renderizar();
-    /*consola(salida);*/
+    return salida;
     
 }
-function sfAntiFaroInt(cantidad){
+function antiFaroInt(cantidad){
 
     var salida = deck.antiFaroInt(cantidad);
     renderizar();
-    /*consola(salida);*/  
+    return salida;  
 }
 
 function renderizar(){
@@ -535,7 +536,6 @@ $("#naipes").sortable({
                     numero = parseInt(ordenElementos[i]);
                     if (i !== numero && (i+1) !== numero){
                         deck.move(numero,i);
-                        consola("#"+(numero+1)+" > #"+(i+1))
                         abreBaraja();
                         break;
                     }
@@ -575,7 +575,7 @@ function verModulos(event){
     }
 }
 function parseador(txtOrden){
-    
+    var salida;
     // Divide el input de la consola al encontrar un ";" generando así una secuencia de órdenes.
     txtOrden = txtOrden.split(";");
     
@@ -583,8 +583,7 @@ function parseador(txtOrden){
     for (var i = 0;i < txtOrden.length;i++){
         
             var txtComando = txtOrden[i].split("*");
-            
-            
+               
             // ¿el comando tiene multiplicador?
             if (txtComando.length == 2){
                 
@@ -594,83 +593,82 @@ function parseador(txtOrden){
                 
                     txtComando[1] = parseInt(txtComando[1]);
 
-                    repetirComando(txtComando[0].trim(),txtComando[1]);
+                    //salida = repite(txtComando[0].trim(),txtComando[1]);
+                    repite(txtComando[0].trim(),txtComando[1]);
                     
                 }
             }else if (txtComando.length = 1){
                 
+                //salida = ejecutarComando(txtComando[0].trim());
                 ejecutarComando(txtComando[0].trim());
+                
             }
     }
+    
+    return salida;
 }
-function repetirComando(comando, multipicador){
-
-    for (var i = 0; i < multipicador ;i++){
-        ejecutarComando(comando);
+function repite(comando, multiplicador){
+    
+    var salida;
+    for (var i = 0; i < multiplicador ;i++){
+        salida = ejecutarComando(comando);
     }
+    return salida + "*" + multiplicador
+    
     
 }
-function ejecutarComando(texto){
+function ejecutarComando(comando){
 
-    var argAbre = texto.indexOf("(");
-    var argCierra = texto.indexOf(")");
-    var argumento = "";
-
+    var argAbre = comando.indexOf("(");
+    var argCierra = comando.indexOf(")");
+    var argumento;
     if (argAbre != -1 ){
         
-        if (argAbre == 0) {consola("Sintáxis no válida")}
-        argumento = texto.substring(argAbre+1,argCierra);
-        texto = texto.substring(0,argAbre);
+        if (argAbre == 0) {return "Sintáxis no válida"}
+        argumento = comando.substring(argAbre+1,argCierra);
+        comando = comando.substring(0,argAbre);
+        
     }
     
-    switch (texto) {
+    comando = comando.toLowerCase();
+    
+    switch (comando) {
             case "help":
             case "ayuda":
-                consola('Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.');
-                return;
+                return 'Haga <a href="docs" target="_blank">click aquí</a> acceder a la ayuda.';
             case "version":
-                consola('Barajador v0.1 (beta)');
-                return;
-            case "nueva":
+                return appName + "v " + appVersion;
+            case "newdeck":
             case "new":
-                abreDefault();
-                return;
-            case "clear":
-            case "clr":
-                clear();
-                return;
+                return newDeck();
             case "recargar":
             case "refresh":
                 refresh();
                 return;
             case "orden":
-                obtenerOrden();
-                return;
+                return obtenerOrden();
             case "reiniciar":
-                reiniciarPosiciones();
-                return;
-            case "historial":
-            case "hist":
-                historial();
-                return;
+            case "start":
+                return reiniciarPosiciones();
             case "cortar":
             case "cut":
-                sfCortar(argumento);
+                cut(argumento);
                 return;
             case "voltear":
             case "turn":
                 sfVoltearEstas(argumento);
-                consola("turn("+argumento+")");
-                renderizar();
                 return;
             case "invertir":
             case "inv":
                 sfInvertir(argumento);
                 return;
+            case "add":
+            case "agrega":
+                add(argumento);
+                return;
             case "eliminar":
             case "del":
-                eliminarCartaX(argumento);
-                return;
+                return eliminarCartaX(argumento);
             case "fisheryates":
                 sfFisherYates();
                 return;
@@ -682,6 +680,9 @@ function ejecutarComando(texto){
                 return;
             case "randomorg":
                 sfRandomOrg();
+                return;
+            case "tiar":
+                tiar();
                 return;
             case "milk":
             case "alfa":
@@ -708,26 +709,30 @@ function ejecutarComando(texto){
                 sfAntiDud();
                 return;
             case "riffle":
-                sfRiffle();
+                riffle();
                 return;
             case "antiriffle":
                 sfAntiRiffle();
                 return;
+            case "oh":
+            case "overhand":
+                overhand(argumento);
+                return;
+            case "faroout":
             case "faroext":
             case "fo":
-                faroext(argumento);
-                return;
+                return faroOut(argumento);
             case "faroint":
             case "fi":
-                sfFaroInt(argumento);
-                return;
+                return faroInt(argumento);
+            case "antifaroout":
             case "antifaroext":
             case "-fo":
-                sfAntiFaroExt(argumento);
+                antiFaroOut(argumento);
                 return;
             case "antifaroint":
             case "-fi":
-                sfAntiFaroInt(argumento);
+                antiFaroInt(argumento);
                 return;
             case "separarrojasnegras":
             case "seprb":
@@ -742,13 +747,15 @@ function ejecutarComando(texto){
             case "leer":
                 cargarSonido("miguel");
                 sonido.playString(deck.get2Bfaces());
-                return;
+                return "Miguel: Escriba «stop» para detener la lectura.";
             case "stop":
                 sonido.stop();
-                return;
-            case "generarqr":
-            case "qr":
-                generarQrConsola();
+                return "Miguel: Lecturavdetenida."
+            case "getqr":
+                return getQr();
+            case "maths":
+                verStats();
+                $("#modalStats").modal();
                 return;
             case "screenshot":
             case "shot":
@@ -757,15 +764,10 @@ function ejecutarComando(texto){
             case "":
                 return;
             default:
-                //consola(texto + ": No se encontró la orden");
-                return;
+                return comando + ": No se encontró la orden";
         }
 }
-function consola(texto){
-    
-   // document.getElementById("consolaOutput").innerHTML = texto + "\n" + document.getElementById("consolaOutput").innerHTML;
-    
-}
+
 function generarQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
@@ -773,7 +775,7 @@ function generarQr(){
     // var strBaraja16 = LZString.compressToUTF16(strBaraja);
     
     $("#imagenQr").attr('src', urlApi + strBaraja);
-    $("#modalQr #descargar").attr('href', urlApi + strBaraja);
+    $("#descargarQ").attr('href', urlApi + strBaraja);
     $("#modalQr").modal();
     
 }
@@ -781,10 +783,10 @@ function OpenInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
-function generarQrConsola(){
+function getQr(){
     qrSize = 250;
     urlApi = "https://api.qrserver.com/v1/create-qr-code/?size=" + qrSize + "x" + qrSize + "&data=";
-    consola("Código QR generado, descárguelo haciendo <a href='" + urlApi + deck.getMatriz("face",",") +"' download='barajaQr.png'>click aquí</a>.")
+    return "Código QR generado, descárguelo haciendo <a href='" + urlApi + deck.getMatriz("face",",") +"' download='barajaQr.png'>click aquí</a>."
 }
 function screenshot(){
     html2canvas($("#moduloTapete"), {
@@ -795,14 +797,14 @@ function screenshot(){
             screenS = screenS.replace("image/png", "image/octet-stream");
             
             $("#imagenScreen").attr('src', screenS);
-            $("#modalScreen #descargar").attr('href', screenS);
+            $("#descargarImg").attr('href', screenS);
             $("#modalScreen").modal();
 
         }
     });
 }
 function cambiarNombreArchivo(){
-     $("#modalScreen #descargar").attr('download', $("#modalScreen input").val()+".png");
+     $("#descargarImg").attr('download', $("#modalScreen input").val()+".png");
 }
 function screenshotConsola(){
     html2canvas($("#moduloTapete"), {
@@ -810,7 +812,7 @@ function screenshotConsola(){
             var screenS = new Image();
             screenS = canvas.toDataURL("image/png");
             screenS = screenS.replace("image/png", "image/octet-stream");
-            consola("Imagen generada. Haga <a href='" + screenS + "' download='" + $("#modalScreen input").val()+".png" + "' target='_blank'>click aquí</a> para descargar");
+            return "Imagen generada. Haga <a href='" + screenS + "' download='" + $("#modalScreen input").val()+".png" + "' target='_blank'>click aquí</a> para descargar";
 
         }
     });
@@ -924,27 +926,30 @@ function cartaActual(carta){
         posCartaActual = carta;
    
 }
+function add(cara){
+    
+    deck.add(deck.card.length,cara,imgDorso,true,false);
+    abreBaraja();
+    
+}
 
 function eliminarCarta(){
-    deck.card.splice(posCartaActual,1);
+    var salida = deck.card.splice(posCartaActual,1);
     abreBaraja();
-    consola("eliminar("+parseInt(posCartaActual+1)+")");
+    return salida;
 }
 function eliminarCartaX(cual){
     if (cual == "") {
-        consola("Falta un argumento");
-        return;
+        return "Falta un argumento";
+        
     } else {
         if (cual > 0) {
-            consola("eliminar("+cual+")");
             cual = parseInt(cual) - 1;
         } else {
             if (cual < 0){
-                consola("eliminar("+cual+")");
                 cual = deck.card.length + parseInt(cual);
             } else {
-                consola(cual + " no es un argumento válido.");
-                return;
+                return cual + " no es un argumento válido.";
             }
         }
         deck.card.splice(cual,1);
@@ -1031,7 +1036,6 @@ function editarAgregarAplicar(){
         
         if (posCartaActual != posNueva){
 
-            consola("#"+posCartaActual + " > #" + posNueva);
             deck.move(posCartaActual,posNueva);
 
         }
@@ -1113,10 +1117,10 @@ function mostrarCorte(lugar){
     }
     lugarAnt = lugar;
 }
-function sfCortar(numero){
-    var salida = deck.cortar(numero);
+function cut(numero){
+    var salida = deck.cut(numero);
     renderizar();
-    consola(salida);
+    return salida;
     
 }
 function sfCortarMontar(){
@@ -1127,21 +1131,21 @@ function sfCortarMontar(){
     return;
     }
     
-    var salida = deck.cortar($("#alNumero").val());
+    var salida = deck.cut($("#alNumero").val());
     $("#modalCortar").modal('hide');
     renderizar();
-    consola(salida);
+    return salida;
 }
 function cortarPorAca(){
-    var salida = deck.cortar(posCartaActual);
+    var salida = deck.cut(posCartaActual);
     renderizar();
-    consola(salida);
+    return salida;
 }
 
 function voltearEsta(){
-    deck.turnOver(posCartaActual);
-    consola("turn("+(posCartaActual+1)+")");
+    var salida = deck.turnOver(posCartaActual);
     renderizar();
+    return salida;
 }
 function sfVoltearEstas(argumento){
     
@@ -1159,29 +1163,16 @@ function sfVoltearEstas(argumento){
         deck.turnOver(parseInt(nums[0])-1);
     }
     
+    renderizar();
 }
 
 function moverATop(){
-    consola(deck.card[posCartaActual].face + " > Top");
     deck.toTop(posCartaActual);
     renderizar();
 }
 function moverABottom(){
-    consola(deck.card[posCartaActual].face + " > Bottom");
-    deck.toBotom(posCartaActual);
+    deck.toBottom(posCartaActual);
     renderizar();  
-}
-function historial(){
-    for(var i = 0; i < comandosHistorial.length; i++){
-        var t = i.toString();
-        if (t.length == 2) { t = " " + t + " "};
-        if (t.length == 1) { t = "  " + t + " "};
-        consola(t + comandosHistorial[i]);
-    }
-}
-function sfRepetir(){
-    alert("repite: " + comandosHistorial[comandosHistorial.length - 1]);
-    //ejecutarComando(historial[historial.length-1]);
 }
 
 function refresh(){
@@ -1315,10 +1306,9 @@ function catoAplicar(){
             txtMezcla += "de " + desde + " a " + hasta + " cartas ";
         }
         
-        deck.cortar(cortarX);
+        deck.cut(cortarX);
         deck.invertir(voltearX);
         sfVoltearEstas("1,"+voltearX);
-        consola("cato("+cortarX+","+voltearX+")");
     }
     
     if (j == 1 || isNaN(j)){
@@ -1370,12 +1360,12 @@ function faroAplicar(){
     // ¿Exterior o Interior?
     if ( $("#faroExtInt").bootstrapSwitch('state') ) {
         
-        mezcla = mezcla + "ext(";
+        mezcla = mezcla + "Out(";
         txtMezcla += " Exterior";
         
     } else {
     
-        mezcla = mezcla + "int(";
+        mezcla = mezcla + "Int(";
         txtMezcla += " Interior";
         
     }
@@ -1466,11 +1456,13 @@ function verStats(){
         
     }
     
+    var infocolores = deck.getColors(1,0)
+    
     var ordenCiclos = "λ₍<sub>n</sub>₎=(" + partition(s,true).join("+") + ")";
     
     $("#modalStats .barajaMatriz").html("["+deck.getMatriz("face",", ")+"]");
     $("#modalStats .cantidad").html("n = " + deck.card.length+"<sub>10</sub> = "+deck.card.length.toString(2)+"<sub>2</sub> = "+deck.card.length.toString(4)+"<sub>4</sub>");
-    $("#modalStats .permutaciones").html("n! = " + factorial);
+    $("#modalStats .permutaciones").html("n! = " + factorial + " = " + Base64.fromNumber("80658175170943878571660636856403766975289505440883277824000000000000"));
     $("#modalStats .mezclasNecesarias").html("= " + mezclasNecesarias);
     $("#modalStats .adivinacionesProbables").html("= " + adivinacionesProbables);
     $("#modalStats .adivinacionesPorcentaje").html(adivinacionesPorcentaje + "%");
@@ -1480,12 +1472,21 @@ function verStats(){
     $("#modalStats .descompCiclica").html("C<sub>P</sub> = "+prodCiclos);
     $("#modalStats .ordenCiclos").html(ordenCiclos);
     $("#modalStats .periodoPermutacion").html("m.c.m("+delDuplicates(s,true).join(",")+") = " + lcm(s));
+    $("#modalStats .infocolores").html("RB<sub>n</sub> = " + infocolores + "<sub>2</sub><br> = " + parseInt(infocolores,2).toString(4) + "<sub>4</sub> = " + parseInt(infocolores,2).toString(8)+"<sub>8</sub> = " + parseInt(infocolores,2).toString(16).toUpperCase() +"<sub>16</sub> = " + parseInt(infocolores,2).toString(10)+"<sub>10</sub>");
     
     $("#mostrar-ciclos").html("");
     primera = true;
     dibujarGraph("grafico");
     
 }
+
+function sharegraph(){  
+    
+    $("#grafoA").attr("src")
+    window.open("")
+    
+}
+
 function printStats(){
 
     $(".printable").print();
@@ -1520,22 +1521,12 @@ function closeHelpStats(){
     
 }
 
-function redondeo(numero,decimales){
-
-    var numeroRedondo = Math.round(numero * Math.pow(10,decimales)) / Math.pow(10,decimales);
-    
-    if (numero != numeroRedondo){
-        numeroRedondo = numeroRedondo + "..."
-    }    
-    return numeroRedondo;
-    
-}
 // Mezcla Alfa
 function sfMilk(){
     
     var salida = deck.milk();
     renderizar();
-    consola(salida);
+    return salida;
     
 }
 
@@ -1543,51 +1534,82 @@ function sfOmega(){
 
     var salida = deck.omega();
     renderizar();
-    consola(salida);
+    return salida;
     
 }
 function sfMongeDown(){
 
     var salida = deck.mongeDown();
     renderizar();
-    consola(salida);
+    return salida;
 }
 function sfMongeUp(){
 
     var salida = deck.mongeUp();
     renderizar();
-    consola(salida);
+    return salida;
 }
 function sfDud(){
 
     var salida = deck.downUnderDeal();
     renderizar();
-    consola(salida);
+    return salida;
+    
 }
 function sfAntiDud(){
 
     var salida = deck.antiDownUnderDeal();
     renderizar();
-    consola(salida);
+    return salida;
+    
 }
 function sfUdd(){
 
     var salida = deck.underDownDeal();
     renderizar();
-    consola(salida);
+    return salida;
 }
 function sfAntiUdd(){
 
     var salida = deck.antiUnderDownDeal();
     renderizar();
-    consola(salida);
+    return salida;
 }
 
-function sfRiffle(){
+function riffle(){
     
     var salida = deck.riffle();
     renderizar();
-    consola(salida);
+    return salida;
+}
+
+function sfAntiRiffle(){
+
+    var salida = deck.antiRiffle();
+    renderizar();
+    return salida;
+}
+
+function overhand(prob){
+    
+    if(isNaN(prob) || prob.lenght == 0){prob = 0.2};
+    
+    if (prob == "0") {prob = 0.001}
+    //if (typeof prob === 'undefined'){notificar("prob");prob = 0.2}
+    barajaTemp = [];
+    
+    while (deck.card.length > 0) {
+        var num = 0;
+        do{
+            num++;
+        } while (Math.random()>prob);
+
+        barajaTemp = deck.card.splice(0,num).concat(barajaTemp);
+        
+    } 
+    
+    deck.card = barajaTemp;
+    abreBaraja();
 }
 
 function sfTriangular(){
@@ -1595,11 +1617,12 @@ function sfTriangular(){
     var salida = deck.triangular();
     
 }
+
 function sfSeparaRojasNegras(){
 
     deck.card = deck.getReds().concat(deck.getBlacks());
     renderizar();
-    consola("separaRojasNegras");
+    return;
     
 }
 
@@ -1607,16 +1630,9 @@ function sfSeparaNegrasRojas(){
 
     deck.card = deck.getBlacks().concat(deck.getReds());
     renderizar();
-    consola("separaNegrasRojas");
+    return;
     
 }
-function sfAntiRiffle(){
-
-    var salida = deck.antiRiffle();
-    renderizar();
-    consola(salida);
-}
-
 
 function obtenerOrden(){
 
@@ -1791,8 +1807,17 @@ function abrirStack(){
     }
 }
 
+function tiarShow(){
+    $("#modalTiar").modal();
+}
+
+function tiar(){
+    var num = rdomUnif(deck.card.length-1);
+    deck.move(0,num);
+    abreBaraja();
+}
 // Abre una baraja desde el stack JSON
-function abreDefault() {
+function newDeck() {
         
 deck = new EyDeck("AT,2T,3T,4T,5T,6T,7T,8T,9T,10T,JT,QT,KT,AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AP,2P,3P,4P,5P,6P,7P,8P,9P,10P,JP,QP,KP,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD"); 
 abreBaraja(); 
@@ -2131,11 +2156,30 @@ function dibujarGraph(objeto){
     cxt = oCanvas.getContext("2d");
     cxt.fillStyle = "white";
     cxt.fillRect(0, 0, oCanvas.width, oCanvas.height);
-    
     escala = $("#inpEspacio").val();
+    
+    if (true){
+        
+        if ( cxt.setLineDash !== undefined )   cxt.setLineDash([10,10]);
+        if ( cxt.mozDash !== undefined )       cxt.mozDash = [10,10];
+
+        cxt.strokeStyle = "black";
+        cxt.beginPath();
+        cxt.moveTo(centroX,0);
+        cxt.lineTo(centroX,oCanvas.height);
+        cxt.stroke();
+        
+        if ( cxt.setLineDash !== undefined )   cxt.setLineDash([10,0]);
+        if ( cxt.mozDash !== undefined )       cxt.mozDash = [10,0];
+    }
+
+    
     margenX = (oCanvas.width/2) - (ordenI.length * escala)/2;
     alfa = Math.PI*2 / ordenI.length;
-    modif = alfa * ordenI.length/2;
+    
+    var coma = 4;
+    if (ordenI.length % 2 == 0) { coma = 2 }
+    modif = alfa * (-ordenI.length-coma)/4;
     radio = escala * 16;
     
     dibujaSecuencia();
@@ -2176,6 +2220,8 @@ function dibujarGraph(objeto){
     }
     
     $("#grafoA").attr("src",oCanvas.toDataURL())
+    $("#graphdown").attr("href",oCanvas.toDataURL())
+    $("#graphshare").attr("href","graficador?orden="+ordenI);
 }
 
 function dibujaSecuencia(){

@@ -9,7 +9,7 @@
     <meta name="author" content="Ey Pacha!">
     <link rel="icon" href="favicon.png">
 
-    <title>Barajador</title>
+    <title>EyDeck!</title>
      
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
 
 </head>
 
-  <body>
+<body>
 <!-- Barra de menues -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -46,7 +46,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href=""><img alt="Brand" src="favicon.png">Barajador</a>
+            <a class="navbar-brand" href=""><img alt="Brand" src="favicon.png">EyDeck!</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -173,7 +173,7 @@
 </div>
 
 <!-- Modulos -->
-<div id="moduloMatriz">
+<div id="moduloMatriz" class="collapse in">
 <div class="input-group matriz input-group-sm">
   <input id="matriz" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2" readonly>
   <span id="copy-container" class="input-group-btn">
@@ -190,7 +190,7 @@
         
     </div>
     
-    <div id="moduloBotonera" class="botonera">
+    <div id="moduloBotonera" class="botonera collapse in">
         <input type="button" class="btn btn-primary reiniciarPosiciones" value="Reiniciar orden" data-toggle="popover" data-trigger="hover" data-content="Reinicia las posiciones relativas equiparándolas con las absolutas.">
         <input type="button" class="btn btn-primary sfInvertir" value="Invertir" data-toggle="popover" data-trigger="hover" data-content="Invierte una a una el orden de las cartas.">
         <input type="button" class="btn btn-primary sfCut" value="Cortar...">
@@ -204,10 +204,11 @@
         <input type="button" class="btn btn-primary sfAntiFaroIn" value="-Interior" data-toggle="popover" data-trigger="hover" data-title="Mezcla Antifaro Interior" data-content="Las cartas se dividen en dos paquetes desintercalánndolas una a una para luego recomponer la baraja, dejando la carta que estaba en 2ra posición en primer lugar.">
         <input type="button" class="btn btn-primary sfRiffle" value="Riffle" data-toggle="popover" data-trigger="hover" data-title="Mezcla Riffle / Americana / Por hojeo" data-content="Se corta la baraja en dos paquetes de similar tamaño para luego intercalarlas alternandolas.">
         <input type="button" class="btn btn-primary sfAntiRiffle" value="AntiRiffle" data-toggle="popover" data-trigger="hover" data-title="Anti Rifle" data-content="Desimbrica las cartas en tods paquetes, teniendo cada carta las mismas probabilidades de ir a parar a un paquete o al otro. A continuación coloca un paquete encima de otro.">
+        <input type="button" class="btn btn-primary sfOverhand" value="Overhand" data-toggle="popover" data-trigger="hover" data-title="Overhand Shuffle" data-content="Describir!!!">
     
         <br>
 
-        <input type="button" class="btn btn-primary sfTriangular" value="Tirangular" data-toggle="popover" data-trigger="hover" data-title="Mezcla triangular Up" data-content="Se colocan las cartas de izquierdaa derecha en filas, una carta en la primer columna, dos en la segunda, tres en la tercera, etc. A continuación se recogen por columnas no se como">
+        <input type="button" class="btn btn-primary collapse sfTriangular" value="Tirangular" data-toggle="popover" data-trigger="hover" data-title="Mezcla triangular Up" data-content="Se colocan las cartas de izquierdaa derecha en filas, una carta en la primer columna, dos en la segunda, tres en la tercera, etc. A continuación se recogen por columnas no se como">
         <input type="button" class="btn btn-primary sfDud" value="DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (Australiana)" data-content="Teniendo baraja en la mano, coloca la primer carta debajo y la siguiente se coloca en la mesa. Se repite la operación hasta que no queden cartas en la mano.">
         <input type="button" class="btn btn-primary sfAntiDud" value="-DUD" data-toggle="popover" data-trigger="hover" data-title="Down Under Deal (inversa)" data-content="Teniendo baraja en la mesa, se toma la primer carta. Luego se toma otra carta, se la coloca sobre las que haya en la mano para luego subir la última carta a primera posición. Se repite esta última operación hasta que no queden cartas en le mesa.">
         <input type="button" class="btn btn-primary sfUdd" value="UDD" data-toggle="popover" data-trigger="hover" data-title="Under Down Deal" data-content="Teniendo baraja en la mano, coloca la primer carta en la mesa y la siguiente se coloca debajo de la baraja. Se repite la operación hasta que no queden cartas en la mano.">
@@ -217,6 +218,7 @@
         <input type="button" class="btn btn-primary sfMongeDown" value="MongeDown" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Down" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta debajo y la siguiente arriba de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
         <input type="button" class="btn btn-primary sfMongeUp" value="MongeUp" data-toggle="popover" data-trigger="hover" data-title="Mezcla Monge Up" data-content="Teniendo las cartas en una mano, se toma una carta con la otra mano. Luego se coloca la siguiente carta arriba y la siguiente abajo de todo el paquete. Se continuen hasta acabar con todo el paquete de la primer mano.">
         <input type="button" class="btn btn-primary sfCato" value="Cato..." data-toggle="popover" data-trigger="hover" data-title="Mezcla CATO (Cut And Turn Over)" data-content="Se realiza un corte y luego voltean dos cartas. Se repite este proceso las veces que se desee. También pueden voltear cualquier cantidad par de cartas.">
+        <input type="button" class="btn btn-primary sfTiar collapse" value="Tiar..." data-toggle="popover" data-trigger="hover" data-title="Mezcla TIAR (Top In at Random Shuffle)" data-content="Se toma la primer carta y se la coloca al azar en cualquier lugar de la baraja. Se repite este proceso hasta que la carta bottom es la que es colocada al azar.">
        <!-- <br>-->
         <input type="button" class="btn btn-primary sfFisherYates" value="Fisher-Yates" data-toggle="popover" data-trigger="hover"  data-title="Azar Fisher-Yates" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación original.">
         <input type="button" class="btn btn-primary sfDurstenfeld" value="Durstenfeld" data-toggle="popover" data-trigger="hover" data-title="Azar Durstenfeld" data-content="Las cartas se permutan de forma pseudoaleatoria utilizando el algoritmo Fisher-Yates en su implementación Durstenfeld.">
@@ -225,11 +227,9 @@
         <input type="button" class="btn btn-primary sfRandomOrg" value="Random.org" data-toggle="popover" data-trigger="hover" data-title="Azar Random.org" data-content="Mezcla aleatoria a partir del ruido atmosférico, utilizando el servicio Random.Org a través de la API ofrecida en su web.">
     </div>
 </div>
-<div id="moduloConsola" class="collapse in">
-</div>
-</div>
+<div id="moduloConsola" class="collapse in"></div>
 
-<!-- Guardar Baraja -->
+<!-- Modal Guardar Baraja -->
 <div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -256,7 +256,7 @@
   </div>
 </div>
     
-<!-- Generar Captura -->
+<!-- Modal Generar Captura -->
 <div class="modal fade" id="modalScreen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -272,14 +272,14 @@
             </div>
       </div>
       <div class="modal-footer">
-        <a id="descargar" class="btn btn-primary" href="#" download="baraja.png" data-dismiss="modal">Descargar</a>
+        <a id="descargarImg" class="btn btn-primary" href="#" download="baraja.png" data-dismiss="modal">Descargar</a>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
       
-<!-- GenerarQR -->
+<!-- Modal GenerarQR -->
 <div class="modal fade" id="modalQr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -291,7 +291,7 @@
         <img id="imagenQr" scr="" alt="" title="QR de la baraja actual" width="250" height="250">
       </div>
       <div class="modal-footer">
-        <a id="descargar" class="btn btn-primary" href="#" download="barajaQr.png">Descargar</a>
+        <a id="descargarQr" class="btn btn-primary" href="#" download="barajaQr.png">Descargar</a>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -314,6 +314,10 @@
           <option value=""></option>
           <option value="bicycle">Bicycle</option>
           <option value="small-cards">Small pixel cards</option>
+          <option value="emmanuel-jose-1">Emmanuel Jose - #1 Curator</option>
+          <option value="emmanuel-jose-2">Emmanuel Jose - #2 Clipped Wing</option>
+          <option value="emmanuel-jose-3">Emmanuel Jose - #3 Sawdust</option>
+          <option value="emmanuel-jose-4">Emmanuel Jose - #4 Delicious</option>
           <option value="cburnett">Wikicommos - Cburnett</option>
           <option value="david-bellot">Wikicommos - David Bellot</option>
           <option value="galvanic">Sean Whelan - Galvanic</option>
@@ -376,6 +380,7 @@
           <option value="fourKings">Four Kings</option>
           <option value="eightKings">Eight Kings</option>
           <option value="dixRois">Dix Rois</option>
+          <option value="dosfaros">Dos faros</option>
           <option value="dieciochoReyes">Dieciocho Reyes</option>
           <option value="aronson">Aronson Stack</option>
           <option value="ireland">Ireland Stack</option>
@@ -481,7 +486,7 @@
             </div>
           <table>
             <tr>
-                <td>Crimp:<br/><input type="checkbox" class="editarCrimp" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control chk"></td>
+                <td>Crimp:<br/><input type="checkbox" class="editarCrimp chk" data-off-color="primary" data-on-text="Si" data-off-text="No" class="form-control chk"></td>
             </tr>
             <tr>
                 <td><div class="editarCrimpTipo collapse">Tipo:<br/><input type="checkbox" class="editarCrimpTopBottom form-control chk" data-off-color="primary" data-on-text="A Top" data-off-text="A Bottom" data-handle-width="69"></div></td>
@@ -641,7 +646,28 @@
     </div>
   </div>
 </div>
-    
+   
+<!-- Modal Tiar Avanzada -->
+<div class="modal fade" id="modalTiar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Mezcla "Top In At Random"</h4>
+      </div>
+      <div class="modal-body" style="text-align:justify">
+          
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary btnAplicar">Aplicar</button>
+      </div>
+    </div>
+  </div>
+</div>
+   
+      
 <!-- Modal Estadisticas -->
 <div class="modal fade" id="modalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -652,22 +678,26 @@
       </div>
       <div class="modal-body">
        <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#resumen">Resumen</a></li>
-          <li><a data-toggle="tab" href="#graficar">Gráfico</a></li>
-        </ul>
+         <li><a data-toggle="tab" href="#general">General</a></li>
+         <li class="active"><a data-toggle="tab" href="#graficar">Gráfico</a></li>
+         <li><a data-toggle="tab" href="#permutaciones">Permutaciones</a></li>
+       </ul>
         <div class="tab-content printable">
-          <div id="graficar" class="tab-pane fade">
+          <div id="graficar" class="tab-pane fade in active">
             <div id="contenedor">
             <div id="graficoFs">
              <div id="graphOptions">
-             <button id="graphfs" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></a>
+             <a role="button" id="graphshare" class="btn btn-default btn-xs" href="#" target="_blank" data-toggle="tooltip" data-placement="top" data-title="Abrir en otra ventana" data-cointainer="body"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a>
+             <a role="button" id="graphdown" class="btn btn-default btn-xs" href="#" target="_blank" data-toggle="tooltip" data-placement="top" data-title="Descargar gráfico" data-cointainer="body" download><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+             <button id="graphfs" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" data-title="En pantalla completa" data-cointainer="body"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span></button>
              <button id="graphop" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#optionsCollapse"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
              <div class="collapse" id="optionsCollapse">
                  <div class="well">
-                     <input type="checkbox" class="bts chk" data-size="mini" id="inpRadial" data-label-text="Gráfico" checked data-on-text="Lineal" data-off-text="Circular" data-off-color="primary" onChange="dibujarGraph('grafico')">
+                     <input type="checkbox" class="bts chk" data-size="mini" id="inpRadial" data-label-text="Gráfico" data-on-text="Lineal" data-off-text="Circular" data-off-color="primary" onChange="dibujarGraph('grafico')">
                      <input type="checkbox" class="bts chk" data-size="mini" data-label-text="Posiciones" data-on-text="Ver" id="inpPosiciones" checked onChange="dibujarGraph('grafico')">
                      <input type="checkbox" class="bts chk" data-size="mini" data-label-text="R&oacute;tulos" data-on-text="Ver" id="inpRotulos" checked onChange="dibujarGraph('grafico')">
-     Zoom: <input id="inpEspacio" type="number" min="1" max="25" value="20" onChange="dibujarGraph('grafico')">
+     Zoom: <input id="inpEspacio" type="number" min="1" max="35" value="20" onChange="dibujarGraph('grafico')">
+                     <button class="btn btn-default btn-xs" data-toggle="collapse" data-target="#optionsCollapse"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
                    </div>
             </div>
              </div>
@@ -677,9 +707,10 @@
           </div>
           </div>
           </div>
-          <div id="resumen" class="tab-pane fade in active">
-          <table class="table">
-              <tr>
+          
+          <div id="general" class="tab-pane fade">
+              <table class="table">
+                  <tr>
                   <td class="sinBordeTop" colspan="2" data-toggle="popover" data-title="Matriz de la baraja" data-content="Representación en texto de el orden de la baraja, en donde cada elemento se encuentra separado por comas Para más información sobre la codificación <a href='docs/#matriz' target='blank'>click aquí</a>."><span class="barajaMatriz"></span></td>
               </tr>
               <tr>
@@ -694,29 +725,38 @@
                   <td data-toggle="popover" data-title="Mezclas necesarias para alcanzar el azar" data-content="Cantidad de mezclas riffle (a la americana) necesarias para romper todos los patrones existentes en una baraja de n cartas.<br>Para más información <a href='http://statweb.stanford.edu/~cgates/PERSI/papers/bayer92.pdf' target='blank'>click aquí</a>."><img src="img/maths/32log_2(n).png"><span class="mezclasNecesarias"></span></td>
                   <td data-toggle="popover" data-title="Adivinaciones probables" data-content="Estadísticamente se pueden adivinar un promedio de H(n)  cartas siendo el número total de la baraja el n-ésimo número de la <a href='https://es.wikipedia.org/wiki/Serie_armónica_(matemática)' target='blank'>Serie armónica</a>:<br><pre>H<sub>n</sub> = <sup>1</sup>/<sub>1</sub> + <sup>1</sup>/<sub>2</sub> + <sup>1</sup>/<sub>3</sub> + … + <sup>1</sup>/<sub>n</sub></pre>"><img src="img/maths/h(n).png"> <span class="adivinacionesProbables"></span> (<span class="adivinacionesPorcentaje"></span>)</td>
               </tr>
+              </table>
+          </div>
+          <div id="permutaciones" class="tab-pane fade">
+          <table class="table">
               <tr>
-              <td colspan="2" data-toggle="popover" data-title="Permutaciones" data-content="Los sucesivos valores indican el valor ordinal que ocupa cada elemento en relación al conjunto inicial. Es decir el lugar donde se encuentran las cartas luego de mezclarlas."><span class="barajaPermutaciones"></span></td>    
+                  <td colspan="2" class="sinBordeTop" data-toggle="popover" data-title="Permutaciones" data-content="Los sucesivos valores indican el valor ordinal que ocupa cada elemento en relación al conjunto inicial. Es decir el lugar donde se encuentran las cartas luego de mezclarlas."><span class="barajaPermutaciones"></span></td>    
               </tr>
               <tr>
-              <td colspan="2" data-toggle="popover" data-title="Descomposición cíclica" data-content="Producto de los ciclos de las permutaciones. Los números encerrados entre () represetan las cartas que se intercambian entre sí luego de la mezcla. Si sólo hay encerrado un número significa que la carta permanece inmóvil."><span class="descompCiclica"></span></td>
+                  <td colspan="2" data-toggle="popover" data-title="Descomposición cíclica" data-content="Producto de los ciclos de las permutaciones. Los números encerrados entre () represetan las cartas que se intercambian entre sí luego de la mezcla. Si sólo hay encerrado un número significa que la carta permanece inmóvil."><span class="descompCiclica"></span></td>
               </tr>
               <tr>
-              <td data-toggle="popover" data-title="Partición del orden los ciclos" data-content="Orden de los ciclos expresados como partición multiplicativa de n:<br><img src='img/maths/partition.png'>"><span class="ordenCiclos"></span></td>
-              <td data-toggle="popover" data-title="Periodo de la permutación" data-content="El período represetan el Mínimo Común Múltiplo de la de las longitudes de los ciclo. Dando por tanto el número de permutaciones P necesarias para volver al estado inicial."><span class="periodoPermutacion"></span></td>
+                  <td data-toggle="popover" data-title="Partición del orden los ciclos" data-content="Orden de los ciclos expresados como partición     multiplicativa de n:<br><img src='img/maths/partition.png'>"><span class="ordenCiclos"></span></td>
+                  <td data-toggle="popover" data-title="Periodo de la permutación" data-content="El período represetan el Mínimo Común Múltiplo de la de las longitudes de los ciclo. Dando por tanto el número de permutaciones P necesarias para volver al estado inicial."><span class="periodoPermutacion"></span></td>
+              </tr>
+              <tr>
+                  <td colspan="2"><span class="infocolores"></span>
+                  </td>
               </tr>
           </table>      
            
             </div>
           
       </div>
-      
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary helpStats">?</button>
         <button type="button" class="btn btn-primary printStats">Imprimir</button>
         <button type="button" class="btn btn-primary closeStats" data-dismiss="modal">Cerrar</button>
       </div>
-    </div>
+    
   </div>
+ </div>
 </div>
     
 <!-- Modal Ayuda -->
@@ -728,10 +768,10 @@
         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Acerca de...</h4>
       </div>
       <div class="modal-body" style="text-align:justify">
-          <p style="font-size:16pt;font-weight:bold">Barajador v1.0 (beta)</p>
+          <p style="font-size:16pt;font-weight:bold">EyDeck! v1.0 (beta)</p>
           <p><b>Descripción:</b><br> Simulador de baraja online. Un programa pensado para la investigación de las propiedades de una baraja de cartas, ordenamientos, mezclas, informes y estadísticas.</p>
           <p><b>Versión experimental:</b><br> Esta aplicación está en constante cambios debido a su reciente y permantente desarrollo. Algunas cosas que deberían funcionar no lo hacen y otras posiblemente no ocurren como deberían.</p>
-          <p><b>Conctacto:</b><br> Si tienes alguna sugerencia, crítica o consulta no dudes en <a href="mailto:pachaguionbajo@gmail.com?Subject=Barajador%20v1.0%20(beta)" target="_blank">escribirme un correo</a>.</p>
+          <p><b>Conctacto:</b><br> Si tienes alguna sugerencia, crítica o consulta no dudes en <a href="mailto:pachaguionbajo@gmail.com?Subject=EyDeck!%20v1.0%20(beta)" target="_blank">escribirme un correo</a>.</p>
           <p><b>Créditos:</b><br>Hecho con JavaScript, <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> y <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> por: <a href="http://www.eypacha.com.ar" target="_blank">Ey Pacha!</a></p>
       </div>
       <div class="modal-footer">
@@ -769,25 +809,25 @@
           <option value="skotBopSimple">Skot Bop Stack (simple)</option>
         </select>
         <div class="row equal">
-  <div class="col-md-6">
-    <div class="thumbnail">
-      <div class="caption">
-        <h3>Repasa</h3>
-        <p class="aJ">Se mostrarán las cartas a intervalos de tiempos regulares y junto a ellas su número de orden. Avanza y retrocede de forma manual o de forma automática. <i>Si es tu primera vez, empieza por aquí.</i></p>
-        <p class="aC"><a href="#" id="btnRepasa" class="btn btn-primary btn-lg" role="button">Empezar</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="thumbnail">
-      <div class="caption">
-        <h3>Ejercita</h3>
-        <p class="aJ">Se mostrarán las cartas y tendrás que indicar en qué numero se encuentra o mostraremos el número y deberás indicar cuál es la carta que se ubica en la posición solicitada. <i>Conoce tu puntuación.</i></p>
-        <p class="aC"><a href="#" id="btnEjercita" class="btn btn-primary btn-lg" role="button">Próximamente...</a></p>
-      </div>
-    </div>
-  </div>
-</div>
+          <div class="col-md-6">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>Repasa</h3>
+                <p class="aJ">Se mostrarán las cartas a intervalos de tiempos regulares y junto a ellas su número de orden. Avanza y retrocede de forma manual o de forma automática. <i>Si es tu primera vez, empieza por aquí.</i></p>
+                <p class="aC"><a href="#" id="btnRepasa" class="btn btn-primary btn-lg" role="button">Empezar</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>Ejercita</h3>
+                <p class="aJ">Se mostrarán las cartas y tendrás que indicar en qué numero se encuentra o mostraremos el número y deberás indicar cuál es la carta que se ubica en la posición solicitada. <i>Conoce tu puntuación.</i></p>
+                <p class="aC"><a href="#" id="btnEjercita" class="btn btn-primary btn-lg" role="button">Próximamente...</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
        </div>
         <table class="table memo">
         <tr>
@@ -804,8 +844,9 @@
             <button type="button" class="btn btn-primary ant">Anterior</button>
             <button type="button" class="btn btn-success" id="play"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
             <button type="button" class="btn btn-danger" id="stop"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
-            <button type="button" class="btn btn-primary sig">Siguiente</button></td>
+            <button type="button" class="btn btn-primary sig">Siguiente</button>
             </div>
+            </td>
         </tr>
         <tr>
             <td colspan="3" class="nombreCarta"></td>
@@ -821,7 +862,7 @@
     </div>
   </div>
 </div>
-  
+
 <!-- Modal SETTINGS -->
 <div class="modal fade" id="modalPreferencias" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -839,7 +880,7 @@
           <li class="active"><a data-toggle="tab" href="#themeSettings">Ver</a></li>
           <li><a data-toggle="tab" href="#soundSettings">Sonido</a></li>
           <li><a data-toggle="tab" href="#randomSettings">Random.org</a></li>
-        </ul>
+          </ul>
 
         <div class="tab-content">
           <div id="themeSettings" class="tab-pane fade in active">
@@ -963,7 +1004,7 @@
             </table>
           </div>
               
-          </div>
+        </div>
           
       </div>
       <div class="modal-footer">
@@ -1004,24 +1045,22 @@
 jQuery(document).ready(function($) {
     var id = 1;
     $('#moduloConsola').terminal(function(command, term) {
-        if (command == 'help') {
-            term.echo("haga <a href='docs' target='blank'>click aquí</a> para ver la ayuda",{raw:true});
-        } else if (command == "js") {
+        if (command == "js") {
             term.push(function(command, term) {
-                var result = window.eval(command);
-                if (result != undefined) {
+                var salida = window.eval(command);
+                if (salida != undefined) {
 
-                    if(String(result).substr(0, 10+command.length) == "function " + command+ "("){
+                    if(String(salida).substr(0, 10+command.length) == "function " + command+ "("){
                         
-                        var result = window.eval(command+"()");
+                        var salida = window.eval(command+"()");
                         
-                        if (result != undefined) {
-                            term.echo("< "+String(result));
+                        if (salida != undefined) {
+                            term.echo("< "+String(salida));
                         }
                         
                     } else {
                         
-                        term.echo("< "+String(result));
+                        term.echo("< "+String(salida));
                         /*term.echo("< "+String(result).substr(0, 10+command.length) == "function " + command+ "(");*/
                     }
                     
@@ -1030,12 +1069,16 @@ jQuery(document).ready(function($) {
                 name: 'js',
                 prompt: '> '});
         } else {
-            parseador(command);
+            var salida = parseador(command);
+            
+            if (salida != undefined) {
+                term.echo(""+String(salida),{raw:true});
+            }
            // term.echo("se desconoce el comando " + command);
         }
     }, {
         greetings: '',
-        prompt: 'user@eydeck:~$ ' 
+        prompt: 'guest@eydeck:~$ ' 
        /* onBlur: function() {
             // prevent loosing focus
             return false;

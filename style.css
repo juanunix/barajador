@@ -520,6 +520,11 @@ th {
     text-align: right;
 }
 
+#optionsCollapse {
+    position: relative;
+    top: -24px;
+    right: -4px;
+}
 #mostrar-ciclos label {
     display: inline;
     max-width: 100%;
