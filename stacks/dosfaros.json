@@ -1,0 +1,6 @@
+{
+    "name": "Dos faros",
+    "type": "memorized",
+    "description": "Baraja de 52 cartas en donde las cartas se ubican de tal manera de que haciendo una mezcla faros exterior, las cuatro cartas del mismo número intercambian lugar para sumar 13: el A-Q, 2-J, 3-10, 4-9, 5-8 y 6-7 a excepción de los reyes que rotan entre sí. Luego de dos faros cada número habrá rotado con los otros números del mismo palo.",
+    "faces": "KT,8C,5P,3D,8P,9C,AT,4D,5D,10C,4T,2C,3T,8D,9P,AC,8T,KC,QP,6T,9D,QD,JP,2P,10P,6C,5T,10D,4C,9T,QT,JD,5C,QC,KP,7D,AP,JT,7T,3C,4P,2D,AC,6P,2T,10T,7C,JC,3P,6D,7P,KD"
+}
