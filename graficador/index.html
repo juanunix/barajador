@@ -20,11 +20,12 @@
     <!-- Open Graph -->
     <meta property="og:locale" content="es_ES" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Graficador de permutaciónes" />
-    <meta property="og:description" content="Herramienta para visualizar gráficamente las permutaciones de una baraja de cartas luego de una mezcla." />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content="Graficador" />
-    <meta property="og:image" content="" />
+    <meta property="og:title" content="Ey Deck! Graficador de permutaciones" />
+    <meta property="og:description" content="Herramienta para visualizar gráficamente las permutaciones de una baraja de cartas." />
+    <meta property="og:url" content="http://eypacha.com.ar/15263748/graficador" />
+    <meta property="og:site_name" content="Ey Deck! Graficador" />
+    <meta property="fb:app_id" content="357514884387882" />
+    <meta property="og:image" content="og_image.jpg" />
     
 </head>
 
@@ -37,7 +38,9 @@
  <input type="checkbox" class="bts" data-size="mini" id="inpRadial" data-label-text="Gráfico" checked data-on-text="Lineal" data-off-text="Circular" data-off-color="primary" onChange="dibujar()">
  <input type="checkbox" class="bts" data-size="mini" data-label-text="Posiciones" data-on-text="Ver" id="inpPosiciones" checked onChange="dibujar()">
  <input type="checkbox" class="bts" data-size="mini" data-label-text="R&oacute;tulos" data-on-text="Ver" id="inpRotulos" checked onChange="dibujar()">
- Zoom: <input id="inpEspacio" type="number" min="1" max="20" value="15" onChange="dibujar()">
+ Zoom: <input id="inpEspacio" type="number" min="1" max="35" value="15" onChange="dibujar()">
+ Link corto: <input id="shorlink" value="" readonly>
+ <a role="button" id="graphshare" class="btn btn-default btn-xs" href="#" target="_blank"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Share</a>
 </div>
 
 <script src="../js/jquery.min.js"></script>

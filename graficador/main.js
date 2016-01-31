@@ -1,11 +1,17 @@
 var orden = getQueryVariable("orden");
     orden = orden.split(",");
-var colores = ["#bf2330","#0ff","#0f0","#00f","#ff0","#f0f","#f00","#888","#7c0741","#280b5d","#146961","#98cb3e","#ef6f2d","#186c68"];
+var colores = ["#bf2330","#0ff","#0f0","#00f","#ff0","#f0f","#f00","#666","#7c0741","#280b5d","#146961","#98cb3e","#ef6f2d","#337ab7","#3c763d","#8a6d3b","#e91e63","#f44336","#9c27b0","#67aAb7","#3f51b5","#2196f3","#4caf50","#ffc107","#563300"];
 var oCanvas = document.getElementById("grafico");
 var cxt = oCanvas.getContext("2d");
 var sumandos;
 var ciclosArray = [];
 var primera = true;
+var login = "eypacha";
+var api_key = "R_da6cb00ea3395240c2a5ee7b5b6b1384";
+var long_url = "http://eypacha.com.ar/15263748/graficador/?orden="+ orden;
+
+
+$( "#shorlink" ).on( "click", function(){$( "#shorlink" ).select();} );
 
 function setFullscreen(){
     $("#grafico").attr("width",window.innerWidth+"px")
@@ -250,19 +256,23 @@ do{
         
         if ( primera ) {    
         
-            $("<div class='itemCiclo'><label id='l"+ciclos.length+"'><span id='s"+ciclos.length+"'>1</span> <input type='checkbox' id='inp"+ciclos.length+"' checked onChange='dibujar()'></label></div>").appendTo("#mostrar-ciclos");
+            $("<label id='l"+ciclos.length+"' class='itemciclo'><span id='s"+ciclos.length+"'>1</span> <input type='checkbox' id='inp"+ciclos.length+"' checked onChange='dibujar()'></label>").appendTo("#mostrar-ciclos");
         
         }
         
-        $("#l"+(ciclos.length)).css("color",colores[ciclos.length-1]);
-        $("#s"+(ciclos.length)).html(ciclo[0]);
+        $("#s"+(ciclos.length)).html("("+ciclo.join(" ")+")");
         $("#l"+(ciclos.length)).css("display","inline-block");
         
         if ($("#inp"+(ciclos.length)).prop("checked")){
-            cxt.strokeStyle = colores[ciclos.length-1];
+            $("#l"+(ciclos.length)).css("color",colores[ciclos.length-1 % colores.length]);
+            cxt.strokeStyle = colores[ciclos.length-1 % colores.length];
             dCiclo(ciclo.toString());
         
+        } else {
+            $("#l"+(ciclos.length)).css("color","silver");
+            
         }
+
         
     } else 
     {
@@ -291,3 +301,33 @@ $(function(argument) {
   $('[type="checkbox"].bts').bootstrapSwitch();
 
 })
+
+function get_short_url(long_url, login, api_key, func){
+    $.getJSON(
+        "http://api.bitly.com/v3/shorten?callback=?", 
+        { 
+            "format": "json",
+            "apiKey": api_key,
+            "login": login,
+            "longUrl": long_url
+        },
+        function(response)
+        {
+            console.log(response);
+            func(response.data.url);
+            
+        }
+    );
+}
+    
+get_short_url(long_url, login, api_key, function(short_url) {
+    
+    if (typeof short_url === 'undefined') {
+        
+        short_url = long_url;
+    }
+        
+        $("#graphshare").attr("href","https://www.facebook.com/sharer/sharer.php?u="+short_url);
+        $("#shorlink").val(short_url);
+    
+});
