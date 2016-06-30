@@ -1,0 +1,6 @@
+{
+    "name": "Rufus Steele Stack",
+    "type": "memorized",
+    "description": "Baraja ordenada de 52 cartas creada por Rufus Steele.",
+    "faces": "8P,KD,AT,KT,10C,5C,8D,7T,10P,JC,5P,6C,6T,3C,3P,6D,4D,5T,AP,JT,QD,JD,4T,9D,QT,2P,2C,9C,AD,9T,QC,KC,8T,AC,10T,JP,QP,7D,4C,4P,7C,7P,6P,2D,10D,3T,KT,5D,2T,9P,3D,8C"
+}
